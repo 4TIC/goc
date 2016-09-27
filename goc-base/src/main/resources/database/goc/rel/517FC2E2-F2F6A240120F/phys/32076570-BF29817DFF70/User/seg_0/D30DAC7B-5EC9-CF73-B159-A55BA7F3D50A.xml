@@ -1,0 +1,9 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<UserOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UserOraclev10g" name="UJI_REUNIONES" directorySegmentName="seg_0" id="D30DAC7B-5EC9-CF73-B159-A55BA7F3D50A">
+<sourceConnName>uji_reuniones@d11</sourceConnName>
+<sourceObjName>UJI_REUNIONES</sourceObjName>
+<createdBy>borillo</createdBy>
+<createdTime>2016-06-15 08:32:00 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<schemaObject>851AFA7E-0C67-E024-A963-48DB8EF55127</schemaObject>
+</UserOraclev10g>

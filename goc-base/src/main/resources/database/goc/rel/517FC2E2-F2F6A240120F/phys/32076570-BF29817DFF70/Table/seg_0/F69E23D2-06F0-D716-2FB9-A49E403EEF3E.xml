@@ -1,0 +1,54 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="GOC_TIPOS_ORGANO" directorySegmentName="seg_0" id="F69E23D2-06F0-D716-2FB9-A49E403EEF3E">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<schemaObject>851AFA7E-0C67-E024-A963-48DB8EF55127</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>AF97CA58-0D81-5B33-6071-BEFEDDACDC8C</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="CODIGO" id="03F51222-17BA-2A18-016E-3C0CDE184E18">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID" id="AE173D2C-98AF-F9CD-E64A-DCF171B412C5">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="NOMBRE" id="CF6A6E2C-E6EB-0A4B-3966-26D1558A834C">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="TIPOS_ORGANO_PK" id="A826358C-5E79-CB29-86C6-BC882860ECAD">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<schemaObject>851AFA7E-0C67-E024-A963-48DB8EF55127</schemaObject>
+<segment>00A8D95D-5A5B-2BD1-4455-6A0114FC507D</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+</IndexProxy>
+</indexProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="TIPOS_ORGANO_PK" id="C4D0A0E0-0DCB-BAF4-9EDB-F4C8C4D2E27C">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<segment>00A8D95D-5A5B-2BD1-4455-6A0114FC507D</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+<existingIndex>A826358C-5E79-CB29-86C6-BC882860ECAD</existingIndex>
+<indexSegment>00A8D95D-5A5B-2BD1-4455-6A0114FC507D</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

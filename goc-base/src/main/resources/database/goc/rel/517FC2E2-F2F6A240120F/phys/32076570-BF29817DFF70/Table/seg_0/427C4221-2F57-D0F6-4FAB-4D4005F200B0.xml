@@ -1,0 +1,39 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="GOC_CARGOS" directorySegmentName="seg_0" id="427C4221-2F57-D0F6-4FAB-4D4005F200B0">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<schemaObject>851AFA7E-0C67-E024-A963-48DB8EF55127</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>AF97CA58-0D81-5B33-6071-BEFEDDACDC8C</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="NOMBRE" id="568C9850-7CD8-C39A-EB01-10734D2AFFBA">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID" id="56D2EFA3-3E43-9D7E-34C9-891B32CCF5CD">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="GOC_CARGOS_PK" id="DEA06DDA-ABBF-9F4D-0D9B-595479BA213C">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<schemaObject>851AFA7E-0C67-E024-A963-48DB8EF55127</schemaObject>
+<segment>00A8D95D-5A5B-2BD1-4455-6A0114FC507D</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+<indexSegment>00A8D95D-5A5B-2BD1-4455-6A0114FC507D</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

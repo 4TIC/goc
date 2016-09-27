@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+  <distributable/>
+
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+      classpath:applicationContext.xml
+    </param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>appVersion</param-name>
+    <param-value>${pom.version}</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>webAppRootKey</param-name>
+    <param-value>uji-goc-base.root</param-value>
+  </context-param>
+
+  <listener>
+    <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>es.uji.commons.rest.listeners.CleanUpOracleMBeansListener</listener-class>
+  </listener>
+
+  <filter>
+    <filter-name>sso-filter</filter-name>
+    <filter-class>es.uji.apps.goc.auth.ExternalAccessTokenAuth</filter-class>
+    <init-param>
+      <param-name>authToken</param-name>
+      <param-value>${goc.external.authToken}</param-value>
+    </init-param>
+    <init-param>
+      <param-name>defaultUserId</param-name>
+      <param-value>${uji.deploy.defaultUserId}</param-value>
+    </init-param>
+    <init-param>
+      <param-name>defaultUserName</param-name>
+      <param-value>${uji.deploy.defaultUserName}</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>sso-filter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <servlet>
+    <servlet-name>rest-api</servlet-name>
+    <servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
+    <init-param>
+      <param-name>com.sun.jersey.config.property.packages</param-name>
+      <param-value>es.uji.commons.rest.json; com.fasterxml.jackson.jaxrs.json; es.uji.commons.rest.html; es.uji.apps.goc.services.rest
+      </param-value>
+    </init-param>
+    <init-param>
+      <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
+      <param-value>com.sun.jersey.api.container.filter.LoggingFilter</param-value>
+    </init-param>
+    <init-param>
+      <param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
+      <param-value>com.sun.jersey.api.container.filter.LoggingFilter</param-value>
+    </init-param>
+    <init-param>
+      <param-name>com.sun.jersey.config.feature.logging.DisableEntitylogging</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>rest-api</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
+</web-app>

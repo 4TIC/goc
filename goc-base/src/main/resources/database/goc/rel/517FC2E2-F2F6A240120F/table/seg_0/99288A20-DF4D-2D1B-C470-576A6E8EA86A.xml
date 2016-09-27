@@ -1,0 +1,131 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="99288A20-DF4D-2D1B-C470-576A6E8EA86A" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_ORGANOS_REUNIONES">
+<sourceConnName>uji_reuniones@d11</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_ORGANOS_REUNIONES</sourceObjName>
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>2D0F5979-D9B2-BBA0-88DD-C996704C3D89</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="D3CD5B9C-AEB3-53CB-0430-627354FD3020">
+<sourceConnName>uji_reuniones@d11</sourceConnName>
+<sourceObjSchema>GOC_ORGANOS_REUNIONES</sourceObjSchema>
+<sourceObjName>ID</sourceObjName>
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>AE0C4143-E4D3-0B4D-A679-B51C0C9C4B21</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ORGANO_ID" id="DDF3E507-C149-5974-07DD-1C8198BABA25">
+<sourceConnName>uji_reuniones@d11</sourceConnName>
+<sourceObjSchema>GOC_ORGANOS_REUNIONES</sourceObjSchema>
+<sourceObjName>ORGANO_ID</sourceObjName>
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>344B61CC-676B-ADE9-470D-18FD3BDCDA17</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="29D2EBE9-E284-17F9-7A93-7497F3A2C094" referredColumn="5DAF4901-D0F7-34EF-15B2-452AAE9DEF19"/>
+</associations>
+</Column>
+<Column name="REUNION_ID" id="DB00195B-8B4A-A6FA-F1BA-2E7D776A629B">
+<sourceConnName>uji_reuniones@d11</sourceConnName>
+<sourceObjSchema>GOC_ORGANOS_REUNIONES</sourceObjSchema>
+<sourceObjName>REUNION_ID</sourceObjName>
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>51CD4668-0887-DA0C-B235-F27D89DAB32A</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="16BD796E-A4C8-96BC-B37B-674910CE8044" referredColumn="70A5F1A6-7E2A-4353-0032-ACFD918D611E"/>
+</associations>
+</Column>
+<Column name="ORGANO_EXTERNO_ID" id="1BA556B2-FDB6-F9D1-84F0-3CB8CE27F043">
+<sourceConnName>uji_reuniones@d11</sourceConnName>
+<sourceObjSchema>GOC_ORGANOS_REUNIONES</sourceObjSchema>
+<sourceObjName>ORGANO_EXTERNO_ID</sourceObjName>
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>5148E199-410C-F560-90B6-AB9FB0CADEA3</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>8 BYTE</dataTypeSize>
+<ownDataTypeParameters>8 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="0C3D1D3C-6BB6-A756-16E1-59389BBAD686" name="ORGANOS_REUNIONES_PK">
+<sourceConnName>uji_reuniones@d11</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>ORGANOS_REUNIONES_PK</sourceObjName>
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>6034ACD8-1442-3ACA-0D33-958E6AEA6136</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D3CD5B9C-AEB3-53CB-0430-627354FD3020"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C9C4B320-E9F0-0366-E4EE-196970E5E11A" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="ORGANOS_REUNIONES_PK">
+<sourceConnName>uji_reuniones@d11</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>ORGANOS_REUNIONES_PK</sourceObjName>
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>F0D91C27-BD97-F41E-CCEA-29AC885EED9F</importedID>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D3CD5B9C-AEB3-53CB-0430-627354FD3020"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A76AC97D-AC41-6A28-27C4-A28616D5EE55" name="GOC_ORG_REU_ORGANOS_FK">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DDF3E507-C149-5974-07DD-1C8198BABA25"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="E84A5FD1-3415-8536-554F-C475AF2E8A53" name="GOC_ORG_REU_REUNIONES_FK">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DB00195B-8B4A-A6FA-F1BA-2E7D776A629B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

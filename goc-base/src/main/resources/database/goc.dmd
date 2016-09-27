@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="goc" id="0AD7BF7D-6B5B-053B-8CBE-9A51730C1608" version="3.5">
+<createdBy>borillo</createdBy>
+<createdTime>2016-06-15 08:30:05 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>0AD7BF7D-6B5B-053B-8CBE-9A51730C1608</designId>
+<usedDesignStorageDescriptors>
+<designDescr class="oracle.dbtools.crest.model.design.Design$DesignStorageDesc" id="072E0F91-7C3A-653F-613C-7DC28526ECC7">
+<designStoragePath>/media/new/opt/devel/workspaces/uji/goc-base/src/main/resources/database</designStoragePath>
+</designDescr>
+</usedDesignStorageDescriptors>
+</OSDM_Design>

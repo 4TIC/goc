@@ -1,0 +1,309 @@
+swagger: "2.0"
+info:
+  title: "REST API: Gestión de órganos colegiados"
+  description: Puntos de extensión a implementar
+  version: "1.0.0"
+host: ujiapps.uji.es
+schemes:
+  - https
+basePath: /goc/rest/external
+produces:
+  - application/json
+paths:
+  /organos:
+    get:
+      summary: Órganos disponibles.
+      description: |
+        Obtiene una lista completa de los organos disponibles.
+      responses:
+        200:
+          description: Lista de organos
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Organo"
+
+  /organos/{organoId}/miembros:
+    get:
+      summary: Miembros pertenecientes a un órgano determinado.
+      description: |
+        Obtiene una lista de todos los miembros pertenecientes a un determinado órgano.
+      parameters:
+        - name: organoId
+          in: path
+          description: Id del organo
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: Lista de miembros de un órgano
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Miembro"
+
+  /config/menus:
+    get:
+      summary: Listado de menús de acceso a las distintas funcionalidades de GOC.
+      description: |
+        Permite la carga del árbol lateral de navegación con las opciones principales de navegación.
+      responses:
+        200:
+          description: Listado de entradas del menú.
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Menu"
+
+  /notificaciones:
+    post:
+      summary: Envío de notificaciones.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      description: |
+        Permite el envío de correos de aviso a los miembros involucrados en las reuniones.
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/Mensaje"
+      responses:
+        204:
+          description: Envío completado correctamente sin respuesta.
+
+  /firmas:
+    post:
+      summary: Firma del acta de una reunión
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      description: |
+        Firma el acta de una reunión ya concluida con todos los puntos acordados en ella
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Reunion"
+      responses:
+        204:
+          description: Acta firmada correctamente sin respuesta.
+
+  /personas:
+    get:
+      summary: Directorio de personas de la institución.
+      description: |
+        A partir de una consulta devuelve un listado de personas pertenecientes a la institución.
+      parameters:
+        - name: query
+          in: query
+          description: Cadena de búsqueda de persona
+          type: string
+      responses:
+        200:
+          description: Lista de personas que cumplen con la cadena de búsqueda
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Persona"
+
+  /personas/{personaId}:
+    get:
+      summary: Información de una persona a partir de su id.
+      description: |
+        Obtiene una persona del directorio de personas a partir de su Id.
+      parameters:
+        - name: personaId
+          in: path
+          description: Id de la persona
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: Información de persona
+          schema:
+            $ref: "#/definitions/Persona"
+
+definitions:
+  Reunion:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: Identificador de la reunión
+      asunto:
+        type: string
+        description: Asunto principal de la reunión
+      fecha:
+        type: string
+        format: datetime
+        description: Fecha de realización de la reunión
+      numero_sesion:
+        type: number
+        description: Número de sesión de la reunión
+      duracion:
+        type: number
+        description: Duración de la reunión en minutos
+      ubicacion:
+        type: string
+        description: Lugar de realización de la reunión
+      acuerdos:
+        type: string
+        description: |
+          Descripción de los acuerdos establecidos en la reunión
+      asistentes:
+        type: array
+        description: Lista de asistentes a la reunión
+        items:
+          $ref: "#/definitions/Organo"
+      puntos_orden_dia:
+        type: array
+        description: Lista de puntos del orden del día
+        items:
+          $ref: "#/definitions/PuntoOrdenDia"
+
+
+  PuntoOrdenDia:
+    type: object
+    properties:
+      id:
+        type: number
+        description: Identificador único del punto del orden del día.
+      titulo:
+        type: string
+        description: Título del punto del orden del día.
+      descripcion:
+        type: string
+        description: Descripción del punto del orden del día.
+      deliberaciones:
+        type: string
+        description: Deliberaciones del punto del orden del día.
+      acuerdos:
+        type: string
+        description: Acuerdos del punto del orden del día.
+      orden:
+        type: number
+        description: |
+          Número identificativo del orden del punto del orden del día con respecto al resto.
+
+  Organo:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Identificadorr único del órgano.
+      nombre:
+        type: string
+        description: Nombre del organo.
+      tipo_id:
+        type: number
+        description: Identificar único del tipo de órgano.
+      tipo_codigo:
+        type: string
+        description: |
+          Valor enumerado que representa al órgano (p.e. DEPARTAMENTO).
+      tipo_nombre:
+        type: string
+        description: Nombre del tipo de órgano.
+
+  Miembro:
+    type: object
+    properties:
+      id:
+        type: number
+        description: Identificadorr único del miembro.
+      nombre:
+        type: string
+        description: Nombre del miembro.
+      email:
+        type: string
+        description: E-Mail del miembro.
+      organo:
+        $ref: "#/definitions/Organo"
+      cargo:
+        $ref: "#/definitions/Cargo"
+
+  Persona:
+    type: object
+    properties:
+      id:
+        type: number
+        description: Identificadorr único de la persona.
+      nombre:
+        type: string
+        description: Nombre de la persona.
+      email:
+        type: string
+        description: E-Mail de la persona.
+
+  Cargo:
+    type: object
+    properties:
+      id:
+        type: number
+        description: Identificadorr único del cargo.
+      nombre:
+        type: string
+        description: Nombre del cargo.
+
+  Mensaje:
+    type: object
+    properties:
+      asunto:
+        type: string
+        description: Asunto del mensaje.
+      contentType:
+        type: string
+        description: Tipo MIME del contenido del mensaje.
+      cuerpo:
+        type: string
+        description: Contenido del mensaje.
+      from:
+        type: string
+        description: Dirección de correo del emisor.
+      replyTo:
+        type: string
+        description: Dirección de correo a la que responder.
+      destinos:
+        type: array
+        description: Lista de direcciones de correo de los destinatarios.
+        items:
+          type: string
+
+  Menu:
+    type: object
+    properties:
+      row:
+        type: array
+        description: Lista de entradas del menú.
+        items:
+          $ref: "#/definitions/MenuItem"
+
+  MenuItem:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Asunto del mensaje.
+      title:
+        type: string
+        description: Tipo MIME del contenido del mensaje.
+      text:
+        type: string
+        description: Contenido del mensaje.
+      leaf:
+        type: string
+        description: Dirección de correo del emisor.
+      checked:
+        type: string
+        description: Dirección de correo a la que responder.
+      row:
+        type: array
+        description: Listado de entradas anidadas en el menú.
+        items:
+          $ref: "#/definitions/MenuItem"

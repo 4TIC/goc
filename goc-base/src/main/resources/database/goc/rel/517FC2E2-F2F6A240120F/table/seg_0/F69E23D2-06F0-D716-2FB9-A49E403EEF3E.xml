@@ -1,0 +1,90 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="F69E23D2-06F0-D716-2FB9-A49E403EEF3E" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_TIPOS_ORGANO">
+<sourceConnName>uji_reuniones@d11</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_TIPOS_ORGANO</sourceObjName>
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>3829C220-DDB5-5695-BC81-57EA5FF05D20</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="AE173D2C-98AF-F9CD-E64A-DCF171B412C5">
+<sourceConnName>uji_reuniones@d11</sourceConnName>
+<sourceObjSchema>GOC_TIPOS_ORGANO</sourceObjSchema>
+<sourceObjName>ID</sourceObjName>
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>5E70FE94-F526-611E-E407-29FBEDDE11CC</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CODIGO" id="03F51222-17BA-2A18-016E-3C0CDE184E18">
+<sourceConnName>uji_reuniones@d11</sourceConnName>
+<sourceObjSchema>GOC_TIPOS_ORGANO</sourceObjSchema>
+<sourceObjName>CODIGO</sourceObjName>
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>BD4FEB61-16D9-22C7-E63C-BB069C115206</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10 BYTE</dataTypeSize>
+<ownDataTypeParameters>10 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRE" id="CF6A6E2C-E6EB-0A4B-3966-26D1558A834C">
+<sourceConnName>uji_reuniones@d11</sourceConnName>
+<sourceObjSchema>GOC_TIPOS_ORGANO</sourceObjSchema>
+<sourceObjName>NOMBRE</sourceObjName>
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>0399E692-1FC6-82D1-B6B1-8EA549EBB9AC</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="C4D0A0E0-0DCB-BAF4-9EDB-F4C8C4D2E27C" name="TIPOS_ORGANO_PK">
+<sourceConnName>uji_reuniones@d11</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>TIPOS_ORGANO_PK</sourceObjName>
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>6236596E-325D-305A-64F8-7483B0D8FD87</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AE173D2C-98AF-F9CD-E64A-DCF171B412C5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A826358C-5E79-CB29-86C6-BC882860ECAD" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="TIPOS_ORGANO_PK">
+<sourceConnName>uji_reuniones@d11</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>TIPOS_ORGANO_PK</sourceObjName>
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>0B19CB30-3BE4-9D23-5DD0-B11DBB9A6743</importedID>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AE173D2C-98AF-F9CD-E64A-DCF171B412C5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

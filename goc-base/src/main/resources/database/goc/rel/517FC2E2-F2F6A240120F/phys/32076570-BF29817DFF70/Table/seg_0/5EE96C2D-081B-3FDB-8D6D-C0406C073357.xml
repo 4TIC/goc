@@ -1,0 +1,127 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="GOC_REUNIONES" directorySegmentName="seg_0" id="5EE96C2D-081B-3FDB-8D6D-C0406C073357">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<schemaObject>851AFA7E-0C67-E024-A963-48DB8EF55127</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>AF97CA58-0D81-5B33-6071-BEFEDDACDC8C</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="ACTA" id="2D6818D3-6E68-6287-2E4B-B1BF3DE5854A">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ASUNTO" id="3B5550FD-3159-EA71-5226-27342B384441">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="COMPLETADA" id="4A80C800-1A34-A461-2181-FD328CF4FCF2">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<defaultValue>0</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="ID" id="70A5F1A6-7E2A-4353-0032-ACFD918D611E">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DURACION" id="B4160770-55C6-E0CA-1F29-D3E6976F6271">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CREADOR_ID" id="C2B8F508-AFF5-4A93-FC3B-983E243BC132">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ORDEN_DIA" id="C871B76D-F1E4-E393-B90D-8515701362DF">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="FECHA_CREACION" id="CAE0069B-914C-2E44-977A-644064A60FC6">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="FECHA" id="DDCC7F1C-75CF-0A03-FA84-0CEC43E3B0D0">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="FECHA_COMPLETADA" id="E0F569F8-ED7E-99C3-3846-06941FA9297A">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DESCRIPCION" id="E1D99C2B-C8DC-0987-DA60-F09DEA2BC624">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="REUNIONES_PK" id="36B0F7E6-7EC0-62B9-B77D-778031FAC302">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<schemaObject>851AFA7E-0C67-E024-A963-48DB8EF55127</schemaObject>
+<segment>00A8D95D-5A5B-2BD1-4455-6A0114FC507D</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+</IndexProxy>
+</indexProxies>
+<lobStorages>
+<LobStorage class="oracle.dbtools.crest.model.design.storage.oracle.v11g.LobStorageOraclev11g" name="SYS_LOB0000357204C00005$$" id="12C7ABEE-791A-D7F1-2A94-B8AD9788228E">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<cache>NOCACHE</cache>
+<chunk>8192</chunk>
+<column>DESCRIPCION</column>
+<logging>YES</logging>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+</LobStorage>
+<LobStorage class="oracle.dbtools.crest.model.design.storage.oracle.v11g.LobStorageOraclev11g" name="SYS_LOB0000357204C00006$$" id="A38C511E-9350-5D53-D675-E5ED2F84D8B2">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<cache>NOCACHE</cache>
+<chunk>8192</chunk>
+<column>ORDEN_DIA</column>
+<logging>YES</logging>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+</LobStorage>
+<LobStorage class="oracle.dbtools.crest.model.design.storage.oracle.v11g.LobStorageOraclev11g" name="SYS_LOB0000357204C00010$$" id="C8978C99-B6F0-2DA3-2E5B-B045E68BC2FB">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<cache>NOCACHE</cache>
+<chunk>8192</chunk>
+<column>ACTA</column>
+<logging>YES</logging>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+</LobStorage>
+</lobStorages>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="REUNIONES_PK" id="E7E0C857-67B7-B381-7809-CCE9D0CA86E5">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<segment>00A8D95D-5A5B-2BD1-4455-6A0114FC507D</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+<existingIndex>36B0F7E6-7EC0-62B9-B77D-778031FAC302</existingIndex>
+<indexSegment>00A8D95D-5A5B-2BD1-4455-6A0114FC507D</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

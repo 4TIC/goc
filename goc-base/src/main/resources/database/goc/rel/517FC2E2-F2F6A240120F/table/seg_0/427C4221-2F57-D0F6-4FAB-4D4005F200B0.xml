@@ -1,0 +1,62 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="427C4221-2F57-D0F6-4FAB-4D4005F200B0" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_CARGOS">
+<sourceConnName>uji_reuniones@d11</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_CARGOS</sourceObjName>
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>B78C19D6-7B68-43E2-B24C-B39846943CE2</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="56D2EFA3-3E43-9D7E-34C9-891B32CCF5CD">
+<sourceConnName>uji_reuniones@d11</sourceConnName>
+<sourceObjSchema>GOC_CARGOS</sourceObjSchema>
+<sourceObjName>ID</sourceObjName>
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>7B9FFFB4-DEB3-B62D-C9ED-FFD9BC7B6CFD</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRE" id="568C9850-7CD8-C39A-EB01-10734D2AFFBA">
+<sourceConnName>uji_reuniones@d11</sourceConnName>
+<sourceObjSchema>GOC_CARGOS</sourceObjSchema>
+<sourceObjName>NOMBRE</sourceObjName>
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>1194A599-6560-2F14-D737-81A5821403E1</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>400 BYTE</dataTypeSize>
+<ownDataTypeParameters>400 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="DEA06DDA-ABBF-9F4D-0D9B-595479BA213C" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_CARGOS_PK">
+<sourceConnName>uji_reuniones@d11</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>SYS_C00221569</sourceObjName>
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>C3D59497-46E2-1FE5-A0F2-8DE92F7A602E</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="56D2EFA3-3E43-9D7E-34C9-891B32CCF5CD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

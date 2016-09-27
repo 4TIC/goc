@@ -1,0 +1,71 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="GOC_ORGANOS_REUNIONES" directorySegmentName="seg_0" id="99288A20-DF4D-2D1B-C470-576A6E8EA86A">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<schemaObject>851AFA7E-0C67-E024-A963-48DB8EF55127</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>AF97CA58-0D81-5B33-6071-BEFEDDACDC8C</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="ORGANO_EXTERNO_ID" id="1BA556B2-FDB6-F9D1-84F0-3CB8CE27F043">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID" id="D3CD5B9C-AEB3-53CB-0430-627354FD3020">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="REUNION_ID" id="DB00195B-8B4A-A6FA-F1BA-2E7D776A629B">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ORGANO_ID" id="DDF3E507-C149-5974-07DD-1C8198BABA25">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="ORGANOS_REUNIONES_PK" id="C9C4B320-E9F0-0366-E4EE-196970E5E11A">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<schemaObject>851AFA7E-0C67-E024-A963-48DB8EF55127</schemaObject>
+<segment>00A8D95D-5A5B-2BD1-4455-6A0114FC507D</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+</IndexProxy>
+</indexProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="GOC_ORG_REU_ORGANOS_FK" id="A76AC97D-AC41-6A28-27C4-A28616D5EE55">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ForeignKey>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="GOC_ORG_REU_REUNIONES_FK" id="E84A5FD1-3415-8536-554F-C475AF2E8A53">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="ORGANOS_REUNIONES_PK" id="0C3D1D3C-6BB6-A756-16E1-59389BBAD686">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<segment>00A8D95D-5A5B-2BD1-4455-6A0114FC507D</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+<existingIndex>C9C4B320-E9F0-0366-E4EE-196970E5E11A</existingIndex>
+<indexSegment>00A8D95D-5A5B-2BD1-4455-6A0114FC507D</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

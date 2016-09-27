@@ -1,0 +1,89 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="GOC_REUNIONES_DOCUMENTOS" directorySegmentName="seg_0" id="42B417AC-DB28-9932-1845-D0262BA7CB9D">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<schemaObject>851AFA7E-0C67-E024-A963-48DB8EF55127</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>AF97CA58-0D81-5B33-6071-BEFEDDACDC8C</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="DESCRIPCION" id="5063EFA8-54C4-5BD5-4EDE-41F2EA3799DB">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="REUNION_ID" id="5458982E-741C-34F1-86C8-AB400632578D">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CREADOR_ID" id="7E6E1B45-853F-4C8F-62D8-9F9CCE662A64">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID" id="9BB2E2B5-16D3-57C6-BCE7-F115DD261C1E">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="FECHA_ADICION" id="A89FE98F-0D6B-5697-1016-7BE6E28BE7FF">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<defaultValue>SYSDATE</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="MIME_TYPE" id="C211FED3-0B4E-BEED-D5AC-09A2EE00A607">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="NOMBRE_FICHERO" id="E7E9F549-554B-99E4-DF41-D385CBB57D8B">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DATOS" id="F420DA1E-6C0F-645C-4D84-6561D60C5BEB">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_DOCUMENTOS_REUNIONES" id="0145E314-A522-749B-30D2-E45161AA50FE">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<lobStorages>
+<LobStorage class="oracle.dbtools.crest.model.design.storage.oracle.v11g.LobStorageOraclev11g" name="SYS_LOB0000359372C00007$$" id="7C4ECE31-8215-7E49-56C6-64F64F7BE7C2">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<cache>NOCACHE</cache>
+<chunk>8192</chunk>
+<column>DATOS</column>
+<logging>YES</logging>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+</LobStorage>
+</lobStorages>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="GOC_REUNIONES_DOCUMENTOS_PK" id="BA722E2F-E503-69CE-4AF5-AD5F20E191F3">
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<schemaObject>851AFA7E-0C67-E024-A963-48DB8EF55127</schemaObject>
+<segment>00A8D95D-5A5B-2BD1-4455-6A0114FC507D</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+<indexSegment>00A8D95D-5A5B-2BD1-4455-6A0114FC507D</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>
