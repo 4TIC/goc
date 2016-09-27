@@ -31,6 +31,7 @@ import es.uji.apps.goc.dao.ReunionDocumentoDAO;
 import es.uji.apps.goc.dto.MiembroFirma;
 import es.uji.apps.goc.dto.MiembroTemplate;
 import es.uji.apps.goc.dto.OrganoFirma;
+import es.uji.apps.goc.dto.OrganoLocal;
 import es.uji.apps.goc.dto.OrganoReunion;
 import es.uji.apps.goc.dto.OrganoReunionMiembro;
 import es.uji.apps.goc.dto.OrganoTemplate;
@@ -55,7 +56,6 @@ import es.uji.apps.goc.model.Comentario;
 import es.uji.apps.goc.model.Documento;
 import es.uji.apps.goc.model.Miembro;
 import es.uji.apps.goc.model.Organo;
-import es.uji.apps.goc.model.OrganoLocal;
 import es.uji.apps.goc.model.Persona;
 
 import static es.uji.apps.goc.dto.QReunion.reunion;

@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import es.uji.apps.goc.dto.QOrganoAutorizado;
 import org.springframework.stereotype.Repository;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 
+import es.uji.apps.goc.dto.OrganoLocal;
+import es.uji.apps.goc.dto.QOrganoAutorizado;
+import es.uji.apps.goc.dto.QOrganoLocal;
 import es.uji.apps.goc.dto.QOrganoReunion;
 import es.uji.apps.goc.dto.TipoOrganoLocal;
 import es.uji.apps.goc.model.Organo;
-import es.uji.apps.goc.model.OrganoLocal;
-import es.uji.apps.goc.model.QOrganoLocal;
 import es.uji.apps.goc.model.TipoOrgano;
 import es.uji.commons.db.BaseDAODatabaseImpl;
 

@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 
 import es.uji.apps.goc.dao.OrganoReunionDAO;
 import es.uji.apps.goc.dao.OrganoReunionMiembroDAO;
+import es.uji.apps.goc.dto.OrganoLocal;
 import es.uji.apps.goc.dto.OrganoReunion;
 import es.uji.apps.goc.dto.Reunion;
-import es.uji.apps.goc.model.OrganoLocal;
 
 @Service
 @Component

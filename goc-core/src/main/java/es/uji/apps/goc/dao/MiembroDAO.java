@@ -15,14 +15,14 @@ import com.sun.jersey.api.client.WebResource;
 
 import es.uji.apps.goc.dto.MiembroExterno;
 import es.uji.apps.goc.dto.MiembroLocal;
+import es.uji.apps.goc.dto.OrganoLocal;
 import es.uji.apps.goc.dto.QMiembroLocal;
+import es.uji.apps.goc.dto.QOrganoLocal;
 import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.model.Cargo;
 import es.uji.apps.goc.model.JSONListaMiembrosDeserializer;
 import es.uji.apps.goc.model.Miembro;
 import es.uji.apps.goc.model.Organo;
-import es.uji.apps.goc.model.OrganoLocal;
-import es.uji.apps.goc.model.QOrganoLocal;
 import es.uji.commons.db.BaseDAODatabaseImpl;
 
 @Repository

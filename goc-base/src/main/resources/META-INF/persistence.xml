@@ -12,6 +12,9 @@
     <class>es.uji.apps.goc.dto.Reunion</class>
     <class>es.uji.apps.goc.dto.ReunionDocumento</class>
     <class>es.uji.apps.goc.dto.OrganoReunion</class>
+    <class>es.uji.apps.goc.dto.OrganoLocal</class>
+    <class>es.uji.apps.goc.dto.MiembroLocal</class>
+    <class>es.uji.apps.goc.dto.Cargo</class>
     <class>es.uji.apps.goc.dto.OrganoReunionMiembro</class>
     <class>es.uji.apps.goc.dto.PuntoOrdenDia</class>
     <class>es.uji.apps.goc.dto.PuntoOrdenDiaDocumento</class>

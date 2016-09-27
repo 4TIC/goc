@@ -1,4 +1,4 @@
-package es.uji.apps.goc.batch.senders;
+package es.uji.apps.goc.avisos.senders;
 
 import java.util.Date;
 

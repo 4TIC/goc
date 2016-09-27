@@ -1,4 +1,4 @@
-package es.uji.apps.goc.model;
+package es.uji.apps.goc.dto;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,10 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import es.uji.apps.goc.dto.OrganoReunion;
-import es.uji.apps.goc.dto.MiembroLocal;
-import es.uji.apps.goc.dto.TipoOrganoLocal;
 
 @Entity
 @Table(name = "GOC_ORGANOS")

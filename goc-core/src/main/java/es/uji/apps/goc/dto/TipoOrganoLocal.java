@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import es.uji.apps.goc.model.OrganoLocal;
-
 @Entity
 @Table(name = "GOC_TIPOS_ORGANO")
 public class TipoOrganoLocal implements Serializable

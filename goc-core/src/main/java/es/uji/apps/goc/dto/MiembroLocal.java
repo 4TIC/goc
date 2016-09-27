@@ -10,10 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
-import es.uji.apps.goc.model.OrganoLocal;
-
 @Entity
 @Table(name = "GOC_MIEMBROS")
 public class MiembroLocal implements Serializable

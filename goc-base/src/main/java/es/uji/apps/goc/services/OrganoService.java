@@ -21,12 +21,12 @@ import es.uji.apps.goc.dao.OrganoDAO;
 import es.uji.apps.goc.dao.ReunionDAO;
 import es.uji.apps.goc.dto.OrganoAutorizado;
 import es.uji.apps.goc.dto.OrganoExterno;
+import es.uji.apps.goc.dto.OrganoLocal;
 import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.exceptions.OrganoNoDisponibleException;
 import es.uji.apps.goc.exceptions.OrganosExternosException;
 import es.uji.apps.goc.model.JSONListaOrganosExternosDeserializer;
 import es.uji.apps.goc.model.Organo;
-import es.uji.apps.goc.model.OrganoLocal;
 import es.uji.apps.goc.model.TipoOrgano;
 
 @Service
