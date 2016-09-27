@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>es.uji.apps.goc</groupId>
+  <artifactId>goc</artifactId>
+  <version>0.0.5-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>goc</name>
+
+   <properties>
+     <aspectj.version>1.8.5</aspectj.version>
+     <jersey.version>1.19</jersey.version>
+     <spring.version>4.1.6.RELEASE</spring.version>
+     <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
+   </properties>
+
+  <modules>
+      <!--    <module>goc-core</module>-->
+    <module>goc-base</module>
+    <!--    <module>goc-notificaciones</module>-->
+  </modules>
+
+  <dependencies>
+
+    <!-- Testing -->
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>1.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-all</artifactId>
+      <version>1.3</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <scm>
+    <connection>scm:svn:http://jira.uji.es/repos/uji/GOC/goc/trunk</connection>
+    <url>http://jira.uji.es/repos/uji/GOC/goc/trunk</url>
+  </scm>
+
+  <repositories>
+    <repository>
+      <id>uji</id>
+      <url>http://devel.uji.es/nexus/content/groups/public/</url>
+    </repository>
+  </repositories>
+
+  <distributionManagement>
+    <repository>
+      <id>nexus</id>
+      <url>http://devel.uji.es/nexus/content/repositories/releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>nexus</id>
+      <url>http://devel.uji.es/nexus/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+ <build>
+    <plugins>
+
+      <!-- Compilación del código -->
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+
+      <!-- Servidor de aplicaciones Jetty -->
+
+      <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>9.2.10.v20150310</version>
+        <configuration>
+          <stopKey>ujiapps</stopKey>
+          <stopPort>9905</stopPort>
+          <systemProperties>
+            <systemProperty>
+              <name>jetty.port</name>
+              <value>9005</value>
+            </systemProperty>
+          </systemProperties>
+          <webApp>
+            <contextPath>/goc</contextPath>
+            <descriptor>target/web.xml</descriptor>
+          </webApp>
+        </configuration>
+      </plugin>
+
+      <!-- Carga de propiedades desde fichero de config -->
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>properties-maven-plugin</artifactId>
+        <version>1.0-alpha-2</version>
+        <executions>
+          <execution>
+            <phase>initialize</phase>
+            <goals>
+              <goal>read-project-properties</goal>
+            </goals>
+            <configuration>
+              <files>
+                <file>/etc/uji/goc/app.properties</file>
+              </files>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- QueryDSL -->
+
+      <plugin>
+        <groupId>com.mysema.maven</groupId>
+        <artifactId>maven-apt-plugin</artifactId>
+        <version>1.0.4</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>process</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>target/generated-sources/java</outputDirectory>
+              <processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Proceso de release -->
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <tagNameFormat>${project.name}_@{project.version}</tagNameFormat>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
