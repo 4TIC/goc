@@ -17,9 +17,9 @@
    </properties>
 
   <modules>
-      <!--    <module>goc-core</module>-->
+    <module>goc-core</module>
     <module>goc-base</module>
-    <!--    <module>goc-notificaciones</module>-->
+    <module>goc-avisos</module>
   </modules>
 
   <dependencies>
