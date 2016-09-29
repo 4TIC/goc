@@ -36,11 +36,43 @@
       <artifactId>jersey-client</artifactId>
       <version>${jersey.version}</version>
     </dependency>
- 
+
+    <!-- Thymeleaf -->
+
     <dependency>
-      <groupId>es.uji.commons</groupId>
-      <artifactId>uji-commons-web-template</artifactId>
-      <version>0.1.1-SNAPSHOT</version>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf</artifactId>
+      <version>2.1.2.RELEASE</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>javassist</artifactId>
+          <groupId>org.javassist</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>nz.net.ultraq.thymeleaf</groupId>
+      <artifactId>thymeleaf-layout-dialect</artifactId>
+      <version>1.2.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.cocoon.pipeline</groupId>
+      <artifactId>cocoon-pipeline</artifactId>
+      <version>3.0.0-alpha-3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.cocoon.optional</groupId>
+      <artifactId>cocoon-optional</artifactId>
+      <version>3.0.0-alpha-3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>fop</artifactId>
+      <version>1.0</version>
     </dependency>
 
     <!-- Jersey Test Framework -->
