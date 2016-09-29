@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="persistenceUnit"
+    transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+    <class>es.uji.apps.goc.dto.TipoOrganoLocal</class>
+    <class>es.uji.apps.goc.model.Organo</class>
+    <class>es.uji.apps.goc.model.Miembro</class>
+    <class>es.uji.apps.goc.dto.Reunion</class>
+    <class>es.uji.apps.goc.dto.ReunionDocumento</class>
+    <class>es.uji.apps.goc.dto.OrganoReunion</class>
+    <class>es.uji.apps.goc.dto.OrganoLocal</class>
+    <class>es.uji.apps.goc.dto.MiembroLocal</class>
+    <class>es.uji.apps.goc.dto.Cargo</class>
+    <class>es.uji.apps.goc.dto.OrganoReunionMiembro</class>
+    <class>es.uji.apps.goc.dto.PuntoOrdenDia</class>
+    <class>es.uji.apps.goc.dto.PuntoOrdenDiaDocumento</class>
+    <class>es.uji.apps.goc.dto.ReunionComentario</class>
+    <class>es.uji.apps.goc.dto.OrganoAutorizado</class>
+  </persistence-unit>
+</persistence>

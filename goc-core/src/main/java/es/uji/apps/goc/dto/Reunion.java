@@ -61,6 +61,9 @@ public class Reunion implements Serializable
     @Column(name="FECHA_COMPLETADA")
     private Date fechaCompletada;
 
+    @Column(name="NOTIFICADA")
+    private Boolean notificada;
+
     @OneToOne
     @JoinColumn(name="MIEMBRO_RESPONSABLE_ACTA_ID")
     private OrganoReunionMiembro miembroResponsableActa;

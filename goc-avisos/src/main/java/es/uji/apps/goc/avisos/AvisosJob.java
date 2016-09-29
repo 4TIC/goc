@@ -1,18 +1,20 @@
 package es.uji.apps.goc.avisos;
 
-import es.uji.apps.goc.avisos.services.AvisosService;
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.Date;
+import es.uji.apps.goc.avisos.services.AvisosService;
 
 public class AvisosJob implements Runnable
 {
     public static Logger log = LoggerFactory.getLogger(AvisosJob.class);
 
-    private static final int TIEMPO_ESPERA_ENTRE_CONSULTAS = 1000 * 60;
+    //private static final int TIEMPO_ESPERA_ENTRE_CONSULTAS = 1000 * 60;
+    private static final int TIEMPO_ESPERA_ENTRE_CONSULTAS = 1000 * 5;
 
     private AvisosService avisosService;
 

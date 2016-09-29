@@ -50,6 +50,26 @@ public class AvisosReunion
         notificacionesDAO.enviaNotificacion(mensaje);
     }
 
+    @Transactional
+    public void enviaAvisoReunionProxima(Long reunionId, Long connectedUserId)
+            throws ReunionNoDisponibleException, MiembrosExternosException, NotificacionesException
+    {
+        Reunion reunion = getReunion(reunionId, connectedUserId);
+        List<String> miembros = getMiembros(reunion, connectedUserId);
+
+        Mensaje mensaje = new Mensaje();
+        mensaje.setAsunto("[GOC] Recordatorio reunión: " + reunion.getDescripcion());
+        mensaje.setContentType("text/html");
+
+        ReunionFormatter formatter = new ReunionFormatter(reunion);
+        mensaje.setCuerpo(formatter.format());
+
+        mensaje.setFrom("e-ujier@uji.es");
+        mensaje.setDestinos(miembros);
+
+        notificacionesDAO.enviaNotificacion(mensaje);
+    }
+
     private Reunion getReunion(Long reunionId, Long connectedUserId) throws ReunionNoDisponibleException
     {
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
