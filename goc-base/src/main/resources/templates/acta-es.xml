@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:th="http://www.thymeleaf.org">
+  <fo:layout-master-set>
+    <fo:simple-page-master master-name="acta" text-align="justify"
+      margin-right="1.5cm" margin-left="1.5cm" margin-bottom="1cm" margin-top="1cm"
+      page-width="21cm" page-height="29.7cm">
+      <fo:region-body margin-top="4.5cm" margin-bottom="1cm" />
+      <fo:region-before extent="5.5cm" />
+      <fo:region-after extent="1cm" />
+    </fo:simple-page-master>
+  </fo:layout-master-set>
+
+  <fo:page-sequence master-reference="acta">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block space-after="0.1cm">
+        <fo:table>
+          <fo:table-column column-width="3cm" />
+          <fo:table-column column-width="8cm" />
+          <fo:table-column column-width="7cm" />
+
+          <fo:table-body>
+            <fo:table-row>
+              <fo:table-cell>
+                <fo:block text-align="center">
+                  <fo:external-graphic src="file:/etc/uji/goc/logo.jpg" width="2cm"/>
+                </fo:block>
+              </fo:table-cell>
+
+              <fo:table-cell display-align="center" border-right="solid" border-width="0.2cm" padding="0.4cm">
+                <fo:block font-size="12pt" font-weight="bold" text-align="end">
+                  Universitat Jaume I
+                </fo:block>
+              </fo:table-cell>
+
+              <fo:table-cell display-align="center" padding="0.4cm">
+                <fo:block font-size="11pt">Actas de reuniones</fo:block>
+              </fo:table-cell>
+            </fo:table-row>
+          </fo:table-body>
+        </fo:table>
+      </fo:block>
+    </fo:static-content>
+
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block font-weight="bold" font-size="16pt">
+        ACTA DE REUNIÓN
+      </fo:block>
+
+      <fo:block font-weight="bold" font-size="14pt" space-before="0.5cm" th:text="${reunion.asunto}">
+        Información básica
+      </fo:block>
+
+      <fo:block th:if="${reunion.numeroSesion} != null">
+        Núm. de sessión: <fo:inline th:text="${reunion.numeroSesion}">25</fo:inline>
+      </fo:block>
+
+      <fo:block th:if="${reunion.fecha}">
+        Fecha: <fo:inline th:text="${#dates.format(reunion.fecha)}">24/08/2015 a les 14:00h</fo:inline>
+      </fo:block>
+
+      <fo:block th:if="${reunion.responsableActa}">
+        Responsable de acta: <fo:inline th:text="${reunion.responsableActa}"></fo:inline>
+      </fo:block>
+
+      <fo:block th:if="${reunion.ubicacion}">
+        Lugar: <fo:inline th:text="${reunion.ubicacion}">Despatx 123</fo:inline>
+      </fo:block>
+
+      <fo:block th:if="${reunion.urlGrabacion}">
+        URL de grabación: <fo:inline th:text="${reunion.urlGrabacion}">URL gravació</fo:inline>
+      </fo:block>
+
+      <fo:block th:if="${reunion.descripcion}">
+        Descripción: <fo:inline th:text="${reunion.descripcion}">Descripción</fo:inline>
+      </fo:block>
+
+      <fo:block th:if="${reunion.telematica}">
+        Reunión telemática
+      </fo:block>
+
+      <fo:block font-weight="bold" font-size="14pt" space-before="0.5cm" th:if="${not #lists.isEmpty(reunion.organos)}" space-after="0.2cm">
+        Asistentes
+      </fo:block>
+
+      <fo:block th:each="organo : ${reunion.organos}">
+        <fo:block space-after="0.2cm" th:text="${organo.nombre} + ':'" />
+
+        <fo:block margin-left="1cm" space-after="0.5cm" th:each="miembro : ${organo.asistentes}">
+          <fo:block th:text="${miembro.cargo.nombre} + ' - ' + ${miembro.nombre} + ' (' + ${miembro.email} + ') '"></fo:block>
+          <fo:block font-size="10pt" th:if="${miembro.suplente}" th:text="'Asiste como suplente ' + ${miembro.suplente}"></fo:block>
+        </fo:block>
+      </fo:block>
+
+      <fo:block font-weight="bold" font-size="14pt" space-before="0.5cm" th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}">
+        Orden del día
+      </fo:block>
+
+      <fo:list-block provisional-distance-between-starts="0.5cm" th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}">
+        <fo:list-item th:each="puntoOrdenDia, rowStat : ${reunion.puntosOrdenDia}">
+          <fo:list-item-label end-indent="label-end()">
+            <fo:block th:text="${rowStat.index+1} + '.'" />
+          </fo:list-item-label>
+          <fo:list-item-body start-indent="body-start()">
+            <fo:block th:text="${puntoOrdenDia.titulo}" />
+            <fo:block th:text="${puntoOrdenDia.descripcion}" />
+          </fo:list-item-body>
+        </fo:list-item>
+      </fo:list-block>
+
+      <fo:block font-weight="bold" font-size="14pt" space-before="0.5cm" th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}">
+        Desarrollo de la sessión
+      </fo:block>
+
+      <fo:list-block provisional-distance-between-starts="0.5cm" th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}">
+        <fo:list-item th:each="puntoOrdenDia, rowStat : ${reunion.puntosOrdenDia}">
+          <fo:list-item-label end-indent="label-end()">
+            <fo:block th:text="${rowStat.index+1} + '.'" />
+          </fo:list-item-label>
+          <fo:list-item-body start-indent="body-start()">
+            <fo:block th:text="${puntoOrdenDia.deliberaciones == null} ? 'Sense deliberacions' : ${puntoOrdenDia.deliberaciones}" />
+          </fo:list-item-body>
+        </fo:list-item>
+      </fo:list-block>
+
+      <fo:block font-weight="bold" font-size="14pt" space-before="0.5cm">
+        Convocant: <fo:inline font-weight="normal" th:text="${reunion.convocanteNombre} + ' (' + ${reunion.convocanteEmail} + ')'"></fo:inline>
+      </fo:block>
+
+      <fo:block font-weight="bold" font-size="14pt" space-before="0.5cm" th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}">
+        Acuerdos
+      </fo:block>
+
+      <fo:list-block provisional-distance-between-starts="0.5cm" th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}">
+        <fo:list-item th:each="puntoOrdenDia, rowStat : ${reunion.puntosOrdenDia}">
+          <fo:list-item-label end-indent="label-end()">
+            <fo:block th:text="${rowStat.index+1} + '.'" />
+          </fo:list-item-label>
+          <fo:list-item-body start-indent="body-start()">
+            <fo:block th:text="${puntoOrdenDia.acuerdos == null} ? 'Sense acords': ${puntoOrdenDia.acuerdos}" />
+          </fo:list-item-body>
+        </fo:list-item>
+      </fo:list-block>
+      <fo:block page-break-before="always" th:if="${not #lists.isEmpty(reunion.comentarios)}">
+        <fo:block font-weight="bold" font-size="14pt" space-before="0.5cm" th:if="${not #lists.isEmpty(reunion.organos)}" space-after="0.2cm">
+          Comentarios
+        </fo:block>
+
+        <fo:block space-after="0.25cm" space-before="0.25cm" border-bottom="1px solid #CCC" th:each="comentario : ${reunion.comentarios}">
+          <fo:block space-after="0.2cm" font-size="10pt" th:text="'Data: ' + ${#dates.format(reunion.fecha)}" />
+          <fo:block space-after="0.2cm" font-size="10pt" th:text="'Assistent: ' + ${comentario.creadorNombre}" />
+          <fo:block space-after="0.2cm" th:text="'Comentari: ' + ${comentario.comentario}" />
+        </fo:block>
+      </fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+</fo:root>

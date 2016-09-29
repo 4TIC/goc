@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:th="http://www.thymeleaf.org">
+  <fo:layout-master-set>
+    <fo:simple-page-master master-name="acta" text-align="justify"
+      margin-right="2.5cm" margin-left="2.5cm" margin-bottom="1cm" margin-top="2.5cm"
+      page-width="21cm" page-height="29.7cm">
+      <fo:region-body margin-top="4.5cm" margin-bottom="1cm" />
+      <fo:region-before extent="5.5cm" />
+      <fo:region-after extent="1cm" />
+    </fo:simple-page-master>
+  </fo:layout-master-set>
+
+  <fo:page-sequence master-reference="acta">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block space-after="0.1cm">
+        <fo:table>
+          <fo:table-column column-width="3cm" />
+          <fo:table-column column-width="8cm" />
+          <fo:table-column column-width="7cm" />
+
+          <fo:table-body>
+            <fo:table-row>
+              <fo:table-cell>
+                <fo:block text-align="center">
+                  <fo:external-graphic src="file:/etc/uji/goc/logo.jpg" width="2cm"/>
+                </fo:block>
+              </fo:table-cell>
+
+              <fo:table-cell display-align="center" border-right="solid" border-width="0.2cm" padding="0.4cm">
+                <fo:block font-size="12pt" font-weight="bold" text-align="end">
+                  Universitat Jaume I
+                </fo:block>
+              </fo:table-cell>
+
+              <fo:table-cell display-align="center" padding="0.4cm">
+                <fo:block font-size="11pt">Certificat d'assistència</fo:block>
+              </fo:table-cell>
+            </fo:table-row>
+          </fo:table-body>
+        </fo:table>
+      </fo:block>
+    </fo:static-content>
+
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block>
+        Per la present, certifique que <fo:inline th:text="${nombreAsistente}"></fo:inline> ha assistit
+        el dia <fo:inline th:text="${fechaReunion}"></fo:inline> a les <fo:inline th:text="${horaReunion}"></fo:inline>
+        a la reunió <fo:inline th:text="${nombreReunion}"></fo:inline> convocada per <fo:inline th:text="${nombreConvocante}"></fo:inline>.
+      </fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+</fo:root>

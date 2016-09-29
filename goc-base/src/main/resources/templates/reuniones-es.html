@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="/goc/css/jquery.modal.css" />
+    <link rel="stylesheet" type="text/css" href="/goc/css/style.css" />
+    <script src="/goc/js/jquery.min.js"></script>
+    <script src="/goc/js/jquery.modal.js"></script>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+        var applang = [[${applang}]];
+    /*]]>*/
+    </script>
+  </head>
+  <body>
+    <div class="content">
+      <div class="header">
+        <img class="logo" src="/goc/img/uji.png" />
+        <h1>Gestión de Órganos colegiados</h1>
+        <div class="topmenu">
+          <ul>
+            <li><a href="?lang=ca">Valencià</a></li>
+            <li><a href="?lang=es">Español</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <h1>Listado de reuniones</h1>
+      <ul>
+        <li th:each="reunion : ${reuniones}">
+          <strong th:text="${#dates.format(reunion.fecha, 'dd/MM/YYYY HH:mm')}"></strong>
+          <span th:text="${reunion.asunto}"></span>
+          (<a th:href="'/goc/rest/publicacion/reuniones/' + ${reunion.id} + '?lang=' + ${applang}">Documentación</a> |
+           <a th:href="'/goc/rest/actas/' + ${reunion.id} + '?lang=' + ${applang}">Acta</a> |
+           <a th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/asistencia' + '?lang=' + ${applang}">Certificado de asistencia</a>)
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
