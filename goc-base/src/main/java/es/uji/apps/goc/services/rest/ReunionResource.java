@@ -363,7 +363,7 @@ public class ReunionResource extends CoreBaseService
     @GET
     @Path("{reunionId}/asistencia")
     @Produces("application/pdf")
-    public Template reunion(@PathParam("reunionId") Long reunionId,
+    public Template reunion(@PathParam("reunionId") Long reunionId, @QueryParam("lang") String lang,
             @Context HttpServletRequest request) throws OrganosExternosException,
             MiembrosExternosException, ReunionNoDisponibleException, ReunionNoCompletadaException,
             AsistenteNoEncontradoException, PersonasExternasException
@@ -392,7 +392,8 @@ public class ReunionResource extends CoreBaseService
             throw new AsistenteNoEncontradoException();
         }
 
-        Template template = new PDFTemplate("asistencia");
+        String applang = getLangCode(lang);
+        Template template = new PDFTemplate("asistencia-" + applang);
         template.put("nombreAsistente", nombreAsistente);
         template.put("tituloReunion", reunionTemplate.getAsunto());
         template.put("fechaReunion", getFechaReunion(reunionTemplate.getFecha()));
@@ -400,6 +401,18 @@ public class ReunionResource extends CoreBaseService
         template.put("duracionReunion", getDuracionReunion(reunionTemplate.getDuracion()));
         template.put("nombreConvocante", reunionTemplate.getConvocanteNombre());
         return template;
+    }
+
+    private String getLangCode(String lang)
+    {
+
+        if (lang == null || lang.isEmpty()
+                || !(lang.toLowerCase().equals("ca") || lang.toLowerCase().equals("es")))
+        {
+            return "ca";
+        }
+
+        return lang;
     }
 
     private String getFechaReunion(Date fecha)
