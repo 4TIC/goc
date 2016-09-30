@@ -48,12 +48,12 @@ import es.uji.apps.goc.services.OrganoReunionMiembroService;
 import es.uji.apps.goc.services.OrganoService;
 import es.uji.apps.goc.services.ReunionDocumentoService;
 import es.uji.apps.goc.services.ReunionService;
+import es.uji.apps.goc.templates.PDFTemplate;
+import es.uji.apps.goc.templates.Template;
 import es.uji.commons.rest.CoreBaseService;
 import es.uji.commons.rest.ParamUtils;
 import es.uji.commons.rest.UIEntity;
 import es.uji.commons.sso.AccessManager;
-import es.uji.commons.web.template.PDFTemplate;
-import es.uji.commons.web.template.Template;
 
 import static es.uji.apps.goc.dto.QReunionDocumento.reunionDocumento;
 
@@ -391,7 +391,7 @@ public class ReunionResource extends CoreBaseService
             throw new AsistenteNoEncontradoException();
         }
 
-        Template template = new PDFTemplate("goc/asistencia");
+        Template template = new PDFTemplate("asistencia");
         template.put("nombreAsistente", nombreAsistente);
         template.put("tituloReunion", reunionTemplate.getAsunto());
         template.put("fechaReunion", getFechaReunion(reunionTemplate.getFecha()));

@@ -1,34 +1,16 @@
 package es.uji.apps.goc.services;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-import es.uji.apps.goc.dto.OrganoExterno;
 import es.uji.apps.goc.dto.PersonaExterna;
 import es.uji.apps.goc.exceptions.PersonasExternasException;
-import es.uji.apps.goc.model.JSONListaOrganosExternosDeserializer;
 import es.uji.apps.goc.model.Persona;
-import org.springframework.beans.factory.annotation.Autowired;
+import es.uji.commons.rest.CoreBaseService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.sun.jersey.api.core.InjectParam;
-
-import es.uji.apps.goc.dao.ReunionDAO;
-import es.uji.apps.goc.dto.Reunion;
-import es.uji.apps.goc.dto.ReunionTemplate;
-import es.uji.apps.goc.exceptions.MiembrosExternosException;
-import es.uji.apps.goc.exceptions.OrganosExternosException;
-import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
-import es.uji.commons.rest.CoreBaseService;
-import es.uji.commons.sso.AccessManager;
-import es.uji.commons.web.template.HTMLTemplate;
-import es.uji.commons.web.template.Template;
-
-import java.util.List;
+import javax.ws.rs.core.MediaType;
 
 @Service
 public class PersonaService extends CoreBaseService

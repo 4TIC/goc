@@ -1,31 +1,23 @@
 package es.uji.apps.goc.services.rest;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-
 import com.sun.jersey.api.core.InjectParam;
-
-import es.uji.apps.goc.dao.*;
-import es.uji.apps.goc.dto.*;
+import es.uji.apps.goc.dao.ReunionDAO;
+import es.uji.apps.goc.dto.Reunion;
+import es.uji.apps.goc.dto.ReunionTemplate;
 import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.exceptions.OrganosExternosException;
 import es.uji.apps.goc.exceptions.PersonasExternasException;
 import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
-import es.uji.apps.goc.model.Miembro;
-import es.uji.apps.goc.model.Organo;
 import es.uji.apps.goc.model.Persona;
-import es.uji.apps.goc.services.OrganoService;
 import es.uji.apps.goc.services.PersonaService;
 import es.uji.apps.goc.services.ReunionService;
+import es.uji.apps.goc.templates.PDFTemplate;
+import es.uji.apps.goc.templates.Template;
 import es.uji.commons.sso.AccessManager;
-import es.uji.commons.web.template.PDFTemplate;
-import es.uji.commons.web.template.Template;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 
 @Path("actas")
 public class ActaResource
@@ -43,7 +35,7 @@ public class ActaResource
     @Path("{reunionId}")
     @Produces("application/pdf")
     public Template reunion(@PathParam("reunionId") Long reunionId, @QueryParam("lang") String lang,
-            @Context HttpServletRequest request) throws OrganosExternosException,
+                            @Context HttpServletRequest request) throws OrganosExternosException,
             MiembrosExternosException, ReunionNoDisponibleException, PersonasExternasException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
@@ -62,7 +54,7 @@ public class ActaResource
                 connectedUserId);
 
         String applang = getLangCode(lang);
-        Template template = new PDFTemplate("goc/acta-" + applang);
+        Template template = new PDFTemplate("acta-" + applang);
         template.put("reunion", reunionTemplate);
         template.put("convocante", convocante);
         template.put("applang", applang);

@@ -65,7 +65,7 @@
     <servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
     <init-param>
       <param-name>com.sun.jersey.config.property.packages</param-name>
-      <param-value>es.uji.commons.rest.json; com.fasterxml.jackson.jaxrs.json; es.uji.commons.rest.html; es.uji.apps.goc.services.rest
+      <param-value>es.uji.commons.rest.json; com.fasterxml.jackson.jaxrs.json; es.uji.apps.goc.templates; es.uji.apps.goc.services.rest
       </param-value>
     </init-param>
     <init-param>

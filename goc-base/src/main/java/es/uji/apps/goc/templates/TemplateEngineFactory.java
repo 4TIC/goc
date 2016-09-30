@@ -3,7 +3,6 @@ package es.uji.apps.goc.templates;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import org.thymeleaf.templateresolver.FileTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
 import java.util.HashMap;
@@ -16,7 +15,7 @@ public class TemplateEngineFactory
     private String application;
 
     private static TemplateEngine initializeTemplateEngine(String templateMode, String prefix,
-            String sufix, boolean cacheable, Long timeToLive, String application)
+                                                           String sufix, boolean cacheable, Long timeToLive, String application)
     {
         TemplateResolver templateResolver = new ClassLoaderTemplateResolver();
         templateResolver.setCharacterEncoding("UTF-8");
@@ -39,13 +38,13 @@ public class TemplateEngineFactory
     }
 
     public static TemplateEngine getTemplateEngine(String templateMode, String prefix,
-            String sufix, String application)
+                                                   String sufix, String application)
     {
         return getTemplateEngine(templateMode, prefix, sufix, false, 3600000L, application);
     }
 
     public static TemplateEngine getTemplateEngine(String templateMode, String prefix,
-            String sufix, boolean cacheable, Long timeToLive, String application)
+                                                   String sufix, boolean cacheable, Long timeToLive, String application)
     {
         if (templateEngines == null || !templateEngines.containsKey(templateMode))
         {

@@ -1,25 +1,22 @@
 package es.uji.apps.goc.services;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-
-import es.uji.apps.goc.exceptions.PersonasExternasException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.sun.jersey.api.core.InjectParam;
-
 import es.uji.apps.goc.dao.ReunionDAO;
 import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.dto.ReunionTemplate;
 import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.exceptions.OrganosExternosException;
+import es.uji.apps.goc.exceptions.PersonasExternasException;
 import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
+import es.uji.apps.goc.templates.HTMLTemplate;
+import es.uji.apps.goc.templates.Template;
 import es.uji.commons.rest.CoreBaseService;
 import es.uji.commons.sso.AccessManager;
-import es.uji.commons.web.template.HTMLTemplate;
-import es.uji.commons.web.template.Template;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @Service
@@ -43,7 +40,7 @@ public class PublicacionService extends CoreBaseService
         List<Reunion> reuniones = reunionService.getReunionesCompletadasByAsistenteIdOrSuplenteId(connectedUserId);
 
         String applang = getLangCode(lang);
-        Template template = new HTMLTemplate("goc/reuniones-" + applang);
+        Template template = new HTMLTemplate("reuniones-" + applang);
         template.put("reuniones", reuniones);
         template.put("applang", applang);
         template.put("connectedUserId", connectedUserId);
@@ -71,7 +68,7 @@ public class PublicacionService extends CoreBaseService
                 connectedUserId);
 
         String applang = getLangCode(lang);
-        Template template = new HTMLTemplate("goc/reunion-" + applang);
+        Template template = new HTMLTemplate("reunion-" + applang);
         template.put("reunion", reunionTemplate);
         template.put("applang", applang);
         template.put("connectedUserId", connectedUserId);
