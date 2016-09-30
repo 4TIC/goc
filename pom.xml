@@ -108,27 +108,6 @@
         </configuration>
       </plugin>
 
-      <!-- Carga de propiedades desde fichero de config -->
-
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>properties-maven-plugin</artifactId>
-        <version>1.0-alpha-2</version>
-        <executions>
-          <execution>
-            <phase>initialize</phase>
-            <goals>
-              <goal>read-project-properties</goal>
-            </goals>
-            <configuration>
-              <files>
-                <file>/etc/uji/goc/app.properties</file>
-              </files>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
       <!-- QueryDSL -->
 
       <plugin>
