@@ -1,10 +1,6 @@
 package es.uji.apps.goc.services.rest;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -68,17 +64,25 @@ public class ExternalResource extends CoreBaseService
     @GET
     @Path("config/menus")
     @Produces(MediaType.APPLICATION_JSON)
-    public ObjectNode menus()
+    public ObjectNode menus(@QueryParam("lang") String lang)
     {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         ArrayNode rows = result.putArray("row");
 
-        rows.add(menuEntry(mapper, "goc.view.organo.Main", "Organs"));
-        rows.add(menuEntry(mapper, "goc.view.tipoOrgano.Main", "Tipus d'organs"));
-        rows.add(menuEntry(mapper, "goc.view.miembro.Main", "Membres"));
-        rows.add(menuEntry(mapper, "goc.view.reunion.Main", "Reunions"));
-        rows.add(menuEntry(mapper, "goc.view.cargo.Main", "Càrrecs"));
+        if (lang.equals("es")) {
+            rows.add(menuEntry(mapper, "goc.view.organo.Main", "Órganos"));
+            rows.add(menuEntry(mapper, "goc.view.tipoOrgano.Main", "Tipos de órganos"));
+            rows.add(menuEntry(mapper, "goc.view.miembro.Main", "Miembros"));
+            rows.add(menuEntry(mapper, "goc.view.reunion.Main", "Reuniones"));
+            rows.add(menuEntry(mapper, "goc.view.cargo.Main", "Cargos"));
+        } else {
+            rows.add(menuEntry(mapper, "goc.view.organo.Main", "Òrgans"));
+            rows.add(menuEntry(mapper, "goc.view.tipoOrgano.Main", "Tipus d'organs"));
+            rows.add(menuEntry(mapper, "goc.view.miembro.Main", "Membres"));
+            rows.add(menuEntry(mapper, "goc.view.reunion.Main", "Reunions"));
+            rows.add(menuEntry(mapper, "goc.view.cargo.Main", "Càrrecs"));
+        }
 
         return result;
     }

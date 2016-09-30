@@ -31,7 +31,9 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
 
     buildLogoPanel : function()
     {
-        var langSelector = '<select '
+        var langSelector = '<select ';
+
+        console.log(appI18N);
         var logoPanel = new Ext.Panel(
             {
                 region: 'north',
@@ -41,26 +43,26 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
                     {
                         region: 'center',
                         border: 0,
-                        html: '<div style="background: url(http://e-ujier.uji.es/img/portal2/imagenes/cabecera_1px.png) repeat-x scroll left top transparent; height: 70px;">' + 
+                        html: '<div style="background: url(http://e-ujier.uji.es/img/portal2/imagenes/cabecera_1px.png) repeat-x scroll left top transparent; height: 70px;">' +
                             '<img src="http://e-ujier.uji.es/img/portal2/imagenes/logo_uji_horizontal.png" style="float: left;margin: 10px 16px;" />' + 
                             '<div style="float:left; margin-top:11px;">' + 
                             '<span style="color: rgb(255,255, 255); font-family: Helvetica,Arial,sans-serif;font-size:1.2em;">E-UJIER@</span><br/>' + 
-                            '<span style="color: #CDCCE5; font-family: Helvetica,Arial,sans-serif; font-size:2.3em;">' + this.tituloAplicacion + '</span></div></div>'
+                            '<span style="color: #CDCCE5; font-family: Helvetica,Arial,sans-serif; font-size:2em;">' + this.tituloAplicacion + '</span></div></div>'
                     },
                     {
                         region: 'east',
                         border: 0,
-                        width: 80,
+                        width: 150,
                         html: '<ul style="background: url(http://e-ujier.uji.es/img/portal2/imagenes/cabecera_1px.png) repeat-x scroll left top transparent; height: 70px; padding-top: 35px;" class="lang">' +
-                              '<li><a href="?lang=ca">ca</a></li><li><a href="?lang=es">es</a></li><li><a href="?lang=en">en</a></li></ul>'
+                              '<li><a href="?lang=ca">Valencià</a></li><li><a href="?lang=es">Español</a></li></ul>'
                     },
                     {
                         region: 'east',
                         border: 0,
                         width: 140,
-                        html: '<div style="background: url(http://e-ujier.uji.es/img/portal2/imagenes/cabecera_1px.png) repeat-x scroll left top transparent; height: 70px; padding-top: 35px">' + 
+                        html: '<div style="background: url(http://e-ujier.uji.es/img/portal2/imagenes/cabecera_1px.png) repeat-x scroll left top transparent; height: 70px; padding-top: 35px">' +
                             '<span style="color: #CDCCE5; font-family: Helvetica,Arial,sans-serif;"><img src="http://static.uji.es/js/extjs/uji-commons-extjs/img/lock.png"/>' + 
-                            '<a style="color:inherit;" href="http://xmlrpc.uji.es/lsm/logout_sso.php">desconnecteu-vos</a></span></div>'
+                            '<a style="color:inherit;" href="http://xmlrpc.uji.es/lsm/logout_sso.php">' + appI18N.common.desconectar + '</a></span></div>'
                     }
                 ]
             }
@@ -75,7 +77,7 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
 
         var navigationTree = Ext.create('Ext.tree.Panel',
         {
-            title : 'Conectat com ' + login + '@',
+            title : appI18N.common.conectadoComo + ' ' + login + '@',
             region : 'west',
             lines : false,
             width : this.treeWidth,
@@ -96,7 +98,7 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
                 proxy :
                 {
                     type : 'ajax',
-                    url : '/goc/rest/external/config/menus',
+                    url : '/goc/rest/external/config/menus/?lang=' + appLang ,
                     reader :
                     {
                         type : 'json',

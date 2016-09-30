@@ -27,7 +27,7 @@
     <script type="text/javascript">
 
         function getValidLang(lang) {
-            if (!lang || [ 'ca', 'es', 'en' ].indexOf(lang.toLowerCase()) === -1) {
+            if (!lang || [ 'ca', 'es' ].indexOf(lang.toLowerCase()) === -1) {
                 return 'ca';
             }
 

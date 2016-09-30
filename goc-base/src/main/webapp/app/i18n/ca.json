@@ -15,7 +15,8 @@
     "aviso": "Avís",
     "sinResultados": "La búsqueda realitzada no ha produït cap resultat",
     "confirmarBorrado": "Esteu segur/a de voler esborrar el registre?",
-    "desconectar": "desconnecteu-vos"
+    "desconectar": "desconnecteu-vos",
+    "conectadoComo": "Connectat com"
   },
   "header": {
     "titulo": "Gestión de Órganos Colegiados"

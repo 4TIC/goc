@@ -15,7 +15,8 @@
     "aviso": "Aviso",
     "sinResultados": "La búsqueda realizada no ha producido ningún resultado",
     "confirmarBorrado": "¿Estás seguro de querer borrar el registro?",
-    "desconectar": "desconnecteu-vos"
+    "desconectar": "desconectarse",
+    "conectadoComo": "Conectado com"
   },
   "header": {
     "titulo": "Gestión de Órganos Colegiados"
