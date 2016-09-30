@@ -29,7 +29,7 @@ $(function () {
 
         for (var i = 0; i < result.data.length; i++) {
             var persona = result.data[i];
-            items.push('<li><input type="radio" value="' + persona.id + '"/> <label>' + persona.nombre + '</label></li>')
+            items.push('<li><input type="radio" value="' + persona.id + '"/> <label for="suplenteNombre">' + persona.nombre + '</label> (<label for="suplenteEmail">' + persona.email + '</label>)</li>')
         }
 
         $('div.nuevo-suplente ul.resultados').html(items.join('\n'));
@@ -95,12 +95,13 @@ $(function () {
     });
 
     $('button[name=add-suplente]').on('click', function (ev) {
-        var suplente = $('div.nuevo-suplente ul.resultados li input[type=radio]').filter(':checked');
+        var suplente = $('div.nuevo-suplente ul.resultados li input[type=radio]').filter(':checked').parent('li');
         var organoMiembroId = $('div.nuevo-suplente input[name=organoMiembroId]').val();
 
         var data = {
-            suplenteId: suplente.val(),
-            suplenteNombre: suplente.next('label').html(),
+            suplenteId: suplente.children('input[type=radio]').val(),
+            suplenteNombre: suplente.children('label[for=suplenteNombre]').html(),
+            suplenteEmail: suplente.children('label').next('label[for=suplenteEmail]').html(),
             organoMiembroId: organoMiembroId
         };
 

@@ -22,8 +22,10 @@ Ext.define('goc.view.reunion.FormReunionMiembrosController', {
         window.show();
 
         window.on('LookoupWindowClickSeleccion', function (res) {
+            console.log(res);
             record.set('suplenteId', res.get('id'));
             record.set('suplenteNombre', res.get('nombre'));
+            record.set('suplenteEmail', res.get('email'));
         });
     },
 
@@ -33,6 +35,7 @@ Ext.define('goc.view.reunion.FormReunionMiembrosController', {
 
         record.set('suplenteId', null);
         record.set('suplenteNombre', null);
+        record.set('suplenteEmail', null);
     },
 
     onLoad: function () {

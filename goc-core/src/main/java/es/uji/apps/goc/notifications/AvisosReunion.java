@@ -2,7 +2,10 @@ package es.uji.apps.goc.notifications;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import es.uji.apps.goc.dao.OrganoReunionMiembroDAO;
+import es.uji.apps.goc.dto.OrganoReunionMiembro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +31,9 @@ public class AvisosReunion
     private MiembroDAO miembroDAO;
 
     @Autowired
+    private OrganoReunionMiembroDAO organoReunionMiembroDAO;
+
+    @Autowired
     private NotificacionesDAO notificacionesDAO;
 
     @Transactional
@@ -38,7 +44,8 @@ public class AvisosReunion
         List<String> miembros = getMiembros(reunion, connectedUserId);
 
         Mensaje mensaje = new Mensaje();
-        mensaje.setAsunto("[GOC] Nueva reunión: Se te ha incluido como miembro en una nueva convocatoria de reunión");
+        mensaje.setAsunto(
+                "[GOC] Nueva reunión: Se te ha incluido como miembro en una nueva convocatoria de reunión");
         mensaje.setContentType("text/html");
 
         ReunionFormatter formatter = new ReunionFormatter(reunion);
@@ -50,7 +57,6 @@ public class AvisosReunion
         notificacionesDAO.enviaNotificacion(mensaje);
     }
 
-    @Transactional
     public void enviaAvisoReunionProxima(Long reunionId, Long connectedUserId)
             throws ReunionNoDisponibleException, MiembrosExternosException, NotificacionesException
     {
@@ -58,19 +64,25 @@ public class AvisosReunion
         List<String> miembros = getMiembros(reunion, connectedUserId);
 
         Mensaje mensaje = new Mensaje();
-        mensaje.setAsunto("[GOC] Recordatorio reunión: " + reunion.getDescripcion());
+        mensaje.setAsunto("[GOC] Recordatorio reunión: " + reunion.getAsunto());
         mensaje.setContentType("text/html");
 
         ReunionFormatter formatter = new ReunionFormatter(reunion);
         mensaje.setCuerpo(formatter.format());
 
         mensaje.setFrom("e-ujier@uji.es");
+
+        miembros = new ArrayList<>();
+        miembros.add("david.rubert@gmail.com");
         mensaje.setDestinos(miembros);
 
-        notificacionesDAO.enviaNotificacion(mensaje);
+        if (miembros.size() > 0) {
+            notificacionesDAO.enviaNotificacion(mensaje);
+        }
     }
 
-    private Reunion getReunion(Long reunionId, Long connectedUserId) throws ReunionNoDisponibleException
+    private Reunion getReunion(Long reunionId, Long connectedUserId)
+            throws ReunionNoDisponibleException
     {
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
 
@@ -84,28 +96,14 @@ public class AvisosReunion
     private List<String> getMiembros(Reunion reunion, Long connectedUserId)
             throws ReunionNoDisponibleException, MiembrosExternosException
     {
-        List<String> miembros = new ArrayList<>();
 
-        for (OrganoReunion organoReunion : reunion.getReunionOrganos())
-        {
-            if (organoReunion.getOrganoLocal() != null)
-            {
-                for (MiembroLocal miembroLocal : organoReunion.getOrganoLocal().getMiembros())
-                {
-                    miembros.add(miembroLocal.getEmail());
-                }
-            }
+        List<OrganoReunionMiembro> listaAsistentesReunion = organoReunionMiembroDAO
+                .getAsistentesConfirmadosByReunionId(reunion.getId());
 
-            String organoExternoId = organoReunion.getOrganoExternoId();
-
-            if (organoExternoId != null)
-            {
-                for (Miembro miembroExterno : miembroDAO.getMiembrosExternos(organoExternoId, connectedUserId))
-                {
-                    miembros.add(miembroExterno.getEmail());
-                }
-            }
-        }
+        List<String> miembros = listaAsistentesReunion.stream()
+                .map(asistente -> asistente.getSuplenteEmail() != null
+                        ? asistente.getSuplenteEmail() : asistente.getEmail())
+                .collect(Collectors.toList());
 
         return miembros;
     }

@@ -88,6 +88,7 @@ public class OrganoReunionMiembroService
         }
     }
 
+    @Transactional
     private void updateOrganoReunionMiembrosDesdeOrganoUI(UIEntity organoUI, Long reunionId)
     {
         List<UIEntity> miembrosUI = organoUI.getRelations().get("miembros");
@@ -103,6 +104,7 @@ public class OrganoReunionMiembroService
         {
             Long suplenteId = Long.parseLong(miembroUI.get("suplenteId"));
             String suplenteNombre = miembroUI.get("suplenteNombre");
+            String suplenteEmail = miembroUI.get("suplenteEmail");
             if (suplenteId.equals(0L))
             {
                 suplenteId = null;
@@ -110,7 +112,7 @@ public class OrganoReunionMiembroService
             String asistenteId = miembroUI.get("id");
             Boolean asistencia = new Boolean(miembroUI.get("asistencia"));
             organoReunionMiembroDAO.updateAsistente(reunionId, organoId, externo, asistenteId,
-                    asistencia, suplenteId, suplenteNombre);
+                    asistencia, suplenteId, suplenteNombre, suplenteEmail);
         }
     }
 
@@ -121,19 +123,22 @@ public class OrganoReunionMiembroService
         List<OrganoReunionMiembro> asistentes = organoReunionMiembroDAO
                 .getMiembroByAsistenteIdOrSuplenteId(reunionId, connectedUserId);
 
-        for (OrganoReunionMiembro asistente: asistentes) {
+        for (OrganoReunionMiembro asistente : asistentes)
+        {
             asistente.setAsistenciaConfirmada(asistencia);
             organoReunionMiembroDAO.update(asistente);
         }
     }
 
     @Transactional
-    public void estableceSuplente(Long reunionId, Long connectedUserId, Long suplenteId, String suplenteNombre, Long organoMiembroId)
+    public void estableceSuplente(Long reunionId, Long connectedUserId, Long suplenteId,
+            String suplenteNombre, String suplenteEmail, Long organoMiembroId)
     {
         OrganoReunionMiembro miembro = organoReunionMiembroDAO.getMiembroById(organoMiembroId);
 
         miembro.setSuplenteId(suplenteId);
         miembro.setSuplenteNombre(suplenteNombre);
+        miembro.setSuplenteEmail(suplenteEmail);
         organoReunionMiembroDAO.update(miembro);
     }
 
@@ -143,6 +148,7 @@ public class OrganoReunionMiembroService
         OrganoReunionMiembro miembro = organoReunionMiembroDAO.getMiembroById(miembroId);
         miembro.setSuplenteId(null);
         miembro.setSuplenteNombre(null);
+        miembro.setSuplenteEmail(null);
         organoReunionMiembroDAO.update(miembro);
     }
 }

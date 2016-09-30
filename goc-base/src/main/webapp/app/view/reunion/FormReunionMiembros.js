@@ -63,13 +63,17 @@ Ext.define('goc.view.reunion.FormReunionMiembros', {
                     flex: 1
                 },
                 {
-                    text: appI18N.reuniones.suplente,
                     dataIndex: 'suplenteId',
                     hidden: true
                 },
                 {
-                    text: 'Suplent',
+                    text: appI18N.reuniones.suplente,
                     dataIndex: 'suplenteNombre',
+                    flex: 1
+                },
+                {
+                    text: appI18N.reuniones.suplenteEmail,
+                    dataIndex: 'suplenteEmail',
                     flex: 1
                 },
                 {

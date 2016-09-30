@@ -288,4 +288,12 @@ public class Reunion implements Serializable
     {
         this.telematicaDescripcion = telematicaDescripcion;
     }
+
+    public Boolean isNotificada() {
+        return notificada;
+    }
+
+    public void setNotificada(Boolean notificada) {
+        this.notificada = notificada;
+    }
 }

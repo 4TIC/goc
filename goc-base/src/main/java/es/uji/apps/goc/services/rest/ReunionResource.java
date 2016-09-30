@@ -178,11 +178,12 @@ public class ReunionResource extends CoreBaseService
         Long connectedUserId = AccessManager.getConnectedUserId(request);
         Long suplenteId = Long.parseLong(suplente.get("suplenteId"));
         String suplenteNombre = suplente.get("suplenteNombre");
+        String suplenteEmail = suplente.get("suplenteEmail");
         Long organoMiembroId = Long.parseLong(suplente.get("organoMiembroId"));
 
         reunionService.compruebaReunionNoCompletada(reunionId);
         organoReunionMiembroService.estableceSuplente(reunionId, connectedUserId, suplenteId,
-                suplenteNombre, organoMiembroId);
+                suplenteNombre, suplenteEmail, organoMiembroId);
     }
 
     @DELETE

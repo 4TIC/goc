@@ -72,7 +72,8 @@ Ext.define('goc.view.reunion.FormReunionController', {
                         id: record.get('miembroId'),
                         asistencia: record.get('asistencia'),
                         suplenteId: record.get('suplenteId'),
-                        suplenteNombre: record.get('suplenteNombre')
+                        suplenteNombre: record.get('suplenteNombre'),
+                        suplenteEmail: record.get('suplenteEmail')
                     });
                 });
             }

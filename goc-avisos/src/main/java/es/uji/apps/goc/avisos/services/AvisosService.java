@@ -13,18 +13,24 @@ import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.exceptions.NotificacionesException;
 import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
 import es.uji.apps.goc.notifications.AvisosReunion;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Component
 public class AvisosService
 {
     private static final int ONE_DAY = 1000 * 60 * 60 * 24;
+    private ReunionDAO reunionDAO;
 
     @Autowired
     private AvisosReunion avisosReunion;
 
     @Autowired
-    private ReunionDAO reunionDAO;
+    public AvisosService(ReunionDAO reunionDAO) {
+        this.reunionDAO = reunionDAO;
+    }
+
 
     @Value("${uji.deploy.defaultUserId}")
     private Long connectedUserId;
@@ -33,33 +39,34 @@ public class AvisosService
     {
 
         Date tomorrow = getTomorrowDate();
-        reunionDAO.getPendientesNotificacion(getTomorrowDate()).stream()
-                .forEach(reunion ->
-                {
-                    try
-                    {
-                        procesaEnvios(reunion);
-                    }
-                    catch (MiembrosExternosException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    catch (ReunionNoDisponibleException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    catch (NotificacionesException e)
-                    {
-                        e.printStackTrace();
-                    }
-                });
+        reunionDAO.getPendientesNotificacion(getTomorrowDate()).stream().forEach(reunion -> {
+            try
+            {
+                procesaEnvios(reunion);
+            }
+            catch (MiembrosExternosException e)
+            {
+                e.printStackTrace();
+            }
+            catch (ReunionNoDisponibleException e)
+            {
+                e.printStackTrace();
+            }
+            catch (NotificacionesException e)
+            {
+                e.printStackTrace();
+            }
+        });
     }
 
+    @Transactional
     private void procesaEnvios(Reunion reunion)
             throws MiembrosExternosException, ReunionNoDisponibleException, NotificacionesException
     {
         avisosReunion.enviaAvisoReunionProxima(reunion.getId(), connectedUserId);
-        reunionDAO.marcaNotificada(reunion.getId());
+
+        reunion.setNotificada(true);
+        reunionDAO.update(reunion);
     }
 
     public Date getTomorrowDate()

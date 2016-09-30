@@ -86,14 +86,15 @@ public class OrganoReunionMiembroDAO extends BaseDAODatabaseImpl
                 .list(qOrganoReunionMiembro);
     }
 
-    @Transactional
     public void updateAsistente(Long reunionId, String organoId, Boolean externo,
-            String asistenteId, Boolean asistencia, Long suplenteId, String suplenteNombre)
+            String asistenteId, Boolean asistencia, Long suplenteId, String suplenteNombre,
+            String suplenteEmail)
     {
         JPAUpdateClause update = new JPAUpdateClause(entityManager, qOrganoReunionMiembro);
         update.set(qOrganoReunionMiembro.asistencia, asistencia)
                 .set(qOrganoReunionMiembro.suplenteId, suplenteId)
                 .set(qOrganoReunionMiembro.suplenteNombre, suplenteNombre)
+                .set(qOrganoReunionMiembro.suplenteEmail, suplenteEmail)
                 .where(qOrganoReunionMiembro.miembroId.eq(asistenteId)
                         .and(qOrganoReunionMiembro.reunionId.eq(reunionId)
                                 .and(qOrganoReunionMiembro.organoId.eq(organoId)
@@ -130,5 +131,15 @@ public class OrganoReunionMiembroDAO extends BaseDAODatabaseImpl
 
         return query.from(qOrganoReunionMiembro)
                 .where(qOrganoReunionMiembro.reunionId.eq(reunionId)).list(qOrganoReunionMiembro);
+    }
+
+    public List<OrganoReunionMiembro> getAsistentesConfirmadosByReunionId(Long reunionId)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        return query.from(qOrganoReunionMiembro)
+                .where(qOrganoReunionMiembro.reunionId.eq(reunionId)
+                        .and(qOrganoReunionMiembro.asistenciaConfirmada.eq(true)))
+                .list(qOrganoReunionMiembro);
     }
 }

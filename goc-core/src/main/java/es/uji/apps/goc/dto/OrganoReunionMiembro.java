@@ -27,40 +27,46 @@ public class OrganoReunionMiembro implements Serializable
 
     private Boolean asistencia;
 
-    @Column(name="ORGANO_ID")
+    @Column(name = "ORGANO_ID")
     private String organoId;
 
-    @Column(name="ORGANO_EXTERNO")
+    @Column(name = "ORGANO_EXTERNO")
     private Boolean organoExterno;
 
-    @Column(name="REUNION_ID")
+    @Column(name = "REUNION_ID")
     private Long reunionId;
 
-    @Column(name="MIEMBRO_ID")
+    @Column(name = "MIEMBRO_ID")
     private String miembroId;
 
-    @Column(name="CARGO_ID")
+    @Column(name = "CARGO_ID")
     private String cargoId;
 
-    @Column(name="CARGO_NOMBRE")
+    @Column(name = "CARGO_NOMBRE")
     private String cargoNombre;
 
-    @Column(name="SUPLENTE_ID")
+    @Column(name = "SUPLENTE_ID")
     private Long suplenteId;
 
-    @Column(name="SUPLENTE_NOMBRE")
+    @Column(name = "SUPLENTE_NOMBRE")
     private String suplenteNombre;
 
-    @Column(name="ASISTENCIA_CONFIRMADA")
+    @Column(name = "SUPLENTE_EMAIL")
+    private String suplenteEmail;
+
+    @Column(name = "ASISTENCIA_CONFIRMADA")
     private Boolean asistenciaConfirmada;
 
     @ManyToOne
     @JoinColumn(name = "ORGANO_REUNION_ID")
     private OrganoReunion organoReunion;
 
-    public OrganoReunionMiembro() {}
+    public OrganoReunionMiembro()
+    {
+    }
 
-    public OrganoReunionMiembro(Long id) {
+    public OrganoReunionMiembro(Long id)
+    {
         this.id = id;
     }
 
@@ -74,27 +80,33 @@ public class OrganoReunionMiembro implements Serializable
         this.id = id;
     }
 
-    public String getNombre() {
+    public String getNombre()
+    {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    public void setNombre(String nombre)
+    {
         this.nombre = nombre;
     }
 
-    public String getEmail() {
+    public String getEmail()
+    {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email)
+    {
         this.email = email;
     }
 
-    public OrganoReunion getOrganoReunion() {
+    public OrganoReunion getOrganoReunion()
+    {
         return organoReunion;
     }
 
-    public void setOrganoReunion(OrganoReunion organoReunion) {
+    public void setOrganoReunion(OrganoReunion organoReunion)
+    {
         this.organoReunion = organoReunion;
     }
 
@@ -153,19 +165,23 @@ public class OrganoReunionMiembro implements Serializable
         this.miembroId = miembroId;
     }
 
-    public String getCargoId() {
+    public String getCargoId()
+    {
         return cargoId;
     }
 
-    public void setCargoId(String cargoId) {
+    public void setCargoId(String cargoId)
+    {
         this.cargoId = cargoId;
     }
 
-    public String getCargoNombre() {
+    public String getCargoNombre()
+    {
         return cargoNombre;
     }
 
-    public void setCargoNombre(String cargoNombre) {
+    public void setCargoNombre(String cargoNombre)
+    {
         this.cargoNombre = cargoNombre;
     }
 
@@ -197,5 +213,15 @@ public class OrganoReunionMiembro implements Serializable
     public void setAsistenciaConfirmada(Boolean asistenciaConfirmada)
     {
         this.asistenciaConfirmada = asistenciaConfirmada;
+    }
+
+    public String getSuplenteEmail()
+    {
+        return suplenteEmail;
+    }
+
+    public void setSuplenteEmail(String suplenteEmail)
+    {
+        this.suplenteEmail = suplenteEmail;
     }
 }

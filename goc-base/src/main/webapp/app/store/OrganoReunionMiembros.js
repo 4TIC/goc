@@ -12,6 +12,7 @@ Ext.define('goc.store.OrganoReunionMiembros', {
         { name: 'organoId', type: 'number' },
         { name: 'suplenteId', type: 'number' },
         { name: 'suplenteNombre', type: 'string' },
+        { name: 'suplenteEmail', type: 'string' },
         { name: 'info', mapping: 'nombre', convert: function(v, record) {
             return v + ' (' + record.get('cargoNombre') + ')';
         }}

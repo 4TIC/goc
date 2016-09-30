@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mysema.query.jpa.impl.JPAQuery;
@@ -46,7 +47,7 @@ public class ReunionDAO extends BaseDAODatabaseImpl
 
     @Transactional
     public void marcarReunionComoCompletadaYActualizarAcuerdo(Long reunionId,
-                                                              Long responsableActaId, String acuerdos)
+            Long responsableActaId, String acuerdos)
     {
         JPAUpdateClause update = new JPAUpdateClause(entityManager, qReunion);
         update.set(qReunion.completada, true).set(qReunion.fechaCompletada, new Date())
@@ -66,7 +67,7 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     }
 
     public List<Reunion> getReunionesByOrganoExternoIdAndUserId(String organoId,
-                                                                Long connectedUserId)
+            Long connectedUserId)
     {
         JPAQuery query = new JPAQuery(entityManager);
 
@@ -81,8 +82,8 @@ public class ReunionDAO extends BaseDAODatabaseImpl
         JPAQuery query = new JPAQuery(entityManager);
 
         return query.from(qReunion).leftJoin(qReunion.reunionOrganos, qOrganoReunion).fetch()
-                //.where(qReunion.completada.eq(false))
-                //.and(qReunion.fecha.after(new Date()).and(qReunion.fecha.before(fechaProxima))))
+                // .where(qReunion.completada.eq(false))
+                // .and(qReunion.fecha.after(new Date()).and(qReunion.fecha.before(fechaProxima))))
                 .list(qReunion);
     }
 
@@ -99,8 +100,8 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     {
         JPAQuery query = new JPAQuery(entityManager);
 
-        List<Reunion> reuniones = query.from(qReunion)
-                .where(qReunion.id.eq(reunionId)).list(qReunion);
+        List<Reunion> reuniones = query.from(qReunion).where(qReunion.id.eq(reunionId))
+                .list(qReunion);
 
         if (reuniones.size() == 0)
         {
@@ -110,21 +111,13 @@ public class ReunionDAO extends BaseDAODatabaseImpl
         return reuniones.get(0);
     }
 
-    @Transactional
-    public void marcaNotificada(Long id)
-    {
-        JPAUpdateClause update = new JPAUpdateClause(entityManager, qReunion);
-        update.set(qReunion.notificada, true)
-                .where(qReunion.id.eq(id));
-
-        update.execute();
-    }
-
     public List<Reunion> getPendientesNotificacion(Date fecha)
     {
         JPAQuery query = new JPAQuery(entityManager);
 
-        return query.from(qReunion)
-                .where(qReunion.notificada.ne(true).and(qReunion.fecha.after(new Date())).and(qReunion.fecha.before(fecha))).list(qReunion);
+        return query
+                .from(qReunion).where(qReunion.notificada.ne(true)
+                        .and(qReunion.fecha.after(new Date())).and(qReunion.fecha.before(fecha)))
+                .list(qReunion);
     }
 }

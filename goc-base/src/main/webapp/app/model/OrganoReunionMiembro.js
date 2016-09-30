@@ -15,6 +15,7 @@ Ext.define('goc.model.OrganoReunionMiembro', {
         { name: 'miembroId', type: 'number' },
         { name: 'organoId', type: 'number' },
         { name: 'suplenteId', type: 'number' },
-        { name: 'suplenteNombre', type: 'string' }
+        { name: 'suplenteNombre', type: 'string' },
+        { name: 'suplenteEmail', type: 'string' }
     ]
 });
