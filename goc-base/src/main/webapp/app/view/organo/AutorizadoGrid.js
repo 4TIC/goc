@@ -9,9 +9,6 @@ Ext.define('goc.view.organo.AutorizadoGrid',
     name : 'autorizadoGrid',
     title : appI18N.organos.autorizados,
     multiSelect : true,
-    viewModel: {
-        type: 'organoGridModel'
-    },
     bind: {
         store: '{organoAutorizadosStore}'
     },

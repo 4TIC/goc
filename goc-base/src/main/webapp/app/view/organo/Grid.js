@@ -2,13 +2,9 @@ Ext.define('goc.view.organo.Grid', {
     extend: 'Ext.ux.uji.grid.Panel',
     alias: 'widget.organoGrid',
     requires: [
-        'goc.view.organo.GridController',
-        'goc.view.organo.GridModel'
+        'goc.view.organo.GridController'
     ],
     controller: 'organoGridController',
-    viewModel: {
-        type: 'organoGridModel'
-    },
     bind: {
         store: '{organosStore}'
     },
@@ -28,7 +24,7 @@ Ext.define('goc.view.organo.Grid', {
         dataIndex: 'tipoOrganoId',
         flex: 1,
         renderer: function (id, meta, rec) {
-            var store = this.getViewModel().getStore('tipoOrganosStore');
+            var store = this.up('organoMainPanel').getViewModel().getStore('tipoOrganosStore');
             var tipoOrganoRecord = store.getById(id);
             return tipoOrganoRecord ? tipoOrganoRecord.get('nombre') : '';
         },

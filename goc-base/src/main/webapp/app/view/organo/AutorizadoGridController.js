@@ -30,7 +30,6 @@ Ext.define('goc.view.organo.AutorizadoGridController',
         var record = organosGrid.getView().getSelectionModel().getSelection()[0];
         var vm = this.getViewModel();
 
-        console.log(record);
         if (!record)
             return;
 

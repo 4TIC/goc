@@ -33,7 +33,6 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
     {
         var langSelector = '<select ';
 
-        console.log(appI18N);
         var logoPanel = new Ext.Panel(
             {
                 region: 'north',

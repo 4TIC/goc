@@ -26,7 +26,6 @@ Ext.define('goc.view.organo.GridController', {
         });
 
         var record = grid.getView().getSelectionModel().getSelection()[0];
-        console.log(record)
         grid.up('panel').down('grid[name=autorizadoGrid]').fireEvent('organoSelected', record.get('id'), record.get('externo'));
 
     }

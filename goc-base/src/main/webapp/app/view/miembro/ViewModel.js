@@ -1,6 +1,6 @@
-Ext.define('goc.view.miembro.GridModel', {
+Ext.define('goc.view.miembro.ViewModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.miembroGridModel',
+    alias: 'viewmodel.miembroViewModel',
 
     requires: [
         'goc.model.Miembro',
@@ -17,12 +17,8 @@ Ext.define('goc.view.miembro.GridModel', {
         cargosStore: {
             type: 'cargos'
         },
-        organoStore: {
-            type: 'organos',
-            filters: [{
-                property: 'externo',
-                value: 'false'
-            }]
+        organosStore: {
+            type: 'organos'
         }
     }
 });

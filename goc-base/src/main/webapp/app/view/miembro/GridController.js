@@ -1,11 +1,6 @@
 Ext.define('goc.view.miembro.GridController', {
     extend: 'Ext.ux.uji.grid.PanelController',
     alias: 'controller.miembroGridController',
-    
-    viewModel: {
-        type: 'miembroGridModel'
-    },
-    
     onAdd: function() {
         var mainPanel = Ext.ComponentQuery.query("miembroMain")[0];
         var combo = mainPanel.down("combobox");
@@ -22,7 +17,8 @@ Ext.define('goc.view.miembro.GridController', {
     },
     
     decideRowIsEditable: function(editor, context) {
-        var mainPanel = Ext.ComponentQuery.query("miembroMain")[0];
+        var grid = this.getView();
+        var mainPanel = grid.up('miembroMainPanel');
         var combo = mainPanel.down("combobox");
         var organo = combo.getSelection();
         

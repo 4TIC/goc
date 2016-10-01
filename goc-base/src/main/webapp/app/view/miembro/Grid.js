@@ -3,16 +3,10 @@ Ext.define('goc.view.miembro.Grid', {
     alias: 'widget.miembroGrid',
 
     requires: [
-        'goc.view.miembro.GridController',
-        'goc.view.miembro.GridModel'
+        'goc.view.miembro.GridController'
     ],
 
     controller: 'miembroGridController',
-
-    viewModel: {
-        type: 'miembroGridModel'
-    },
-
     bind: {
         store: '{miembrosStore}'
     },
@@ -44,7 +38,7 @@ Ext.define('goc.view.miembro.Grid', {
             text: appI18N.miembros.cargo,
             dataIndex: 'cargoId',
             renderer: function(value, cell) {
-                var viewModel = this.getViewModel();
+                var viewModel = this.getView().up('miembroMainPanel').getViewModel();
                 var cargosStore = viewModel.getStore('cargosStore');
 
                 var record = cargosStore.findRecord('id', value, 0, false, false, true);

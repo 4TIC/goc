@@ -28,6 +28,7 @@
     "externo": "Externo",
     "autorizados": "Autorizados",
     "seleccionaSuplente": "Selecciona el suplente",
+    "seleccionaTipoOrgano": "Selecciona el tipo de órgano",
     "sinAutorizadosDisponibles": "Todavía no hay autorizados para este órgano",
     "borrarAutorizacion": "¿Estás seguro de querer quitar la autorización a esta persona?"
   },
@@ -39,9 +40,9 @@
   "miembros": {
     "titulo": "Miembros",
     "tituloGrid": "Miembros de Órganos",
-    "colectivo": "Colectivo",
-    "seleccionarColectivo": "Seleccionar un colectivo",
-    "seleccionarCargo": "Seleccionar un cargo",
+    "organo": "Órgano",
+    "seleccionaOrgano": "Seleccionar un órgano",
+    "seleccionaCargo": "Seleccionar un cargo",
     "nombre": "Nombre",
     "correo": "Correo",
     "cargo": "Càrrec",

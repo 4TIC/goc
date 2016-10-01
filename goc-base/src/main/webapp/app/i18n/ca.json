@@ -28,6 +28,7 @@
     "externo": "Extern",
     "autorizados": "Autoritzats",
     "seleccionaSuplente": "Sel·lecciona el suplent",
+    "seleccionaTipoOrgano": "Sel·lecciona el tipus de òrgan",
     "sinAutorizadosDisponibles": "Encara no n'hi han autoritzats per aquest òrgan",
     "borrarAutorizacion": "Esteu segur/a de voler quitar l'autorització a aquesta persona?"
   },
@@ -39,9 +40,9 @@
   "miembros": {
     "titulo": "Membres",
     "tituloGrid": "Membres d'Òrgans",
-    "colectivo": "Col·lectiu",
-    "seleccionarColectivo": "Sel·lecciona un col·lectiu",
-    "seleccionarCargo": "Sel·lecciona un càrrec",
+    "organo": "Òrgan",
+    "seleccionaOrgano": "Sel·lecciona un òrgan",
+    "seleccionaCargo": "Sel·lecciona un càrrec",
     "nombre": "Nom",
     "correo": "Correu",
     "cargo": "Càrrec",

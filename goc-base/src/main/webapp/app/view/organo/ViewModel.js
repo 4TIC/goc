@@ -1,12 +1,13 @@
-Ext.define('goc.view.organo.GridModel', {
+Ext.define('goc.view.organo.ViewModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.organoGridModel',
+    alias: 'viewmodel.organoViewModel',
+
     requires: [
         'goc.store.Organos',
         'goc.store.TipoOrganos',
-        'goc.store.OrganoAutorizados',
-        'goc.store.Personas'
+        'goc.store.OrganoAutorizados'
     ],
+
     stores: {
         organosStore: {
             type: 'organos'
@@ -17,6 +18,5 @@ Ext.define('goc.view.organo.GridModel', {
         organoAutorizadosStore: {
             type: 'organoAutorizados'
         }
-
     }
 });
