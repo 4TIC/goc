@@ -78,19 +78,25 @@ public class ReunionResource extends CoreBaseService
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<UIEntity> getReuniones(@QueryParam("organoId") String organoId,
-            @QueryParam("externo") Boolean externo)
+            @QueryParam("tipoOrganoId") Long tipoOrganoId, @QueryParam("externo") Boolean externo)
+            throws OrganosExternosException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
         List<Reunion> listaReuniones = new ArrayList<>();
 
-        if (organoId == null)
+        if (tipoOrganoId != null)
         {
-            listaReuniones = reunionService.getReunionesByUserId(connectedUserId);
+            listaReuniones = reunionService.getReunionesByTipoOrganoIdAndUserId(tipoOrganoId,
+                    connectedUserId);
         }
-        else
+        else if (organoId != null)
         {
             listaReuniones = reunionService.getReunionesByOrganoIdAndUserId(organoId, externo,
                     connectedUserId);
+        }
+        else
+        {
+            listaReuniones = reunionService.getReunionesByUserId(connectedUserId);
         }
 
         List<Tuple> listaNumeroDocumentosPorReunionId = reunionDocumentoService

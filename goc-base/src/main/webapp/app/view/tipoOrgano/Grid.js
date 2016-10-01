@@ -10,6 +10,7 @@ Ext.define('goc.view.tipoOrgano.Grid',{
         type: 'tipoOrganos'
     },
     title: appI18N.tipoOrganos.titulo,
+    scrollable: true,
     columns: [{
         text: 'ID',
         dataIndex: 'id',

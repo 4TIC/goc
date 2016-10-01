@@ -12,6 +12,7 @@ Ext.define('goc.view.reunion.OrdenDiaGrid',
         },
         name: 'ordenDia',
         reference: 'ordenDiaGrid',
+        scrollable: true,
         title: appI18N.reuniones.tituloOrdenDia,
         multiSelect: true,
         columns: [

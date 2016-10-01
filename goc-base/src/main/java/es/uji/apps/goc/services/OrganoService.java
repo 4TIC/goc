@@ -56,6 +56,11 @@ public class OrganoService
         return organos;
     }
 
+    public List<Organo> getOrganosLocales(Long connectedUserId)
+    {
+        return organoDAO.getOrganosByUserId(connectedUserId);
+    }
+
     public List<Organo> getOrganosPorAutorizadoId(Long connectedUserId)
             throws OrganosExternosException
     {

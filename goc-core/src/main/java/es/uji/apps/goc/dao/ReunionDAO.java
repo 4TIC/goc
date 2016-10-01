@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mysema.query.jpa.impl.JPAQuery;
@@ -47,7 +46,7 @@ public class ReunionDAO extends BaseDAODatabaseImpl
 
     @Transactional
     public void marcarReunionComoCompletadaYActualizarAcuerdo(Long reunionId,
-            Long responsableActaId, String acuerdos)
+                                                              Long responsableActaId, String acuerdos)
     {
         JPAUpdateClause update = new JPAUpdateClause(entityManager, qReunion);
         update.set(qReunion.completada, true).set(qReunion.fechaCompletada, new Date())
@@ -67,7 +66,7 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     }
 
     public List<Reunion> getReunionesByOrganoExternoIdAndUserId(String organoId,
-            Long connectedUserId)
+                                                                Long connectedUserId)
     {
         JPAQuery query = new JPAQuery(entityManager);
 

@@ -7,6 +7,7 @@ Ext.define('goc.view.reunion.ViewModel', {
         'goc.store.PuntosOrdenDia',
         'goc.store.PuntosOrdenDiaDocumentos',
         'goc.store.OrganoReunionMiembros',
+        'goc.store.TipoOrganos',
         'goc.store.Organos',
         'goc.store.Personas'
     ],
@@ -22,6 +23,10 @@ Ext.define('goc.view.reunion.ViewModel', {
         },
         puntosOrdenDiaDocumentosStore: {
             type: 'puntosOrdenDiaDocumentos'
+        },
+        tipoOrganosStore: {
+            type: 'tipoOrganos',
+            autoLoad: true
         },
         organosStore: {
             type: 'organos',

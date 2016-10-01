@@ -12,7 +12,8 @@ Ext.define('goc.view.miembro.Grid', {
     },
 
     title: appI18N.miembros.tituloGrid,
-    
+    scrollable: true,
+
     columns: [
         {
             text: appI18N.miembros.nombre,

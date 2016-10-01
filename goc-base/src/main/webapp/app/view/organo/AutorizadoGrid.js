@@ -9,6 +9,7 @@ Ext.define('goc.view.organo.AutorizadoGrid',
     name : 'autorizadoGrid',
     title : appI18N.organos.autorizados,
     multiSelect : true,
+    scrollable: true,
     bind: {
         store: '{organoAutorizadosStore}'
     },

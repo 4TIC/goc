@@ -22,6 +22,7 @@ Ext.define('goc.view.reunion.FormReunionMiembros', {
     items: [
         {
             xtype: 'grid',
+            scrollable: true,
             margin: '5 0 5 0',
             layout: 'anchor',
             viewConfig: {

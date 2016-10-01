@@ -10,6 +10,7 @@ Ext.define('goc.view.organo.Grid', {
     },
     name: 'organosGrid',
     title: 'Òrgans',
+    scrollable: true,
     columns: [ {
         text: appI18N.organos.nombre,
         dataIndex: 'nombre',

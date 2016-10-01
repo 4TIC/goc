@@ -34,6 +34,7 @@ Ext.define('goc.view.miembro.Main', {
         },
         {
             xtype: 'miembroGrid',
+            layout: 'fit',
             minHeight: 300,
             hidden: true
         }

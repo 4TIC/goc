@@ -802,4 +802,37 @@ public class ReunionService
             throw new ReunionYaCompletadaException();
         }
     }
+
+    public List<Reunion> getReunionesByTipoOrganoIdAndUserId(Long tipoOrganoId,
+            Long connectedUserId) throws OrganosExternosException
+    {
+        List<Organo> listaOrganosExternos = organoService.getOrganosExternos();
+
+        List<String> listaOrganosExternosIds = listaOrganosExternos.stream()
+                .filter(organo -> organo.getTipoOrgano().getId().equals(tipoOrganoId))
+                .map(organo -> organo.getId()).collect(Collectors.toList());
+
+        List<Organo> listaOrganosLocales = organoService.getOrganosLocales(connectedUserId);
+        List<Long> listaOrganosLocalesIds = listaOrganosLocales.stream()
+                .filter(organo -> organo.getTipoOrgano().getId().equals(tipoOrganoId))
+                .map(organo -> Long.parseLong(organo.getId())).collect(Collectors.toList());
+
+
+        List<Reunion> reuniones = new ArrayList<>();
+        for (String organoExternoId: listaOrganosExternosIds) {
+            List<OrganoReunion> reunionesExternas = organoReunionDAO.getOrganoReunionByOrganoExternoId(organoExternoId);
+            for (OrganoReunion organoReunion: reunionesExternas) {
+                reuniones.add(reunionDAO.getReunionById(organoReunion.getReunion().getId()));
+            }
+        }
+
+        for (Long organoLocalId: listaOrganosLocalesIds) {
+            List<OrganoReunion> reunionesLocales = organoReunionDAO.getOrganoReunionByOrganoLocalId(organoLocalId);
+            for (OrganoReunion organoReunion: reunionesLocales) {
+                reuniones.add(reunionDAO.getReunionById(organoReunion.getReunion().getId()));
+            }
+        }
+
+        return reuniones;
+    }
 }

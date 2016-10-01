@@ -13,6 +13,8 @@ Ext.define('goc.view.cargo.Grid',{
     },
 
     title: 'Càrrecs',
+    scrollable: true,
+
     columns: [{
         text: 'ID',
         dataIndex: 'id',
