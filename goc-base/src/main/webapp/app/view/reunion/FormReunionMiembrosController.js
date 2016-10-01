@@ -62,5 +62,26 @@ Ext.define('goc.view.reunion.FormReunionMiembrosController', {
         var store = viewModel.get('store')
         var reunionId = viewModel.get('reunionId');
         this.onClose();
+    },
+
+    onSearchMiembro: function(field, searchString) {
+        var viewModel = this.getViewModel();
+        var store = viewModel.get('store')
+
+        if (!searchString) {
+            store.clearFilter();
+            return;
+        }
+
+        var filter  = new Ext.util.Filter(
+            {
+                id : 'tipoOrganoId',
+                property : 'nombre',
+                value : searchString,
+                anyMatch: true
+            });
+
+        store.addFilter(filter);
+
     }
 });

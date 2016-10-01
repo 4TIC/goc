@@ -32,6 +32,9 @@ public class AvisosReunion
     @Autowired
     private NotificacionesDAO notificacionesDAO;
 
+    //@Value("${goc.smtp.defaultSender}")
+    private String defaultSender;
+
     @Transactional
     public void enviaAvisoNuevaReunion(Long reunionId, Long connectedUserId)
             throws ReunionNoDisponibleException, MiembrosExternosException, NotificacionesException
@@ -47,7 +50,7 @@ public class AvisosReunion
         ReunionFormatter formatter = new ReunionFormatter(reunion);
         mensaje.setCuerpo(formatter.format());
 
-        mensaje.setFrom("e-ujier@uji.es");
+        mensaje.setFrom(defaultSender);
         mensaje.setDestinos(miembros);
 
         notificacionesDAO.enviaNotificacion(mensaje);
@@ -66,7 +69,7 @@ public class AvisosReunion
         ReunionFormatter formatter = new ReunionFormatter(reunion);
         mensaje.setCuerpo(formatter.format());
 
-        mensaje.setFrom("e-ujier@uji.es");
+        mensaje.setFrom(defaultSender);
 
         mensaje.setDestinos(miembros);
 

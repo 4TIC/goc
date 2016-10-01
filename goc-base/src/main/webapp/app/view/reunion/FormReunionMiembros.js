@@ -18,8 +18,36 @@ Ext.define('goc.view.reunion.FormReunionMiembros', {
     viewModel: {
         type: 'reunionViewModel'
     },
+    tbar: [
+        {
+            xtype: 'button',
+            iconCls: 'fa fa-plus',
+            text: appI18N.reuniones.anadirSuplente,
+            handler: 'onAddSuplente',
+            bind: {
+                disabled: '{reunionCompletada}'
+            }
+        },
+        {
+            xtype: 'button',
+            iconCls: 'fa fa-edit',
+            text: appI18N.reuniones.borrarSuplente,
+            handler: 'onRemoveSuplente',
+            bind: {
+                disabled: '{reunionCompletada}'
+            }
+        }
+    ],
 
     items: [
+        {
+            xtype: 'textfield',
+            emptyText: appI18N.reuniones.buscaAsistente,
+            name: 'searchMiembro',
+            listeners: {
+                change: 'onSearchMiembro'
+            }
+        },
         {
             xtype: 'grid',
             scrollable: true,
@@ -32,26 +60,6 @@ Ext.define('goc.view.reunion.FormReunionMiembros', {
             bind: {
                 store: '{store}'
             },
-            tbar: [
-                {
-                    xtype: 'button',
-                    iconCls: 'fa fa-plus',
-                    text: appI18N.reuniones.anadirSuplente,
-                    handler: 'onAddSuplente',
-                    bind: {
-                        disabled: '{reunionCompletada}'
-                    }
-                },
-                {
-                    xtype: 'button',
-                    iconCls: 'fa fa-edit',
-                    text: appI18N.reuniones.borrarSuplente,
-                    handler: 'onRemoveSuplente',
-                    bind: {
-                        disabled: '{reunionCompletada}'
-                    }
-                }
-            ],
             columns: [
                 {
                     text: appI18N.common.nombre,
