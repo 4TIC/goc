@@ -1,25 +1,21 @@
 package es.uji.apps.goc.notifications;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import es.uji.apps.goc.dao.OrganoReunionMiembroDAO;
-import es.uji.apps.goc.dto.OrganoReunionMiembro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.uji.apps.goc.dao.MiembroDAO;
 import es.uji.apps.goc.dao.NotificacionesDAO;
+import es.uji.apps.goc.dao.OrganoReunionMiembroDAO;
 import es.uji.apps.goc.dao.ReunionDAO;
-import es.uji.apps.goc.dto.MiembroLocal;
-import es.uji.apps.goc.dto.OrganoReunion;
+import es.uji.apps.goc.dto.OrganoReunionMiembro;
 import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.exceptions.NotificacionesException;
 import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
-import es.uji.apps.goc.model.Miembro;
 
 @Component
 public class AvisosReunion
@@ -72,8 +68,6 @@ public class AvisosReunion
 
         mensaje.setFrom("e-ujier@uji.es");
 
-        miembros = new ArrayList<>();
-        miembros.add("david.rubert@gmail.com");
         mensaje.setDestinos(miembros);
 
         if (miembros.size() > 0) {

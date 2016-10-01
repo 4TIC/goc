@@ -54,7 +54,7 @@ Ext.Ajax.request({
                     var viewport = Ext.create('Ext.ux.uji.ApplicationViewport',
                         {
                             codigoAplicacion: 'GOC',
-                            tituloAplicacion: 'Gestión de Órganos Colegiados',
+                            tituloAplicacion: appI18N.header.titulo,
                             dashboard: true
                         });
                 }
