@@ -34,7 +34,7 @@ public class AvisosService
     @Value("${uji.deploy.defaultUserId}")
     private Long connectedUserId;
 
-    @Value("${goc.smtp.defaultSender}")
+    @Value("${uji.smtp.defaultSender}")
     private String defaultSender;
 
     public void procesarPendientes()

@@ -74,7 +74,7 @@ public class ReunionResource extends CoreBaseService
     @InjectParam
     private OrganoReunionMiembroService organoReunionMiembroService;
 
-    @Value("${goc.smtp.defaultSender}")
+    @Value("${uji.smtp.defaultSender}")
     private String defaultSender;
 
     @InjectParam
