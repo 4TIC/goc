@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import es.uji.apps.goc.dao.ReunionDAO;
 import es.uji.apps.goc.dto.Reunion;
@@ -13,8 +14,6 @@ import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.exceptions.NotificacionesException;
 import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
 import es.uji.apps.goc.notifications.AvisosReunion;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Component
@@ -34,6 +33,9 @@ public class AvisosService
 
     @Value("${uji.deploy.defaultUserId}")
     private Long connectedUserId;
+
+    @Value("${goc.smtp.defaultSender}")
+    private String defaultSender;
 
     public void procesarPendientes()
     {
@@ -63,7 +65,7 @@ public class AvisosService
     private void procesaEnvios(Reunion reunion)
             throws MiembrosExternosException, ReunionNoDisponibleException, NotificacionesException
     {
-        avisosReunion.enviaAvisoReunionProxima(reunion.getId(), connectedUserId);
+        avisosReunion.enviaAvisoReunionProxima(reunion.getId(), connectedUserId, defaultSender);
 
         reunion.setNotificada(true);
         reunionDAO.update(reunion);

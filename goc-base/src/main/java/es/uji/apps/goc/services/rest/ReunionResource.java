@@ -24,6 +24,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.mysema.query.Tuple;
 import com.sun.jersey.api.core.InjectParam;
 
@@ -71,6 +73,9 @@ public class ReunionResource extends CoreBaseService
 
     @InjectParam
     private OrganoReunionMiembroService organoReunionMiembroService;
+
+    @Value("${goc.smtp.defaultSender}")
+    private String defaultSender;
 
     @InjectParam
     private AvisosReunion avisosReunion;
@@ -299,7 +304,7 @@ public class ReunionResource extends CoreBaseService
         organoReunionMiembroService.updateOrganoReunionMiembrosDesdeOrganosUI(organosUI, reunionId,
                 connectedUserId);
 
-        avisosReunion.enviaAvisoNuevaReunion(reunionId, connectedUserId);
+        avisosReunion.enviaAvisoNuevaReunion(reunionId, connectedUserId, defaultSender);
 
         return Response.ok().build();
     }

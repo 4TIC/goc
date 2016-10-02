@@ -32,11 +32,8 @@ public class AvisosReunion
     @Autowired
     private NotificacionesDAO notificacionesDAO;
 
-    //@Value("${goc.smtp.defaultSender}")
-    private String defaultSender;
-
     @Transactional
-    public void enviaAvisoNuevaReunion(Long reunionId, Long connectedUserId)
+    public void enviaAvisoNuevaReunion(Long reunionId, Long connectedUserId, String defaultSender)
             throws ReunionNoDisponibleException, MiembrosExternosException, NotificacionesException
     {
         Reunion reunion = getReunion(reunionId, connectedUserId);
@@ -56,7 +53,7 @@ public class AvisosReunion
         notificacionesDAO.enviaNotificacion(mensaje);
     }
 
-    public void enviaAvisoReunionProxima(Long reunionId, Long connectedUserId)
+    public void enviaAvisoReunionProxima(Long reunionId, Long connectedUserId, String defaultSender)
             throws ReunionNoDisponibleException, MiembrosExternosException, NotificacionesException
     {
         Reunion reunion = getReunion(reunionId, connectedUserId);
