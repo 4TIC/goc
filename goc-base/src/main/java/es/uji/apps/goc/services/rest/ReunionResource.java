@@ -304,7 +304,7 @@ public class ReunionResource extends CoreBaseService
         organoReunionMiembroService.updateOrganoReunionMiembrosDesdeOrganosUI(organosUI, reunionId,
                 connectedUserId);
 
-        avisosReunion.enviaAvisoNuevaReunion(reunionId, connectedUserId, defaultSender);
+        avisosReunion.enviaAvisoNuevaReunion(reunionId, defaultSender);
 
         return Response.ok().build();
     }
