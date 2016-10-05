@@ -2,12 +2,12 @@ Ext.define('goc.view.reunion.FormReunionMiembros', {
     extend: 'Ext.window.Window',
     xtype: 'formReunionMiembros',
     width: 640,
-    manageHeight: true,
     modal: true,
     bodyPadding: 10,
     layout: {
         type: 'vbox',
-        align: 'stretch'
+        align : 'stretch',
+        pack  : 'start'
     },
     title: appI18N.reuniones.gestionAsistentes,
 
@@ -50,9 +50,10 @@ Ext.define('goc.view.reunion.FormReunionMiembros', {
         },
         {
             xtype: 'grid',
+            flex: 1,
+            height : 300,
             scrollable: true,
             margin: '5 0 5 0',
-            layout: 'anchor',
             viewConfig: {
                 emptyText: appI18N.reuniones.sinAsistentes,
                 markDirty: false

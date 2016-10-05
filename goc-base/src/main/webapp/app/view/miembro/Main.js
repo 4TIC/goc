@@ -12,11 +12,15 @@ Ext.define('goc.view.miembro.Main', {
 
     title: appI18N.miembros.titulo,
     padding: 10,
-
+    autoHeight: true,
+    layout: {
+        type: 'vbox',
+        align : 'stretch',
+        pack  : 'start'
+    },
     items: [
         {
             xtype: 'combobox',
-            width: 320,
             emptyText: appI18N.miembros.seleccionaOrgano,
             bind: {
                 store: '{organosStore}'
@@ -34,8 +38,6 @@ Ext.define('goc.view.miembro.Main', {
         },
         {
             xtype: 'miembroGrid',
-            layout: 'fit',
-            minHeight: 300,
             hidden: true
         }
     ],

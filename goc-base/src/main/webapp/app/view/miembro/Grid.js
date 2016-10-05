@@ -13,6 +13,7 @@ Ext.define('goc.view.miembro.Grid', {
 
     title: appI18N.miembros.tituloGrid,
     scrollable: true,
+    flex: 1,
 
     columns: [
         {

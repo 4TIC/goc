@@ -23,15 +23,17 @@ public class ExternalService
         TipoOrgano t1 = new TipoOrgano(5L, "98", "Departamento Externo");
         TipoOrgano t2 = new TipoOrgano(6L, "121", "Unidad de Gestión Externa");
 
-        Organo c1 = new Organo("E1", "Organo 1 Externo", t1);
-        Organo c2 = new Organo("E2", "Organo 2 Externo", t1);
-        Organo c3 = new Organo("E3", "Organo 3 Externo", t2);
-        Organo c4 = new Organo("E4", "Organo 4 Externo", t2);
+        for (Integer i=1; i<5; i++) {
+            Organo organo = new Organo("E" + i.toString(), "Organo " + i.toString() + " Externo", t1);
+            listaOrganos.add(organo);
 
-        listaOrganos.add(c1);
-        listaOrganos.add(c2);
-        listaOrganos.add(c3);
-        listaOrganos.add(c4);
+        }
+
+        for (Integer i=5; i<10; i++)
+        {
+            Organo organo = new Organo("E" + i.toString(), "Organo " + i.toString() + " Externo", t2);
+            listaOrganos.add(organo);
+        }
 
         return listaOrganos;
     }
@@ -46,25 +48,20 @@ public class ExternalService
         Cargo c1 = new Cargo("1");
         c1.setNombre("Presidente");
 
+        Miembro m1 = new Miembro(1L, "Miembro 1 Organo " + organo.getId(),
+                "miembro1@organo" + organo.getId() + ".com", organo, c1);
+
+        listaMiembros.add(m1);
+
         Cargo c2 = new Cargo("2");
         c2.setNombre("Vocal");
 
-        Miembro m1 = new Miembro(1L, "Miembro 1 Organo " + organo.getId(),
-                "miembro1@organo" + organo.getId() + ".com", organo, c1);
-        Miembro m2 = new Miembro(2L, "Miembro 2 Organo " + organo.getId(),
-                "miembro2@organo" + organo.getId() + ".com", organo, c2);
-        Miembro m3 = new Miembro(3L, "Miembro 3 Organo " + organo.getId(),
-                "miembro3@organo" + organo.getId() + ".com", organo, c2);
-        Miembro m4 = new Miembro(4L, "Miembro 4 Organo " + organo.getId(),
-                "miembro4@organo" + organo.getId() + ".com", organo, c2);
-        Miembro m5 = new Miembro(5L, "Miembro 5 Organo " + organo.getId(),
-                "miembro5@organo" + organo.getId() + ".com", organo, c2);
-
-        listaMiembros.add(m1);
-        listaMiembros.add(m2);
-        listaMiembros.add(m3);
-        listaMiembros.add(m4);
-        listaMiembros.add(m5);
+        for (Long i=2L; i<50L; i++)
+        {
+            Miembro miembro = new Miembro(i, "Miembro " + i.toString() + " Organo " + organo.getId(),
+                    "miembro" + i.toString() + "@organo" + organo.getId() + ".com", organo, c2);
+            listaMiembros.add(miembro);
+        }
 
         return listaMiembros;
     }
