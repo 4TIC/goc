@@ -41,6 +41,12 @@ public class Reunion implements Serializable
     @Column(name="CREADOR_ID")
     private Long creadorId;
 
+    @Column(name="CREADOR_NOMBRE")
+    private String creadorNombre;
+
+    @Column(name="CREADOR_EMAIL")
+    private String creadorEmail;
+
     @Column(name="FECHA_CREACION")
     private Date fechaCreacion;
 
@@ -295,5 +301,25 @@ public class Reunion implements Serializable
 
     public void setNotificada(Boolean notificada) {
         this.notificada = notificada;
+    }
+
+    public String getCreadorNombre()
+    {
+        return creadorNombre;
+    }
+
+    public void setCreadorNombre(String creadorNombre)
+    {
+        this.creadorNombre = creadorNombre;
+    }
+
+    public String getCreadorEmail()
+    {
+        return creadorEmail;
+    }
+
+    public void setCreadorEmail(String creadorEmail)
+    {
+        this.creadorEmail = creadorEmail;
     }
 }

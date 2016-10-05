@@ -79,7 +79,7 @@
         </li>
       </ol>
 
-      <h3>Convocant: <span style="font-weight: normal; font-size: 16px;" th:text="${reunion.convocanteNombre} + '(' + ${reunion.convocanteEmail} + ')'">Info convocante</span></h3>
+      <h3>Convocant: <span style="font-weight: normal; font-size: 16px;" th:text="${reunion.creadorNombre} + '(' + ${reunion.creadorEmail} + ')'">Info convocante</span></h3>
       <div class="nuevo-suplente" style="display: none;">
         <input type="hidden" name="organoMiembroId" />
         <p class="suplente-actual">Suplent actual: <strong></strong> <button name="borra-suplente">Esborrar suplent</button></p>

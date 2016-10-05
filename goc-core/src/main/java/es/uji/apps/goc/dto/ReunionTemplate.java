@@ -31,9 +31,9 @@ public class ReunionTemplate implements Serializable
 
     private String telematicaDescripcion;
 
-    private String convocanteNombre;
+    private String creadorNombre;
 
-    private String convocanteEmail;
+    private String creadorEmail;
 
     private String urlGrabacion;
 
@@ -205,24 +205,25 @@ public class ReunionTemplate implements Serializable
         this.telematicaDescripcion = telematicaDescripcion;
     }
 
-    public String getConvocanteNombre()
+
+    public String getCreadorNombre()
     {
-        return convocanteNombre;
+        return creadorNombre;
     }
 
-    public void setConvocanteNombre(String convocanteNombre)
+    public void setCreadorNombre(String creadorNombre)
     {
-        this.convocanteNombre = convocanteNombre;
+        this.creadorNombre = creadorNombre;
     }
 
-    public String getConvocanteEmail()
+    public String getCreadorEmail()
     {
-        return convocanteEmail;
+        return creadorEmail;
     }
 
-    public void setConvocanteEmail(String convocanteEmail)
+    public void setCreadorEmail(String creadorEmail)
     {
-        this.convocanteEmail = convocanteEmail;
+        this.creadorEmail = creadorEmail;
     }
 
     public Boolean isCompletada()

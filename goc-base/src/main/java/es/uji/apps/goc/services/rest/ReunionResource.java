@@ -215,7 +215,7 @@ public class ReunionResource extends CoreBaseService
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public UIEntity addReunion(UIEntity reunionUI)
-            throws NotificacionesException, MiembrosExternosException
+            throws NotificacionesException, MiembrosExternosException, PersonasExternasException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
@@ -288,9 +288,9 @@ public class ReunionResource extends CoreBaseService
     @Path("{reunionId}/organos")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modificaReunionesOrgano(@PathParam("reunionId") Long reunionId,
-            UIEntity reunionOrganosUI)
-            throws ReunionNoDisponibleException, NotificacionesException, MiembrosExternosException,
-            OrganoConvocadoNoPermitidoException, ReunionYaCompletadaException
+            UIEntity reunionOrganosUI) throws ReunionNoDisponibleException, NotificacionesException,
+            MiembrosExternosException, OrganoConvocadoNoPermitidoException,
+            ReunionYaCompletadaException, PersonasExternasException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
@@ -304,7 +304,8 @@ public class ReunionResource extends CoreBaseService
         organoReunionMiembroService.updateOrganoReunionMiembrosDesdeOrganosUI(organosUI, reunionId,
                 connectedUserId);
 
-        avisosReunion.enviaAvisoNuevaReunion(reunionId, defaultSender);
+        Reunion reunion = reunionService.getReunionConOrganosById(reunionId, connectedUserId);
+        avisosReunion.enviaAvisoNuevaReunion(reunion, defaultSender);
 
         return Response.ok().build();
     }
@@ -359,9 +360,13 @@ public class ReunionResource extends CoreBaseService
         reunion.setDescripcion(reunionUI.get("descripcion"));
         reunion.setUbicacion(reunionUI.get("ubicacion"));
         reunion.setUrlGrabacion(reunionUI.get("urlGrabacion"));
-        reunion.setNumeroSesion(Long.parseLong(reunionUI.get("numeroSesion")));
-        reunion.setPublica(new Boolean(reunionUI.get("publica")));
 
+        if (!reunionUI.get("numeroSesion").isEmpty())
+        {
+            reunion.setNumeroSesion(Long.parseLong(reunionUI.get("numeroSesion")));
+        }
+
+        reunion.setPublica(new Boolean(reunionUI.get("publica")));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(reunionUI.get("fecha"), formatter);
 
@@ -410,7 +415,7 @@ public class ReunionResource extends CoreBaseService
         template.put("fechaReunion", getFechaReunion(reunionTemplate.getFecha()));
         template.put("horaReunion", getHoraReunion(reunionTemplate.getFecha()));
         template.put("duracionReunion", getDuracionReunion(reunionTemplate.getDuracion()));
-        template.put("nombreConvocante", reunionTemplate.getConvocanteNombre());
+        template.put("nombreConvocante", reunionTemplate.getCreadorNombre());
         return template;
     }
 

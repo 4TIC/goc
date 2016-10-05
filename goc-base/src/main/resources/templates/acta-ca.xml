@@ -108,7 +108,7 @@
       </fo:list-block>
 
       <fo:block font-weight="bold" font-size="14pt" space-before="0.5cm">
-        Convocant: <fo:inline font-weight="normal" th:text="${reunion.convocanteNombre} + ' (' + ${reunion.convocanteEmail} + ')'"></fo:inline>
+        Convocant: <fo:inline font-weight="normal" th:text="${reunion.creadorNombre} + ' (' + ${reunion.creadorEmail} + ')'"></fo:inline>
       </fo:block>
 
       <fo:block font-weight="bold" font-size="14pt" space-before="0.5cm" th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}">

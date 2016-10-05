@@ -1,5 +1,7 @@
 package es.uji.apps.goc.notifications;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +36,9 @@ public class AvisosReunion
     }
 
     @Transactional
-    public void enviaAvisoNuevaReunion(Long reunionId, String defaultSender)
+    public void enviaAvisoNuevaReunion(Reunion reunion, String defaultSender)
             throws ReunionNoDisponibleException, MiembrosExternosException, NotificacionesException
     {
-        Reunion reunion = getReunion(reunionId);
         List<String> miembros = getMiembros(reunion);
 
         Mensaje mensaje = new Mensaje();
@@ -49,6 +50,7 @@ public class AvisosReunion
         mensaje.setCuerpo(formatter.format());
 
         mensaje.setFrom(defaultSender);
+        mensaje.setReplyTo(reunion.getCreadorEmail());
         mensaje.setDestinos(miembros);
 
         notificacionesDAO.enviaNotificacion(mensaje);
@@ -64,14 +66,17 @@ public class AvisosReunion
             return false;
         }
 
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+
         Mensaje mensaje = new Mensaje();
-        mensaje.setAsunto("[GOC] Recordatorio reunión: " + reunion.getAsunto());
+        mensaje.setAsunto("[GOC] Recordatorio reunión: " + reunion.getAsunto() + " (" + df.format(reunion.getFecha()) + ")");
         mensaje.setContentType("text/html");
 
         ReunionFormatter formatter = new ReunionFormatter(reunion);
         mensaje.setCuerpo(formatter.format());
 
         mensaje.setFrom(defaultSender);
+        mensaje.setReplyTo(reunion.getCreadorEmail());
 
         mensaje.setDestinos(miembros);
         notificacionesDAO.enviaNotificacion(mensaje);

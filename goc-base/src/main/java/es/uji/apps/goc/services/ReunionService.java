@@ -109,8 +109,13 @@ public class ReunionService
     }
 
     public Reunion addReunion(Reunion reunion, Long connectedUserId)
+            throws PersonasExternasException
     {
+        Persona convocante = personaService.getPersonaFromDirectoryByPersonaId(connectedUserId);
+
         reunion.setCreadorId(connectedUserId);
+        reunion.setCreadorNombre(convocante.getNombre());
+        reunion.setCreadorEmail(convocante.getEmail());
         reunion.setFechaCreacion(new Date());
 
         return reunionDAO.insert(reunion);
@@ -300,15 +305,8 @@ public class ReunionService
         reunionFirma.setTelematica(reunion.isTelematica());
         reunionFirma.setTelematicaDescripcion(reunion.getTelematicaDescripcion());
         reunionFirma.setCompletada(reunion.getCompletada());
-
-        Persona convocante = personaService
-                .getPersonaFromDirectoryByPersonaId(reunion.getCreadorId());
-
-        if (convocante != null)
-        {
-            reunionFirma.setConvocanteNombre(convocante.getNombre());
-            reunionFirma.setConvocanteEmail(convocante.getEmail());
-        }
+        reunionFirma.setCreadorNombre(reunion.getCreadorNombre());
+        reunionFirma.setCreadorEmail(reunion.getCreadorEmail());
 
         List<Organo> organos = organoService.getOrganosByReunionIdAndUserId(reunion.getId(),
                 connectedUserId);
@@ -475,15 +473,8 @@ public class ReunionService
         reunionTemplate.setTelematica(reunion.isTelematica());
         reunionTemplate.setTelematicaDescripcion(reunion.getTelematicaDescripcion());
         reunionTemplate.setCompletada(reunion.getCompletada());
-
-        Persona convocante = personaService
-                .getPersonaFromDirectoryByPersonaId(reunion.getCreadorId());
-
-        if (convocante != null)
-        {
-            reunionTemplate.setConvocanteNombre(convocante.getNombre());
-            reunionTemplate.setConvocanteEmail(convocante.getEmail());
-        }
+        reunionTemplate.setCreadorNombre(reunion.getCreadorNombre());
+        reunionTemplate.setCreadorEmail(reunion.getCreadorEmail());
 
         if (reunion.getMiembroResponsableActa() != null)
         {
@@ -817,18 +808,23 @@ public class ReunionService
                 .filter(organo -> organo.getTipoOrgano().getId().equals(tipoOrganoId))
                 .map(organo -> Long.parseLong(organo.getId())).collect(Collectors.toList());
 
-
         List<Reunion> reuniones = new ArrayList<>();
-        for (String organoExternoId: listaOrganosExternosIds) {
-            List<OrganoReunion> reunionesExternas = organoReunionDAO.getOrganoReunionByOrganoExternoId(organoExternoId);
-            for (OrganoReunion organoReunion: reunionesExternas) {
+        for (String organoExternoId : listaOrganosExternosIds)
+        {
+            List<OrganoReunion> reunionesExternas = organoReunionDAO
+                    .getOrganoReunionByOrganoExternoId(organoExternoId);
+            for (OrganoReunion organoReunion : reunionesExternas)
+            {
                 reuniones.add(reunionDAO.getReunionById(organoReunion.getReunion().getId()));
             }
         }
 
-        for (Long organoLocalId: listaOrganosLocalesIds) {
-            List<OrganoReunion> reunionesLocales = organoReunionDAO.getOrganoReunionByOrganoLocalId(organoLocalId);
-            for (OrganoReunion organoReunion: reunionesLocales) {
+        for (Long organoLocalId : listaOrganosLocalesIds)
+        {
+            List<OrganoReunion> reunionesLocales = organoReunionDAO
+                    .getOrganoReunionByOrganoLocalId(organoLocalId);
+            for (OrganoReunion organoReunion : reunionesLocales)
+            {
                 reuniones.add(reunionDAO.getReunionById(organoReunion.getReunion().getId()));
             }
         }

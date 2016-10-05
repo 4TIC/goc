@@ -34,9 +34,9 @@ public class ReunionFirma implements Serializable
 
     private Boolean completada;
 
-    private String convocanteNombre;
+    private String creadorNombre;
 
-    private String convocanteEmail;
+    private String creadorEmail;
 
     private String telematicaDescripcion;
 
@@ -201,26 +201,6 @@ public class ReunionFirma implements Serializable
         this.telematicaDescripcion = telematicaDescripcion;
     }
 
-    public String getConvocanteNombre()
-    {
-        return convocanteNombre;
-    }
-
-    public void setConvocanteNombre(String convocanteNombre)
-    {
-        this.convocanteNombre = convocanteNombre;
-    }
-
-    public String getConvocanteEmail()
-    {
-        return convocanteEmail;
-    }
-
-    public void setConvocanteEmail(String convocanteEmail)
-    {
-        this.convocanteEmail = convocanteEmail;
-    }
-
     public Boolean isCompletada()
     {
         return completada;
@@ -229,5 +209,25 @@ public class ReunionFirma implements Serializable
     public void setCompletada(Boolean completada)
     {
         this.completada = completada;
+    }
+
+    public String getCreadorNombre()
+    {
+        return creadorNombre;
+    }
+
+    public void setCreadorNombre(String creadorNombre)
+    {
+        this.creadorNombre = creadorNombre;
+    }
+
+    public String getCreadorEmail()
+    {
+        return creadorEmail;
+    }
+
+    public void setCreadorEmail(String creadorEmail)
+    {
+        this.creadorEmail = creadorEmail;
     }
 }
