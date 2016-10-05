@@ -1,35 +1,24 @@
 package es.uji.apps.goc.avisos.services;
 
-import java.util.Date;
-
+import es.uji.apps.goc.dao.ReunionDAO;
+import es.uji.apps.goc.dto.Reunion;
+import es.uji.apps.goc.notifications.AvisosReunion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.uji.apps.goc.dao.ReunionDAO;
-import es.uji.apps.goc.dto.Reunion;
-import es.uji.apps.goc.exceptions.MiembrosExternosException;
-import es.uji.apps.goc.exceptions.NotificacionesException;
-import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
-import es.uji.apps.goc.notifications.AvisosReunion;
+import java.util.Date;
+import java.util.List;
 
 @Service
-@Component
 public class AvisosService
 {
+    private static Logger log = LoggerFactory.getLogger(AvisosService.class);
+
     private static final int ONE_DAY = 1000 * 60 * 60 * 24;
-    private ReunionDAO reunionDAO;
-
-    @Autowired
-    private AvisosReunion avisosReunion;
-
-    @Autowired
-    public AvisosService(ReunionDAO reunionDAO) {
-        this.reunionDAO = reunionDAO;
-    }
-
 
     @Value("${uji.deploy.defaultUserId}")
     private Long connectedUserId;
@@ -37,35 +26,36 @@ public class AvisosService
     @Value("${uji.smtp.defaultSender}")
     private String defaultSender;
 
+    private AvisosReunion avisosReunion;
+    private ReunionDAO reunionDAO;
+
+    @Autowired
+    public AvisosService(AvisosReunion avisosReunion, ReunionDAO reunionDAO)
+    {
+        this.avisosReunion = avisosReunion;
+        this.reunionDAO = reunionDAO;
+    }
+
     public void procesarPendientes()
     {
-
         Date tomorrow = getTomorrowDate();
-        reunionDAO.getPendientesNotificacion(getTomorrowDate()).stream().forEach(reunion -> {
-            try
-            {
-                procesaEnvios(reunion);
-            }
-            catch (MiembrosExternosException e)
-            {
-                e.printStackTrace();
-            }
-            catch (ReunionNoDisponibleException e)
-            {
-                e.printStackTrace();
-            }
-            catch (NotificacionesException e)
-            {
-                e.printStackTrace();
-            }
-        });
+        List<Reunion> pendientesNotificacion = reunionDAO.getPendientesNotificacion(tomorrow);
+
+        pendientesNotificacion.stream()
+                .forEach(reunion -> procesaEnvios(reunion));
     }
 
     @Transactional
     private void procesaEnvios(Reunion reunion)
-            throws MiembrosExternosException, ReunionNoDisponibleException, NotificacionesException
     {
-        avisosReunion.enviaAvisoReunionProxima(reunion.getId(), connectedUserId, defaultSender);
+        try
+        {
+            avisosReunion.enviaAvisoReunionProxima(reunion, defaultSender);
+        }
+        catch (Exception e)
+        {
+            log.error("No se ha podido enviar el aviso de reunión para " + reunion.getId(), e);
+        }
 
         reunion.setNotificada(true);
         reunionDAO.update(reunion);
