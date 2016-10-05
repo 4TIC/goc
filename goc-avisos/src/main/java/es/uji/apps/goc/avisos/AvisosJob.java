@@ -13,9 +13,7 @@ public class AvisosJob implements Runnable
 {
     public static Logger log = LoggerFactory.getLogger(AvisosJob.class);
 
-    //private static final int TIEMPO_ESPERA_ENTRE_CONSULTAS = 1000 * 60;
-    private static final int TIEMPO_ESPERA_ENTRE_CONSULTAS = 1000 * 5;
-
+    private static final int TIEMPO_ESPERA_ENTRE_CONSULTAS = 1000 * 60;
     private AvisosService avisosService;
 
     public AvisosJob(AvisosService avisosService)

@@ -1,5 +1,11 @@
 package es.uji.apps.goc.notifications;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import es.uji.apps.goc.dao.NotificacionesDAO;
 import es.uji.apps.goc.dao.OrganoReunionMiembroDAO;
 import es.uji.apps.goc.dao.ReunionDAO;
@@ -8,11 +14,6 @@ import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.exceptions.NotificacionesException;
 import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -53,14 +54,14 @@ public class AvisosReunion
         notificacionesDAO.enviaNotificacion(mensaje);
     }
 
-    public void enviaAvisoReunionProxima(Reunion reunion, String defaultSender)
+    public Boolean enviaAvisoReunionProxima(Reunion reunion, String defaultSender)
             throws ReunionNoDisponibleException, MiembrosExternosException, NotificacionesException
     {
         List<String> miembros = getMiembros(reunion);
 
         if (miembros == null || miembros.size() == 0)
         {
-            return;
+            return false;
         }
 
         Mensaje mensaje = new Mensaje();
@@ -71,9 +72,11 @@ public class AvisosReunion
         mensaje.setCuerpo(formatter.format());
 
         mensaje.setFrom(defaultSender);
-        mensaje.setDestinos(miembros);
 
+        mensaje.setDestinos(miembros);
         notificacionesDAO.enviaNotificacion(mensaje);
+
+        return true;
     }
 
     private Reunion getReunion(Long reunionId)

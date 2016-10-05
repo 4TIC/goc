@@ -1,37 +1,96 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>goc-avisos</artifactId>
-  <packaging>jar</packaging>
-  <name>goc-avisos</name>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>goc-avisos</artifactId>
+    <packaging>jar</packaging>
+    <name>goc-avisos</name>
 
-  <parent>
-    <artifactId>goc</artifactId>
-    <groupId>es.uji.apps.goc</groupId>
-    <version>0.0.5-SNAPSHOT</version>
-  </parent>
+    <parent>
+        <artifactId>goc</artifactId>
+        <groupId>es.uji.apps.goc</groupId>
+        <version>0.0.5-SNAPSHOT</version>
+    </parent>
 
-  <dependencies>
-    <dependency>
-      <groupId>es.uji.commons</groupId>
-      <artifactId>uji-commons-db</artifactId>
-      <version>0.2.1</version>
-    </dependency>
+    <dependencies>
+        <dependency>
+            <groupId>es.uji.commons</groupId>
+            <artifactId>uji-commons-db</artifactId>
+            <version>0.2.1</version>
+        </dependency>
 
-    <dependency>
-      <groupId>es.uji.apps.goc</groupId>
-      <artifactId>goc-core</artifactId>
-      <version>${project.version}</version>
-    </dependency>
+        <dependency>
+            <groupId>es.uji.apps.goc</groupId>
+            <artifactId>goc-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
-    <!-- Mail -->
+        <!-- Mail -->
 
-    <dependency>
-      <groupId>javax.mail</groupId>
-      <artifactId>mail</artifactId>
-      <version>1.4.4</version>
-    </dependency>
-  </dependencies>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.4</version>
+        </dependency>
+    </dependencies>
+
+    <plugins>
+        <!-- Weaving de dependencias -->
+
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>aspectj-maven-plugin</artifactId>
+            <version>1.7</version>
+            <dependencies>
+                <dependency>
+                    <groupId>org.aspectj</groupId>
+                    <artifactId>aspectjrt</artifactId>
+                    <version>${aspectj.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.aspectj</groupId>
+                    <artifactId>aspectjtools</artifactId>
+                    <version>${aspectj.version}</version>
+                </dependency>
+            </dependencies>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>compile</goal>
+                        <goal>test-compile</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <showWeaveInfo>false</showWeaveInfo>
+                <verbose>false</verbose>
+                <source>1.8</source>
+                <target>1.8</target>
+                <complianceLevel>1.8</complianceLevel>
+                <weaveDependencies>
+                    <weaveDependency>
+                        <groupId>es.uji.commons</groupId>
+                        <artifactId>uji-commons-db</artifactId>
+                    </weaveDependency>
+                    <weaveDependency>
+                        <groupId>es.uji.commons</groupId>
+                        <artifactId>uji-commons-sso</artifactId>
+                    </weaveDependency>
+                    <weaveDependency>
+                        <groupId>es.uji.commons</groupId>
+                        <artifactId>uji-commons-rest</artifactId>
+                    </weaveDependency>
+                </weaveDependencies>
+                <outxml>true</outxml>
+                <aspectLibraries>
+                    <aspectLibrary>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-aspects</artifactId>
+                    </aspectLibrary>
+                </aspectLibraries>
+            </configuration>
+        </plugin>
+    </plugins>
 
   <build>
     <plugins>
