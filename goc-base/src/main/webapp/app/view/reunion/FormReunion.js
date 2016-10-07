@@ -94,11 +94,18 @@ Ext.define('goc.view.reunion.FormReunion',
                         disabled : '{reunion.completada}'
                     },
                     flex : 1,
-                    padding : '0 10 0 0'
+                    padding : '0 10 0 0',
+                    validator: function(date) {
+                        var now = new Date();
+                        now.setDate(now.getDate() - 1);
+                        return Ext.Date.parse(date, 'd/m/Y') > now;
+                    }
                 },
                 {
                     allowBlank : false,
                     xtype : 'timefield',
+                    minValue: '07:00',
+                    maxValue: '23:00',
                     name : 'hora',
                     emptyText : appI18N.reuniones.horaInicio,
                     format : 'H:i',

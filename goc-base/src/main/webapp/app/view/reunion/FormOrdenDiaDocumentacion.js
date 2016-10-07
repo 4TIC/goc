@@ -6,7 +6,7 @@ Ext.define('goc.view.reunion.FormOrdenDiaDocumentacion',
             title: '{title}'
         },
         width: 640,
-        manageHeight: true,
+        height: 440,
         modal: true,
         bodyPadding: 10,
         layout: {
@@ -28,8 +28,8 @@ Ext.define('goc.view.reunion.FormOrdenDiaDocumentacion',
             {
                 xtype: 'grid',
                 scrollable: true,
+                flex: 1,
                 margin: '5 0 5 0',
-                layout: 'anchor',
                 viewConfig: {
                     emptyText: appI18N.reuniones.documentacionAdjuntaVacia
                 },
