@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import es.uji.apps.goc.dao.ReunionDAO;
 import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.notifications.AvisosReunion;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AvisosService
@@ -41,13 +42,14 @@ public class AvisosService
                 .forEach(reunion -> procesaEnvios(reunion));
     }
 
+    @Transactional
     private void procesaEnvios(Reunion reunion)
     {
         Boolean notificados = false;
 
         try
         {
-            notificados = avisosReunion.enviaAvisoReunionProxima(reunion, defaultSender);
+            notificados = avisosReunion.enviaAvisoReunionProxima(reunion);
         }
         catch (Exception e)
         {

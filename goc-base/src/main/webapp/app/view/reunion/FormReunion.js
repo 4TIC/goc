@@ -160,13 +160,13 @@ Ext.define('goc.view.reunion.FormReunion',
                 {
                     fieldLabel : appI18N.reuniones.numeroSesion,
                     name : 'numeroSesion',
-                    xtype : 'textfield',
+                    xtype : 'numberfield',
                     bind :
                     {
                         value : '{reunion.numeroSesion}',
                         disabled : '{reunion.completada}'
                     },
-                    width : 160
+                    width : 180
                 },
                 {
                     xtype : 'tbfill',

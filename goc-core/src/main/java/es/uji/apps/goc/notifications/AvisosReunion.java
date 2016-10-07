@@ -2,6 +2,7 @@ package es.uji.apps.goc.notifications;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.exceptions.NotificacionesException;
 import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
 
+import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
 
 @Component
@@ -36,7 +38,7 @@ public class AvisosReunion
     }
 
     @Transactional
-    public void enviaAvisoNuevaReunion(Reunion reunion, String defaultSender)
+    public void enviaAvisoNuevaReunion(Reunion reunion)
             throws ReunionNoDisponibleException, MiembrosExternosException, NotificacionesException
     {
         List<String> miembros = getMiembros(reunion);
@@ -49,14 +51,17 @@ public class AvisosReunion
         ReunionFormatter formatter = new ReunionFormatter(reunion);
         mensaje.setCuerpo(formatter.format());
 
-        mensaje.setFrom(defaultSender);
         mensaje.setReplyTo(reunion.getCreadorEmail());
+
+        miembros = new ArrayList<>();
+        miembros.add("david.rubert@gmail.com");
+
         mensaje.setDestinos(miembros);
 
         notificacionesDAO.enviaNotificacion(mensaje);
     }
 
-    public Boolean enviaAvisoReunionProxima(Reunion reunion, String defaultSender)
+    public Boolean enviaAvisoReunionProxima(Reunion reunion)
             throws ReunionNoDisponibleException, MiembrosExternosException, NotificacionesException
     {
         List<String> miembros = getMiembros(reunion);
@@ -74,10 +79,10 @@ public class AvisosReunion
 
         ReunionFormatter formatter = new ReunionFormatter(reunion);
         mensaje.setCuerpo(formatter.format());
-
-        mensaje.setFrom(defaultSender);
         mensaje.setReplyTo(reunion.getCreadorEmail());
 
+        miembros = new ArrayList<>();
+        miembros.add("david.rubert@gmail.com");
         mensaje.setDestinos(miembros);
         notificacionesDAO.enviaNotificacion(mensaje);
 

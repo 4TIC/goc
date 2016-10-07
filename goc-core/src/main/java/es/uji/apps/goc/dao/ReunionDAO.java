@@ -114,9 +114,10 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     {
         JPAQuery query = new JPAQuery(entityManager);
 
+        Date now = new Date();
         return query
                 .from(qReunion).where(qReunion.notificada.ne(true)
-                        .and(qReunion.fecha.after(new Date())).and(qReunion.fecha.before(fecha)))
+                        .and(qReunion.fecha.after(now)).and(qReunion.fecha.before(fecha)))
                 .list(qReunion);
     }
 }

@@ -29,6 +29,7 @@ public class MailSender
     private Integer smtpPort;
     private String smtpUsername;
     private String smtpPassword;
+    private String defaultSender;
 
     @Autowired
     public MailSender(
@@ -37,7 +38,8 @@ public class MailSender
             @Value("${uji.smtp.auth}") Boolean smtpAuthRequired,
             @Value("${uji.smtp.port}") Integer smtpPort,
             @Value("${uji.smtp.username}") String smtpUsername,
-            @Value("${uji.smtp.password}") String smtpPassword)
+            @Value("${uji.smtp.password}") String smtpPassword,
+            @Value("${uji.smtp.defaultSender}") String defaultSender)
     {
         this.smtpHost = smtpHost;
         this.smtpStartTLS = smtpStartTLS;
@@ -45,6 +47,7 @@ public class MailSender
         this.smtpPort = smtpPort;
         this.smtpUsername = smtpUsername;
         this.smtpPassword = smtpPassword;
+        this.defaultSender = defaultSender;
     }
 
     public void send(Mensaje message) throws CanNotSendException
@@ -112,7 +115,7 @@ public class MailSender
 
     private void setRecipients(Mensaje mensaje, Message message) throws MessagingException
     {
-        message.setFrom(new InternetAddress(mensaje.getFrom()));
+        message.setFrom(new InternetAddress(defaultSender));
 
         if (mensaje.getReplyTo() != null && !mensaje.getReplyTo().isEmpty())
         {

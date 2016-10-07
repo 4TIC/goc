@@ -256,7 +256,12 @@ public class ReunionResource extends CoreBaseService
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(reunionUI.get("fecha"), formatter);
         Date fecha = Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant());
-        Long numeroSesion = Long.parseLong(reunionUI.get("numeroSesion"));
+        Long numeroSesion = null;
+
+        if (!reunionUI.get("numeroSesion").isEmpty()) {
+            numeroSesion = Long.parseLong(reunionUI.get("numeroSesion"));
+        }
+
         Long duracion = Long.parseLong(reunionUI.get("duracion"));
 
         reunionService.compruebaReunionNoCompletada(reunionId);
@@ -305,7 +310,7 @@ public class ReunionResource extends CoreBaseService
                 connectedUserId);
 
         Reunion reunion = reunionService.getReunionConOrganosById(reunionId, connectedUserId);
-        avisosReunion.enviaAvisoNuevaReunion(reunion, defaultSender);
+        avisosReunion.enviaAvisoNuevaReunion(reunion);
 
         return Response.ok().build();
     }

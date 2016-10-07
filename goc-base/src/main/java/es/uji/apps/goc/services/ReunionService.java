@@ -116,6 +116,8 @@ public class ReunionService
         reunion.setCreadorId(connectedUserId);
         reunion.setCreadorNombre(convocante.getNombre());
         reunion.setCreadorEmail(convocante.getEmail());
+        reunion.setNotificada(false);
+        reunion.setCompletada(false);
         reunion.setFechaCreacion(new Date());
 
         return reunionDAO.insert(reunion);
