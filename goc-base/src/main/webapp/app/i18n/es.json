@@ -27,6 +27,7 @@
     "tipoOrgano": "Tipo de órgano",
     "externo": "Externo",
     "autorizados": "Autorizados",
+    "seleccionaEstadoOrganos": "Selecciona estado órganos",
     "seleccionaSuplente": "Selecciona el suplente",
     "seleccionaTipoOrgano": "Selecciona el tipo de órgano",
     "sinAutorizadosDisponibles": "Todavía no hay autorizados para este órgano",

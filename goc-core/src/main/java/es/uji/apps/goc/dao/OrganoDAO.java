@@ -64,6 +64,7 @@ public class OrganoDAO extends BaseDAODatabaseImpl
 
         organo.setId(organoLocalDTO.getId().toString());
         organo.setNombre(organoLocalDTO.getNombre());
+        organo.setInactivo(organoLocalDTO.isInactivo());
         organo.setCreadorId(organoLocalDTO.getCreadorId());
         organo.setFechaCreacion(organoLocalDTO.getFechaCreacion());
 
@@ -104,6 +105,23 @@ public class OrganoDAO extends BaseDAODatabaseImpl
         return organoLocalToOrgano(organos.get(0));
     }
 
+    public OrganoLocal getOrganoLocalByIdAndUserId(Long organoId, Long connectedUserId)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+        QOrganoLocal qOrganoLocal = QOrganoLocal.organoLocal;
+
+        List<OrganoLocal> organos = query.from(qOrganoLocal)
+                .where(qOrganoLocal.id.eq(organoId).and(qOrganoLocal.creadorId.eq(connectedUserId)))
+                .orderBy(qOrganoLocal.fechaCreacion.desc()).list(qOrganoLocal);
+
+        if (organos.size() == 0)
+        {
+            return null;
+        }
+
+        return organos.get(0);
+    }
+
     public Organo insertOrgano(Organo organo, Long connectedUserId)
     {
         OrganoLocal organoLocal = organoLocalDesdeOrgano(organo);
@@ -132,6 +150,7 @@ public class OrganoDAO extends BaseDAODatabaseImpl
             organoLocal.setId(Long.parseLong(organo.getId()));
         }
 
+        organoLocal.setInactivo(organo.isInactivo());
         organoLocal.setNombre(organo.getNombre());
         organoLocal.setCreadorId(organo.getCreadorId());
         organoLocal.setFechaCreacion(organo.getFechaCreacion());

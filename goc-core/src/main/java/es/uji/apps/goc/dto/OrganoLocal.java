@@ -27,6 +27,8 @@ public class OrganoLocal implements Serializable
 
     private String nombre;
 
+    private Boolean inactivo;
+
     @Column(name="CREADOR_ID")
     private Long creadorId;
 
@@ -133,5 +135,13 @@ public class OrganoLocal implements Serializable
     public void setTipoOrgano(TipoOrganoLocal tipoOrgano)
     {
         this.tipoOrgano = tipoOrgano;
+    }
+
+    public Boolean isInactivo() {
+        return inactivo;
+    }
+
+    public void setInactivo(Boolean inactivo) {
+        this.inactivo = inactivo;
     }
 }

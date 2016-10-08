@@ -25,6 +25,7 @@ public class ExternalService
 
         for (Integer i=1; i<5; i++) {
             Organo organo = new Organo("E" + i.toString(), "Organo " + i.toString() + " Externo", t1);
+            organo.setInactivo(i % 2 == 0);
             listaOrganos.add(organo);
 
         }
@@ -32,6 +33,7 @@ public class ExternalService
         for (Integer i=5; i<10; i++)
         {
             Organo organo = new Organo("E" + i.toString(), "Organo " + i.toString() + " Externo", t2);
+            organo.setInactivo(i % 2 == 0);
             listaOrganos.add(organo);
         }
 

@@ -98,6 +98,7 @@ public class OrganoResource extends CoreBaseService
         ui.put("id", organo.getId());
         ui.put("nombre", organo.getNombre());
         ui.put("externo", organo.isExterno());
+        ui.put("inactivo", organo.isInactivo());
         ui.put("tipoOrganoId", organo.getTipoOrgano().getId());
         return ui;
     }
@@ -136,7 +137,7 @@ public class OrganoResource extends CoreBaseService
             throws OrganoNoDisponibleException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
-        organoService.removeOrganoById(organoId, connectedUserId);
+        organoService.deshabilitaOrganoById(organoId, connectedUserId);
         return Response.ok().build();
     }
 

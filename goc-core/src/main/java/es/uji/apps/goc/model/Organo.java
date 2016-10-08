@@ -19,6 +19,8 @@ public class Organo
 
     private Boolean externo;
 
+    private Boolean inactivo;
+
     private Long creadorId;
 
     private Date fechaCreacion;
@@ -117,5 +119,13 @@ public class Organo
 
     public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public Boolean isInactivo() {
+        return inactivo;
+    }
+
+    public void setInactivo(Boolean inactivo) {
+        this.inactivo = inactivo;
     }
 }

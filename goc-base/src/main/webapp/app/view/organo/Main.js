@@ -2,10 +2,13 @@ Ext.define('goc.view.organo.Main',
     {
         extend: 'Ext.panel.Panel',
         alias: 'widget.organoMainPanel',
-        requires: ['goc.view.organo.MainController', 'goc.view.organo.Grid', 'goc.view.organo.ViewModel', 'goc.view.organo.AutorizadoGrid', 'goc.view.organo.ComboTipoOrgano'],
+        requires: ['goc.view.organo.MainController', 'goc.view.organo.Grid', 'goc.view.organo.ViewModel', 'goc.view.organo.AutorizadoGrid', 'goc.view.organo.ComboEstadoOrgano', 'goc.view.organo.ComboTipoOrgano'],
         title: appI18N.organos.titulo,
         tbar: [
             '->',
+            {
+                xtype: 'comboEstadoOrgano'
+            },
             {
                 padding: 10,
                 xtype: 'comboTipoOrgano'
@@ -36,7 +39,8 @@ Ext.define('goc.view.organo.Main',
                     }]
             }],
         listeners: {
-            'tipoOrganoSelected': 'onTipoOrganoSelected'
+            'tipoOrganoSelected': 'onTipoOrganoSelected',
+            'filtrarOrganos': 'onFiltrarOrganos'
         }
 
     });

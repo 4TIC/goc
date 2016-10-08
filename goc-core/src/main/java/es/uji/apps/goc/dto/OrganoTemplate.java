@@ -6,6 +6,7 @@ public class OrganoTemplate
 {
     private String id;
     private String nombre;
+    private Boolean inactivo;
 
     private Long tipoOrganoId;
     private String tipoNombre;
@@ -78,5 +79,13 @@ public class OrganoTemplate
 
     public void setAsistentes(List<MiembroTemplate> asistentes) {
         this.asistentes = asistentes;
+    }
+
+    public Boolean getInactivo() {
+        return inactivo;
+    }
+
+    public void setInactivo(Boolean inactivo) {
+        this.inactivo = inactivo;
     }
 }

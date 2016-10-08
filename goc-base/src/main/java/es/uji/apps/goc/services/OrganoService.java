@@ -104,17 +104,19 @@ public class OrganoService
         return organoDAO.updateOrgano(organo);
     }
 
-    public void removeOrganoById(Long organoId, Long connectedUserId)
+    public void deshabilitaOrganoById(Long organoId, Long connectedUserId)
             throws OrganoNoDisponibleException
     {
-        Organo organo = organoDAO.getOrganoByIdAndUserId(organoId, connectedUserId);
+        OrganoLocal organo = organoDAO.getOrganoLocalByIdAndUserId(organoId, connectedUserId);
 
         if (organo == null)
         {
             throw new OrganoNoDisponibleException();
         }
 
-        organoDAO.delete(OrganoLocal.class, organoId);
+        organo.setInactivo(false);
+        organoDAO.update(organo);
+        // organoDAO.delete(OrganoLocal.class, organoId);
     }
 
     public List<Organo> getOrganosExternos() throws OrganosExternosException
@@ -177,6 +179,7 @@ public class OrganoService
 
         organo.setId(organoExternoDTO.getId());
         organo.setNombre(organoExternoDTO.getNombre());
+        organo.setInactivo(organoExternoDTO.isInactivo());
         organo.setExterno(true);
 
         TipoOrgano tipoOrgano = new TipoOrgano();

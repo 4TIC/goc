@@ -6,6 +6,7 @@ public class OrganoExterno
 {
     private String id;
     private String nombre;
+    private Boolean inactivo;
 
     @JsonProperty("tipo_id")
     private Long tipoOrganoId;
@@ -69,5 +70,13 @@ public class OrganoExterno
     public OrganoExterno() {}
     public OrganoExterno(String id) {
         this.id = id;
+    }
+
+    public Boolean isInactivo() {
+        return inactivo;
+    }
+
+    public void setInactivo(Boolean inactivo) {
+        this.inactivo = inactivo;
     }
 }

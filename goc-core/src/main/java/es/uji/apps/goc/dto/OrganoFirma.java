@@ -5,6 +5,7 @@ public class OrganoFirma
 {
     private String id;
     private String nombre;
+    private Boolean inactivo;
 
     private Long tipoOrganoId;
     private String tipoNombre;
@@ -77,5 +78,13 @@ public class OrganoFirma
 
     public void setAsistentes(List<MiembroFirma> asistentes) {
         this.asistentes = asistentes;
+    }
+
+    public Boolean getInactivo() {
+        return inactivo;
+    }
+
+    public void setInactivo(Boolean inactivo) {
+        this.inactivo = inactivo;
     }
 }

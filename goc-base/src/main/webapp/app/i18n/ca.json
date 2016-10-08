@@ -27,6 +27,7 @@
     "tipoOrgano": "Tipus Òrgan",
     "externo": "Extern",
     "autorizados": "Autoritzats",
+    "seleccionaEstadoOrganos": "Sel·lecciona l'estat",
     "seleccionaSuplente": "Sel·lecciona el suplent",
     "seleccionaTipoOrgano": "Sel·lecciona el tipus de òrgan",
     "sinAutorizadosDisponibles": "Encara no n'hi han autoritzats per aquest òrgan",

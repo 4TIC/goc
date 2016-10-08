@@ -1,13 +1,13 @@
 Ext.define('goc.view.organo.MainController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.organoMainController',
-    
-    onLoad: function() {
+
+    onLoad: function () {
         var viewModel = this.getViewModel();
         viewModel.getStore('organosStore').load();
     },
 
-    onTipoOrganoSelected: function(recordId) {
+    onTipoOrganoSelected: function (recordId) {
         var vm = this.getViewModel();
         var store = vm.getStore('organosStore');
 
@@ -16,13 +16,33 @@ Ext.define('goc.view.organo.MainController', {
             return;
         }
 
-        var filter  = new Ext.util.Filter(
+        var filter = new Ext.util.Filter(
             {
-                id : 'tipoOrganoId',
-                property : 'tipoOrganoId',
-                value : recordId
+                id: 'tipoOrganoId',
+                property: 'tipoOrganoId',
+                value: recordId
             });
 
         store.addFilter(filter);
+    },
+
+    onFiltrarOrganos: function (inactivos) {
+        var vm = this.getViewModel();
+        var store = vm.getStore('organosStore');
+
+        console.log(arguments);
+
+        if (inactivos === null) {
+            store.clearFilter();
+            return;
+        }
+
+        var filter = new Ext.util.Filter({
+            property: 'inactivo',
+            value: inactivos
+        });
+
+        store.addFilter(filter);
+
     }
 });
