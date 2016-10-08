@@ -29,7 +29,7 @@ Ext.define('goc.view.organo.GridController', {
         });
 
         var record = grid.getView().getSelectionModel().getSelection()[0];
-        grid.up('panel').down('grid[name=autorizadoGrid]').fireEvent('organoSelected', record.get('id'), record.get('externo'));
+        grid.up('panel').down('grid[name=autorizadoGrid]').fireEvent('organoSelected', record);
 
     },
 

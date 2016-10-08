@@ -2,7 +2,8 @@ Ext.define('goc.view.miembro.GridController', {
     extend: 'Ext.ux.uji.grid.PanelController',
     alias: 'controller.miembroGridController',
     onAdd: function() {
-        var mainPanel = Ext.ComponentQuery.query("miembroMain")[0];
+        var view = this.getView();
+        var mainPanel = view.up('miembroMainPanel');
         var combo = mainPanel.down("combobox");
         var organo = combo.getSelection();
         var rec = Ext.create('goc.model.Miembro', {

@@ -2,6 +2,7 @@ package es.uji.apps.goc.services.rest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -40,16 +41,15 @@ public class OrganoResource extends CoreBaseService
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<UIEntity> getOrganos(@QueryParam("reunionId") String reunionId)
+    public List<UIEntity> getOrganos(@QueryParam("reunionId") Long reunionId)
             throws OrganosExternosException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
         List<Organo> listaOrganos = new ArrayList<>();
 
-        if (ParamUtils.parseLong(reunionId) != null)
+        if (reunionId != null)
         {
-            listaOrganos = organoService.getOrganosByReunionIdAndUserId(Long.parseLong(reunionId),
-                    connectedUserId);
+            listaOrganos = organoService.getOrganosByReunionIdAndUserId(reunionId, connectedUserId);
         }
         else
         {
@@ -57,6 +57,30 @@ public class OrganoResource extends CoreBaseService
         }
 
         return organosToUI(listaOrganos);
+    }
+
+    @GET
+    @Path("activos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UIEntity> getOrganosActivos(@QueryParam("reunionId") Long reunionId)
+            throws OrganosExternosException
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+        List<Organo> listaOrganos = new ArrayList<>();
+
+        if (reunionId != null)
+        {
+            listaOrganos = organoService.getOrganosByReunionIdAndUserId(reunionId, connectedUserId);
+        }
+        else
+        {
+            listaOrganos = organoService.getOrganos(connectedUserId);
+        }
+
+        listaOrganos = listaOrganos.stream().filter(o -> !o.isInactivo())
+                .collect(Collectors.toList());
+        return organosToUI(listaOrganos);
+
     }
 
     @GET
@@ -127,7 +151,8 @@ public class OrganoResource extends CoreBaseService
         String nombre = organoUI.get("nombre");
         Long tipoOrganoId = Long.parseLong(organoUI.get("tipoOrganoId"));
         Boolean inactivo = new Boolean(organoUI.get("inactivo"));
-        Organo organo = organoService.updateOrgano(organoId, nombre, tipoOrganoId, inactivo, connectedUserId);
+        Organo organo = organoService.updateOrgano(organoId, nombre, tipoOrganoId, inactivo,
+                connectedUserId);
 
         return UIEntity.toUI(organo);
     }

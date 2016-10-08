@@ -58,7 +58,7 @@ public class ExternalService
         Cargo c2 = new Cargo("2");
         c2.setNombre("Vocal");
 
-        for (Long i=2L; i<50L; i++)
+        for (Long i=2L; i<10L; i++)
         {
             Miembro miembro = new Miembro(i, "Miembro " + i.toString() + " Organo " + organo.getId(),
                     "miembro" + i.toString() + "@organo" + organo.getId() + ".com", organo, c2);

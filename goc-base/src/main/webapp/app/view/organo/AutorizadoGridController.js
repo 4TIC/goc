@@ -2,24 +2,28 @@ Ext.define('goc.view.organo.AutorizadoGridController',
 {
     extend : 'Ext.ux.uji.grid.PanelController',
     alias : 'controller.autorizadoGridController',
-    organoId : null,
-    externo : null,
+    organo : null,
 
-    organoSelected : function(organoId, externo)
+    organoSelected : function(organo)
     {
-        if (organoId === this.organoId && externo === this.externo)
+        if (organo === this.organo) {
             return;
-        this.organoId = organoId;
-        this.externo = externo;
+        }
 
+        this.organo = organo;
+
+        if (organo.get('inactivo')) {
+            return this.getView().setDisabled(true);
+        }
+        
         var viewModel = this.getViewModel();
         this.getView().setDisabled(false);
         viewModel.getStore('organoAutorizadosStore').load(
         {
             params :
             {
-                organoId : organoId,
-                externo : externo
+                organoId : organo.get('id'),
+                externo : organo.get('externo')
             }
         });
     },

@@ -67,10 +67,10 @@ public class OrganoService
         List<Organo> organosExternos = getOrganosExternos();
         List<String> listaOrganosIdsPermitidos = getOrganosIdsPermitidosAutorizado(connectedUserId);
         organos.addAll(
-                organosExternos.stream().filter(o -> listaOrganosIdsPermitidos.contains(o.getId()))
+                organosExternos.stream().filter(o -> !o.isInactivo()).filter(o -> listaOrganosIdsPermitidos.contains(o.getId()))
                         .collect(Collectors.toList()));
         List<Organo> organosLocales = organoDAO.getOrganosByAutorizadoId(connectedUserId);
-        organos.addAll(organosLocales);
+        organos.addAll(organosLocales.stream().filter(o -> !o.isInactivo()).collect(Collectors.toList()));
         return organos;
     }
 

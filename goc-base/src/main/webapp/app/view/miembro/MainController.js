@@ -4,7 +4,9 @@ Ext.define('goc.view.miembro.MainController', {
     
     onLoad: function() {
         var viewModel = this.getViewModel();
-        viewModel.getStore('organosStore').load();
+        viewModel.getStore('organosStore').load({
+            url: '/goc/rest/organos/activos'
+        });
     },
 
     onOrganoSelected: function(combo, record) {
