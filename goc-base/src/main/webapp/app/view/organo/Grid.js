@@ -5,13 +5,52 @@ Ext.define('goc.view.organo.Grid', {
         'goc.view.organo.GridController'
     ],
     controller: 'organoGridController',
+    reference: 'organoGrid',
     bind: {
-        store: '{organosStore}'
+        store: '{organosStore}',
+        selection: '{selectedOrgano}'
     },
     name: 'organosGrid',
     title: 'Òrgans',
     scrollable: true,
-    columns: [ {
+
+    tbar: [
+        {
+            xtype: 'button',
+            name: 'add',
+            iconCls: 'fa fa-plus',
+            text: appI18N ? appI18N.common.anadir : 'Afegir',
+            handler: 'onAdd'
+        },
+        {
+            xtype: 'button',
+            name: 'edit',
+            iconCls: 'fa fa-edit',
+            text: appI18N ? appI18N.common.editar : 'Editar',
+            handler: 'onEdit'
+        },
+        {
+            xtype: 'button',
+            iconCls: 'fa fa-remove',
+            text: 'Inhabilita',
+            handler: 'onToggleEstado',
+            hidden: true,
+            bind: {
+                hidden: '{ocultaBotonInhabilita}'
+            }
+        },
+        {
+            xtype: 'button',
+            iconCls: 'fa fa-check-circle',
+            text: 'Habilita',
+            handler: 'onToggleEstado',
+            hidden: true,
+            bind: {
+                hidden: '{ocultaBotonHabilita}'
+            }
+        }],
+
+    columns: [{
         text: appI18N.organos.nombre,
         dataIndex: 'nombre',
         flex: 1,

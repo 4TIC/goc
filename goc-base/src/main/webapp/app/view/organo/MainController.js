@@ -30,13 +30,6 @@ Ext.define('goc.view.organo.MainController', {
         var vm = this.getViewModel();
         var store = vm.getStore('organosStore');
 
-        console.log(arguments);
-
-        if (inactivos === null) {
-            store.clearFilter();
-            return;
-        }
-
         var filter = new Ext.util.Filter({
             property: 'inactivo',
             value: inactivos

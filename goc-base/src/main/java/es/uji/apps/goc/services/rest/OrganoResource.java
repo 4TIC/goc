@@ -126,19 +126,10 @@ public class OrganoResource extends CoreBaseService
         Long connectedUserId = AccessManager.getConnectedUserId(request);
         String nombre = organoUI.get("nombre");
         Long tipoOrganoId = Long.parseLong(organoUI.get("tipoOrganoId"));
-        Organo organo = organoService.updateOrgano(organoId, nombre, tipoOrganoId, connectedUserId);
+        Boolean inactivo = new Boolean(organoUI.get("inactivo"));
+        Organo organo = organoService.updateOrgano(organoId, nombre, tipoOrganoId, inactivo, connectedUserId);
 
         return UIEntity.toUI(organo);
-    }
-
-    @DELETE
-    @Path("{organoId}")
-    public Response borraOrgano(@PathParam("organoId") Long organoId, UIEntity entity)
-            throws OrganoNoDisponibleException
-    {
-        Long connectedUserId = AccessManager.getConnectedUserId(request);
-        organoService.deshabilitaOrganoById(organoId, connectedUserId);
-        return Response.ok().build();
     }
 
     private Organo uiToModel(UIEntity organoUI)
@@ -151,6 +142,7 @@ public class OrganoResource extends CoreBaseService
         }
 
         organo.setNombre(organoUI.get("nombre"));
+        organo.setInactivo(false);
 
         TipoOrgano tipoOrgano = new TipoOrgano();
         tipoOrgano.setId(Long.parseLong(organoUI.get("tipoOrganoId")));

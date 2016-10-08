@@ -21,7 +21,6 @@ import es.uji.apps.goc.dao.OrganoDAO;
 import es.uji.apps.goc.dao.ReunionDAO;
 import es.uji.apps.goc.dto.OrganoAutorizado;
 import es.uji.apps.goc.dto.OrganoExterno;
-import es.uji.apps.goc.dto.OrganoLocal;
 import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.exceptions.OrganoNoDisponibleException;
 import es.uji.apps.goc.exceptions.OrganosExternosException;
@@ -89,7 +88,7 @@ public class OrganoService
     }
 
     public Organo updateOrgano(Long organoId, String nombre, Long tipoOrganoId,
-            Long connectedUserId) throws OrganoNoDisponibleException
+                               Boolean inactivo, Long connectedUserId) throws OrganoNoDisponibleException
     {
         Organo organo = organoDAO.getOrganoByIdAndUserId(organoId, connectedUserId);
 
@@ -101,13 +100,28 @@ public class OrganoService
         organo.setNombre(nombre);
         TipoOrgano tipoOrgano = new TipoOrgano(tipoOrganoId);
         organo.setTipoOrgano(tipoOrgano);
+        organo.setInactivo(inactivo);
         return organoDAO.updateOrgano(organo);
     }
 
     public void deshabilitaOrganoById(Long organoId, Long connectedUserId)
             throws OrganoNoDisponibleException
     {
-        OrganoLocal organo = organoDAO.getOrganoLocalByIdAndUserId(organoId, connectedUserId);
+        Organo organo = organoDAO.getOrganoByIdAndUserId(organoId, connectedUserId);
+
+        if (organo == null)
+        {
+            throw new OrganoNoDisponibleException();
+        }
+
+        organo.setInactivo(true);
+        organoDAO.updateOrgano(organo);
+    }
+
+    public void habilitaOrganoById(Long organoId, Long connectedUserId)
+            throws OrganoNoDisponibleException
+    {
+        Organo organo = organoDAO.getOrganoByIdAndUserId(organoId, connectedUserId);
 
         if (organo == null)
         {
@@ -115,8 +129,7 @@ public class OrganoService
         }
 
         organo.setInactivo(false);
-        organoDAO.update(organo);
-        // organoDAO.delete(OrganoLocal.class, organoId);
+        organoDAO.updateOrgano(organo);
     }
 
     public List<Organo> getOrganosExternos() throws OrganosExternosException

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 
@@ -105,23 +106,6 @@ public class OrganoDAO extends BaseDAODatabaseImpl
         return organoLocalToOrgano(organos.get(0));
     }
 
-    public OrganoLocal getOrganoLocalByIdAndUserId(Long organoId, Long connectedUserId)
-    {
-        JPAQuery query = new JPAQuery(entityManager);
-        QOrganoLocal qOrganoLocal = QOrganoLocal.organoLocal;
-
-        List<OrganoLocal> organos = query.from(qOrganoLocal)
-                .where(qOrganoLocal.id.eq(organoId).and(qOrganoLocal.creadorId.eq(connectedUserId)))
-                .orderBy(qOrganoLocal.fechaCreacion.desc()).list(qOrganoLocal);
-
-        if (organos.size() == 0)
-        {
-            return null;
-        }
-
-        return organos.get(0);
-    }
-
     public Organo insertOrgano(Organo organo, Long connectedUserId)
     {
         OrganoLocal organoLocal = organoLocalDesdeOrgano(organo);
@@ -132,13 +116,13 @@ public class OrganoDAO extends BaseDAODatabaseImpl
         return organoLocalToOrgano(organoLocal);
     }
 
+    @Transactional
     public Organo updateOrgano(Organo organo)
     {
         OrganoLocal organoLocal = organoLocalDesdeOrgano(organo);
         organoLocal = this.update(organoLocal);
 
         return organoLocalToOrgano(organoLocal);
-
     }
 
     private OrganoLocal organoLocalDesdeOrgano(Organo organo)
