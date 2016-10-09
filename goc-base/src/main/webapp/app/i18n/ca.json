@@ -2,7 +2,7 @@
   "common": {
     "anadir": "Afegir",
     "editar": "Editar",
-    "borrar": "Borrar",
+    "borrar": "Esborrar",
     "actualizar": "Actualiztar",
     "aceptar": "Acceptar",
     "cancelar": "Cancel·lar",
@@ -26,12 +26,18 @@
     "nombre": "Nom",
     "tipoOrgano": "Tipus Òrgan",
     "externo": "Extern",
+    "estado": "Estat",
+    "activos": "Actius",
+    "activo": "Actiu",
+    "inhabilitar": "Inhabilitar",
+    "inactivos": "Inactius",
     "autorizados": "Autoritzats",
     "seleccionaEstadoOrganos": "Sel·lecciona l'estat",
     "seleccionaSuplente": "Sel·lecciona el suplent",
     "seleccionaTipoOrgano": "Sel·lecciona el tipus de òrgan",
     "sinAutorizadosDisponibles": "Encara no n'hi han autoritzats per aquest òrgan",
-    "borrarAutorizacion": "Esteu segur/a de voler quitar l'autorització a aquesta persona?"
+    "borrarAutorizacion": "Esteu segur/a de voler quitar l'autorització a aquesta persona?",
+    "inhabilitarOrgano": "Esteu segur/a de voler inhabilitar el òrgan?"
   },
   "tipoOrganos": {
     "titulo": "Tipus d'Òrgans",

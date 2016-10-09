@@ -43,7 +43,7 @@ Ext.define('goc.view.organo.GridController', {
 
         if (record.get('inactivo') === false)
         {
-            return Ext.Msg.confirm('Esborrar', 'Esteu segur/a de voler inhabilitar el òrgan ?', function(btn, text)
+            return Ext.Msg.confirm(appI18N.organos.inhabilitar, appI18N.organos.inhabilitarOrgano, function(btn, text)
             {
                 if (btn == 'yes')
                 {

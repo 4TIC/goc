@@ -85,7 +85,14 @@ Ext.define('goc.view.organo.Grid', {
         renderer: function (id, meta, rec) {
             return rec.get('externo') === 'true' ? 'Sí' : 'No';
         }
-    }],
+    },
+        {
+            text: appI18N.organos.activo,
+            width: 80,
+            renderer: function (id, meta, rec) {
+                return rec.get('inactivo') ? 'No' : 'Sí';
+            }
+        }],
 
     listeners: {
         render: 'onLoad',

@@ -26,12 +26,18 @@
     "nombre": "Nombre",
     "tipoOrgano": "Tipo de órgano",
     "externo": "Externo",
+    "estado": "Estat",
+    "activos": "Actius",
+    "activo": "Actiu",
+    "inactivos": "Inactius",
+    "inhabilitar": "Inhabilitar",
     "autorizados": "Autorizados",
     "seleccionaEstadoOrganos": "Selecciona estado órganos",
     "seleccionaSuplente": "Selecciona el suplente",
     "seleccionaTipoOrgano": "Selecciona el tipo de órgano",
     "sinAutorizadosDisponibles": "Todavía no hay autorizados para este órgano",
-    "borrarAutorizacion": "¿Estás seguro de querer quitar la autorización a esta persona?"
+    "borrarAutorizacion": "¿Estás seguro de querer quitar la autorización a esta persona?",
+    "inhabilitarOrgano": "¿Estás seguro de querer inhabilitar el órgano?"
   },
   "tipoOrganos": {
     "titulo": "Tipo de Órganos",

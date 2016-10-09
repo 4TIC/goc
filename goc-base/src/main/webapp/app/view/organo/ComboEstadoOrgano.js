@@ -3,7 +3,7 @@ Ext.define('goc.view.organo.ComboEstadoOrgano',
         extend: 'Ext.ux.uji.combo.Combo',
         alias: 'widget.comboEstadoOrgano',
         allowBlank: true,
-        fieldLabel: 'Estat',
+        fieldLabel: appI18N.organos.estado,
         labelWidth: 100,
         labelAlign: 'right',
         width: 280,
@@ -16,11 +16,11 @@ Ext.define('goc.view.organo.ComboEstadoOrgano',
             data: [
                 {
                     value: false,
-                    text: 'Actius'
+                    text: appI18N.organos.activos
                 },
                 {
                     value: true,
-                    text: 'Inactius'
+                    text: appI18N.organos.inactivos
                 }
             ]
         }),
