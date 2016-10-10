@@ -24,7 +24,9 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     {
         JPAQuery query = new JPAQuery(entityManager);
 
-        return query.from(qReunion).where(qReunion.creadorId.eq(connectedUserId))
+        return query.from(qReunion)
+                .where(qReunion.creadorId.eq(connectedUserId)
+                        .and(qReunion.completada.eq(false).or(qReunion.completada.isNull())))
                 .orderBy(qReunion.fechaCreacion.desc()).list(qReunion);
     }
 
@@ -46,7 +48,7 @@ public class ReunionDAO extends BaseDAODatabaseImpl
 
     @Transactional
     public void marcarReunionComoCompletadaYActualizarAcuerdo(Long reunionId,
-                                                              Long responsableActaId, String acuerdos)
+            Long responsableActaId, String acuerdos)
     {
         JPAUpdateClause update = new JPAUpdateClause(entityManager, qReunion);
         update.set(qReunion.completada, true).set(qReunion.fechaCompletada, new Date())
@@ -61,17 +63,41 @@ public class ReunionDAO extends BaseDAODatabaseImpl
 
         return query.from(qReunion).join(qReunion.reunionOrganos, qOrganoReunion)
                 .where(qReunion.creadorId.eq(connectedUserId)
+                        .and(qReunion.completada.isNull().or(qReunion.completada.eq(false)))
+                        .and(qOrganoReunion.organo.id.eq(organoId)))
+                .orderBy(qReunion.fechaCreacion.desc()).list(qReunion);
+    }
+
+    public List<Reunion> getReunionesCompletadasByOrganoLocalIdAndUserId(Long organoId,
+            Long connectedUserId)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        return query.from(qReunion).join(qReunion.reunionOrganos, qOrganoReunion)
+                .where(qReunion.creadorId.eq(connectedUserId).and(qReunion.completada.eq(true))
                         .and(qOrganoReunion.organo.id.eq(organoId)))
                 .orderBy(qReunion.fechaCreacion.desc()).list(qReunion);
     }
 
     public List<Reunion> getReunionesByOrganoExternoIdAndUserId(String organoId,
-                                                                Long connectedUserId)
+            Long connectedUserId)
     {
         JPAQuery query = new JPAQuery(entityManager);
 
         return query.from(qReunion).join(qReunion.reunionOrganos, qOrganoReunion)
                 .where(qReunion.creadorId.eq(connectedUserId)
+                        .and(qReunion.completada.isNull().or(qReunion.completada.eq(false)))
+                        .and(qOrganoReunion.organoExternoId.eq(organoId)))
+                .orderBy(qReunion.fechaCreacion.desc()).list(qReunion);
+    }
+
+    public List<Reunion> getReunionesCompletadasByOrganoExternoIdAndUserId(String organoId,
+            Long connectedUserId)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        return query.from(qReunion).join(qReunion.reunionOrganos, qOrganoReunion)
+                .where(qReunion.creadorId.eq(connectedUserId).and(qReunion.completada.eq(true))
                         .and(qOrganoReunion.organoExternoId.eq(organoId)))
                 .orderBy(qReunion.fechaCreacion.desc()).list(qReunion);
     }
@@ -115,9 +141,16 @@ public class ReunionDAO extends BaseDAODatabaseImpl
         JPAQuery query = new JPAQuery(entityManager);
 
         Date now = new Date();
-        return query
-                .from(qReunion).where(qReunion.notificada.ne(true)
-                        .and(qReunion.fecha.after(now)).and(qReunion.fecha.before(fecha)))
-                .list(qReunion);
+        return query.from(qReunion).where(qReunion.notificada.ne(true)
+                .and(qReunion.fecha.after(now)).and(qReunion.fecha.before(fecha))).list(qReunion);
+    }
+
+    public List<Reunion> getReunionesCompletadasByUserId(Long connectedUserId)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        return query.from(qReunion)
+                .where(qReunion.creadorId.eq(connectedUserId).and(qReunion.completada.eq(true)))
+                .orderBy(qReunion.fechaCreacion.desc()).list(qReunion);
     }
 }

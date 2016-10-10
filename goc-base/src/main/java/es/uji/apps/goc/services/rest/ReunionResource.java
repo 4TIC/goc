@@ -89,19 +89,53 @@ public class ReunionResource extends CoreBaseService
         Long connectedUserId = AccessManager.getConnectedUserId(request);
         List<Reunion> listaReuniones = new ArrayList<>();
 
+        Boolean completada = false;
         if (tipoOrganoId != null)
         {
             listaReuniones = reunionService.getReunionesByTipoOrganoIdAndUserId(tipoOrganoId,
-                    connectedUserId);
+                    completada, connectedUserId);
         }
         else if (organoId != null)
         {
             listaReuniones = reunionService.getReunionesByOrganoIdAndUserId(organoId, externo,
-                    connectedUserId);
+                    completada, connectedUserId);
         }
         else
         {
-            listaReuniones = reunionService.getReunionesByUserId(connectedUserId);
+            listaReuniones = reunionService.getReunionesByUserId(completada, connectedUserId);
+        }
+
+        List<Tuple> listaNumeroDocumentosPorReunionId = reunionDocumentoService
+                .getNumeroDocumentosPorReunion(connectedUserId);
+
+        return reunionesConNumeroDocumentosToUI(listaReuniones, listaNumeroDocumentosPorReunionId);
+    }
+
+    @GET
+    @Path("completadas")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UIEntity> getReunionesCompletadas(@QueryParam("organoId") String organoId,
+            @QueryParam("tipoOrganoId") Long tipoOrganoId, @QueryParam("externo") Boolean externo)
+            throws OrganosExternosException
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+        List<Reunion> listaReuniones = new ArrayList<>();
+
+        Boolean completada = true;
+
+        if (tipoOrganoId != null)
+        {
+            listaReuniones = reunionService.getReunionesByTipoOrganoIdAndUserId(tipoOrganoId,
+                    completada, connectedUserId);
+        }
+        else if (organoId != null)
+        {
+            listaReuniones = reunionService.getReunionesByOrganoIdAndUserId(organoId, externo,
+                    completada, connectedUserId);
+        }
+        else
+        {
+            listaReuniones = reunionService.getReunionesByUserId(true, connectedUserId);
         }
 
         List<Tuple> listaNumeroDocumentosPorReunionId = reunionDocumentoService
@@ -258,7 +292,8 @@ public class ReunionResource extends CoreBaseService
         Date fecha = Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant());
         Long numeroSesion = null;
 
-        if (!reunionUI.get("numeroSesion").isEmpty()) {
+        if (!reunionUI.get("numeroSesion").isEmpty())
+        {
             numeroSesion = Long.parseLong(reunionUI.get("numeroSesion"));
         }
 

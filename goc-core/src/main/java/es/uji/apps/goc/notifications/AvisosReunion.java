@@ -18,7 +18,6 @@ import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.exceptions.NotificacionesException;
 import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
 
-import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
 
 @Component
@@ -52,13 +51,9 @@ public class AvisosReunion
         mensaje.setCuerpo(formatter.format());
 
         mensaje.setReplyTo(reunion.getCreadorEmail());
-
-        miembros = new ArrayList<>();
-        miembros.add("david.rubert@gmail.com");
-
         mensaje.setDestinos(miembros);
 
-        notificacionesDAO.enviaNotificacion(mensaje);
+        // notificacionesDAO.enviaNotificacion(mensaje);
     }
 
     public Boolean enviaAvisoReunionProxima(Reunion reunion)
@@ -82,9 +77,7 @@ public class AvisosReunion
         mensaje.setReplyTo(reunion.getCreadorEmail());
 
         miembros = new ArrayList<>();
-        miembros.add("david.rubert@gmail.com");
-        mensaje.setDestinos(miembros);
-        notificacionesDAO.enviaNotificacion(mensaje);
+        // notificacionesDAO.enviaNotificacion(mensaje);
 
         return true;
     }

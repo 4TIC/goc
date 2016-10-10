@@ -54,13 +54,6 @@ Ext.define('goc.view.reunion.ReunionGrid',
                 }
             },
             {
-                text: appI18N.reuniones.completada,
-                dataIndex: 'completada',
-                renderer: function (value) {
-                    return (value === true) ? 'Sí' : 'No';
-                }
-            },
-            {
                 dataIndex: 'numeroDocumentos',
                 text: appI18N.reuniones.documentos,
                 align: 'center',

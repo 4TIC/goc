@@ -1,21 +1,23 @@
-Ext.define('goc.view.reunion.ComboTipoOrgano',
+Ext.define('goc.view.common.ComboOrgano',
     {
         extend : 'Ext.ux.uji.combo.Combo',
-        alias : 'widget.comboReunionTipoOrgano',
+        alias : 'widget.comboOrgano',
         allowBlank: true,
-        emptyText: appI18N.reuniones.tipoOrgano,
+        emptyText: appI18N.reuniones.organo,
         showClearIcon : true,
         width: 200,
+
         bind: {
-            store: '{tipoOrganosStore}'
+            store: '{organosStore}'
         },
         listeners: {
             change: function(combo, recordId) {
                 if (!recordId) {
-                    return combo.up('reunionGrid').fireEvent('tipoOrganoSelected', null);
+                    return combo.up('panel').fireEvent('organoSelected', null, null);
                 }
                 var record = combo.getStore().getById(recordId);
-                combo.up('reunionGrid').fireEvent('tipoOrganoSelected', recordId);
+                combo.up('panel').fireEvent('organoSelected', recordId, record.get('externo'));
             }
         }
+
     });

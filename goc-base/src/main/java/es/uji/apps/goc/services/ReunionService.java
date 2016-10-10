@@ -103,8 +103,13 @@ public class ReunionService
     @InjectParam
     private PuntoOrdenDiaDocumentoDAO puntoOrdenDiaDocumentoDAO;
 
-    public List<Reunion> getReunionesByUserId(Long connectedUserId)
+    public List<Reunion> getReunionesByUserId(Boolean completada, Long connectedUserId)
     {
+        if (completada)
+        {
+            return reunionDAO.getReunionesCompletadasByUserId(connectedUserId);
+        }
+
         return reunionDAO.getReunionesByUserId(connectedUserId);
     }
 
@@ -124,8 +129,8 @@ public class ReunionService
     }
 
     public Reunion updateReunion(Long reunionId, String asunto, String descripcion, Long duracion,
-            Date fecha, String ubicacion, String urlGrabacion, Long numeroSesion, Boolean publica,
-            Boolean telematica, String telematicaDescripcion, Long connectedUserId)
+                                 Date fecha, String ubicacion, String urlGrabacion, Long numeroSesion, Boolean publica,
+                                 Boolean telematica, String telematicaDescripcion, Long connectedUserId)
             throws ReunionNoDisponibleException
     {
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
@@ -164,7 +169,8 @@ public class ReunionService
 
     @Transactional
     public void updateOrganosReunionByReunionId(Long reunionId, List<Organo> organos,
-            Long connectedUserId) throws ReunionNoDisponibleException, MiembrosExternosException
+                                                Long connectedUserId)
+            throws ReunionNoDisponibleException, MiembrosExternosException
     {
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
 
@@ -198,7 +204,7 @@ public class ReunionService
     }
 
     private void addOrganosExternosNoExistentes(Reunion reunion, List<String> listaIdsExternos,
-            Long connectedUserId) throws MiembrosExternosException
+                                                Long connectedUserId) throws MiembrosExternosException
     {
         List<String> listaActualOrganosExternosIds = reunion.getReunionOrganos().stream()
                 .filter(el -> el.getOrganoExternoId() != null)
@@ -220,7 +226,7 @@ public class ReunionService
     }
 
     private void addOrganosLocalesNoExistentes(Reunion reunion, List<Long> listaIdsLocales,
-            Long connectedUserId) throws MiembrosExternosException
+                                               Long connectedUserId) throws MiembrosExternosException
     {
         List<Long> listaActualOrganosLocalesIds = reunion.getReunionOrganos().stream()
                 .filter(el -> el.getOrganoLocal() != null)
@@ -243,7 +249,7 @@ public class ReunionService
     }
 
     private void borraOrganosNoNecesarios(Reunion reunion, List<String> listaIdsExternos,
-            List<Long> listaIdsLocales)
+                                          List<Long> listaIdsLocales)
     {
         for (OrganoReunion cr : reunion.getReunionOrganos())
         {
@@ -263,7 +269,7 @@ public class ReunionService
     }
 
     public void firmarReunion(Long reunionId, String acuerdos, Long responsableActaId,
-            Long connectedUserId) throws ReunionYaCompletadaException, FirmaReunionException,
+                              Long connectedUserId) throws ReunionYaCompletadaException, FirmaReunionException,
             OrganosExternosException, PersonasExternasException
     {
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
@@ -444,15 +450,24 @@ public class ReunionService
         return documentoFirma;
     }
 
-    public List<Reunion> getReunionesByOrganoIdAndUserId(String organoId, Boolean externo,
-            Long connectedUserId)
+    public List<Reunion> getReunionesByOrganoIdAndUserId(String organoId, Boolean externo, Boolean completada,
+                                                         Long connectedUserId)
     {
         if (externo)
         {
+            if (completada)
+            {
+                return reunionDAO.getReunionesCompletadasByOrganoExternoIdAndUserId(organoId, connectedUserId);
+            }
             return reunionDAO.getReunionesByOrganoExternoIdAndUserId(organoId, connectedUserId);
         }
         else
         {
+            if (completada)
+            {
+                return reunionDAO.getReunionesCompletadasByOrganoLocalIdAndUserId(Long.parseLong(organoId),
+                        connectedUserId);
+            }
             return reunionDAO.getReunionesByOrganoLocalIdAndUserId(Long.parseLong(organoId),
                     connectedUserId);
         }
@@ -526,7 +541,7 @@ public class ReunionService
     }
 
     private Comentario getComentarioTemplateDessdeComentario(ReunionComentario comentario,
-            QReunion reunion)
+                                                             QReunion reunion)
     {
         Comentario comentarioTemplate = new Comentario();
         comentarioTemplate.setId(comentario.getId());
@@ -538,7 +553,7 @@ public class ReunionService
     }
 
     private List<OrganoTemplate> getOrganosTemplateDesdeOrganos(List<Organo> organos,
-            Reunion reunion)
+                                                                Reunion reunion)
     {
         List<OrganoTemplate> listaOrganoTemplate = new ArrayList<>();
 
@@ -746,7 +761,7 @@ public class ReunionService
     }
 
     private Map<String, List<Miembro>> getMapOrganosMiembros(List<Organo> organos,
-            Long connectedUserId) throws MiembrosExternosException
+                                                             Long connectedUserId) throws MiembrosExternosException
     {
         Map<String, List<Miembro>> mapOrganosMiembros = new HashMap<>();
 
@@ -796,8 +811,8 @@ public class ReunionService
         }
     }
 
-    public List<Reunion> getReunionesByTipoOrganoIdAndUserId(Long tipoOrganoId,
-            Long connectedUserId) throws OrganosExternosException
+    public List<Reunion> getReunionesByTipoOrganoIdAndUserId(Long tipoOrganoId, Boolean completada,
+                                                             Long connectedUserId) throws OrganosExternosException
     {
         List<Organo> listaOrganosExternos = organoService.getOrganosExternos();
 
@@ -831,6 +846,10 @@ public class ReunionService
             }
         }
 
-        return reuniones;
+        if (completada)
+        {
+            return reuniones.stream().filter(r -> r.isCompletada() != null && r.isCompletada()).collect(Collectors.toList());
+        }
+        return reuniones.stream().filter(r -> r.isCompletada() == null || r.isCompletada() == false).collect(Collectors.toList());
     }
 }

@@ -7,7 +7,7 @@ Ext.define('goc.view.reunion.Main',
             type: 'reunionViewModel'
         },
         requires: ['goc.view.reunion.ViewModel', 'goc.view.reunion.ReunionGrid', 'goc.view.reunion.OrdenDiaGrid', 'goc.view.reunion.FormReunion', 'goc.view.reunion.FormOrdenDia',
-            'goc.view.reunion.FormReunionAcuerdos', 'goc.view.reunion.FormDocumentacion', 'goc.view.reunion.FormOrdenDiaDocumentacion', 'goc.view.reunion.FormReunionMiembros', 'goc.view.reunion.ComboTipoOrgano', 'goc.view.reunion.ComboOrgano'],
+            'goc.view.reunion.FormReunionAcuerdos', 'goc.view.reunion.FormDocumentacion', 'goc.view.reunion.FormOrdenDiaDocumentacion', 'goc.view.reunion.FormReunionMiembros', 'goc.view.common.ComboTipoOrgano', 'goc.view.common.ComboOrgano'],
         title: appI18N.reuniones.tituloPrincipal,
         layout: 'fit',
 

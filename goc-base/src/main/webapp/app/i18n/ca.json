@@ -119,6 +119,9 @@
     "suplenteEmail": "E-Mail suplent",
     "asistencia": "Assistència"
   },
+  "historicoReuniones": {
+    "tituloGridReunionesCompletadas": "Històric de reunions completades"
+  },
   "cargos": {
     "titulo": "Càrrecs",
     "nombre": "Nom"
