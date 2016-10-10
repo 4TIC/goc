@@ -21,6 +21,7 @@ import es.uji.apps.goc.dao.OrganoDAO;
 import es.uji.apps.goc.dao.ReunionDAO;
 import es.uji.apps.goc.dto.OrganoAutorizado;
 import es.uji.apps.goc.dto.OrganoExterno;
+import es.uji.apps.goc.dto.OrganoReunion;
 import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.exceptions.OrganoNoDisponibleException;
 import es.uji.apps.goc.exceptions.OrganosExternosException;
@@ -67,10 +68,11 @@ public class OrganoService
         List<Organo> organosExternos = getOrganosExternos();
         List<String> listaOrganosIdsPermitidos = getOrganosIdsPermitidosAutorizado(connectedUserId);
         organos.addAll(
-                organosExternos.stream().filter(o -> !o.isInactivo()).filter(o -> listaOrganosIdsPermitidos.contains(o.getId()))
+                organosExternos.stream().filter(o -> listaOrganosIdsPermitidos.contains(o.getId()))
                         .collect(Collectors.toList()));
         List<Organo> organosLocales = organoDAO.getOrganosByAutorizadoId(connectedUserId);
-        organos.addAll(organosLocales.stream().filter(o -> !o.isInactivo()).collect(Collectors.toList()));
+        organos.addAll(
+                organosLocales.stream().filter(o -> !o.isInactivo()).collect(Collectors.toList()));
         return organos;
     }
 
@@ -87,8 +89,8 @@ public class OrganoService
         return organoDAO.insertOrgano(organo, connectedUserId);
     }
 
-    public Organo updateOrgano(Long organoId, String nombre, Long tipoOrganoId,
-                               Boolean inactivo, Long connectedUserId) throws OrganoNoDisponibleException
+    public Organo updateOrgano(Long organoId, String nombre, Long tipoOrganoId, Boolean inactivo,
+            Long connectedUserId) throws OrganoNoDisponibleException
     {
         Organo organo = organoDAO.getOrganoByIdAndUserId(organoId, connectedUserId);
 
@@ -154,23 +156,28 @@ public class OrganoService
             throws OrganosExternosException
     {
         List<Organo> organos = new ArrayList<>();
-        List<Organo> organosExternos = getOrganosExternos();
-
-        organos.addAll(organoDAO.getOrganosByReunionIdAndUserId(reunionId, connectedUserId));
 
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
-        List<String> listaIdsOrganosExternos = reunion.getReunionOrganos().stream()
-                .map(el -> el.getOrganoExternoId()).collect(Collectors.toList());
-
-        for (Organo organoExterno : organosExternos)
+        for (OrganoReunion organoReunion : reunion.getReunionOrganos())
         {
-            if (listaIdsOrganosExternos.contains(organoExterno.getId()))
-            {
-                organos.add(organoExterno);
-            }
+            organos.add(getOrganoDeOrganoReunion(organoReunion));
         }
 
         return organos;
+    }
+
+    private Organo getOrganoDeOrganoReunion(OrganoReunion organoReunion)
+    {
+        Organo organo = new Organo();
+
+        organo.setId(organoReunion.getOrganoId());
+        organo.setExterno(organoReunion.isExterno());
+        organo.setNombre(organoReunion.getOrganoNombre());
+
+        TipoOrgano tipoOrgano = new TipoOrgano(organoReunion.getTipoOrganoId());
+        organo.setTipoOrgano(tipoOrgano);
+
+        return organo;
     }
 
     private List<Organo> organosExternosDTOToOrgano(List<OrganoExterno> listaOrganosExternos)
@@ -248,4 +255,8 @@ public class OrganoService
         return permisosAdecuados;
     }
 
+    public Organo getOrganoById(Long organoId, Long connectedUserId)
+    {
+        return organoDAO.getOrganoByIdAndUserId(organoId, connectedUserId);
+    }
 }

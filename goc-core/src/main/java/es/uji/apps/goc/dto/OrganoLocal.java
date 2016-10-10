@@ -36,9 +36,6 @@ public class OrganoLocal implements Serializable
     private Date fechaCreacion;
 
     @OneToMany(mappedBy = "organo", cascade = CascadeType.REMOVE)
-    private Set<OrganoReunion> organoReuniones;
-
-    @OneToMany(mappedBy = "organo", cascade = CascadeType.REMOVE)
     private Set<MiembroLocal> miembros;
 
     @ManyToOne
@@ -85,16 +82,6 @@ public class OrganoLocal implements Serializable
 
     public OrganoLocal(Long id) {
         this.id = id;
-    }
-
-    public Set<OrganoReunion> getOrganoReuniones()
-    {
-        return organoReuniones;
-    }
-
-    public void setOrganoReuniones(Set<OrganoReunion> organoReuniones)
-    {
-        this.organoReuniones = organoReuniones;
     }
 
     public Long getCreadorId()

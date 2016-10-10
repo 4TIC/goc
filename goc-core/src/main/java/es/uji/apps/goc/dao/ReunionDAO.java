@@ -64,7 +64,8 @@ public class ReunionDAO extends BaseDAODatabaseImpl
         return query.from(qReunion).join(qReunion.reunionOrganos, qOrganoReunion)
                 .where(qReunion.creadorId.eq(connectedUserId)
                         .and(qReunion.completada.isNull().or(qReunion.completada.eq(false)))
-                        .and(qOrganoReunion.organo.id.eq(organoId)))
+                        .and(qOrganoReunion.organoId.eq(organoId.toString())
+                                .and(qOrganoReunion.externo.eq(false))))
                 .orderBy(qReunion.fechaCreacion.desc()).list(qReunion);
     }
 
@@ -75,7 +76,8 @@ public class ReunionDAO extends BaseDAODatabaseImpl
 
         return query.from(qReunion).join(qReunion.reunionOrganos, qOrganoReunion)
                 .where(qReunion.creadorId.eq(connectedUserId).and(qReunion.completada.eq(true))
-                        .and(qOrganoReunion.organo.id.eq(organoId)))
+                        .and(qOrganoReunion.organoId.eq(organoId.toString())
+                                .and(qOrganoReunion.externo.eq(false))))
                 .orderBy(qReunion.fechaCreacion.desc()).list(qReunion);
     }
 
@@ -87,7 +89,8 @@ public class ReunionDAO extends BaseDAODatabaseImpl
         return query.from(qReunion).join(qReunion.reunionOrganos, qOrganoReunion)
                 .where(qReunion.creadorId.eq(connectedUserId)
                         .and(qReunion.completada.isNull().or(qReunion.completada.eq(false)))
-                        .and(qOrganoReunion.organoExternoId.eq(organoId)))
+                        .and(qOrganoReunion.organoId.eq(organoId)
+                                .and(qOrganoReunion.externo.eq(true))))
                 .orderBy(qReunion.fechaCreacion.desc()).list(qReunion);
     }
 
@@ -97,8 +100,8 @@ public class ReunionDAO extends BaseDAODatabaseImpl
         JPAQuery query = new JPAQuery(entityManager);
 
         return query.from(qReunion).join(qReunion.reunionOrganos, qOrganoReunion)
-                .where(qReunion.creadorId.eq(connectedUserId).and(qReunion.completada.eq(true))
-                        .and(qOrganoReunion.organoExternoId.eq(organoId)))
+                .where(qReunion.creadorId.eq(connectedUserId).and(qReunion.completada.eq(true)).and(
+                        qOrganoReunion.organoId.eq(organoId).and(qOrganoReunion.externo.eq(true))))
                 .orderBy(qReunion.fechaCreacion.desc()).list(qReunion);
     }
 

@@ -28,9 +28,6 @@ public class OrganoReunionMiembroService
     private MiembroService miembroService;
 
     @Autowired
-    private OrganoReunionService organoReunionService;
-
-    @Autowired
     private OrganoReunionDAO organoReunionDAO;
 
     public void updateOrganoReunionMiembrosDesdeOrganosUI(List<UIEntity> organosUI, Long reunionId,
@@ -52,14 +49,14 @@ public class OrganoReunionMiembroService
             throws MiembrosExternosException
     {
         List<Miembro> miembros = new ArrayList();
-        if (organoReunion.getOrganoExternoId() != null)
+        if (organoReunion.isExterno())
         {
-            miembros = miembroService.getMiembrosExternos(organoReunion.getOrganoExternoId(),
+            miembros = miembroService.getMiembrosExternos(organoReunion.getOrganoId(),
                     connectedUserId);
         }
         else
         {
-            miembros = miembroService.getMiembrosLocales(organoReunion.getOrganoLocal().getId(),
+            miembros = miembroService.getMiembrosLocales(Long.parseLong(organoReunion.getOrganoId()),
                     connectedUserId);
         }
 
@@ -68,7 +65,7 @@ public class OrganoReunionMiembroService
             OrganoReunionMiembro organoReunionMiembro = new OrganoReunionMiembro();
             organoReunionMiembro.setOrganoReunion(organoReunion);
 
-            if (organoReunion.getOrganoExternoId() != null)
+            if (organoReunion.isExterno())
             {
                 organoReunionMiembro.setOrganoExterno(true);
             }

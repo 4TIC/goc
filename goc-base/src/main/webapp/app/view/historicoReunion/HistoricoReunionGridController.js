@@ -3,17 +3,15 @@ Ext.define('goc.view.historicoReunion.HistoricoReunionGridController', {
     alias: 'controller.historicoReunionGridController',
     onLoad: function () {
         var viewModel = this.getViewModel();
-        console.log('hola')
-        viewModel.getStore('reunionesStore').load({
-            url: '/goc/rest/reuniones/completadas'
-        });
+        var store = viewModel.getStore('reunionesStore');
+        store.getProxy().url = '/goc/rest/reuniones/completadas';
+        store.load();
     },
     organoSelected: function (id, externo) {
         var grid = this.getView();
 
         if (id) {
             grid.getStore().load({
-                url: '/goc/rest/reuniones/completadas',
                 params: {
                     organoId: id,
                     externo: externo
@@ -22,7 +20,6 @@ Ext.define('goc.view.historicoReunion.HistoricoReunionGridController', {
         } else {
             var comboTipoOrgano = grid.down('comboReunionTipoOrgano');
             grid.getStore().load({
-                url: '/goc/rest/reuniones/completadas',
                 params: {
                     tipoOrganoId: comboTipoOrgano.getValue()
                 }
@@ -33,6 +30,7 @@ Ext.define('goc.view.historicoReunion.HistoricoReunionGridController', {
     filtraComboOrgano: function(tipoOrganoId) {
         var vm = this.getViewModel();
         var store = vm.getStore('organosStore');
+
         var filter  = new Ext.util.Filter(
             {
                 id : 'tipoOrganoId',
@@ -59,11 +57,12 @@ Ext.define('goc.view.historicoReunion.HistoricoReunionGridController', {
 
         if (id) {
             grid.getStore().load({
-                url: '/goc/rest/reuniones/completadas',
                 params: {
                     tipoOrganoId: id
                 }
             });
+            var comboOrganos = grid.down('comboOrgano');
+            comboOrganos.clearValue();
             this.filtraComboOrgano(id);
         } else {
             grid.getStore().load();

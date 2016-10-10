@@ -105,6 +105,8 @@ Ext.define('goc.view.reunion.ReunionGridController', {
                     tipoOrganoId: id
                 }
             });
+            var comboOrganos = grid.down('comboOrgano');
+            comboOrganos.clearValue();
             this.filtraComboOrgano(id);
         } else {
             grid.getStore().load();

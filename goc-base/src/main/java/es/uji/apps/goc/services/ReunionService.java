@@ -31,7 +31,6 @@ import es.uji.apps.goc.dao.ReunionDocumentoDAO;
 import es.uji.apps.goc.dto.MiembroFirma;
 import es.uji.apps.goc.dto.MiembroTemplate;
 import es.uji.apps.goc.dto.OrganoFirma;
-import es.uji.apps.goc.dto.OrganoLocal;
 import es.uji.apps.goc.dto.OrganoReunion;
 import es.uji.apps.goc.dto.OrganoReunionMiembro;
 import es.uji.apps.goc.dto.OrganoTemplate;
@@ -129,8 +128,8 @@ public class ReunionService
     }
 
     public Reunion updateReunion(Long reunionId, String asunto, String descripcion, Long duracion,
-                                 Date fecha, String ubicacion, String urlGrabacion, Long numeroSesion, Boolean publica,
-                                 Boolean telematica, String telematicaDescripcion, Long connectedUserId)
+            Date fecha, String ubicacion, String urlGrabacion, Long numeroSesion, Boolean publica,
+            Boolean telematica, String telematicaDescripcion, Long connectedUserId)
             throws ReunionNoDisponibleException
     {
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
@@ -169,8 +168,8 @@ public class ReunionService
 
     @Transactional
     public void updateOrganosReunionByReunionId(Long reunionId, List<Organo> organos,
-                                                Long connectedUserId)
-            throws ReunionNoDisponibleException, MiembrosExternosException
+            Long connectedUserId)
+            throws ReunionNoDisponibleException, MiembrosExternosException, OrganosExternosException
     {
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
 
@@ -204,11 +203,13 @@ public class ReunionService
     }
 
     private void addOrganosExternosNoExistentes(Reunion reunion, List<String> listaIdsExternos,
-                                                Long connectedUserId) throws MiembrosExternosException
+            Long connectedUserId) throws MiembrosExternosException, OrganosExternosException
     {
         List<String> listaActualOrganosExternosIds = reunion.getReunionOrganos().stream()
-                .filter(el -> el.getOrganoExternoId() != null)
-                .map(elem -> elem.getOrganoExternoId()).collect(Collectors.toList());
+                .filter(el -> el.isExterno()).map(elem -> elem.getOrganoId())
+                .collect(Collectors.toList());
+
+        List<Organo> organosExternos = organoService.getOrganosExternos();
 
         for (String organoId : listaIdsExternos)
         {
@@ -216,7 +217,12 @@ public class ReunionService
             {
                 OrganoReunion organoReunion = new OrganoReunion();
                 organoReunion.setReunion(reunion);
-                organoReunion.setOrganoExternoId(organoId);
+                organoReunion.setOrganoId(organoId);
+                organoReunion.setExterno(true);
+
+                Organo organo = getOrganoExternoById(organoId, organosExternos);
+                organoReunion.setOrganoNombre(organo.getNombre());
+                organoReunion.setTipoOrganoId(organo.getTipoOrgano().getId());
                 organoReunionDAO.insert(organoReunion);
 
                 organoReunionMiembroService.addOrganoReunionMiembros(organoReunion,
@@ -225,21 +231,37 @@ public class ReunionService
         }
     }
 
+    private Organo getOrganoExternoById(String organoId, List<Organo> organosExternos)
+    {
+        for (Organo organo : organosExternos)
+        {
+            if (organo.getId().equals(organoId))
+            {
+                return organo;
+            }
+        }
+
+        return null;
+    }
+
     private void addOrganosLocalesNoExistentes(Reunion reunion, List<Long> listaIdsLocales,
-                                               Long connectedUserId) throws MiembrosExternosException
+            Long connectedUserId) throws MiembrosExternosException
     {
         List<Long> listaActualOrganosLocalesIds = reunion.getReunionOrganos().stream()
-                .filter(el -> el.getOrganoLocal() != null)
-                .map(elem -> elem.getOrganoLocal().getId()).collect(Collectors.toList());
+                .filter(el -> el.isExterno() == false)
+                .map(elem -> Long.parseLong(elem.getOrganoId())).collect(Collectors.toList());
 
         for (Long organoId : listaIdsLocales)
         {
             if (!listaActualOrganosLocalesIds.contains(organoId))
             {
+                Organo organo = organoService.getOrganoById(organoId, connectedUserId);
                 OrganoReunion organoReunion = new OrganoReunion();
-                OrganoLocal organo = new OrganoLocal(organoId);
                 organoReunion.setReunion(reunion);
-                organoReunion.setOrganoLocal(organo);
+                organoReunion.setOrganoId(organoId.toString());
+                organoReunion.setExterno(false);
+                organoReunion.setOrganoNombre(organo.getNombre());
+                organoReunion.setTipoOrganoId(organo.getTipoOrgano().getId());
                 organoReunionDAO.insert(organoReunion);
 
                 organoReunionMiembroService.addOrganoReunionMiembros(organoReunion,
@@ -249,18 +271,17 @@ public class ReunionService
     }
 
     private void borraOrganosNoNecesarios(Reunion reunion, List<String> listaIdsExternos,
-                                          List<Long> listaIdsLocales)
+            List<Long> listaIdsLocales)
     {
         for (OrganoReunion cr : reunion.getReunionOrganos())
         {
-            if (cr.getOrganoLocal() != null
-                    && !listaIdsLocales.contains(cr.getOrganoLocal().getId()))
+            if (cr.isExterno() == false
+                    && !listaIdsLocales.contains(Long.parseLong(cr.getOrganoId())))
             {
                 organoReunionDAO.delete(OrganoReunion.class, cr.getId());
             }
 
-            if (cr.getOrganoExternoId() != null
-                    && !listaIdsExternos.contains(cr.getOrganoExternoId()))
+            if (cr.isExterno() && !listaIdsExternos.contains(cr.getOrganoId()))
             {
                 organoReunionDAO.delete(OrganoReunion.class, cr.getId());
             }
@@ -269,7 +290,7 @@ public class ReunionService
     }
 
     public void firmarReunion(Long reunionId, String acuerdos, Long responsableActaId,
-                              Long connectedUserId) throws ReunionYaCompletadaException, FirmaReunionException,
+            Long connectedUserId) throws ReunionYaCompletadaException, FirmaReunionException,
             OrganosExternosException, PersonasExternasException
     {
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
@@ -450,14 +471,15 @@ public class ReunionService
         return documentoFirma;
     }
 
-    public List<Reunion> getReunionesByOrganoIdAndUserId(String organoId, Boolean externo, Boolean completada,
-                                                         Long connectedUserId)
+    public List<Reunion> getReunionesByOrganoIdAndUserId(String organoId, Boolean externo,
+            Boolean completada, Long connectedUserId)
     {
         if (externo)
         {
             if (completada)
             {
-                return reunionDAO.getReunionesCompletadasByOrganoExternoIdAndUserId(organoId, connectedUserId);
+                return reunionDAO.getReunionesCompletadasByOrganoExternoIdAndUserId(organoId,
+                        connectedUserId);
             }
             return reunionDAO.getReunionesByOrganoExternoIdAndUserId(organoId, connectedUserId);
         }
@@ -465,8 +487,8 @@ public class ReunionService
         {
             if (completada)
             {
-                return reunionDAO.getReunionesCompletadasByOrganoLocalIdAndUserId(Long.parseLong(organoId),
-                        connectedUserId);
+                return reunionDAO.getReunionesCompletadasByOrganoLocalIdAndUserId(
+                        Long.parseLong(organoId), connectedUserId);
             }
             return reunionDAO.getReunionesByOrganoLocalIdAndUserId(Long.parseLong(organoId),
                     connectedUserId);
@@ -541,7 +563,7 @@ public class ReunionService
     }
 
     private Comentario getComentarioTemplateDessdeComentario(ReunionComentario comentario,
-                                                             QReunion reunion)
+            QReunion reunion)
     {
         Comentario comentarioTemplate = new Comentario();
         comentarioTemplate.setId(comentario.getId());
@@ -553,7 +575,7 @@ public class ReunionService
     }
 
     private List<OrganoTemplate> getOrganosTemplateDesdeOrganos(List<Organo> organos,
-                                                                Reunion reunion)
+            Reunion reunion)
     {
         List<OrganoTemplate> listaOrganoTemplate = new ArrayList<>();
 
@@ -761,7 +783,7 @@ public class ReunionService
     }
 
     private Map<String, List<Miembro>> getMapOrganosMiembros(List<Organo> organos,
-                                                             Long connectedUserId) throws MiembrosExternosException
+            Long connectedUserId) throws MiembrosExternosException
     {
         Map<String, List<Miembro>> mapOrganosMiembros = new HashMap<>();
 
@@ -812,7 +834,7 @@ public class ReunionService
     }
 
     public List<Reunion> getReunionesByTipoOrganoIdAndUserId(Long tipoOrganoId, Boolean completada,
-                                                             Long connectedUserId) throws OrganosExternosException
+            Long connectedUserId) throws OrganosExternosException
     {
         List<Organo> listaOrganosExternos = organoService.getOrganosExternos();
 
@@ -848,8 +870,10 @@ public class ReunionService
 
         if (completada)
         {
-            return reuniones.stream().filter(r -> r.isCompletada() != null && r.isCompletada()).collect(Collectors.toList());
+            return reuniones.stream().filter(r -> r.isCompletada() != null && r.isCompletada())
+                    .collect(Collectors.toList());
         }
-        return reuniones.stream().filter(r -> r.isCompletada() == null || r.isCompletada() == false).collect(Collectors.toList());
+        return reuniones.stream().filter(r -> r.isCompletada() == null || r.isCompletada() == false)
+                .collect(Collectors.toList());
     }
 }

@@ -23,17 +23,8 @@ public class ExternalService
         TipoOrgano t1 = new TipoOrgano(5L, "98", "Departamento Externo");
         TipoOrgano t2 = new TipoOrgano(6L, "121", "Unidad de Gestión Externa");
 
-        for (Integer i=1; i<5; i++) {
+        for (Integer i=1; i<10; i++) {
             Organo organo = new Organo("E" + i.toString(), "Organo " + i.toString() + " Externo", t1);
-            organo.setInactivo(i % 2 == 0);
-            listaOrganos.add(organo);
-
-        }
-
-        for (Integer i=5; i<10; i++)
-        {
-            Organo organo = new Organo("E" + i.toString(), "Organo " + i.toString() + " Externo", t2);
-            organo.setInactivo(i % 2 == 0);
             listaOrganos.add(organo);
         }
 
@@ -44,8 +35,8 @@ public class ExternalService
     {
         List<Miembro> listaMiembros = new ArrayList<>();
         Organo organo = new Organo();
-        organo.setId(organoId.toString());
-        organo.setNombre("Organo Externo 1");
+        organo.setId(organoId);
+        organo.setNombre("Organo Externo " + organoId);
 
         Cargo c1 = new Cargo("1");
         c1.setNombre("Presidente");

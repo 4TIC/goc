@@ -12,7 +12,6 @@ import com.mysema.query.jpa.impl.JPAQuery;
 import es.uji.apps.goc.dto.OrganoLocal;
 import es.uji.apps.goc.dto.QOrganoAutorizado;
 import es.uji.apps.goc.dto.QOrganoLocal;
-import es.uji.apps.goc.dto.QOrganoReunion;
 import es.uji.apps.goc.dto.TipoOrganoLocal;
 import es.uji.apps.goc.model.Organo;
 import es.uji.apps.goc.model.TipoOrgano;
@@ -73,20 +72,6 @@ public class OrganoDAO extends BaseDAODatabaseImpl
         organo.setTipoOrgano(tipoOrgano);
 
         return organo;
-    }
-
-    public List<Organo> getOrganosByReunionIdAndUserId(Long reunionId, Long connectedUserId)
-    {
-        JPAQuery query = new JPAQuery(entityManager);
-        QOrganoLocal qOrganoLocal = QOrganoLocal.organoLocal;
-        QOrganoReunion qOrganoReunion = QOrganoReunion.organoReunion;
-
-        query.from(qOrganoLocal).join(qOrganoLocal.organoReuniones, qOrganoReunion)
-                .where(qOrganoReunion.reunion.id.eq(reunionId)
-                        .and(qOrganoLocal.creadorId.eq(connectedUserId)))
-                .orderBy(qOrganoLocal.fechaCreacion.desc());
-
-        return organosLocalesToOrganos(query.list(qOrganoLocal));
     }
 
     public Organo getOrganoByIdAndUserId(Long organoId, Long connectedUserId)

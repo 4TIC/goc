@@ -330,7 +330,7 @@ public class ReunionResource extends CoreBaseService
     public Response modificaReunionesOrgano(@PathParam("reunionId") Long reunionId,
             UIEntity reunionOrganosUI) throws ReunionNoDisponibleException, NotificacionesException,
             MiembrosExternosException, OrganoConvocadoNoPermitidoException,
-            ReunionYaCompletadaException, PersonasExternasException
+            ReunionYaCompletadaException, PersonasExternasException, OrganosExternosException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 

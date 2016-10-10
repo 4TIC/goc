@@ -23,7 +23,6 @@ import es.uji.apps.goc.exceptions.OrganoNoDisponibleException;
 import es.uji.apps.goc.exceptions.OrganosExternosException;
 import es.uji.apps.goc.model.Organo;
 import es.uji.apps.goc.model.TipoOrgano;
-import es.uji.apps.goc.services.OrganoReunionService;
 import es.uji.apps.goc.services.OrganoService;
 import es.uji.commons.rest.CoreBaseService;
 import es.uji.commons.rest.ParamUtils;
@@ -35,9 +34,6 @@ public class OrganoResource extends CoreBaseService
 {
     @InjectParam
     OrganoService organoService;
-
-    @InjectParam
-    OrganoReunionService organoReunionService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

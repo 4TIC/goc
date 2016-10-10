@@ -210,9 +210,6 @@ definitions:
       tipo_nombre:
         type: string
         description: Nombre del tipo de órgano.
-      inactivo:
-        type: boolean
-        description: El órgano está actualmente inactivo.
 
   Miembro:
     type: object

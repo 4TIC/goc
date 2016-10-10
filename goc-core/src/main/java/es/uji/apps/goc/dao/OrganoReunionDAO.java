@@ -33,8 +33,9 @@ public class OrganoReunionDAO extends BaseDAODatabaseImpl
             String organoId)
     {
         JPAQuery query = new JPAQuery(entityManager);
-        List<OrganoReunion> resultado = query.from(qOrganoReunion).where(qOrganoReunion.reunion.id
-                .eq(reunionId).and(qOrganoReunion.organoExternoId.eq(organoId)))
+        List<OrganoReunion> resultado = query.from(qOrganoReunion)
+                .where(qOrganoReunion.reunion.id.eq(reunionId).and(
+                        qOrganoReunion.organoId.eq(organoId).and(qOrganoReunion.externo.eq(true))))
                 .list(qOrganoReunion);
 
         if (resultado.size() == 0)
@@ -48,8 +49,9 @@ public class OrganoReunionDAO extends BaseDAODatabaseImpl
     public OrganoReunion getOrganoReunionByReunionIdAndOrganoLocalId(Long reunionId, Long organoId)
     {
         JPAQuery query = new JPAQuery(entityManager);
-        List<OrganoReunion> resultado = query.from(qOrganoReunion).where(
-                qOrganoReunion.reunion.id.eq(reunionId).and(qOrganoReunion.organo.id.eq(organoId)))
+        List<OrganoReunion> resultado = query.from(qOrganoReunion)
+                .where(qOrganoReunion.reunion.id.eq(reunionId).and(qOrganoReunion.organoId
+                        .eq(organoId.toString()).and(qOrganoReunion.externo.eq(false))))
                 .list(qOrganoReunion);
 
         if (resultado.size() == 0)
@@ -70,15 +72,16 @@ public class OrganoReunionDAO extends BaseDAODatabaseImpl
     public List<OrganoReunion> getOrganoReunionByOrganoExternoId(String organoExternoId)
     {
         JPAQuery query = new JPAQuery(entityManager);
-        return query.from(qOrganoReunion).where(qOrganoReunion.organoExternoId.eq(organoExternoId))
+        return query.from(qOrganoReunion).where(
+                qOrganoReunion.organoId.eq(organoExternoId).and(qOrganoReunion.externo.eq(true)))
                 .list(qOrganoReunion);
     }
 
     public List<OrganoReunion> getOrganoReunionByOrganoLocalId(Long organoLocalId)
     {
         JPAQuery query = new JPAQuery(entityManager);
-        return query.from(qOrganoReunion).where(qOrganoReunion.organo.id.eq(organoLocalId))
-                .list(qOrganoReunion);
+        return query.from(qOrganoReunion).where(qOrganoReunion.organoId.eq(organoLocalId.toString())
+                .and(qOrganoReunion.externo.eq(false))).list(qOrganoReunion);
     }
 
 }

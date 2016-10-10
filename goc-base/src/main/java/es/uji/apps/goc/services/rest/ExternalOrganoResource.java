@@ -44,7 +44,6 @@ public class ExternalOrganoResource extends CoreBaseService
 
             organoUI.put("id", organo.getId());
             organoUI.put("nombre", organo.getNombre());
-            organoUI.put("inactivo", organo.isInactivo());
             organoUI.put("tipo_id", organo.getTipoOrgano().getId());
             organoUI.put("tipo_codigo", organo.getTipoOrgano().getCodigo());
             organoUI.put("tipo_nombre", organo.getTipoOrgano().getNombre());

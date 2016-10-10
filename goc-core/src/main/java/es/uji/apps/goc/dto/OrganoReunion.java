@@ -24,29 +24,24 @@ public class OrganoReunion implements Serializable
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "ORGANO_ID")
-    private OrganoLocal organo;
+    @Column(name = "ORGANO_ID")
+    private String organoId;
+
+    @Column(name = "EXTERNO")
+    private Boolean externo;
 
     @ManyToOne
     @JoinColumn(name = "REUNION_ID")
     private Reunion reunion;
 
-    @Column(name = "ORGANO_EXTERNO_ID")
-    private String organoExternoId;
+    @Column(name = "ORGANO_NOMBRE")
+    private String organoNombre;
+
+    @Column(name = "TIPO_ORGANO_ID")
+    private Long tipoOrganoId;
 
     @OneToMany(mappedBy = "organoReunion", cascade = CascadeType.REMOVE)
     private Set<OrganoReunionMiembro> miembros;
-
-    public OrganoLocal getOrganoLocal()
-    {
-        return organo;
-    }
-
-    public void setOrganoLocal(OrganoLocal organo)
-    {
-        this.organo = organo;
-    }
 
     public Reunion getReunion()
     {
@@ -68,21 +63,51 @@ public class OrganoReunion implements Serializable
         this.id = id;
     }
 
-    public String getOrganoExternoId()
-    {
-        return organoExternoId;
-    }
-
-    public void setOrganoExternoId(String organoExternoId)
-    {
-        this.organoExternoId = organoExternoId;
-    }
-
     public Set<OrganoReunionMiembro> getMiembros() {
         return miembros;
     }
 
     public void setMiembros(Set<OrganoReunionMiembro> miembros) {
         this.miembros = miembros;
+    }
+
+    public String getOrganoNombre()
+    {
+        return organoNombre;
+    }
+
+    public void setOrganoNombre(String organoNombre)
+    {
+        this.organoNombre = organoNombre;
+    }
+
+    public Long getTipoOrganoId()
+    {
+        return tipoOrganoId;
+    }
+
+    public void setTipoOrganoId(Long tipoOrganoId)
+    {
+        this.tipoOrganoId = tipoOrganoId;
+    }
+
+    public String getOrganoId()
+    {
+        return organoId;
+    }
+
+    public void setOrganoId(String organoId)
+    {
+        this.organoId = organoId;
+    }
+
+    public Boolean isExterno()
+    {
+        return externo;
+    }
+
+    public void setExterno(Boolean externo)
+    {
+        this.externo = externo;
     }
 }
