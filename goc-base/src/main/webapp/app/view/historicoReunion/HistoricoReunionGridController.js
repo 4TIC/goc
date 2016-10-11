@@ -68,6 +68,28 @@ Ext.define('goc.view.historicoReunion.HistoricoReunionGridController', {
             grid.getStore().load();
             this.limpiaFiltrosComboOrgano();
         }
+    },
+
+    onSearchReunion: function(field, searchString) {
+        var viewModel = this.getViewModel();
+        var store = viewModel.getStore('reunionesStore');
+
+        if (!searchString) {
+            store.clearFilter();
+            return;
+        }
+
+        var filter  = new Ext.util.Filter(
+            {
+                id : 'search',
+                property : 'asunto',
+                value : searchString,
+                anyMatch: true
+            });
+
+        store.addFilter(filter);
+
     }
+
 
 });

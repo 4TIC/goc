@@ -7,6 +7,7 @@ $(function () {
             type: "GET",
             url: "/goc/rest/reuniones/" + reunionId + "/comentarios",
             success: function (response) {
+                if (response.data.length ===0) return;
                 var html = '<h1>' + appI18N.acta.comentarios + '</h1>';
 
                 response.data.map(function (comentario) {

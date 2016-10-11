@@ -289,6 +289,7 @@ public class ReunionService
         }
     }
 
+    @Transactional
     public void firmarReunion(Long reunionId, String acuerdos, Long responsableActaId,
             Long connectedUserId) throws ReunionYaCompletadaException, FirmaReunionException,
             OrganosExternosException, PersonasExternasException

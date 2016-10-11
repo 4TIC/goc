@@ -43,12 +43,12 @@ public class PuntoOrdenDiaDAO extends BaseDAODatabaseImpl
 
     }
 
-    public PuntoOrdenDia getSiguientePuntoOrdenDiaByOrden(Long orden)
+    public PuntoOrdenDia getSiguientePuntoOrdenDiaByOrden(Long reunionId, Long orden)
     {
         JPAQuery query = new JPAQuery(entityManager);
         List<PuntoOrdenDia> puntosOrdenDia = query.from(qPuntoOrdenDia)
-                .where(qPuntoOrdenDia.orden.gt(orden)).orderBy(qPuntoOrdenDia.orden.asc())
-                .list(qPuntoOrdenDia);
+                .where(qPuntoOrdenDia.reunion.id.eq(reunionId).and(qPuntoOrdenDia.orden.gt(orden)))
+                .orderBy(qPuntoOrdenDia.orden.asc()).list(qPuntoOrdenDia);
 
         if (puntosOrdenDia.size() == 0)
         {

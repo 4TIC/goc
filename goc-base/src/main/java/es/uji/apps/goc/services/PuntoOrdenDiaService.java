@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import es.uji.apps.goc.dao.PuntoOrdenDiaDAO;
 import es.uji.apps.goc.dto.PuntoOrdenDia;
 import es.uji.apps.goc.exceptions.PuntoOrdenDiaNoDisponibleException;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Component
@@ -65,6 +66,7 @@ public class PuntoOrdenDiaService
         return puntoOrdenDiaDAO.insert(puntoOrdenDia);
     }
 
+    @Transactional
     public void subePuntoOrdenDia(Long reunionId, Long puntoOrdenDiaId, Long connectedUserId)
     {
         PuntoOrdenDia puntoOrdenDia = puntoOrdenDiaDAO.getPuntoOrdenDiaById(puntoOrdenDiaId);
@@ -75,7 +77,9 @@ public class PuntoOrdenDiaService
         {
             Long orden = puntoOrdenDia.getOrden();
             puntoOrdenDiaDAO.actualizaOrden(puntoOrdenDiaId, anteriorPuntoOrdenDia.getOrden());
+            puntoOrdenDiaDAO.flush();
             puntoOrdenDiaDAO.actualizaOrden(anteriorPuntoOrdenDia.getId(), orden);
+            puntoOrdenDiaDAO.flush();
             return;
         }
 
@@ -88,17 +92,20 @@ public class PuntoOrdenDiaService
         }
     }
 
+    @Transactional
     public void bajaPuntoOrdenDia(Long reunionId, Long puntoOrdenDiaId, Long connectedUserId)
     {
         PuntoOrdenDia puntoOrdenDia = puntoOrdenDiaDAO.getPuntoOrdenDiaById(puntoOrdenDiaId);
         PuntoOrdenDia siguientePuntoOrdenDia = puntoOrdenDiaDAO
-                .getSiguientePuntoOrdenDiaByOrden(puntoOrdenDia.getOrden());
+                .getSiguientePuntoOrdenDiaByOrden(reunionId, puntoOrdenDia.getOrden());
 
         if (siguientePuntoOrdenDia != null)
         {
             Long orden = puntoOrdenDia.getOrden();
             puntoOrdenDiaDAO.actualizaOrden(puntoOrdenDiaId, siguientePuntoOrdenDia.getOrden());
+            puntoOrdenDiaDAO.flush();
             puntoOrdenDiaDAO.actualizaOrden(siguientePuntoOrdenDia.getId(), orden);
+            puntoOrdenDiaDAO.flush();
         }
 
         List<PuntoOrdenDia> listaPuntosOrdenDia = puntoOrdenDiaDAO

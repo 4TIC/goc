@@ -26,12 +26,12 @@ Ext.define('goc.view.reunion.OrdenDiaGrid',
                 xtype: 'actioncolumn',
                 title: appI18N.reuniones.posicion,
                 align: 'right',
-                width: 50,
+                width: 25,
                 items: [
                     {
                         iconCls: 'x-fa fa-arrow-up',
                         tooltip: appI18N.reuniones.subir,
-                        isDisabled: function(grid) {
+                        isDisabled: function (grid) {
                             var reunionGrid = Ext.ComponentQuery.query("reunionGrid")[0];
                             var record = reunionGrid.getView().getSelectionModel().getSelection()[0];
                             return record.get('completada');
@@ -41,7 +41,14 @@ Ext.define('goc.view.reunion.OrdenDiaGrid',
                             var puntoOrdenDiaId = rec.get('id');
                             grid.up('panel[name=ordenDia]').fireEvent('subePuntoOrdenDia', puntoOrdenDiaId);
                         }
-                    },
+                    }]
+            },
+            {
+                xtype: 'actioncolumn',
+                title: appI18N.reuniones.posicion,
+                align: 'right',
+                width: 25,
+                items: [
                     {
                         iconCls: 'x-fa fa-arrow-down',
                         tooltip: appI18N.reuniones.bajar,

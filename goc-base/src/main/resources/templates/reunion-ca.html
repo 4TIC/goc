@@ -31,9 +31,9 @@
         <li th:text="'Data: ' + ${#dates.format(reunion.fecha, 'dd/MM/YYYY HH:mm')}"></li>
         <li th:if="${reunion.responsableActa}" th:text="'Responsable d\'acta: ' + ${reunion.responsableActa}"></li>
         <li th:if="${reunion.numeroSesion} != null" th:text="'Número de sessió: ' + ${reunion.numeroSesion}"></li>
-        <li th:text="'Lloc: ' + ${reunion.ubicacion}"></li>
+        <li th:if="${reunion.ubicacion}" th:text="'Lloc: ' + ${reunion.ubicacion}"></li>
         <li th:text="'Duració: ' + ${reunion.duracion} + ' minuts'"></li>
-        <li th:text="'Descripció: ' + ${reunion.descripcion}"></li>
+        <li th:if="${reunion.descripcion}" th:text="'Descripció: ' + ${reunion.descripcion}"></li>
         <li th:if="${reunion.acuerdos != null}" th:text="'Acords: ' + ${reunion.acuerdos}"></li>
         <li th:if="${reunion.urlGrabacion != null}">URL gravació: <a th:href="${reunion.urlGrabacion}" th:text="${reunion.urlGrabacion}"></a></li>
         <li th:if="${reunion.telematica}">Reunió telemàtica. Instruccions: <span th:text="${reunion.telematicaDescripcion}"></span></li>
@@ -100,7 +100,7 @@
         <textarea style="width: 100%; height: 240px;"></textarea>
         <button class="post-comentario">Afegeix</button>
       </div>
-      <hr style="margin-top: 2em;"/>
+      <br style="margin-top: 2em;"/>
       <button th:if="!${reunion.completada}" class="add-comentario">Afegir un comentari</button>
       <div class="comentarios"></div>
     </div>

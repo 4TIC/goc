@@ -64,7 +64,16 @@ Ext.define('goc.view.historicoReunion.HistoricoReunionGrid', {
             }
         }],
 
-    tbar: ['->',
+    tbar: [
+        {
+            xtype: 'textfield',
+            emptyText: appI18N.reuniones.buscarReunion,
+            flex: 1,
+            name: 'searchReunion',
+            listeners: {
+                change: 'onSearchReunion'
+            }
+        },
         {
             xtype: 'comboReunionTipoOrgano',
             margin: '0 10 10 0'
