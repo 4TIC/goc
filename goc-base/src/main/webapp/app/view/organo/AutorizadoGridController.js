@@ -57,8 +57,12 @@ Ext.define('goc.view.organo.AutorizadoGridController',
                 organoExterno : record.get('externo')
             });
 
-            store.add(autorizado);
-            store.sync();
+
+            var existeAutorizado = store.find('personaId', autorizado.get('personaId'));
+            if (existeAutorizado === -1) {
+                store.add(autorizado);
+                store.sync();
+            }
         });
     },
 

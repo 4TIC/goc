@@ -12,7 +12,7 @@ Ext.define('goc.view.organo.MainController', {
         var store = vm.getStore('organosStore');
 
         if (!recordId) {
-            store.clearFilter();
+            store.removeFilter('tipoOrganoId');
             return;
         }
 

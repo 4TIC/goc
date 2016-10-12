@@ -218,6 +218,17 @@ public class OrganoService
 
     public OrganoAutorizado addAutorizado(OrganoAutorizado organoAutorizado)
     {
+        List<OrganoAutorizado> listaAutorizados = organoAutorizadoDAO.getAutorizadosByOrgano(
+                organoAutorizado.getOrganoId(), organoAutorizado.isOrganoExterno());
+
+        List<OrganoAutorizado> existeAutorizado = listaAutorizados.stream()
+                .filter(oa -> oa.getPersonaId().equals(organoAutorizado.getPersonaId()))
+                .collect(Collectors.toList());
+
+        if (existeAutorizado.size() == 1) {
+            return existeAutorizado.get(0);
+        }
+
         return organoAutorizadoDAO.insert(organoAutorizado);
     }
 
