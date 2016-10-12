@@ -73,7 +73,7 @@ public class OrganoResource extends CoreBaseService
             listaOrganos = organoService.getOrganos(connectedUserId);
         }
 
-        listaOrganos = listaOrganos.stream().filter(o -> !o.isInactivo())
+        listaOrganos = listaOrganos.stream().filter(o -> o.isExterno() || !o.isInactivo())
                 .collect(Collectors.toList());
         return organosToUI(listaOrganos);
 

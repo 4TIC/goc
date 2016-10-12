@@ -48,7 +48,7 @@ Ext.define('goc.view.miembro.Grid', {
             },
             editor: {
                 xtype: 'combobox',
-                minWidth: 300,
+                allowBlank: false,
                 emptyText: 'Sel·lecciona un càrrec',
                 bind: {
                     store: '{cargosStore}'

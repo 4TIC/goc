@@ -38,6 +38,7 @@ Ext.define('goc.view.miembro.Main', {
         },
         {
             xtype: 'miembroGrid',
+            flex: 1,
             hidden: true
         }
     ],
