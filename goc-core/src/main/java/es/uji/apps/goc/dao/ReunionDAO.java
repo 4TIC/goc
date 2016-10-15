@@ -115,12 +115,11 @@ public class ReunionDAO extends BaseDAODatabaseImpl
                 .list(qReunion);
     }
 
-    public List<Reunion> getReunionesCompletadasByListaIds(List<Long> reunionesIds)
+    public List<Reunion> getReunionesTodasByListaIds(List<Long> reunionesIds)
     {
         JPAQuery query = new JPAQuery(entityManager);
 
-        return query.from(qReunion)
-                .where(qReunion.id.in(reunionesIds).and(qReunion.completada.eq(true)))
+        return query.from(qReunion).where(qReunion.id.in(reunionesIds))
                 .orderBy(qReunion.fechaCreacion.desc()).list(qReunion);
     }
 

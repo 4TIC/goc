@@ -812,7 +812,7 @@ public class ReunionService
         return reunionDAO.getReunionConOrganosById(reunionId);
     }
 
-    public List<Reunion> getReunionesCompletadasByAsistenteIdOrSuplenteId(Long connectedUserId)
+    public List<Reunion> getReunionesTodasByAsistenteIdOrSuplenteId(Long connectedUserId)
     {
         List<OrganoReunionMiembro> listaOrganosReunionMiembro = organoReunionMiembroDAO
                 .getReunionesByAsistenteIdOrSuplenteId(connectedUserId);
@@ -821,7 +821,7 @@ public class ReunionService
                 .map(organoReunionMiembro -> organoReunionMiembro.getReunionId())
                 .collect(Collectors.toList());
 
-        return reunionDAO.getReunionesCompletadasByListaIds(reunionesIds);
+        return reunionDAO.getReunionesTodasByListaIds(reunionesIds);
     }
 
     public void compruebaReunionNoCompletada(Long reunionId) throws ReunionYaCompletadaException

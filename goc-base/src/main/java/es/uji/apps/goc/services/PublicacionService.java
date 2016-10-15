@@ -1,6 +1,19 @@
 package es.uji.apps.goc.services;
 
+import java.util.List;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.sun.jersey.api.core.InjectParam;
+
 import es.uji.apps.goc.dao.ReunionDAO;
 import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.dto.ReunionTemplate;
@@ -12,12 +25,6 @@ import es.uji.apps.goc.templates.HTMLTemplate;
 import es.uji.apps.goc.templates.Template;
 import es.uji.commons.rest.CoreBaseService;
 import es.uji.commons.sso.AccessManager;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import java.util.List;
 
 @Service
 @Path("publicacion")
@@ -37,7 +44,7 @@ public class PublicacionService extends CoreBaseService
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
-        List<Reunion> reuniones = reunionService.getReunionesCompletadasByAsistenteIdOrSuplenteId(connectedUserId);
+        List<Reunion> reuniones = reunionService.getReunionesTodasByAsistenteIdOrSuplenteId(connectedUserId);
 
         String applang = getLangCode(lang);
         Template template = new HTMLTemplate("reuniones-" + applang);
