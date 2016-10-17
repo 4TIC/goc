@@ -46,7 +46,7 @@ Ext.define('goc.view.reunion.FormReunionController', {
             viewModel: {
                 data: {
                     reunionId: reunionId,
-                    reunionCompletada: reunion.get('completada'),
+                    reunionCompletada: reunionId ? reunion.get('completada') : false,
                     organoId: organo.get('id'),
                     externo: organo.get('externo'),
                     store: store,
@@ -69,7 +69,7 @@ Ext.define('goc.view.reunion.FormReunionController', {
             if (miembrosStore) {
                 miembrosStore.getData().each(function (record) {
                     miembros.push({
-                        id: record.get('miembroId'),
+                        email: record.get('email'),
                         asistencia: record.get('asistencia'),
                         suplenteId: record.get('suplenteId'),
                         suplenteNombre: record.get('suplenteNombre'),

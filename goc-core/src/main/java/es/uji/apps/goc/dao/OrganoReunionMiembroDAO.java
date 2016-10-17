@@ -86,22 +86,23 @@ public class OrganoReunionMiembroDAO extends BaseDAODatabaseImpl
                 .list(qOrganoReunionMiembro);
     }
 
-    public void updateAsistente(Long reunionId, String organoId, Boolean externo,
-            String asistenteId, Boolean asistencia, Long suplenteId, String suplenteNombre,
-            String suplenteEmail)
+    @Transactional
+    public void updateAsistenteReunionByEmail(Long reunionId, String organoId, Boolean externo,
+                                String asistenteEmail, Boolean asistencia, Long suplenteId, String suplenteNombre,
+                                String suplenteEmail)
     {
         JPAUpdateClause update = new JPAUpdateClause(entityManager, qOrganoReunionMiembro);
         update.set(qOrganoReunionMiembro.asistencia, asistencia)
                 .set(qOrganoReunionMiembro.suplenteId, suplenteId)
                 .set(qOrganoReunionMiembro.suplenteNombre, suplenteNombre)
                 .set(qOrganoReunionMiembro.suplenteEmail, suplenteEmail)
-                .where(qOrganoReunionMiembro.miembroId.eq(asistenteId)
+                .where(qOrganoReunionMiembro.email.eq(asistenteEmail)
                         .and(qOrganoReunionMiembro.reunionId.eq(reunionId)
                                 .and(qOrganoReunionMiembro.organoId.eq(organoId)
                                         .and(qOrganoReunionMiembro.organoExterno.eq(externo)))));
         update.execute();
-
     }
+
 
     public List<OrganoReunionMiembro> getMiembroByAsistenteIdOrSuplenteId(Long reunionId,
             Long connectedUserId)

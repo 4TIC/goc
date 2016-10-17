@@ -202,6 +202,7 @@ public class ReunionService
         addOrganosExternosNoExistentes(reunion, listaIdsExternos, connectedUserId);
     }
 
+    @Transactional
     private void addOrganosExternosNoExistentes(Reunion reunion, List<String> listaIdsExternos,
             Long connectedUserId) throws MiembrosExternosException, OrganosExternosException
     {
@@ -244,6 +245,7 @@ public class ReunionService
         return null;
     }
 
+    @Transactional
     private void addOrganosLocalesNoExistentes(Reunion reunion, List<Long> listaIdsLocales,
             Long connectedUserId) throws MiembrosExternosException
     {

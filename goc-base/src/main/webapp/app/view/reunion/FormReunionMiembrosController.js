@@ -22,7 +22,6 @@ Ext.define('goc.view.reunion.FormReunionMiembrosController', {
         window.show();
 
         window.on('LookoupWindowClickSeleccion', function (res) {
-            console.log(res);
             record.set('suplenteId', res.get('id'));
             record.set('suplenteNombre', res.get('nombre'));
             record.set('suplenteEmail', res.get('email'));
@@ -47,11 +46,28 @@ Ext.define('goc.view.reunion.FormReunionMiembrosController', {
         var grid = this.getView().down('grid');
 
         if (remoteLoad) {
-            viewModel.get('store').load({
-                url: '/goc/rest/reuniones/' + reunionId + '/miembros',
+
+            if (reunionId) {
+                return viewModel.get('store').load({
+                    url: '/goc/rest/reuniones/' + reunionId + '/miembros',
+                    params: {
+                        organoId: organoId,
+                        externo: externo
+                    },
+                    callback: function(recs) {
+                        console.log(recs);
+                    }
+                });
+            }
+
+            return viewModel.get('store').load({
+                url: '/goc/rest/miembros',
                 params: {
                     organoId: organoId,
                     externo: externo
+                },
+                callback: function(recs) {
+                    console.log(recs);
                 }
             });
         }

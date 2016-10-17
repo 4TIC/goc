@@ -45,6 +45,7 @@ public class OrganoReunionMiembroService
         }
     }
 
+    @Transactional
     protected void addOrganoReunionMiembros(OrganoReunion organoReunion, Long connectedUserId)
             throws MiembrosExternosException
     {
@@ -106,9 +107,10 @@ public class OrganoReunionMiembroService
             {
                 suplenteId = null;
             }
-            String asistenteId = miembroUI.get("id");
             Boolean asistencia = new Boolean(miembroUI.get("asistencia"));
-            organoReunionMiembroDAO.updateAsistente(reunionId, organoId, externo, asistenteId,
+            String email = miembroUI.get("email");
+
+            organoReunionMiembroDAO.updateAsistenteReunionByEmail(reunionId, organoId, externo, email,
                     asistencia, suplenteId, suplenteNombre, suplenteEmail);
         }
     }
