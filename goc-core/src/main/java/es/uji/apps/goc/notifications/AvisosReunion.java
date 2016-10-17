@@ -2,7 +2,6 @@ package es.uji.apps.goc.notifications;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +75,6 @@ public class AvisosReunion
         mensaje.setCuerpo(formatter.format());
         mensaje.setReplyTo(reunion.getCreadorEmail());
 
-        miembros = new ArrayList<>();
         notificacionesDAO.enviaNotificacion(mensaje);
 
         return true;
