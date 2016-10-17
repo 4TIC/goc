@@ -20,11 +20,11 @@ public class ExternalService
     {
         List<Organo> listaOrganos = new ArrayList<>();
 
-        TipoOrgano t1 = new TipoOrgano(5L, "98", "Departamento Externo");
-        TipoOrgano t2 = new TipoOrgano(6L, "121", "Unidad de Gestión Externa");
+        TipoOrgano t1 = new TipoOrgano(5L, "98", "Departamento Interno");
+        TipoOrgano t2 = new TipoOrgano(6L, "121", "Unidad de Gestión Interno");
 
         for (Integer i=1; i<10; i++) {
-            Organo organo = new Organo("E" + i.toString(), "Organo " + i.toString() + " Externo", t1);
+            Organo organo = new Organo("E" + i.toString(), "Organo " + i.toString() + " Interno", t1);
             listaOrganos.add(organo);
         }
 
@@ -36,7 +36,7 @@ public class ExternalService
         List<Miembro> listaMiembros = new ArrayList<>();
         Organo organo = new Organo();
         organo.setId(organoId);
-        organo.setNombre("Organo Externo " + organoId);
+        organo.setNombre("Organo Interno " + organoId);
 
         Cargo c1 = new Cargo("1");
         c1.setNombre("Presidente");

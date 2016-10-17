@@ -4,6 +4,7 @@ Ext.define('goc.view.common.ComboTipoOrgano',
         alias : 'widget.comboReunionTipoOrgano',
         allowBlank: true,
         emptyText: appI18N.reuniones.tipoOrgano,
+        matchFieldWidth: false,
         showClearIcon : true,
         width: 200,
         bind: {

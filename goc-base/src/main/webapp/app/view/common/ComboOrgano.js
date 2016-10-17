@@ -5,6 +5,7 @@ Ext.define('goc.view.common.ComboOrgano',
         allowBlank: true,
         emptyText: appI18N.reuniones.organo,
         showClearIcon : true,
+        matchFieldWidth: false,
         width: 200,
 
         bind: {
