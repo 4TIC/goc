@@ -1,6 +1,7 @@
 package es.uji.apps.goc.services.rest;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -13,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import com.sun.jersey.api.core.InjectParam;
 
 import es.uji.apps.goc.model.Persona;
+import es.uji.apps.goc.model.Rol;
 import es.uji.apps.goc.services.ExternalService;
 import es.uji.commons.rest.CoreBaseService;
 import es.uji.commons.rest.UIEntity;
@@ -64,4 +66,16 @@ public class ExternalPersonaResource extends CoreBaseService
 
         return personaToUI(persona);
     }
+
+    @GET
+    @Path("{personaId}/roles")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UIEntity> getRolesByPersonaId(@PathParam("personaId") Long personaId)
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+        Rol rol = externalService.getRolesByPersonaId(personaId);
+
+        return UIEntity.toUI(Collections.singletonList(rol));
+    }
+
 }

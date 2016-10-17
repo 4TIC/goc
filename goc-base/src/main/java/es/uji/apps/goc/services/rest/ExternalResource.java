@@ -1,6 +1,13 @@
 package es.uji.apps.goc.services.rest;
 
-import javax.ws.rs.*;
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -10,18 +17,25 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sun.jersey.api.core.InjectParam;
 
 import es.uji.apps.goc.dto.ReunionFirma;
+import es.uji.apps.goc.exceptions.RolesPersonaExternaException;
 import es.uji.apps.goc.firmas.FirmaService;
+import es.uji.apps.goc.model.Rol;
 import es.uji.apps.goc.notifications.CanNotSendException;
 import es.uji.apps.goc.notifications.MailSender;
 import es.uji.apps.goc.notifications.Mensaje;
 import es.uji.apps.goc.services.ExternalService;
+import es.uji.apps.goc.services.PersonaService;
 import es.uji.commons.rest.CoreBaseService;
+import es.uji.commons.sso.AccessManager;
 
 @Path("external")
 public class ExternalResource extends CoreBaseService
 {
     @InjectParam
     private ExternalService externalService;
+
+    @InjectParam
+    private PersonaService personaService;
 
     @InjectParam
     private MailSender mailSender;
@@ -64,28 +78,58 @@ public class ExternalResource extends CoreBaseService
     @GET
     @Path("config/menus")
     @Produces(MediaType.APPLICATION_JSON)
-    public ObjectNode menus(@QueryParam("lang") String lang)
+    public ObjectNode menus(@QueryParam("lang") String lang) throws RolesPersonaExternaException
     {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+
+        List<Rol> roles = personaService.getRolesFromPersonaId(connectedUserId);
+
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         ArrayNode rows = result.putArray("row");
 
-        if (lang.equals("es")) {
+        Boolean admin = roles.stream().filter(r -> r.getNombre().equals("ADMIN")).findAny().isPresent();
+
+        if (admin)
+        {
+            if (lang.equals("es"))
+            {
+                rows.add(menuEntry(mapper, "goc.view.organo.Main", "Órganos"));
+                rows.add(menuEntry(mapper, "goc.view.tipoOrgano.Main", "Tipos de órganos"));
+                rows.add(menuEntry(mapper, "goc.view.miembro.Main", "Miembros"));
+                rows.add(menuEntry(mapper, "goc.view.reunion.Main", "Reuniones"));
+                rows.add(menuEntry(mapper, "goc.view.historicoReunion.Main",
+                        "Histórico de Reuniones"));
+                rows.add(menuEntry(mapper, "goc.view.cargo.Main", "Cargos"));
+            }
+            else
+            {
+                rows.add(menuEntry(mapper, "goc.view.organo.Main", "Òrgans"));
+                rows.add(menuEntry(mapper, "goc.view.tipoOrgano.Main", "Tipus d'organs"));
+                rows.add(menuEntry(mapper, "goc.view.miembro.Main", "Membres"));
+                rows.add(menuEntry(mapper, "goc.view.reunion.Main", "Reunions"));
+                rows.add(menuEntry(mapper, "goc.view.historicoReunion.Main",
+                        "Històric de Reunions"));
+                rows.add(menuEntry(mapper, "goc.view.cargo.Main", "Càrrecs"));
+            }
+            return result;
+
+        }
+
+        if (lang.equals("es"))
+        {
             rows.add(menuEntry(mapper, "goc.view.organo.Main", "Órganos"));
-            rows.add(menuEntry(mapper, "goc.view.tipoOrgano.Main", "Tipos de órganos"));
             rows.add(menuEntry(mapper, "goc.view.miembro.Main", "Miembros"));
             rows.add(menuEntry(mapper, "goc.view.reunion.Main", "Reuniones"));
             rows.add(menuEntry(mapper, "goc.view.historicoReunion.Main", "Histórico de Reuniones"));
-            rows.add(menuEntry(mapper, "goc.view.cargo.Main", "Cargos"));
-        } else {
+        }
+        else
+        {
             rows.add(menuEntry(mapper, "goc.view.organo.Main", "Òrgans"));
-            rows.add(menuEntry(mapper, "goc.view.tipoOrgano.Main", "Tipus d'organs"));
             rows.add(menuEntry(mapper, "goc.view.miembro.Main", "Membres"));
             rows.add(menuEntry(mapper, "goc.view.reunion.Main", "Reunions"));
             rows.add(menuEntry(mapper, "goc.view.historicoReunion.Main", "Històric de Reunions"));
-            rows.add(menuEntry(mapper, "goc.view.cargo.Main", "Càrrecs"));
         }
-
         return result;
     }
 

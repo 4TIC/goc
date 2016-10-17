@@ -10,6 +10,7 @@ import es.uji.apps.goc.model.Cargo;
 import es.uji.apps.goc.model.Miembro;
 import es.uji.apps.goc.model.Organo;
 import es.uji.apps.goc.model.Persona;
+import es.uji.apps.goc.model.Rol;
 import es.uji.apps.goc.model.TipoOrgano;
 import es.uji.commons.rest.StringUtils;
 
@@ -103,5 +104,14 @@ public class ExternalService
         Persona persona = new Persona(1L, "Javier Pérez", "jperez@uji.es");
 
         return persona;
+    }
+
+    public Rol getRolesByPersonaId(Long personaId)
+    {
+        if (personaId.equals(88848L)) {
+            return new Rol(1L, "ADMIN");
+        }
+
+        return new Rol(2L, "USUARIO");
     }
 }

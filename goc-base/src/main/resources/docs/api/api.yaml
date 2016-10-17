@@ -128,6 +128,26 @@ paths:
           schema:
             $ref: "#/definitions/Persona"
 
+  /personas/{personaId}/roles:
+    get:
+      summary: Información de los roles de una persona a partir de su id.
+      description: |
+        Obtiene una persona del directorio de personas a partir de su Id.
+      parameters:
+        - name: personaId
+          in: path
+          description: Id de la persona
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: Lista de personas que cumplen con la cadena de búsqueda
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Rol"
+
 definitions:
   Reunion:
     type: object
@@ -250,6 +270,16 @@ definitions:
       nombre:
         type: string
         description: Nombre del cargo.
+
+  Rol:
+    type: object
+    properties:
+      id:
+        type: number
+        description: Identificadorr único del rol.
+      nombre:
+        type: string
+        description: Nombre del rol.
 
   Mensaje:
     type: object
