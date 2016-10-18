@@ -101,7 +101,7 @@ public class ExternalService
     }
 
     public Persona getPersonaById(Long personaId, Long connectedUserId) {
-        Persona persona = new Persona(1L, "Javier Pérez", "jperez@uji.es");
+        Persona persona = new Persona(88849L, "Nicolás Manero", "nmanero@uji.es");
 
         return persona;
     }
