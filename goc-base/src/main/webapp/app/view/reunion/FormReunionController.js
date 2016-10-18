@@ -41,12 +41,15 @@ Ext.define('goc.view.reunion.FormReunionController', {
 
         var store = this.getStoreDeMiembros(organo.get('id'), organo.get('externo'));
 
+        var formData = view.down('form').getValues();
+
         var modalDefinition = {
             xtype: 'formReunionMiembros',
             viewModel: {
                 data: {
                     reunionId: reunionId,
                     reunionCompletada: reunionId ? reunion.get('completada') : false,
+                    admiteSuplencia: formData.admiteSuplencia,
                     organoId: organo.get('id'),
                     externo: organo.get('externo'),
                     store: store,

@@ -24,6 +24,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import es.uji.apps.goc.exceptions.*;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.mysema.query.Tuple;
@@ -33,17 +34,6 @@ import es.uji.apps.goc.dto.MiembroTemplate;
 import es.uji.apps.goc.dto.OrganoTemplate;
 import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.dto.ReunionTemplate;
-import es.uji.apps.goc.exceptions.AsistenteNoEncontradoException;
-import es.uji.apps.goc.exceptions.FirmaReunionException;
-import es.uji.apps.goc.exceptions.MiembrosExternosException;
-import es.uji.apps.goc.exceptions.NotificacionesException;
-import es.uji.apps.goc.exceptions.OrganoConvocadoNoPermitidoException;
-import es.uji.apps.goc.exceptions.OrganosExternosException;
-import es.uji.apps.goc.exceptions.PersonasExternasException;
-import es.uji.apps.goc.exceptions.ReunionNoCompletadaException;
-import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
-import es.uji.apps.goc.exceptions.ReunionYaCompletadaException;
-import es.uji.apps.goc.exceptions.UrlGrabacionException;
 import es.uji.apps.goc.model.Organo;
 import es.uji.apps.goc.notifications.AvisosReunion;
 import es.uji.apps.goc.services.OrganoReunionMiembroService;
@@ -218,7 +208,8 @@ public class ReunionResource extends CoreBaseService
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public void establecerSuplente(@PathParam("reunionId") Long reunionId, UIEntity suplente)
-            throws AsistenteNoEncontradoException, ReunionYaCompletadaException
+            throws AsistenteNoEncontradoException, ReunionYaCompletadaException,
+            ReunionNoAdmiteSuplenciaException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
         Long suplenteId = Long.parseLong(suplente.get("suplenteId"));
@@ -227,6 +218,7 @@ public class ReunionResource extends CoreBaseService
         Long organoMiembroId = Long.parseLong(suplente.get("organoMiembroId"));
 
         reunionService.compruebaReunionNoCompletada(reunionId);
+        reunionService.compruebaReunionAdmiteSuplencia(reunionId);
         organoReunionMiembroService.estableceSuplente(reunionId, connectedUserId, suplenteId,
                 suplenteNombre, suplenteEmail, organoMiembroId);
     }
@@ -236,12 +228,13 @@ public class ReunionResource extends CoreBaseService
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public void borraSuplente(@PathParam("reunionId") Long reunionId, UIEntity miembro)
-            throws ReunionYaCompletadaException
+            throws ReunionYaCompletadaException, ReunionNoAdmiteSuplenciaException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
         Long miembroId = Long.parseLong(miembro.get("organoMiembroId"));
 
         reunionService.compruebaReunionNoCompletada(reunionId);
+        reunionService.compruebaReunionAdmiteSuplencia(reunionId);
         organoReunionMiembroService.borraSuplente(reunionId, miembroId, connectedUserId);
     }
 
@@ -274,6 +267,7 @@ public class ReunionResource extends CoreBaseService
         Boolean publica = new Boolean(reunionUI.get("publica"));
         Boolean telematica = new Boolean(reunionUI.get("telematica"));
         String telematicaDescripcion = reunionUI.get("telematicaDescripcion");
+        Boolean admiteSuplencia = new Boolean(reunionUI.get("admiteSuplencia"));
 
         if (!urlGrabacion.isEmpty())
         {
@@ -304,7 +298,7 @@ public class ReunionResource extends CoreBaseService
         reunion.setId(reunionId);
         reunion = reunionService.updateReunion(reunionId, asunto, descripcion, duracion, fecha,
                 ubicacion, urlGrabacion, numeroSesion, publica, telematica, telematicaDescripcion,
-                connectedUserId);
+                admiteSuplencia, connectedUserId);
 
         return UIEntity.toUI(reunion);
     }
@@ -407,6 +401,7 @@ public class ReunionResource extends CoreBaseService
         }
 
         reunion.setPublica(new Boolean(reunionUI.get("publica")));
+        reunion.setAdmiteSuplencia(new Boolean(reunionUI.get("admiteSuplencia")));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(reunionUI.get("fecha"), formatter);
 

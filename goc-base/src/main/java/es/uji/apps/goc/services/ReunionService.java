@@ -1,11 +1,14 @@
 package es.uji.apps.goc.services;
 
+import static es.uji.apps.goc.dto.QReunion.reunion;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ws.rs.core.MediaType;
 
@@ -48,6 +51,7 @@ import es.uji.apps.goc.exceptions.FirmaReunionException;
 import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.exceptions.OrganosExternosException;
 import es.uji.apps.goc.exceptions.PersonasExternasException;
+import es.uji.apps.goc.exceptions.ReunionNoAdmiteSuplenciaException;
 import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
 import es.uji.apps.goc.exceptions.ReunionYaCompletadaException;
 import es.uji.apps.goc.model.Cargo;
@@ -56,8 +60,6 @@ import es.uji.apps.goc.model.Documento;
 import es.uji.apps.goc.model.Miembro;
 import es.uji.apps.goc.model.Organo;
 import es.uji.apps.goc.model.Persona;
-
-import static es.uji.apps.goc.dto.QReunion.reunion;
 
 @Service
 @Component
@@ -129,8 +131,8 @@ public class ReunionService
 
     public Reunion updateReunion(Long reunionId, String asunto, String descripcion, Long duracion,
             Date fecha, String ubicacion, String urlGrabacion, Long numeroSesion, Boolean publica,
-            Boolean telematica, String telematicaDescripcion, Long connectedUserId)
-            throws ReunionNoDisponibleException
+            Boolean telematica, String telematicaDescripcion, Boolean admiteSuplencia,
+            Long connectedUserId) throws ReunionNoDisponibleException
     {
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
 
@@ -148,6 +150,7 @@ public class ReunionService
         reunion.setNumeroSesion(numeroSesion);
         reunion.setPublica(publica);
         reunion.setTelematica(telematica);
+        reunion.setAdmiteSuplencia(admiteSuplencia);
         reunion.setTelematicaDescripcion(telematicaDescripcion);
 
         return reunionDAO.update(reunion);
@@ -335,6 +338,7 @@ public class ReunionService
         reunionFirma.setFecha(reunion.getFecha());
         reunionFirma.setUrlGrabacion(reunion.getUrlGrabacion());
         reunionFirma.setTelematica(reunion.isTelematica());
+        reunionFirma.setAdmiteSuplencia(reunion.isAdmiteSuplencia());
         reunionFirma.setTelematicaDescripcion(reunion.getTelematicaDescripcion());
         reunionFirma.setCompletada(reunion.getCompletada());
         reunionFirma.setCreadorNombre(reunion.getCreadorNombre());
@@ -513,6 +517,7 @@ public class ReunionService
         reunionTemplate.setFecha(reunion.getFecha());
         reunionTemplate.setUrlGrabacion(reunion.getUrlGrabacion());
         reunionTemplate.setTelematica(reunion.isTelematica());
+        reunionTemplate.setAdmiteSuplencia(reunion.isAdmiteSuplencia());
         reunionTemplate.setTelematicaDescripcion(reunion.getTelematicaDescripcion());
         reunionTemplate.setCompletada(reunion.getCompletada());
         reunionTemplate.setCreadorNombre(reunion.getCreadorNombre());
@@ -814,7 +819,7 @@ public class ReunionService
         return reunionDAO.getReunionConOrganosById(reunionId);
     }
 
-    public List<Reunion> getReunionesTodasByAsistenteIdOrSuplenteId(Long connectedUserId)
+    public List<Reunion> getReunionesTodasByAsistenteIdOrCreadorIdOrSuplenteId(Long connectedUserId)
     {
         List<OrganoReunionMiembro> listaOrganosReunionMiembro = organoReunionMiembroDAO
                 .getReunionesByAsistenteIdOrSuplenteId(connectedUserId);
@@ -823,7 +828,11 @@ public class ReunionService
                 .map(organoReunionMiembro -> organoReunionMiembro.getReunionId())
                 .collect(Collectors.toList());
 
-        return reunionDAO.getReunionesTodasByListaIds(reunionesIds);
+        List<Reunion> reunionesAsistentes = reunionDAO.getReunionesTodasByListaIds(reunionesIds);
+        List<Reunion> reunionesConvocante = reunionDAO.getReunionesByCreadorId(connectedUserId);
+
+        return Stream.concat(reunionesAsistentes.stream(), reunionesConvocante.stream())
+                .collect(Collectors.toList());
     }
 
     public void compruebaReunionNoCompletada(Long reunionId) throws ReunionYaCompletadaException
@@ -878,5 +887,16 @@ public class ReunionService
         }
         return reuniones.stream().filter(r -> r.isCompletada() == null || r.isCompletada() == false)
                 .collect(Collectors.toList());
+    }
+
+    public void compruebaReunionAdmiteSuplencia(Long reunionId)
+            throws ReunionNoAdmiteSuplenciaException
+    {
+        Reunion reunion = reunionDAO.getReunionById(reunionId);
+
+        if (reunion.isAdmiteSuplencia() != null && reunion.isAdmiteSuplencia())
+        {
+            throw new ReunionNoAdmiteSuplenciaException();
+        }
     }
 }

@@ -29,6 +29,8 @@ public class ReunionTemplate implements Serializable
 
     private Boolean completada;
 
+    private Boolean admiteSuplencia;
+
     private String telematicaDescripcion;
 
     private String creadorNombre;
@@ -234,5 +236,13 @@ public class ReunionTemplate implements Serializable
     public void setCompletada(Boolean completada)
     {
         this.completada = completada;
+    }
+
+    public Boolean isAdmiteSuplencia() {
+        return admiteSuplencia;
+    }
+
+    public void setAdmiteSuplencia(Boolean admiteSuplencia) {
+        this.admiteSuplencia = admiteSuplencia;
     }
 }

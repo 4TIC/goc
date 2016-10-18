@@ -11,6 +11,7 @@ Ext.define('goc.store.Reuniones', {
         { name: 'completada', type: 'boolean' },
         { name: 'publica', type: 'boolean' },
         { name: 'telematica', type: 'boolean' },
+        { name: 'admiteSuplencia', type: 'boolean', defaultValue: true },
         { name: 'telematicaDescripcion', type: 'string' },
         { name: 'numeroSesion', type: 'string' },
         { name: 'fecha', type: 'date', dateFormat: 'd/m/Y H:i:s' },

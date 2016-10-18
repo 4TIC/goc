@@ -25,7 +25,7 @@ Ext.define('goc.view.reunion.FormReunionMiembros', {
             text: appI18N.reuniones.anadirSuplente,
             handler: 'onAddSuplente',
             bind: {
-                disabled: '{reunionCompletada}'
+                disabled: ('{reunionCompletada}' || '{!admiteSuplencia}') ? true : false
             }
         },
         {
@@ -34,7 +34,7 @@ Ext.define('goc.view.reunion.FormReunionMiembros', {
             text: appI18N.reuniones.borrarSuplente,
             handler: 'onRemoveSuplente',
             bind: {
-                disabled: '{reunionCompletada}'
+                disabled: ('{reunionCompletada}' || '{!admiteSuplencia}') ? true : false
             }
         }
     ],

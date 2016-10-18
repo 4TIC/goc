@@ -52,6 +52,9 @@ public class Reunion implements Serializable
 
     private Boolean completada;
 
+    @Column(name="ADMITE_SUPLENCIA")
+    private Boolean admiteSuplencia;
+
     private Boolean telematica;
 
     @Column(name="TELEMATICA_DESCRIPCION")
@@ -321,5 +324,13 @@ public class Reunion implements Serializable
     public void setCreadorEmail(String creadorEmail)
     {
         this.creadorEmail = creadorEmail;
+    }
+
+    public Boolean isAdmiteSuplencia() {
+        return admiteSuplencia;
+    }
+
+    public void setAdmiteSuplencia(Boolean admiteSuplencia) {
+        this.admiteSuplencia = admiteSuplencia;
     }
 }

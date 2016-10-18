@@ -16,7 +16,7 @@ Ext.define('goc.view.tipoOrgano.Grid',{
         dataIndex: 'id',
         hidden: true
     }, {
-        text: 'Código',
+        text: appI18N.tipoOrganos.codigo,
         dataIndex: 'codigo',
         editor: {
             field: {
@@ -24,7 +24,7 @@ Ext.define('goc.view.tipoOrgano.Grid',{
             }
         },
     }, {
-        text: 'Nombre',
+        text: appI18N.tipoOrganos.nombre,
         dataIndex: 'nombre',
         flex: 1,
         editor: {

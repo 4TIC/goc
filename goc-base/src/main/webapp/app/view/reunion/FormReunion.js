@@ -20,7 +20,8 @@ Ext.define('goc.view.reunion.FormReunion',
     {
         xtype : 'button',
         text : 'Guardar',
-        bind: {
+        bind :
+        {
             disabled : '{reunion.completada}'
         },
         handler : 'onSaveRecord'
@@ -95,7 +96,8 @@ Ext.define('goc.view.reunion.FormReunion',
                     },
                     flex : 1,
                     padding : '0 10 0 0',
-                    validator: function(date) {
+                    validator : function(date)
+                    {
                         var now = new Date();
                         now.setDate(now.getDate() - 1);
                         return Ext.Date.parse(date, 'd/m/Y') > now;
@@ -104,8 +106,8 @@ Ext.define('goc.view.reunion.FormReunion',
                 {
                     allowBlank : false,
                     xtype : 'timefield',
-                    minValue: '07:00',
-                    maxValue: '23:00',
+                    minValue : '07:00',
+                    maxValue : '23:00',
                     name : 'hora',
                     emptyText : appI18N.reuniones.horaInicio,
                     format : 'H:i',
@@ -174,6 +176,22 @@ Ext.define('goc.view.reunion.FormReunion',
                         disabled : '{reunion.completada}'
                     },
                     width : 180
+                },
+                {
+                    xtype : 'tbfill',
+                    flex : 1
+                },
+                {
+                    boxLabel : appI18N.reuniones.admiteSuplencia,
+                    name : 'admiteSuplencia',
+                    bind :
+                    {
+                        value : '{reunion.admiteSuplencia}',
+                        disabled : '{reunion.completada}'
+                    },
+                    xtype : 'checkbox',
+                    checked: true,
+                    inputValue : '1'
                 },
                 {
                     xtype : 'tbfill',

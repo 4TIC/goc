@@ -32,6 +32,8 @@ public class ReunionFirma implements Serializable
 
     private Boolean telematica;
 
+    private Boolean admiteSuplencia;
+
     private Boolean completada;
 
     private String creadorNombre;
@@ -229,5 +231,13 @@ public class ReunionFirma implements Serializable
     public void setCreadorEmail(String creadorEmail)
     {
         this.creadorEmail = creadorEmail;
+    }
+
+    public Boolean isAdmiteSuplencia() {
+        return admiteSuplencia;
+    }
+
+    public void setAdmiteSuplencia(Boolean admiteSuplencia) {
+        this.admiteSuplencia = admiteSuplencia;
     }
 }

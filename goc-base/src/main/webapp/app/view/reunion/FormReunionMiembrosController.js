@@ -53,9 +53,6 @@ Ext.define('goc.view.reunion.FormReunionMiembrosController', {
                     params: {
                         organoId: organoId,
                         externo: externo
-                    },
-                    callback: function(recs) {
-                        console.log(recs);
                     }
                 });
             }
@@ -65,9 +62,6 @@ Ext.define('goc.view.reunion.FormReunionMiembrosController', {
                 params: {
                     organoId: organoId,
                     externo: externo
-                },
-                callback: function(recs) {
-                    console.log(recs);
                 }
             });
         }
