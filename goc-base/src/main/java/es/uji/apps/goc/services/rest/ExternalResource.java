@@ -105,7 +105,7 @@ public class ExternalResource extends CoreBaseService
             else
             {
                 rows.add(menuEntry(mapper, "goc.view.organo.Main", "Òrgans"));
-                rows.add(menuEntry(mapper, "goc.view.tipoOrgano.Main", "Tipus d'organs"));
+                rows.add(menuEntry(mapper, "goc.view.tipoOrgano.Main", "Tipus d'òrgans"));
                 rows.add(menuEntry(mapper, "goc.view.miembro.Main", "Membres"));
                 rows.add(menuEntry(mapper, "goc.view.reunion.Main", "Reunions"));
                 rows.add(menuEntry(mapper, "goc.view.historicoReunion.Main",
