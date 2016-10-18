@@ -52,7 +52,7 @@ public class AvisosReunion
         mensaje.setReplyTo(reunion.getCreadorEmail());
         mensaje.setDestinos(miembros);
 
-        // notificacionesDAO.enviaNotificacion(mensaje);
+        notificacionesDAO.enviaNotificacion(mensaje);
     }
 
     public Boolean enviaAvisoReunionProxima(Reunion reunion)
@@ -75,7 +75,7 @@ public class AvisosReunion
         mensaje.setCuerpo(formatter.format());
         mensaje.setReplyTo(reunion.getCreadorEmail());
 
-        // notificacionesDAO.enviaNotificacion(mensaje);
+        notificacionesDAO.enviaNotificacion(mensaje);
 
         return true;
     }

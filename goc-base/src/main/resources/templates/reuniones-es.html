@@ -31,8 +31,8 @@
           <strong th:text="${#dates.format(reunion.fecha, 'dd/MM/YYYY HH:mm')}"></strong>
           <span th:text="${reunion.asunto}"></span>
           (<a th:href="'/goc/rest/publicacion/reuniones/' + ${reunion.id} + '?lang=' + ${applang}">Documentación</a> |
-           <a th:href="'/goc/rest/actas/' + ${reunion.id} + '?lang=' + ${applang}">Acta</a> |
-           <a th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/asistencia' + '?lang=' + ${applang}">Certificado de asistencia</a>)
+           <a th:href="'/goc/rest/actas/' + ${reunion.id} + '?lang=' + ${applang}">Acta</a><span th:if="${reunion.completada}"> | </span>
+           <a th:if="${reunion.completada}" th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/asistencia' + '?lang=' + ${applang}">Certificado de asistencia</a>)
         </li>
       </ul>
     </div>

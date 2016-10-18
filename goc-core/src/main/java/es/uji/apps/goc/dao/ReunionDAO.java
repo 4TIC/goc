@@ -155,4 +155,12 @@ public class ReunionDAO extends BaseDAODatabaseImpl
                 .where(qReunion.creadorId.eq(connectedUserId).and(qReunion.completada.eq(true)))
                 .orderBy(qReunion.fechaCreacion.desc()).list(qReunion);
     }
+
+    public List<Reunion> getReunionesByCreadorId(Long connectedUserId)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        return query.from(qReunion).where(qReunion.creadorId.eq(connectedUserId))
+                .orderBy(qReunion.fechaCreacion.desc()).list(qReunion);
+    }
 }

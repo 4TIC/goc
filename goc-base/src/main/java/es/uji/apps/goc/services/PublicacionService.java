@@ -44,7 +44,7 @@ public class PublicacionService extends CoreBaseService
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
-        List<Reunion> reuniones = reunionService.getReunionesTodasByAsistenteIdOrSuplenteId(connectedUserId);
+        List<Reunion> reuniones = reunionService.getReunionesTodasByAsistenteIdOrCreadorIdOrSuplenteId(connectedUserId);
 
         String applang = getLangCode(lang);
         Template template = new HTMLTemplate("reuniones-" + applang);

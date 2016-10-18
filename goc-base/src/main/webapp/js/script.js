@@ -1,5 +1,5 @@
 $(function () {
-
+    var appI18N;
     var reunionId = $("div.nuevo-comentario input[name=reunionId]").val();
 
     function loadComentarios(reunionId, appI18N) {
@@ -135,7 +135,7 @@ $(function () {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function () {
-                loadComentarios(reunionId);
+                loadComentarios(reunionId, appI18N);
                 $.modal.close();
             }
         });
@@ -156,8 +156,8 @@ $(function () {
 
     })
 
-    var appI18N;
-    $.getJSON('/goc/app/i18n/' + applang + '.json', function(appI18N) {
+    $.getJSON('/goc/app/i18n/' + applang + '.json', function(data) {
+        appI18N = data;
         loadComentarios(reunionId, appI18N);
-    });
+    })
 });
