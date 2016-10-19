@@ -1,9 +1,6 @@
 package es.uji.apps.goc.notifications;
 
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import java.util.Properties;
 
 import javax.mail.Address;
 import javax.mail.Authenticator;
@@ -17,7 +14,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import java.util.Properties;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 @Component
 public class MailSender
@@ -52,6 +53,10 @@ public class MailSender
 
     public void send(Mensaje message) throws CanNotSendException
     {
+        if (message.getDestinos().size() == 0) {
+            return;
+        }
+
         try
         {
             Session session = getMailSession();

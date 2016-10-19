@@ -143,4 +143,13 @@ public class OrganoReunionMiembroDAO extends BaseDAODatabaseImpl
                         .and(qOrganoReunionMiembro.asistenciaConfirmada.eq(true)))
                 .list(qOrganoReunionMiembro);
     }
+
+    public List<OrganoReunionMiembro> getAsistentesReunionId(Long reunionId)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        return query.from(qOrganoReunionMiembro)
+                .where(qOrganoReunionMiembro.reunionId.eq(reunionId))
+                .list(qOrganoReunionMiembro);
+    }
 }
