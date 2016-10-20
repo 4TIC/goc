@@ -8,7 +8,7 @@ CREATE TABLE GOC_REUNIONES_DOCUMENTOS
   FECHA_ADICION DATE NOT NULL,
   DATOS BLOB NOT NULL,
   CREADOR_ID NUMBER NOT NULL
-)
+);
 
 alter table GOC_REUNIONES_DOCUMENTOS
   add constraint fk_documentos_reuniones foreign key (reunion_id) references goc_reuniones(id);
@@ -22,7 +22,7 @@ CREATE TABLE GOC_REUNIONES_PUNTOS_ORDEN_DIA
   ORDEN        NUMBER                           NOT NULL,
   REUNION_ID   NUMBER                           NOT NULL,
   CONCLUSION   CLOB
-)
+);
 
 alter table GOC_REUNIONES_PUNTOS_ORDEN_DIA
   add constraint fk_ordendia_reunion foreign key (reunion_id) references goc_reuniones(id);
@@ -38,9 +38,9 @@ CREATE TABLE GOC_P_ORDEN_DIA_DOCUMENTOS
   FECHA_ADICION   DATE                          DEFAULT SYSDATE               NOT NULL,
   DATOS           BLOB                          NOT NULL,
   CREADOR_ID      NUMBER                        NOT NULL
-)
+);
 
 alter table GOC_P_ORDEN_DIA_DOCUMENTOS
   add constraint fk_ordendia_documentos_reunion foreign key (punto_id) references GOC_REUNIONES_PUNTOS_ORDEN_DIA(id);
 
-ALTER TABLE GOC_REUNIONES DROP COLUMN ORDEN_DIA
+ALTER TABLE GOC_REUNIONES DROP COLUMN ORDEN_DIA;
