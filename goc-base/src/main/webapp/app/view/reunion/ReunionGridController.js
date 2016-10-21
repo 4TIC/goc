@@ -16,7 +16,10 @@ Ext.define('goc.view.reunion.ReunionGridController', {
         var grid = this.getView();
         var record = grid.getView().getSelectionModel().getSelection()[0];
 
-        if (!record) return;
+        if (!record) {
+            return Ext.Msg.alert(appI18N.common.edicionRegistro, appI18N.common.seleccionarParaEditarRegistro);
+        }
+
         this.createModalReunion(record);
     },
     onCompleted: function () {
@@ -26,7 +29,7 @@ Ext.define('goc.view.reunion.ReunionGridController', {
         var viewModel = this.getViewModel();
 
         if (!record) {
-            return;
+            return Ext.Msg.alert(appI18N.reuniones.cerrarActa, appI18N.reuniones.seleccionarParaCerrarActa);
         }
 
         var asistentesStore = Ext.create('goc.store.OrganoReunionMiembros', {
@@ -122,7 +125,7 @@ Ext.define('goc.view.reunion.ReunionGridController', {
         var store = Ext.create('goc.store.ReunionDocumentos');
 
         if (!record) {
-            return;
+            return Ext.Msg.alert(appI18N.reuniones.documentacion, appI18N.reuniones.seleccionarParaDocumentacion);
         }
 
         this.modal = view.add({

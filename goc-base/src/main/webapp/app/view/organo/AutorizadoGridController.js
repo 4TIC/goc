@@ -71,7 +71,9 @@ Ext.define('goc.view.organo.AutorizadoGridController',
         var grid = this.getView();
         var record = grid.getView().getSelectionModel().getSelection()[0];
 
-        if (!record) return;
+        if (!record) {
+            return Ext.Msg.alert(appI18N.organos.borrarAutorizacion, appI18N.organos.seleccionarParaBorrarAutorizacion);
+        };
 
         var vm = this.getViewModel();
         var store = vm.getStore('organoAutorizadosStore');

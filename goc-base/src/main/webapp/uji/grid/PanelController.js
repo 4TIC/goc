@@ -19,16 +19,22 @@ Ext.define('Ext.ux.uji.grid.PanelController', {
     onEdit: function() {
         var grid = this.getView();
         var selection = grid.getView().getSelectionModel().getSelection()[0];
-        if (selection) {
-            var editor = grid.plugins[0];
-            editor.cancelEdit();
-            editor.startEdit(selection);
+        if (!selection) {
+            return Ext.Msg.alert(appI18N.common.edicionRegistro || "Edició de registre", appI18N.common.seleccionarParaEditarRegistro || "Cal sel·leccionar un registre per a poder fer l'edició");
         }
+
+        var editor = grid.plugins[0];
+        editor.cancelEdit();
+        editor.startEdit(selection);
     },
 
     onDelete: function() {
         var grid = this.getView();
         var records = grid.getView().getSelectionModel().getSelection();
+
+        if (records.length === 0) {
+            return Ext.Msg.alert(appI18N.common.borradoRegistro || "Esborrar registre", appI18N.common.seleccionarParaBorrarRegistro || "Cal sel·leccionar un registre per a poder esborrar-lo");
+        }
 
         if (records.length === 1 && records[0].phantom === true) {
             return grid.getStore().remove(records);

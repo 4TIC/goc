@@ -16,7 +16,11 @@
     "sinResultados": "La búsqueda realitzada no ha produït cap resultat",
     "confirmarBorrado": "Esteu segur/a de voler esborrar el registre?",
     "desconectar": "desconnecteu-vos",
-    "conectadoComo": "Connectat com"
+    "conectadoComo": "Connectat com",
+    "edicionRegistro": "Edició de registre",
+    "borradoRegistro": "Esborrar registre",
+    "seleccionarParaEditarRegistro": "Cal sel·leccionar un registre per a poder fer l'edició",
+    "seleccionarParaBorrarRegistro": "Cal sel·leccionar un registre per a poder esborrar-lo"
   },
   "header": {
     "titulo": "Gestió d'Òrgans Col·legiats"
@@ -37,7 +41,10 @@
     "seleccionaTipoOrgano": "Sel·lecciona el tipus de òrgan",
     "sinAutorizadosDisponibles": "Encara no n'hi han autoritzats per aquest òrgan",
     "borrarAutorizacion": "Esteu segur/a de voler quitar l'autorització a aquesta persona?",
-    "inhabilitarOrgano": "Esteu segur/a de voler inhabilitar el òrgan?"
+    "inhabilitarOrgano": "Esteu segur/a de voler inhabilitar el òrgan?",
+    "borrarAutorizacion": "Esborrar autorització",
+    "seleccionarParaBorrarAutorizacion": "Cal sel·leccionar una persona per a esborrar l'autorització"
+
   },
   "tipoOrganos": {
     "titulo": "Tipus d'Òrgans",
@@ -119,7 +126,14 @@
     "correo": "Correu",
     "suplente": "Suplent",
     "suplenteEmail": "E-Mail suplent",
-    "asistencia": "Assistència"
+    "asistencia": "Assistència",
+    "multiSearchBusqueda": "Recerca...",
+    "multiSearchNadaSeleccionado": "Cap òrgan sel·leccionat",
+    "multiSearchEliminarOrgano": "Eliminar aquest òrgan",
+    "multiSearchBuscarOrgano": "Recerca d'Òrgans per afegir",
+    "seleccionarParaCerrarActa": "Cal sel·leccionar una reunió per a poder tancar l'acta",
+    "documentacion": "Documentació",
+    "seleccionarParaDocumentacion": "Cal sel·leccionar una reunió per accedir a la seua documentació"
   },
   "historicoReuniones": {
     "tituloGridReunionesCompletadas": "Històric de reunions completades"

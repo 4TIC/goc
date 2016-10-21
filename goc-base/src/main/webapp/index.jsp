@@ -12,7 +12,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script type="text/javascript" src="http://static.uji.es/js/extjs/ext-6.0.3.64/build/ext-all-debug.js"></script>
 
-
     <title>Portal</title>
 
     <%

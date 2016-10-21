@@ -16,7 +16,11 @@
     "sinResultados": "La búsqueda realizada no ha producido ningún resultado",
     "confirmarBorrado": "¿Estás seguro de querer borrar el registro?",
     "desconectar": "desconectarse",
-    "conectadoComo": "Conectado com"
+    "conectadoComo": "Conectado com",
+    "edicionRegistro": "Edició de registre",
+    "borradoRegistro": "Esborrar registre",
+    "seleccionarParaEditarRegistro": "Debe seleccionar un registro para poder editarlo",
+    "seleccionarParaBorrarRegistro": "Debe seleccionar un registro para poder borrarlo"
   },
   "header": {
     "titulo": "Gestión de Órganos Colegiados"
@@ -37,7 +41,9 @@
     "seleccionaTipoOrgano": "Selecciona el tipo de órgano",
     "sinAutorizadosDisponibles": "Todavía no hay autorizados para este órgano",
     "borrarAutorizacion": "¿Estás seguro de querer quitar la autorización a esta persona?",
-    "inhabilitarOrgano": "¿Estás seguro de querer inhabilitar el órgano?"
+    "inhabilitarOrgano": "¿Estás seguro de querer inhabilitar el órgano?",
+    "borrarAutorizacion": "Quitar autorización",
+    "seleccionarParaBorrarAutorizacion": "Debe seleccionar una persona para quitar la autorización"
   },
   "tipoOrganos": {
     "titulo": "Tipo de Órganos",
@@ -119,7 +125,14 @@
     "correo": "Correo",
     "suplente": "Suplente",
     "suplenteEmail": "E-mail suplente",
-    "asistencia": "Asistencia"
+    "asistencia": "Asistencia",
+    "multiSearchBusqueda": "Búsqueda...",
+    "multiSearchNadaSeleccionado": "Ningún órgano seleccionado",
+    "multiSearchEliminarOrgano": "Eliminar este órgano",
+    "multiSearchBuscarOrgano": "Buscar órganos a añadir",
+    "seleccionarParaCerrarActa": "Debe seleccionar una reunión para poder cerrar el acta",
+    "documentacion": "Documentación",
+    "seleccionarParaDocumentacion": "Debe seleccionar una reunión para acceder a su documentación"
   },
   "historicoReuniones": {
     "tituloGridReunionesCompletadas": "Històric de reunions completadas"

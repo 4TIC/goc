@@ -1,3 +1,15 @@
+Ext.define("Ext.locale.es.view.MultiSelectorSearch", {
+    override: 'Ext.view.MultiSelectorSearch' ,
+    searchText: appI18N.reuniones.multiSearchBusqueda
+});
+
+Ext.define("Ext.locale.es.view.MultiSelector", {
+    override: 'Ext.view.MultiSelector',
+    emptyText: appI18N.reuniones.multiSearchNadaSeleccionado,
+    removeRowTip: appI18N.reuniones.multiSearchEliminarOrgano,
+    addToolText: appI18N.reuniones.multiSearchBuscarOrgano
+});
+
 Ext.define('goc.view.reunion.FormReunion',
 {
     extend : 'Ext.window.Window',
