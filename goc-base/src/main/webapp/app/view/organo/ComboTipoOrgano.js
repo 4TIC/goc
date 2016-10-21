@@ -12,6 +12,9 @@ Ext.define('goc.view.organo.ComboTipoOrgano',
             store: '{tipoOrganosStore}'
         },
         listeners: {
+            expand: function() {
+                this.getStore().reload();
+            },
             change: function(combo, recordId) {
                 if (!recordId) {
                     return combo.up('organoMainPanel').fireEvent('tipoOrganoSelected', null, null);

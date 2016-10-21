@@ -14,6 +14,5 @@ Ext.define('goc.store.TipoOrganos', {
             type: 'json',
             writeAllFields : true
         }
-    },
-    autoLoad: true
+    }
 });

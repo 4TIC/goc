@@ -77,7 +77,11 @@ Ext.define('goc.view.organo.Grid', {
             valueField: 'id',
             allowBlank: false,
             editable: false,
-            queryMode: 'local'
+            listeners: {
+                expand: function() {
+                    this.getStore().reload();
+                }
+            }
         }
     }, {
         text: appI18N.organos.externo,
