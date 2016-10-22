@@ -12,7 +12,9 @@ Ext.define('goc.view.reunion.FormReunionMiembrosController', {
         var grid = this.getView().down('grid');
         var record = grid.getView().getSelectionModel().getSelection()[0];
 
-        if (!record) return;
+        if (!record) {
+            return Ext.Msg.alert(appI18N.reuniones.addSuplente, appI18N.reuniones.seleccionarParaAnyadirSuplente);
+        }
 
         var window = Ext.create('goc.view.common.LookupWindowPersonas', {
             appPrefix: 'goc',
@@ -32,6 +34,9 @@ Ext.define('goc.view.reunion.FormReunionMiembrosController', {
         var grid = this.getView().down('grid');
         var record = grid.getView().getSelectionModel().getSelection()[0];
 
+        if (!record) {
+            return Ext.Msg.alert(appI18N.reuniones.borrarSuplente, appI18N.reuniones.seleccionarParaBorrarSuplente);
+        }
         record.set('suplenteId', null);
         record.set('suplenteNombre', null);
         record.set('suplenteEmail', null);
@@ -45,6 +50,7 @@ Ext.define('goc.view.reunion.FormReunionMiembrosController', {
         var remoteLoad = viewModel.get('remoteLoad')
         var grid = this.getView().down('grid');
 
+        console.log('suplencia', viewModel.get('admiteSuplencia'));
         if (remoteLoad) {
 
             if (reunionId) {

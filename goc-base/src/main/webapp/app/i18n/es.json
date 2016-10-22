@@ -132,7 +132,11 @@
     "multiSearchBuscarOrgano": "Buscar órganos a añadir",
     "seleccionarParaCerrarActa": "Debe seleccionar una reunión para poder cerrar el acta",
     "documentacion": "Documentación",
-    "seleccionarParaDocumentacion": "Debe seleccionar una reunión para acceder a su documentación"
+    "seleccionarParaDocumentacion": "Debe seleccionar una reunión para acceder a su documentación",
+    "seleccionarParaAnyadirSuplente": "Debe selecciónar un asistente para añadir un suplente",
+    "addSuplente": "Añadir suplente",
+    "borrarSuplente": "Borrar suplente",
+    "seleccionarParaBorrarSuplente": "Debe seleccionar un asistente para borrar a su suplente"
   },
   "historicoReuniones": {
     "tituloGridReunionesCompletadas": "Històric de reunions completadas"

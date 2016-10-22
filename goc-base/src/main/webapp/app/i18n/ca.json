@@ -133,7 +133,11 @@
     "multiSearchBuscarOrgano": "Recerca d'Òrgans per afegir",
     "seleccionarParaCerrarActa": "Cal sel·leccionar una reunió per a poder tancar l'acta",
     "documentacion": "Documentació",
-    "seleccionarParaDocumentacion": "Cal sel·leccionar una reunió per accedir a la seua documentació"
+    "seleccionarParaDocumentacion": "Cal sel·leccionar una reunió per accedir a la seua documentació",
+    "seleccionarParaAnyadirSuplente": "Cal sel·leccionar un assistent per a poder afegir un suplent",
+    "addSuplente": "Afegir suplent",
+    "borrarSuplente": "Esborrar suplent",
+    "seleccionarParaBorrarSuplente": "Cal sel·leccionar un assistent per a poder esborrar el seu suplent"
   },
   "historicoReuniones": {
     "tituloGridReunionesCompletadas": "Històric de reunions completades"

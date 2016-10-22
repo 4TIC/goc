@@ -49,7 +49,7 @@ Ext.define('goc.view.reunion.FormReunionController', {
                 data: {
                     reunionId: reunionId,
                     reunionCompletada: reunionId ? reunion.get('completada') : false,
-                    admiteSuplencia: formData.admiteSuplencia,
+                    admiteSuplencia: formData.admiteSuplencia ? true: false,
                     organoId: organo.get('id'),
                     externo: organo.get('externo'),
                     store: store,
