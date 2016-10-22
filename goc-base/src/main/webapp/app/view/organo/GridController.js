@@ -33,6 +33,29 @@ Ext.define('goc.view.organo.GridController', {
 
     },
 
+    initFilters: function() {
+        var grid = this.getView();
+        var comboEstado = grid.up('organoMainPanel').down('comboEstadoOrgano');
+        var comboTipoOrgano = grid.up('organoMainPanel').down('comboTipoOrgano');
+        comboTipoOrgano.clearValue();
+        comboEstado.setValue(false);
+
+        var vm = this.getViewModel();
+        var store = this.getStore('organosStore');
+        store.clearFilter();
+    },
+
+    onAdd: function() {
+        this.initFilters();
+        var grid = this.getView();
+        var rec = Ext.create(grid.getStore().model.entityName, { id : null });
+        grid.getStore().insert(0, rec);
+        var editor = grid.plugins[0];
+        editor.cancelEdit();
+        editor.startEdit(rec, 0);
+    },
+
+
     onToggleEstado: function() {
         var grid = this.getView();
         var record = grid.getView().getSelectionModel().getSelection()[0];
