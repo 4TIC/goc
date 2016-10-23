@@ -1,7 +1,5 @@
 package es.uji.apps.goc.services;
 
-import static es.uji.apps.goc.dto.QReunion.reunion;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -60,6 +58,8 @@ import es.uji.apps.goc.model.Documento;
 import es.uji.apps.goc.model.Miembro;
 import es.uji.apps.goc.model.Organo;
 import es.uji.apps.goc.model.Persona;
+
+import static es.uji.apps.goc.dto.QReunion.reunion;
 
 @Service
 @Component
@@ -693,6 +693,7 @@ public class ReunionService
         miembroTemplate.setNombre(organoReunionMiembro.getNombre());
         miembroTemplate.setEmail(organoReunionMiembro.getEmail());
         miembroTemplate.setId(organoReunionMiembro.getId().toString());
+        miembroTemplate.setMiembroId(organoReunionMiembro.getMiembroId());
         miembroTemplate.setSuplente(organoReunionMiembro.getSuplenteNombre());
         miembroTemplate.setSuplenteId(organoReunionMiembro.getSuplenteId());
         miembroTemplate.setAsistenciaConfirmada(organoReunionMiembro.getAsistenciaConfirmada());

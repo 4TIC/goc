@@ -12,6 +12,8 @@ public class MiembroTemplate
 
     private String suplente;
     private Long suplenteId;
+    private String miembroId;
+
     private Boolean asistenciaConfirmada;
 
     private Cargo cargo;
@@ -88,5 +90,15 @@ public class MiembroTemplate
     public void setAsistenciaConfirmada(Boolean asistenciaConfirmada)
     {
         this.asistenciaConfirmada = asistenciaConfirmada;
+    }
+
+    public String getMiembroId()
+    {
+        return miembroId;
+    }
+
+    public void setMiembroId(String miembroId)
+    {
+        this.miembroId = miembroId;
     }
 }
