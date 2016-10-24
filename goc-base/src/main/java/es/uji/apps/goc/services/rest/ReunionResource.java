@@ -492,12 +492,12 @@ public class ReunionResource extends CoreBaseService
         {
             for (MiembroTemplate asistente : organo.getAsistentes())
             {
-                if (asistente.getId().equals(connectedUserId))
+                if (asistente.getMiembroId().equals(connectedUserId.toString()))
                 {
                     return asistente.getNombre();
                 }
 
-                if (asistente.getSuplenteId().equals(connectedUserId))
+                if (asistente.getSuplenteId() != null && asistente.getSuplenteId().equals(connectedUserId))
                 {
                     return asistente.getSuplente();
                 }

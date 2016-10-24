@@ -39,6 +39,8 @@ public class ReunionTemplate implements Serializable
 
     private String urlGrabacion;
 
+    private Boolean comoAsistente;
+
     private String responsableActa;
 
     private List<OrganoTemplate> organos;
@@ -244,5 +246,13 @@ public class ReunionTemplate implements Serializable
 
     public void setAdmiteSuplencia(Boolean admiteSuplencia) {
         this.admiteSuplencia = admiteSuplencia;
+    }
+
+    public Boolean isComoAsistente() {
+        return comoAsistente;
+    }
+
+    public void setComoAsistente(Boolean comoAsistente) {
+        this.comoAsistente = comoAsistente;
     }
 }

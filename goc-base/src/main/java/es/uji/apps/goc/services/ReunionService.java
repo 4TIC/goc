@@ -503,7 +503,6 @@ public class ReunionService
     }
 
     public ReunionTemplate getReunionTemplateDesdeReunion(Reunion reunion, Long connectedUserId)
-            throws OrganosExternosException, PersonasExternasException
     {
         ReunionTemplate reunionTemplate = new ReunionTemplate();
 
@@ -820,7 +819,8 @@ public class ReunionService
         return reunionDAO.getReunionConOrganosById(reunionId);
     }
 
-    public List<Reunion> getReunionesTodasByAsistenteIdOrCreadorIdOrSuplenteId(Long connectedUserId)
+    public List<ReunionTemplate> getReunionesByAsistenteIdOrSuplenteId(Long connectedUserId)
+            throws OrganosExternosException, PersonasExternasException
     {
         List<OrganoReunionMiembro> listaOrganosReunionMiembro = organoReunionMiembroDAO
                 .getReunionesByAsistenteIdOrSuplenteId(connectedUserId);
@@ -830,10 +830,24 @@ public class ReunionService
                 .collect(Collectors.toList());
 
         List<Reunion> reunionesAsistentes = reunionDAO.getReunionesTodasByListaIds(reunionesIds);
+
+        return reunionesAsistentes.stream()
+                .map(r -> getReunionTemplateDesdeReunion(r, connectedUserId)).map(r -> {
+                    r.setComoAsistente(true);
+                    return r;
+                }).collect(Collectors.toList());
+    }
+
+    public List<ReunionTemplate> getReunionesByCreadorId(Long connectedUserId)
+            throws OrganosExternosException, PersonasExternasException
+    {
         List<Reunion> reunionesConvocante = reunionDAO.getReunionesByCreadorId(connectedUserId);
 
-        return Stream.concat(reunionesAsistentes.stream(), reunionesConvocante.stream())
-                .collect(Collectors.toList());
+        return reunionesConvocante.stream()
+                .map(r -> getReunionTemplateDesdeReunion(r, connectedUserId)).map(r -> {
+                    r.setComoAsistente(false);
+                    return r;
+                }).collect(Collectors.toList());
     }
 
     public void compruebaReunionNoCompletada(Long reunionId) throws ReunionYaCompletadaException

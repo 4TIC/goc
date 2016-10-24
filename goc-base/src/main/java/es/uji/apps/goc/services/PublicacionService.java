@@ -1,6 +1,8 @@
 package es.uji.apps.goc.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -44,7 +46,20 @@ public class PublicacionService extends CoreBaseService
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
-        List<Reunion> reuniones = reunionService.getReunionesTodasByAsistenteIdOrCreadorIdOrSuplenteId(connectedUserId);
+        List<ReunionTemplate> reunionesAsistente = reunionService
+                .getReunionesByAsistenteIdOrSuplenteId(connectedUserId);
+
+        List<Long> reunionesIds = reunionesAsistente.stream().map(r -> r.getId())
+                .collect(Collectors.toList());
+
+        List<ReunionTemplate> reunionesConvocante = reunionService
+                .getReunionesByCreadorId(connectedUserId).stream()
+                .filter(r -> !reunionesIds.contains(r.getId())).collect(Collectors.toList());
+
+        List<ReunionTemplate> reuniones = Stream
+                .concat(reunionesAsistente.stream(), reunionesConvocante.stream())
+                .sorted((r1, r2) -> r2.getFecha().compareTo(r1.getFecha()))
+                .collect(Collectors.toList());
 
         String applang = getLangCode(lang);
         Template template = new HTMLTemplate("reuniones-" + applang);

@@ -153,7 +153,6 @@ public class OrganoService
     }
 
     public List<Organo> getOrganosByReunionIdAndUserId(Long reunionId, Long connectedUserId)
-            throws OrganosExternosException
     {
         List<Organo> organos = new ArrayList<>();
 
