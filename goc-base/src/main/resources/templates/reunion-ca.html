@@ -50,11 +50,11 @@
                 <strong th:if="${miembro.asistenciaConfirmada}">Assistirà</strong>
                 <strong th:if="${miembro.asistenciaConfirmada == false}">No assistirà</strong>
               </div>
-              <div class="confirmacion" th:if="${reunion.completada != true and (connectedUserId == miembro.id or miembro.suplenteId != null and connectedUserId == miembro.suplenteId)}">
+              <div class="confirmacion" th:if="${reunion.completada != true and (connectedUserId == miembro.miembroId or (miembro.suplenteId != null and connectedUserId == miembro.suplenteId))}">
                 <strong>Confirma assistència:</strong>
                 <button th:class="${miembro.asistenciaConfirmada == true } ? activo : inactivo" name="confirmar">Sí</button>
                 <button th:class="${miembro.asistenciaConfirmada == false} ? activo : inactivo" name="denegar">No</button>
-                <button th:attr="data-miembroid=${miembro.id}, data-suplente=${miembro.suplente}" th:if="${connectedUserId.toString() eq miembro.miembroId or miembro.suplenteId != null and connectedUserId == miembro.suplenteId}" name="suplente">Gestionar suplent</button>
+                <button th:attr="data-miembroid=${miembro.id}, data-suplente=${miembro.suplente}" th:if="${reunion.admiteSuplencia and (connectedUserId == miembro.miembroId or miembro.suplenteId != null and connectedUserId == miembro.suplenteId)}" name="suplente">Gestionar suplent</button>
               </div>
             </li>
           </ul>

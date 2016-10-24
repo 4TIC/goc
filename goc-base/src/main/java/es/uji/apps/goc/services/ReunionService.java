@@ -895,7 +895,7 @@ public class ReunionService
     {
         Reunion reunion = reunionDAO.getReunionById(reunionId);
 
-        if (reunion.isAdmiteSuplencia() != null && reunion.isAdmiteSuplencia())
+        if (reunion.isAdmiteSuplencia() != null && !reunion.isAdmiteSuplencia())
         {
             throw new ReunionNoAdmiteSuplenciaException();
         }
