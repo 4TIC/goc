@@ -21,12 +21,15 @@ public class ReunionFormatter
 
         content.append("<h2>" + reunion.getAsunto() + "</h2>");
 
-        content.append("<div>" + reunion.getDescripcion() + "</div>");
+        if (!reunion.getDescripcion().isEmpty())
+        {
+            content.append("<div>" + reunion.getDescripcion() + "</div>");
+        }
 
         content.append("<div>");
         content.append("<strong>Fecha y hora:</strong> " + formatter.format(reunion.getFecha()) + "<br/>");
         content.append("<strong>Duración:</strong> " + reunion.getDuracion() + " minutos<br/>");
-        content.append("<br/>Para más información, consultar el detalle de la reunión en <a href=\"http://localhost:9005/goc/rest/publicacion/reuniones/" + reunion.getId() + "\">" + "http://localhost:9007/goc/rest/publicacion/reuniones/" + reunion.getId() + "<br/>");
+        content.append("<br/>Para más información, consultar el detalle de la reunión en <a href=\"http://devel.uji.es/goc/rest/publicacion/reuniones/" + reunion.getId() + "\">" + "http://localhost:9007/goc/rest/publicacion/reuniones/" + reunion.getId() + "<br/>");
         content.append("</div>");
 
         return content.toString();
