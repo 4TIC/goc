@@ -77,7 +77,7 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
     },
 
     onEdit: function (grid, td, cellindex) {
-        if (cellindex === 3) {
+        if (cellindex === 5) {
             return this.onAttachmentEdit();
         }
         var grid = this.getView();
