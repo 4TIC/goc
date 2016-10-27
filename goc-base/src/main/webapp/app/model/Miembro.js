@@ -7,6 +7,7 @@ Ext.define('goc.model.Miembro', {
     },
     fields: [
         { name: 'id', type: 'number' },
+        { name: 'personaId', type: 'number' },
         { name: 'nombre', type: 'string' },
         { name: 'email', type: 'string' },
         { name: 'externo', type: 'boolean' },

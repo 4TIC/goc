@@ -9,7 +9,6 @@ Ext.define('goc.view.reunion.ReunionGridController', {
         this.createModalReunion(null);
     },
     onEdit: function (grid, td, cellindex) {
-        console.log(cellindex);
         if (cellindex === 4) {
             return this.onAttachmentEdit();
         }

@@ -60,7 +60,8 @@
     "nombre": "Nom",
     "correo": "Correu",
     "cargo": "Càrrec",
-    "codigo": "Codi"
+    "codigo": "Codi",
+    "anyadirMiembro": "Afegir membre"
   },
   "reuniones": {
     "tituloPrincipal": "Reunions",
@@ -137,7 +138,10 @@
     "seleccionarParaAnyadirSuplente": "Cal sel·leccionar un assistent per a poder afegir un suplent",
     "addSuplente": "Afegir suplent",
     "borrarSuplente": "Esborrar suplent",
-    "seleccionarParaBorrarSuplente": "Cal sel·leccionar un assistent per a poder esborrar el seu suplent"
+    "seleccionarParaBorrarSuplente": "Cal sel·leccionar un assistent per a poder esborrar el seu suplent",
+    "seleccionarParaBorrarPuntoOrdenDia": "Cal sel·leccionar un punt del ordre del dia per a esborrar-ho",
+    "seleccionarParaEditarPuntoOrdenDia": "Cal sel·leccionar un punt del ordre del dia per a editar-ho",
+    "seleccionarParaDocumentacionPuntoOrdenDia": "Cal sel·leccionar un punt del ordre del dia per accedir a la seua documentació"
   },
   "historicoReuniones": {
     "tituloGridReunionesCompletadas": "Històric de reunions completades"

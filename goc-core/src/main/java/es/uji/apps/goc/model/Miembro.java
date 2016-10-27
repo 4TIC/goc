@@ -4,6 +4,8 @@ public class Miembro
 {
     private Long id;
 
+    private Long personaId;
+
     private String nombre;
 
     private String email;
@@ -72,5 +74,15 @@ public class Miembro
     public void setCargo(Cargo cargo)
     {
         this.cargo = cargo;
+    }
+
+    public Long getPersonaId()
+    {
+        return personaId;
+    }
+
+    public void setPersonaId(Long personaId)
+    {
+        this.personaId = personaId;
     }
 }

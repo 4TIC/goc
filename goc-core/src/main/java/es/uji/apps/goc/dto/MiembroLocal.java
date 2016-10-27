@@ -2,6 +2,7 @@ package es.uji.apps.goc.dto;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +20,9 @@ public class MiembroLocal implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(name = "PERSONA_ID")
+    private Long personaId;
 
     private String nombre;
 
@@ -89,5 +93,15 @@ public class MiembroLocal implements Serializable
     public void setCargo(Cargo cargo)
     {
         this.cargo = cargo;
+    }
+
+    public Long getPersonaId()
+    {
+        return personaId;
+    }
+
+    public void setPersonaId(Long personaId)
+    {
+        this.personaId = personaId;
     }
 }

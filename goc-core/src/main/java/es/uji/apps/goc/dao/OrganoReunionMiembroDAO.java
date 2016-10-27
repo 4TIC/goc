@@ -88,8 +88,8 @@ public class OrganoReunionMiembroDAO extends BaseDAODatabaseImpl
 
     @Transactional
     public void updateAsistenteReunionByEmail(Long reunionId, String organoId, Boolean externo,
-                                String asistenteEmail, Boolean asistencia, Long suplenteId, String suplenteNombre,
-                                String suplenteEmail)
+            String asistenteEmail, Boolean asistencia, Long suplenteId, String suplenteNombre,
+            String suplenteEmail)
     {
         JPAUpdateClause update = new JPAUpdateClause(entityManager, qOrganoReunionMiembro);
         update.set(qOrganoReunionMiembro.asistencia, asistencia)
@@ -102,7 +102,6 @@ public class OrganoReunionMiembroDAO extends BaseDAODatabaseImpl
                                         .and(qOrganoReunionMiembro.organoExterno.eq(externo)))));
         update.execute();
     }
-
 
     public List<OrganoReunionMiembro> getMiembroByAsistenteIdOrSuplenteId(Long reunionId,
             Long connectedUserId)
@@ -121,8 +120,9 @@ public class OrganoReunionMiembroDAO extends BaseDAODatabaseImpl
         JPAQuery query = new JPAQuery(entityManager);
 
         return query.from(qOrganoReunionMiembro)
-                .where(qOrganoReunionMiembro.suplenteId.eq(userId)
-                        .or(qOrganoReunionMiembro.miembroId.eq(userId.toString())))
+                .where(qOrganoReunionMiembro.asistencia.eq(true)
+                        .and(qOrganoReunionMiembro.suplenteId.eq(userId)
+                                .or(qOrganoReunionMiembro.miembroId.eq(userId.toString()))))
                 .list(qOrganoReunionMiembro);
     }
 
@@ -149,7 +149,6 @@ public class OrganoReunionMiembroDAO extends BaseDAODatabaseImpl
         JPAQuery query = new JPAQuery(entityManager);
 
         return query.from(qOrganoReunionMiembro)
-                .where(qOrganoReunionMiembro.reunionId.eq(reunionId))
-                .list(qOrganoReunionMiembro);
+                .where(qOrganoReunionMiembro.reunionId.eq(reunionId)).list(qOrganoReunionMiembro);
     }
 }

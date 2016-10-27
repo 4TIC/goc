@@ -71,7 +71,9 @@ Ext.define('goc.view.reunion.FormReunionController', {
             var miembrosStore = self.getStoreDeMiembros(record.get('id'), record.get('externo'));
             if (miembrosStore) {
                 miembrosStore.getData().each(function (record) {
+                    console.log(record);
                     miembros.push({
+                        id: record.get('id'),
                         email: record.get('email'),
                         asistencia: record.get('asistencia'),
                         suplenteId: record.get('suplenteId'),

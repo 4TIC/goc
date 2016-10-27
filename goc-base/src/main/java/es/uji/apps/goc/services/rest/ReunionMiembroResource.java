@@ -91,7 +91,6 @@ public class ReunionMiembroResource extends CoreBaseService
         UIEntity ui = new UIEntity();
 
         ui.put("id", miembro.getId());
-        ui.put("miembroId", miembro.getId());
         ui.put("nombre", miembro.getNombre());
         ui.put("email", miembro.getEmail());
         ui.put("organoId", organoId);

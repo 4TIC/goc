@@ -31,6 +31,10 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
         var records = grid.getView().getSelectionModel().getSelection();
         var reunionId = this.reunionId;
 
+        if (records.length === 0) {
+            return Ext.Msg.alert(appI18N.reuniones.cerrarActa, appI18N.reuniones.seleccionarParaBorrarPuntoOrdenDia);
+        }
+
         if (records.length === 1 && records[0].phantom === true) {
             return grid.getStore().remove(records);
         }
@@ -83,7 +87,9 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
         var grid = this.getView();
         var record = grid.getView().getSelectionModel().getSelection()[0];
 
-        if (!record) return;
+        if (!record) {
+            return Ext.Msg.alert(appI18N.reuniones.cerrarActa, appI18N.reuniones.seleccionarParaEditarPuntoOrdenDia);
+        }
 
         this.createModalPuntoOrdenDia(record);
     },
@@ -99,7 +105,7 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
         var reunion = reunionGrid.getView().getSelectionModel().getSelection()[0];
 
         if (!record) {
-            return;
+            return Ext.Msg.alert(appI18N.reuniones.cerrarActa, appI18N.reuniones.seleccionarParaDocumentacionPuntoOrdenDia);
         }
 
         this.modal = view.add({

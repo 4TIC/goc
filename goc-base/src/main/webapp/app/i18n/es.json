@@ -59,7 +59,8 @@
     "nombre": "Nombre",
     "correo": "Correo",
     "cargo": "Càrrec",
-    "codigo": "Código"
+    "codigo": "Código",
+    "anyadirMiembro": "Afegir membre"
   },
   "reuniones": {
     "tituloPrincipal": "Reuniones",
@@ -136,7 +137,10 @@
     "seleccionarParaAnyadirSuplente": "Debe selecciónar un asistente para añadir un suplente",
     "addSuplente": "Añadir suplente",
     "borrarSuplente": "Borrar suplente",
-    "seleccionarParaBorrarSuplente": "Debe seleccionar un asistente para borrar a su suplente"
+    "seleccionarParaBorrarSuplente": "Debe seleccionar un asistente para borrar a su suplente",
+    "seleccionarParaBorrarPuntoOrdenDia": "Debe seleccionar un punto del orden del día para borrarlo",
+    "seleccionarParaEditarPuntoOrdenDia": "Debe seleccionar un punto del orden del día para editarlo",
+    "seleccionarParaDocumentacionPuntoOrdenDia": "Debe seleccionar un punto del orden del día para acceder a su documentación"
   },
   "historicoReuniones": {
     "tituloGridReunionesCompletadas": "Històric de reunions completadas"

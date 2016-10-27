@@ -63,6 +63,7 @@ public class MiembroDAO extends BaseDAODatabaseImpl
         Miembro miembro = new Miembro();
 
         miembro.setId(miembroLocal.getId());
+        miembro.setPersonaId(miembroLocal.getPersonaId());
         miembro.setNombre(miembroLocal.getNombre());
         miembro.setEmail(miembroLocal.getEmail());
 
@@ -94,6 +95,7 @@ public class MiembroDAO extends BaseDAODatabaseImpl
     public Miembro insertMiembro(Miembro miembro, Long connectedUserId)
     {
         MiembroLocal miembroLocal = new MiembroLocal();
+        miembroLocal.setPersonaId(miembro.getId());
         miembroLocal.setNombre(miembro.getNombre());
         miembroLocal.setEmail(miembro.getEmail());
 
@@ -140,6 +142,7 @@ public class MiembroDAO extends BaseDAODatabaseImpl
         MiembroLocal miembroLocal = new MiembroLocal();
 
         miembroLocal.setId(miembro.getId());
+        miembroLocal.setPersonaId(miembro.getPersonaId());
         miembroLocal.setNombre(miembro.getNombre());
         miembroLocal.setEmail(miembro.getEmail());
 
@@ -194,6 +197,7 @@ public class MiembroDAO extends BaseDAODatabaseImpl
         cargo.setNombre(miembroExterno.getCargo().getNombre());
 
         miembro.setId(miembroExterno.getId());
+        miembro.setPersonaId(miembroExterno.getId());
         miembro.setNombre(miembroExterno.getNombre());
         miembro.setEmail(miembroExterno.getEmail());
         miembro.setCargo(cargo);

@@ -79,7 +79,7 @@ public class OrganoReunionMiembroService
             organoReunionMiembro.setAsistencia(true);
             organoReunionMiembro.setOrganoId(miembro.getOrgano().getId());
             organoReunionMiembro.setReunionId(organoReunion.getReunion().getId());
-            organoReunionMiembro.setMiembroId(miembro.getId().toString());
+            organoReunionMiembro.setMiembroId(miembro.getPersonaId().toString());
             organoReunionMiembro.setCargoId(miembro.getCargo().getId());
             organoReunionMiembro.setCargoNombre(miembro.getCargo().getNombre());
             organoReunionMiembroDAO.insert(organoReunionMiembro);

@@ -103,6 +103,7 @@ public class MiembroResource extends CoreBaseService
     private Miembro uiToModel(UIEntity miembroUI)
     {
         Miembro miembro = new Miembro();
+        miembro.setId(Long.parseLong(miembroUI.get("personaId")));
         miembro.setNombre(miembroUI.get("nombre"));
         miembro.setEmail(miembroUI.get("email"));
 
