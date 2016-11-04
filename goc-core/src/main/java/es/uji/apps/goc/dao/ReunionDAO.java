@@ -36,7 +36,8 @@ public class ReunionDAO extends BaseDAODatabaseImpl
 
         List<Reunion> reuniones = query.from(qReunion)
                 .leftJoin(qReunion.reunionOrganos, qOrganoReunion).fetch()
-                .where(qReunion.id.eq(reunionId)).list(qReunion);
+                .where(qReunion.id.eq(reunionId))
+                .list(qReunion);
 
         if (reuniones.size() == 0)
         {

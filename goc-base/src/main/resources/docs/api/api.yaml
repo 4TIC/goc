@@ -146,7 +146,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/Rol"
+              type: string
 
 definitions:
   Reunion:
@@ -270,16 +270,6 @@ definitions:
       nombre:
         type: string
         description: Nombre del cargo.
-
-  Rol:
-    type: object
-    properties:
-      id:
-        type: number
-        description: Identificadorr único del rol.
-      nombre:
-        type: string
-        description: Nombre del rol.
 
   Mensaje:
     type: object

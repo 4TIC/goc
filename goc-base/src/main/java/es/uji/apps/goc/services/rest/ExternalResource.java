@@ -19,7 +19,6 @@ import com.sun.jersey.api.core.InjectParam;
 import es.uji.apps.goc.dto.ReunionFirma;
 import es.uji.apps.goc.exceptions.RolesPersonaExternaException;
 import es.uji.apps.goc.firmas.FirmaService;
-import es.uji.apps.goc.model.Rol;
 import es.uji.apps.goc.notifications.CanNotSendException;
 import es.uji.apps.goc.notifications.MailSender;
 import es.uji.apps.goc.notifications.Mensaje;
@@ -82,13 +81,13 @@ public class ExternalResource extends CoreBaseService
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
-        List<Rol> roles = personaService.getRolesFromPersonaId(connectedUserId);
+        List<String> roles = personaService.getRolesFromPersonaId(connectedUserId);
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         ArrayNode rows = result.putArray("row");
 
-        Boolean admin = roles.stream().filter(r -> r.getNombre().equals("ADMIN")).findAny().isPresent();
+        Boolean admin = roles.stream().filter(r -> r.equals("ADMIN")).findAny().isPresent();
 
         if (admin)
         {

@@ -14,11 +14,13 @@ import javax.ws.rs.core.MediaType;
 import com.sun.jersey.api.core.InjectParam;
 
 import es.uji.apps.goc.model.Persona;
-import es.uji.apps.goc.model.Rol;
+import es.uji.apps.goc.model.Role;
 import es.uji.apps.goc.services.ExternalService;
 import es.uji.commons.rest.CoreBaseService;
 import es.uji.commons.rest.UIEntity;
 import es.uji.commons.sso.AccessManager;
+
+import static java.util.stream.Collectors.toList;
 
 @Path("/external/personas")
 public class ExternalPersonaResource extends CoreBaseService
@@ -70,12 +72,17 @@ public class ExternalPersonaResource extends CoreBaseService
     @GET
     @Path("{personaId}/roles")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<UIEntity> getRolesByPersonaId(@PathParam("personaId") Long personaId)
+    public List<String> getRolesByPersonaId(@PathParam("personaId") Long personaId)
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
-        Rol rol = externalService.getRolesByPersonaId(personaId);
+        List<Role> rolesByPersonaId = externalService.getRolesByPersonaId(personaId);
 
-        return UIEntity.toUI(Collections.singletonList(rol));
+        if (rolesByPersonaId == null && rolesByPersonaId.isEmpty())
+            return Collections.EMPTY_LIST;
+
+        return rolesByPersonaId.stream()
+                .map(role -> role.toString())
+                .collect(toList());
     }
 
 }

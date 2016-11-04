@@ -1,18 +1,13 @@
 package es.uji.apps.goc.services;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import es.uji.apps.goc.model.*;
+import es.uji.commons.rest.StringUtils;
 import org.springframework.stereotype.Service;
 
-import es.uji.apps.goc.model.Cargo;
-import es.uji.apps.goc.model.Miembro;
-import es.uji.apps.goc.model.Organo;
-import es.uji.apps.goc.model.Persona;
-import es.uji.apps.goc.model.Rol;
-import es.uji.apps.goc.model.TipoOrgano;
-import es.uji.commons.rest.StringUtils;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ExternalService
@@ -24,7 +19,8 @@ public class ExternalService
         TipoOrgano t1 = new TipoOrgano(5L, "98", "Departamento Interno");
         TipoOrgano t2 = new TipoOrgano(6L, "121", "Unidad de Gestión Interno");
 
-        for (Integer i=1; i<10; i++) {
+        for (Integer i = 1; i < 10; i++)
+        {
             Organo organo = new Organo("E" + i.toString(), "Organo " + i.toString() + " Interno", t1);
             listaOrganos.add(organo);
         }
@@ -50,7 +46,7 @@ public class ExternalService
         Cargo c2 = new Cargo("2");
         c2.setNombre("Vocal");
 
-        for (Long i=2L; i<10L; i++)
+        for (Long i = 2L; i < 10L; i++)
         {
             Miembro miembro = new Miembro(i, "Miembro " + i.toString() + " Organo " + organo.getId(),
                     "miembro" + i.toString() + "@organo" + organo.getId() + ".com", organo, c2);
@@ -96,22 +92,19 @@ public class ExternalService
                 .filter(persona -> StringUtils.limpiaAcentos(persona.getNombre()).toLowerCase()
                         .contains(StringUtils.limpiaAcentos(query).toLowerCase())
                         || StringUtils.limpiaAcentos(persona.getEmail().toLowerCase())
-                                .contains(StringUtils.limpiaAcentos(query).toLowerCase()))
+                        .contains(StringUtils.limpiaAcentos(query).toLowerCase()))
                 .collect(Collectors.toList());
     }
 
-    public Persona getPersonaById(Long personaId, Long connectedUserId) {
+    public Persona getPersonaById(Long personaId, Long connectedUserId)
+    {
         Persona persona = new Persona(88849L, "Nicolás Manero", "nmanero@uji.es");
 
         return persona;
     }
 
-    public Rol getRolesByPersonaId(Long personaId)
+    public List<Role> getRolesByPersonaId(Long userId)
     {
-        if (personaId.equals(88849L)) {
-            return new Rol(1L, "ADMIN");
-        }
-
-        return new Rol(2L, "USUARIO");
+        return Arrays.asList(Role.values());
     }
 }

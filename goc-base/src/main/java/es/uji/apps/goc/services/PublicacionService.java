@@ -1,32 +1,23 @@
 package es.uji.apps.goc.services;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.sun.jersey.api.core.InjectParam;
-
 import es.uji.apps.goc.dao.ReunionDAO;
 import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.dto.ReunionTemplate;
-import es.uji.apps.goc.exceptions.MiembrosExternosException;
-import es.uji.apps.goc.exceptions.OrganosExternosException;
-import es.uji.apps.goc.exceptions.PersonasExternasException;
-import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
+import es.uji.apps.goc.exceptions.*;
 import es.uji.apps.goc.templates.HTMLTemplate;
 import es.uji.apps.goc.templates.Template;
 import es.uji.commons.rest.CoreBaseService;
 import es.uji.commons.sso.AccessManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Path("publicacion")
@@ -73,9 +64,10 @@ public class PublicacionService extends CoreBaseService
     @GET
     @Path("reuniones/{reunionId}")
     @Produces(MediaType.TEXT_HTML)
+    @Transactional
     public Template reunion(@PathParam("reunionId") Long reunionId, @QueryParam("lang") String lang)
             throws OrganosExternosException, MiembrosExternosException,
-            ReunionNoDisponibleException, PersonasExternasException
+            ReunionNoDisponibleException, PersonasExternasException, InvalidAccessException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
@@ -85,6 +77,8 @@ public class PublicacionService extends CoreBaseService
         {
             throw new ReunionNoDisponibleException();
         }
+
+        reunion.tieneAcceso(connectedUserId);
 
         ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion,
                 connectedUserId);

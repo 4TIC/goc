@@ -21,7 +21,7 @@ public class ReunionFormatter
 
         content.append("<h2>" + reunion.getAsunto() + "</h2>");
 
-        if (!reunion.getDescripcion().isEmpty())
+        if (reunion.getDescripcion() != null && !reunion.getDescripcion().isEmpty())
         {
             content.append("<div>" + reunion.getDescripcion() + "</div>");
         }

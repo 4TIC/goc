@@ -1,23 +1,19 @@
 package es.uji.apps.goc.services;
 
-import java.util.List;
-
-import javax.ws.rs.core.MediaType;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
-
 import es.uji.apps.goc.dto.PersonaExterna;
 import es.uji.apps.goc.exceptions.PersonasExternasException;
 import es.uji.apps.goc.exceptions.RolesPersonaExternaException;
-import es.uji.apps.goc.model.JSONListaRolesPersonaDeserializer;
 import es.uji.apps.goc.model.Persona;
-import es.uji.apps.goc.model.Rol;
 import es.uji.commons.rest.CoreBaseService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Service
 public class PersonaService extends CoreBaseService
@@ -58,7 +54,7 @@ public class PersonaService extends CoreBaseService
         return persona;
     }
 
-    public List<Rol> getRolesFromPersonaId(Long personaId) throws RolesPersonaExternaException
+    public List<String> getRolesFromPersonaId(Long personaId) throws RolesPersonaExternaException
     {
         WebResource getOrganosResource = Client.create()
                 .resource(this.personasExternasEndpoint + "/" + personaId.toString() + "/roles");
@@ -71,11 +67,6 @@ public class PersonaService extends CoreBaseService
             throw new RolesPersonaExternaException();
         }
 
-        JSONListaRolesPersonaDeserializer jsonDeserializer = response
-                .getEntity(JSONListaRolesPersonaDeserializer.class);
-
-        List<Rol> roles = jsonDeserializer.getRoles();
-
-        return roles;
+        return response.getEntity(new GenericType<List<String>>() {});
     }
 }

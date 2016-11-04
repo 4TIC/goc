@@ -4,16 +4,14 @@ import com.sun.jersey.api.core.InjectParam;
 import es.uji.apps.goc.dao.ReunionDAO;
 import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.dto.ReunionTemplate;
-import es.uji.apps.goc.exceptions.MiembrosExternosException;
-import es.uji.apps.goc.exceptions.OrganosExternosException;
-import es.uji.apps.goc.exceptions.PersonasExternasException;
-import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
+import es.uji.apps.goc.exceptions.*;
 import es.uji.apps.goc.model.Persona;
 import es.uji.apps.goc.services.PersonaService;
 import es.uji.apps.goc.services.ReunionService;
 import es.uji.apps.goc.templates.PDFTemplate;
 import es.uji.apps.goc.templates.Template;
 import es.uji.commons.sso.AccessManager;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -34,9 +32,10 @@ public class ActaResource
     @GET
     @Path("{reunionId}")
     @Produces("application/pdf")
+    @Transactional
     public Template reunion(@PathParam("reunionId") Long reunionId, @QueryParam("lang") String lang,
                             @Context HttpServletRequest request) throws OrganosExternosException,
-            MiembrosExternosException, ReunionNoDisponibleException, PersonasExternasException
+            MiembrosExternosException, ReunionNoDisponibleException, PersonasExternasException, InvalidAccessException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
@@ -46,6 +45,8 @@ public class ActaResource
         {
             throw new ReunionNoDisponibleException();
         }
+
+        reunion.tieneAcceso(connectedUserId);
 
         Persona convocante = personaService
                 .getPersonaFromDirectoryByPersonaId(reunion.getCreadorId());

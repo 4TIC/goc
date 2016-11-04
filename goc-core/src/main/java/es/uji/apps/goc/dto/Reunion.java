@@ -1,19 +1,15 @@
 package es.uji.apps.goc.dto;
 
+import es.uji.apps.goc.exceptions.InvalidAccessException;
+
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import static java.util.stream.Collectors.toList;
 
 @Entity
 @Table(name = "GOC_REUNIONES")
@@ -35,46 +31,46 @@ public class Reunion implements Serializable
 
     private String ubicacion;
 
-    @Column(name="URL_GRABACION")
+    @Column(name = "URL_GRABACION")
     private String urlGrabacion;
 
-    @Column(name="CREADOR_ID")
+    @Column(name = "CREADOR_ID")
     private Long creadorId;
 
-    @Column(name="CREADOR_NOMBRE")
+    @Column(name = "CREADOR_NOMBRE")
     private String creadorNombre;
 
-    @Column(name="CREADOR_EMAIL")
+    @Column(name = "CREADOR_EMAIL")
     private String creadorEmail;
 
-    @Column(name="FECHA_CREACION")
+    @Column(name = "FECHA_CREACION")
     private Date fechaCreacion;
 
     private Boolean completada;
 
-    @Column(name="ADMITE_SUPLENCIA")
+    @Column(name = "ADMITE_SUPLENCIA")
     private Boolean admiteSuplencia;
 
     private Boolean telematica;
 
-    @Column(name="TELEMATICA_DESCRIPCION")
+    @Column(name = "TELEMATICA_DESCRIPCION")
     private String telematicaDescripcion;
 
     private Boolean publica;
 
     private String acuerdos;
 
-    @Column(name="NUMERO_SESION")
+    @Column(name = "NUMERO_SESION")
     private Long numeroSesion;
 
-    @Column(name="FECHA_COMPLETADA")
+    @Column(name = "FECHA_COMPLETADA")
     private Date fechaCompletada;
 
-    @Column(name="NOTIFICADA")
+    @Column(name = "NOTIFICADA")
     private Boolean notificada;
 
     @OneToOne
-    @JoinColumn(name="MIEMBRO_RESPONSABLE_ACTA_ID")
+    @JoinColumn(name = "MIEMBRO_RESPONSABLE_ACTA_ID")
     private OrganoReunionMiembro miembroResponsableActa;
 
     @OneToMany(mappedBy = "reunion", cascade = CascadeType.REMOVE)
@@ -99,9 +95,12 @@ public class Reunion implements Serializable
         this.id = id;
     }
 
-    public Reunion() {}
+    public Reunion()
+    {
+    }
 
-    public Reunion(Long reunionId) {
+    public Reunion(Long reunionId)
+    {
         this.id = reunionId;
     }
 
@@ -185,11 +184,13 @@ public class Reunion implements Serializable
         this.completada = completada;
     }
 
-    public Date getFechaCompletada() {
+    public Date getFechaCompletada()
+    {
         return fechaCompletada;
     }
 
-    public void setFechaCompletada(Date fechaCompletada) {
+    public void setFechaCompletada(Date fechaCompletada)
+    {
         this.fechaCompletada = fechaCompletada;
     }
 
@@ -218,19 +219,23 @@ public class Reunion implements Serializable
         this.reunionPuntosOrdenDia = reunionPuntosOrdenDia;
     }
 
-    public String getAcuerdos() {
+    public String getAcuerdos()
+    {
         return acuerdos;
     }
 
-    public void setAcuerdos(String acuerdos) {
+    public void setAcuerdos(String acuerdos)
+    {
         this.acuerdos = acuerdos;
     }
 
-    public String getUbicacion() {
+    public String getUbicacion()
+    {
         return ubicacion;
     }
 
-    public void setUbicacion(String ubicacion) {
+    public void setUbicacion(String ubicacion)
+    {
         this.ubicacion = ubicacion;
     }
 
@@ -244,27 +249,33 @@ public class Reunion implements Serializable
         this.numeroSesion = numeroSesion;
     }
 
-    public String getUrlGrabacion() {
+    public String getUrlGrabacion()
+    {
         return urlGrabacion;
     }
 
-    public void setUrlGrabacion(String urlGrabacion) {
+    public void setUrlGrabacion(String urlGrabacion)
+    {
         this.urlGrabacion = urlGrabacion;
     }
 
-    public Boolean isPublica() {
+    public Boolean isPublica()
+    {
         return publica;
     }
 
-    public void setPublica(Boolean publica) {
+    public void setPublica(Boolean publica)
+    {
         this.publica = publica;
     }
 
-    public Set<ReunionComentario> getComentarios() {
+    public Set<ReunionComentario> getComentarios()
+    {
         return comentarios;
     }
 
-    public void setComentarios(Set<ReunionComentario> comentarios) {
+    public void setComentarios(Set<ReunionComentario> comentarios)
+    {
         this.comentarios = comentarios;
     }
 
@@ -298,11 +309,13 @@ public class Reunion implements Serializable
         this.telematicaDescripcion = telematicaDescripcion;
     }
 
-    public Boolean isNotificada() {
+    public Boolean isNotificada()
+    {
         return notificada;
     }
 
-    public void setNotificada(Boolean notificada) {
+    public void setNotificada(Boolean notificada)
+    {
         this.notificada = notificada;
     }
 
@@ -326,11 +339,59 @@ public class Reunion implements Serializable
         this.creadorEmail = creadorEmail;
     }
 
-    public Boolean isAdmiteSuplencia() {
+    public Boolean isAdmiteSuplencia()
+    {
         return admiteSuplencia;
     }
 
-    public void setAdmiteSuplencia(Boolean admiteSuplencia) {
+    public void setAdmiteSuplencia(Boolean admiteSuplencia)
+    {
         this.admiteSuplencia = admiteSuplencia;
+    }
+
+    public boolean noEsMiembro(Long connectedUserId)
+    {
+        return !esMiembro(connectedUserId);
+    }
+
+    public boolean esMiembro(final Long userId)
+    {
+        if (userId == null || reunionOrganos == null || reunionOrganos.isEmpty())
+            return false;
+
+        List<OrganoReunionMiembro> miembros = new ArrayList<>();
+
+        getReunionOrganos().stream().forEach(organoReunion ->
+        {
+            List<OrganoReunionMiembro> pertenecientes = organoReunion.getMiembros().stream()
+                    .filter(miembro -> String.valueOf(userId).equals(miembro.getMiembroId()))
+                    .collect(toList());
+
+            miembros.addAll(pertenecientes);
+        });
+
+        return (miembros != null && !miembros.isEmpty());
+    }
+
+    public boolean esCreador(Long userId)
+    {
+        return (userId == getCreadorId());
+    }
+
+    public boolean noEsCreador(Long userId)
+    {
+        return !esCreador(userId);
+    }
+
+    public void tieneAcceso(Long userId) throws InvalidAccessException
+    {
+        if (isPublica())
+            return;
+
+        if (userId == null)
+            throw new InvalidAccessException("Acceso restringido a usuarios autenticados");
+
+        if (noEsCreador(userId) && noEsMiembro(userId))
+            throw new InvalidAccessException("No se tiene acceso a esta reunion");
     }
 }
