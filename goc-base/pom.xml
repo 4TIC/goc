@@ -8,23 +8,10 @@
   <parent>
     <artifactId>goc</artifactId>
     <groupId>es.uji.apps.goc</groupId>
-    <version>0.0.5-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
   </parent>
 
   <dependencies>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <version>3.1.0</version>
-      <scope>provided</scope>
-    </dependency>
- 
-    <dependency>
-      <groupId>es.uji.commons</groupId>
-      <artifactId>uji-commons-testing</artifactId>
-      <version>0.3.6-SNAPSHOT</version>
-    </dependency>
-
     <dependency>
       <groupId>es.uji.apps.goc</groupId>
       <artifactId>goc-core</artifactId>
@@ -32,9 +19,10 @@
     </dependency>
 
     <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-client</artifactId>
-      <version>${jersey.version}</version>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope>
     </dependency>
 
     <!-- Thymeleaf -->
@@ -76,7 +64,7 @@
     </dependency>
 
     <!-- Jersey Test Framework -->
- 
+
     <dependency>
       <groupId>com.sun.jersey.jersey-test-framework</groupId>
       <artifactId>jersey-test-framework-core</artifactId>
