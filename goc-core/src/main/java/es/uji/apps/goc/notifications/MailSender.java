@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 public class MailSender
 {
     private static Logger log = Logger.getLogger(MailSender.class);
+
     private String smtpHost;
     private Boolean smtpStartTLS;
     private Boolean smtpAuthRequired;
@@ -35,17 +36,17 @@ public class MailSender
     @Autowired
     public MailSender(
             @Value("${uji.smtp.host}") String smtpHost,
-            @Value("${uji.smtp.starttls.enable}") Boolean smtpStartTLS,
-            @Value("${uji.smtp.auth}") Boolean smtpAuthRequired,
-            @Value("${uji.smtp.port}") Integer smtpPort,
+            @Value("${uji.smtp.starttls.enable}") String smtpStartTLS,
+            @Value("${uji.smtp.auth}") String smtpAuthRequired,
+            @Value("${uji.smtp.port}") String smtpPort,
             @Value("${uji.smtp.username}") String smtpUsername,
             @Value("${uji.smtp.password}") String smtpPassword,
             @Value("${uji.smtp.defaultSender}") String defaultSender)
     {
         this.smtpHost = smtpHost;
-        this.smtpStartTLS = smtpStartTLS;
-        this.smtpAuthRequired = smtpAuthRequired;
-        this.smtpPort = smtpPort;
+        this.smtpStartTLS = Boolean.parseBoolean(smtpStartTLS);
+        this.smtpAuthRequired = Boolean.parseBoolean(smtpAuthRequired);
+        this.smtpPort = Integer.parseInt(smtpPort);
         this.smtpUsername = smtpUsername;
         this.smtpPassword = smtpPassword;
         this.defaultSender = defaultSender;
