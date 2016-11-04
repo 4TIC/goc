@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>es.uji.apps.goc</groupId>
   <artifactId>goc</artifactId>
-  <version>0.0.5-SNAPSHOT</version>
+  <version>0.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>goc</name>
 
