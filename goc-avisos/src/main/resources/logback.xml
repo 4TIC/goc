@@ -6,9 +6,9 @@
   </appender>
 
   <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>/var/log/uji/uji-goc-avisos.log</file>
+    <file>${goc.home}/goc-avisos.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>/var/log/uji/uji-goc-base.%d{yyyy-MM-dd}.log</fileNamePattern>
+      <fileNamePattern>${goc.home}/goc-base.%d{yyyy-MM-dd}.log</fileNamePattern>
       <maxHistory>30</maxHistory>
     </rollingPolicy>
     <encoder>

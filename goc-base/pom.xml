@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
   <artifactId>goc-base</artifactId>
@@ -88,9 +89,9 @@
 
   <build>
     <finalName>goc</finalName>
- 
+
     <!-- Sustitución de propiedades -->
- 
+
     <resources>
       <resource>
         <directory>${basedir}/src/main/resources</directory>
@@ -104,11 +105,11 @@
         <targetPath>..</targetPath>
       </resource>
     </resources>
- 
+
     <plugins>
 
       <!-- Servidor de aplicaciones Jetty -->
- 
+
       <plugin>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
@@ -130,7 +131,7 @@
       </plugin>
 
       <!-- Weaving de dependencias -->
- 
+
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>aspectj-maven-plugin</artifactId>
@@ -200,15 +201,15 @@
             </goals>
             <configuration>
               <files>
-                <file>src/main/resources/app.properties</file>
+                <file>${goc.home}/app.properties</file>
               </files>
             </configuration>
           </execution>
         </executions>
       </plugin>
-      
+
       <!-- Sustitución de propiedades en el web.xml -->
- 
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
