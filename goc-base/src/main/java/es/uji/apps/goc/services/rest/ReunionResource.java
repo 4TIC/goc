@@ -70,6 +70,9 @@ public class ReunionResource extends CoreBaseService
     @InjectParam
     private AvisosReunion avisosReunion;
 
+    @Value("${goc.logo}")
+    private String logoUrl;
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<UIEntity> getReuniones(@QueryParam("organoId") String organoId,
@@ -444,13 +447,16 @@ public class ReunionResource extends CoreBaseService
         }
 
         String applang = getLangCode(lang);
+
         Template template = new PDFTemplate("asistencia-" + applang);
+        template.put("logo", logoUrl);
         template.put("nombreAsistente", nombreAsistente);
         template.put("tituloReunion", reunionTemplate.getAsunto());
         template.put("fechaReunion", getFechaReunion(reunionTemplate.getFecha()));
         template.put("horaReunion", getHoraReunion(reunionTemplate.getFecha()));
         template.put("duracionReunion", getDuracionReunion(reunionTemplate.getDuracion()));
         template.put("nombreConvocante", reunionTemplate.getCreadorNombre());
+
         return template;
     }
 

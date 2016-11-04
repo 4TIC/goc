@@ -10,6 +10,7 @@ import es.uji.apps.goc.templates.Template;
 import es.uji.commons.rest.CoreBaseService;
 import es.uji.commons.sso.AccessManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,9 @@ public class PublicacionService extends CoreBaseService
 {
     @Autowired
     private ReunionDAO reunionDAO;
+
+    @Value("${goc.logo}")
+    private String logoUrl;
 
     @InjectParam
     private ReunionService reunionService;
@@ -54,6 +58,7 @@ public class PublicacionService extends CoreBaseService
 
         String applang = getLangCode(lang);
         Template template = new HTMLTemplate("reuniones-" + applang);
+        template.put("logo", logoUrl);
         template.put("reuniones", reuniones);
         template.put("applang", applang);
         template.put("connectedUserId", connectedUserId);
@@ -84,7 +89,9 @@ public class PublicacionService extends CoreBaseService
                 connectedUserId);
 
         String applang = getLangCode(lang);
+
         Template template = new HTMLTemplate("reunion-" + applang);
+        template.put("logo", logoUrl);
         template.put("reunion", reunionTemplate);
         template.put("applang", applang);
         template.put("connectedUserId", connectedUserId);

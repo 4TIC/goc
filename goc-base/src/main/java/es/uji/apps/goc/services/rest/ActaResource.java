@@ -11,12 +11,15 @@ import es.uji.apps.goc.services.ReunionService;
 import es.uji.apps.goc.templates.PDFTemplate;
 import es.uji.apps.goc.templates.Template;
 import es.uji.commons.sso.AccessManager;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 
+@Service
 @Path("actas")
 public class ActaResource
 {
@@ -28,6 +31,9 @@ public class ActaResource
 
     @InjectParam
     private ReunionDAO reunionDAO;
+
+    @Value("${goc.logo}")
+    private String logoUrl;
 
     @GET
     @Path("{reunionId}")
@@ -55,7 +61,9 @@ public class ActaResource
                 connectedUserId);
 
         String applang = getLangCode(lang);
+
         Template template = new PDFTemplate("acta-" + applang);
+        template.put("logo", logoUrl);
         template.put("reunion", reunionTemplate);
         template.put("convocante", convocante);
         template.put("applang", applang);
