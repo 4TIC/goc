@@ -22,6 +22,28 @@ Ext.define('goc.view.reunion.ReunionGridController', {
 
         this.createModalReunion(record);
     },
+
+    onEnviarConvocatoria: function() {
+        var grid = this.getView();
+        var record = grid.getView().getSelectionModel().getSelection()[0];
+
+        Ext.Msg.confirm("Confirmacion de envio de la convocatoria", "¿Estas seguro de que la reunion esta completamente definida y quieres notificar a los asistentes?", function(result) {
+            if (result === 'yes') {
+                Ext.Ajax.request(
+                    {
+                        url: '/goc/rest/reuniones/' + record.get('id') + '/enviarconvocatoria',
+                        method: 'PUT',
+                        success: function (response) {
+                            var data = Ext.decode(response.responseText);
+                            Ext.Msg.alert("Resultado del envio de la convocatoria", data.message);
+                        },
+                        scope: this
+                    }
+                );
+            }
+        });
+    },
+
     onCompleted: function () {
         var view = this.getView().up('panel');
         var grid = this.getView();

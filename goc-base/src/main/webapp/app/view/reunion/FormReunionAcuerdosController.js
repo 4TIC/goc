@@ -34,7 +34,5 @@ Ext.define('goc.view.reunion.FormReunionAcuerdosController',
                 scope: this
             });
         }
-
     }
-
 });

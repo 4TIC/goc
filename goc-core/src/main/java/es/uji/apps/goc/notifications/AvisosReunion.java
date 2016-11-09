@@ -43,8 +43,7 @@ public class AvisosReunion
         List<String> miembros = getMiembros(reunion, false);
 
         Mensaje mensaje = new Mensaje();
-        mensaje.setAsunto(
-                "[GOC] Nueva reunión: Se te ha incluido como miembro en una nueva convocatoria de reunión");
+        mensaje.setAsunto("[GOC] Nueva reunión: Se te ha incluido como miembro en una nueva convocatoria de reunión");
         mensaje.setContentType("text/html");
 
         ReunionFormatter formatter = new ReunionFormatter(reunion);

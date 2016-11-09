@@ -407,4 +407,21 @@ public class Reunion implements Serializable
         if (noEsCreador(userId) && noEsMiembro(userId))
             throw new InvalidAccessException("No se tiene acceso a esta reunion");
     }
+
+    public boolean noContieneMiembros()
+    {
+        return !contieneMiembros();
+    }
+
+    private boolean contieneMiembros()
+    {
+        if (reunionOrganos == null || reunionOrganos.isEmpty())
+            return false;
+
+        long numeroOrganosConMiembros = reunionOrganos.stream()
+                .filter(organo -> organo.getMiembros().size() > 0)
+                .count();
+
+        return (numeroOrganosConMiembros > 0);
+    }
 }

@@ -99,6 +99,13 @@ Ext.define('goc.view.reunion.ReunionGrid',
             {
                 xtype: 'button',
                 iconCls: 'fa fa-check',
+                name: 'botonEnviarConvocatoria',
+                text: appI18N.reuniones.enviarConvocatoria,
+                handler: 'onEnviarConvocatoria'
+            }, ' | ',
+            {
+                xtype: 'button',
+                iconCls: 'fa fa-check',
                 name: 'botonCerrar',
                 text: appI18N.reuniones.cerrarActa,
                 handler: 'onCompleted'

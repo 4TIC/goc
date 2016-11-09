@@ -10,6 +10,8 @@ import java.util.stream.Stream;
 
 import javax.ws.rs.core.MediaType;
 
+import es.uji.apps.goc.exceptions.*;
+import es.uji.apps.goc.notifications.AvisosReunion;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,13 +47,6 @@ import es.uji.apps.goc.dto.ReunionComentario;
 import es.uji.apps.goc.dto.ReunionDocumento;
 import es.uji.apps.goc.dto.ReunionFirma;
 import es.uji.apps.goc.dto.ReunionTemplate;
-import es.uji.apps.goc.exceptions.FirmaReunionException;
-import es.uji.apps.goc.exceptions.MiembrosExternosException;
-import es.uji.apps.goc.exceptions.OrganosExternosException;
-import es.uji.apps.goc.exceptions.PersonasExternasException;
-import es.uji.apps.goc.exceptions.ReunionNoAdmiteSuplenciaException;
-import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
-import es.uji.apps.goc.exceptions.ReunionYaCompletadaException;
 import es.uji.apps.goc.model.Cargo;
 import es.uji.apps.goc.model.Comentario;
 import es.uji.apps.goc.model.Documento;
@@ -65,6 +60,12 @@ import static es.uji.apps.goc.dto.QReunion.reunion;
 @Component
 public class ReunionService
 {
+    @Value("${goc.external.firmasEndpoint}")
+    private String firmasEndpoint;
+
+    @Value("${goc.external.authToken}")
+    private String authToken;
+
     @Autowired
     private ReunionDAO reunionDAO;
 
@@ -76,12 +77,6 @@ public class ReunionService
 
     @Autowired
     private ReunionComentarioService reunionComentarioService;
-
-    @Value("${goc.external.firmasEndpoint}")
-    private String firmasEndpoint;
-
-    @Value("${goc.external.authToken}")
-    private String authToken;
 
     @InjectParam
     private OrganoService organoService;
@@ -103,6 +98,10 @@ public class ReunionService
 
     @InjectParam
     private PuntoOrdenDiaDocumentoDAO puntoOrdenDiaDocumentoDAO;
+
+    @InjectParam
+    private AvisosReunion avisosReunion;
+
 
     public List<Reunion> getReunionesByUserId(Boolean completada, Long connectedUserId)
     {
@@ -915,5 +914,21 @@ public class ReunionService
         {
             throw new ReunionNoAdmiteSuplenciaException();
         }
+    }
+
+    public String enviarConvocatoria(Long reunionId)
+            throws MiembrosExternosException, ReunionNoDisponibleException, NotificacionesException
+    {
+        Reunion reunion = reunionDAO.getReunionConMiembrosAndPuntosDiaById(reunionId);
+
+        if (reunion.getReunionPuntosOrdenDia().size() == 0)
+            return "No se han definit els punts de l'ordre del dia";
+
+        if (reunion.noContieneMiembros())
+            return "No se han definit membres per a la reunio";
+
+        avisosReunion.enviaAvisoNuevaReunion(reunion);
+
+        return null;
     }
 }

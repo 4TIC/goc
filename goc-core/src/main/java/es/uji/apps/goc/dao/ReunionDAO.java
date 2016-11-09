@@ -3,15 +3,13 @@ package es.uji.apps.goc.dao;
 import java.util.Date;
 import java.util.List;
 
+import es.uji.apps.goc.dto.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.jpa.impl.JPAUpdateClause;
 
-import es.uji.apps.goc.dto.QOrganoReunion;
-import es.uji.apps.goc.dto.QReunion;
-import es.uji.apps.goc.dto.Reunion;
 import es.uji.commons.db.BaseDAODatabaseImpl;
 
 @Repository
@@ -19,6 +17,8 @@ public class ReunionDAO extends BaseDAODatabaseImpl
 {
     private QReunion qReunion = QReunion.reunion;
     private QOrganoReunion qOrganoReunion = QOrganoReunion.organoReunion;
+    private QPuntoOrdenDia qPuntoOrdenDia = QPuntoOrdenDia.puntoOrdenDia;
+    private QOrganoReunionMiembro qOrganoReunionMiembro = QOrganoReunionMiembro.organoReunionMiembro;
 
     public List<Reunion> getReunionesByUserId(Long connectedUserId)
     {
@@ -128,7 +128,27 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     {
         JPAQuery query = new JPAQuery(entityManager);
 
-        List<Reunion> reuniones = query.from(qReunion).where(qReunion.id.eq(reunionId))
+        List<Reunion> reuniones = query.from(qReunion)
+                .where(qReunion.id.eq(reunionId))
+                .list(qReunion);
+
+        if (reuniones.size() == 0)
+        {
+            return null;
+        }
+
+        return reuniones.get(0);
+    }
+
+    public Reunion getReunionConMiembrosAndPuntosDiaById(Long reunionId)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        List<Reunion> reuniones = query.from(qReunion)
+                .leftJoin(qReunion.reunionOrganos, qOrganoReunion).fetch()
+                .leftJoin(qOrganoReunion.miembros, qOrganoReunionMiembro).fetch()
+                .leftJoin(qReunion.reunionPuntosOrdenDia, qPuntoOrdenDia).fetch()
+                .where(qReunion.id.eq(reunionId))
                 .list(qReunion);
 
         if (reuniones.size() == 0)

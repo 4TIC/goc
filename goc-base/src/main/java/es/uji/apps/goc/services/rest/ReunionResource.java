@@ -1,5 +1,31 @@
 package es.uji.apps.goc.services.rest;
 
+import com.mysema.query.Tuple;
+import com.sun.jersey.api.core.InjectParam;
+import es.uji.apps.goc.dto.MiembroTemplate;
+import es.uji.apps.goc.dto.OrganoTemplate;
+import es.uji.apps.goc.dto.Reunion;
+import es.uji.apps.goc.dto.ReunionTemplate;
+import es.uji.apps.goc.exceptions.*;
+import es.uji.apps.goc.model.Organo;
+import es.uji.apps.goc.services.OrganoReunionMiembroService;
+import es.uji.apps.goc.services.OrganoService;
+import es.uji.apps.goc.services.ReunionDocumentoService;
+import es.uji.apps.goc.services.ReunionService;
+import es.uji.apps.goc.templates.PDFTemplate;
+import es.uji.apps.goc.templates.Template;
+import es.uji.commons.rest.CoreBaseService;
+import es.uji.commons.rest.ParamUtils;
+import es.uji.commons.rest.ResponseMessage;
+import es.uji.commons.rest.UIEntity;
+import es.uji.commons.sso.AccessManager;
+import org.springframework.beans.factory.annotation.Value;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -9,43 +35,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
-import es.uji.apps.goc.exceptions.*;
-import org.springframework.beans.factory.annotation.Value;
-
-import com.mysema.query.Tuple;
-import com.sun.jersey.api.core.InjectParam;
-
-import es.uji.apps.goc.dto.MiembroTemplate;
-import es.uji.apps.goc.dto.OrganoTemplate;
-import es.uji.apps.goc.dto.Reunion;
-import es.uji.apps.goc.dto.ReunionTemplate;
-import es.uji.apps.goc.model.Organo;
-import es.uji.apps.goc.notifications.AvisosReunion;
-import es.uji.apps.goc.services.OrganoReunionMiembroService;
-import es.uji.apps.goc.services.OrganoService;
-import es.uji.apps.goc.services.ReunionDocumentoService;
-import es.uji.apps.goc.services.ReunionService;
-import es.uji.apps.goc.templates.PDFTemplate;
-import es.uji.apps.goc.templates.Template;
-import es.uji.commons.rest.CoreBaseService;
-import es.uji.commons.rest.ParamUtils;
-import es.uji.commons.rest.UIEntity;
-import es.uji.commons.sso.AccessManager;
 
 import static es.uji.apps.goc.dto.QReunionDocumento.reunionDocumento;
 
@@ -67,16 +56,13 @@ public class ReunionResource extends CoreBaseService
     @Value("${uji.smtp.defaultSender}")
     private String defaultSender;
 
-    @InjectParam
-    private AvisosReunion avisosReunion;
-
     @Value("${goc.logo}")
     private String logoUrl;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<UIEntity> getReuniones(@QueryParam("organoId") String organoId,
-            @QueryParam("tipoOrganoId") Long tipoOrganoId, @QueryParam("externo") Boolean externo)
+                                       @QueryParam("tipoOrganoId") Long tipoOrganoId, @QueryParam("externo") Boolean externo)
             throws OrganosExternosException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
@@ -108,7 +94,7 @@ public class ReunionResource extends CoreBaseService
     @Path("completadas")
     @Produces(MediaType.APPLICATION_JSON)
     public List<UIEntity> getReunionesCompletadas(@QueryParam("organoId") String organoId,
-            @QueryParam("tipoOrganoId") Long tipoOrganoId, @QueryParam("externo") Boolean externo)
+                                                  @QueryParam("tipoOrganoId") Long tipoOrganoId, @QueryParam("externo") Boolean externo)
             throws OrganosExternosException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
@@ -138,7 +124,7 @@ public class ReunionResource extends CoreBaseService
     }
 
     private List<UIEntity> reunionesConNumeroDocumentosToUI(List<Reunion> listaReuniones,
-            List<Tuple> listaNumeroDocumentosPorReunionId)
+                                                            List<Tuple> listaNumeroDocumentosPorReunionId)
     {
         List<UIEntity> reunionesUI = new ArrayList<>();
 
@@ -154,7 +140,7 @@ public class ReunionResource extends CoreBaseService
     }
 
     private Long getNumeroDocumentosByReunionId(Long reunionId,
-            List<Tuple> listaNumeroDocumentosPorReunionId)
+                                                List<Tuple> listaNumeroDocumentosPorReunionId)
     {
         Long num = 0L;
 
@@ -323,10 +309,27 @@ public class ReunionResource extends CoreBaseService
     }
 
     @PUT
+    @Path("{reunionId}/enviarconvocatoria")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public ResponseMessage enviarConvocatoria(@PathParam("reunionId") Long reunionId)
+            throws MiembrosExternosException, ReunionNoDisponibleException, NotificacionesException
+    {
+        String messageError = reunionService.enviarConvocatoria(reunionId);
+
+        if (messageError == null)
+        {
+            return new ResponseMessage(true, "Convocatoria enviada correctament");
+        }
+
+        return new ResponseMessage(true, messageError);
+    }
+
+    @PUT
     @Path("{reunionId}/organos")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modificaReunionesOrgano(@PathParam("reunionId") Long reunionId,
-            UIEntity reunionOrganosUI) throws ReunionNoDisponibleException, NotificacionesException,
+                                            UIEntity reunionOrganosUI) throws ReunionNoDisponibleException, NotificacionesException,
             MiembrosExternosException, OrganoConvocadoNoPermitidoException,
             ReunionYaCompletadaException, PersonasExternasException, OrganosExternosException
     {
@@ -341,9 +344,6 @@ public class ReunionResource extends CoreBaseService
 
         organoReunionMiembroService.updateOrganoReunionMiembrosDesdeOrganosUI(organosUI, reunionId,
                 connectedUserId);
-
-        Reunion reunion = reunionService.getReunionConOrganosById(reunionId, connectedUserId);
-        avisosReunion.enviaAvisoNuevaReunion(reunion);
 
         return Response.ok().build();
     }
@@ -420,7 +420,7 @@ public class ReunionResource extends CoreBaseService
     @Path("{reunionId}/asistencia")
     @Produces("application/pdf")
     public Template reunion(@PathParam("reunionId") Long reunionId, @QueryParam("lang") String lang,
-            @Context HttpServletRequest request) throws OrganosExternosException,
+                            @Context HttpServletRequest request) throws OrganosExternosException,
             MiembrosExternosException, ReunionNoDisponibleException, ReunionNoCompletadaException,
             AsistenteNoEncontradoException, PersonasExternasException
     {
@@ -514,5 +514,4 @@ public class ReunionResource extends CoreBaseService
 
         return null;
     }
-
 }
