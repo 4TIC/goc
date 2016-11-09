@@ -108,8 +108,10 @@
     "horas": "horas",
     "hora": "hora",
     "numeroSesion": "Número de sesión",
-    "admiteSuplencia": "Admet suplències",
+    "admiteSuplencia": "Admite suplencias",
+    "admiteComentarios" : "Admite comentarios",
     "reunionPublica": "Reunión pública",
+    "reunionTelematica": "Reunión telemática",
     "telematica": "Telemática",
     "descripcionTelematica": "Descripción conexión telemàtica",
     "lugar": "Lugar",
@@ -140,7 +142,8 @@
     "seleccionarParaBorrarSuplente": "Debe seleccionar un asistente para borrar a su suplente",
     "seleccionarParaBorrarPuntoOrdenDia": "Debe seleccionar un punto del orden del día para borrarlo",
     "seleccionarParaEditarPuntoOrdenDia": "Debe seleccionar un punto del orden del día para editarlo",
-    "seleccionarParaDocumentacionPuntoOrdenDia": "Debe seleccionar un punto del orden del día para acceder a su documentación"
+    "seleccionarParaDocumentacionPuntoOrdenDia": "Debe seleccionar un punto del orden del día para acceder a su documentación",
+    "tipo": "Tipo"
   },
   "historicoReuniones": {
     "tituloGridReunionesCompletadas": "Històric de reunions completadas"

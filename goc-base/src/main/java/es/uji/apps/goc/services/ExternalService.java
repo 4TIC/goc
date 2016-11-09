@@ -58,30 +58,20 @@ public class ExternalService
 
     public List<Persona> getPersonasByQueryString(String query, Long connectedUserId)
     {
-        Persona p1 = new Persona(1L, "Javier Pérez", "jperez@uji.es");
-        Persona p2 = new Persona(2L, "Joaquin Rodríguez", "jrodriguez@uv.es");
-        Persona p3 = new Persona(3L, "Antonio Fernández", "afernandez@upv.es");
-        Persona p4 = new Persona(4L, "Luis Domínguez", "ldominguez@ua.es");
-        Persona p5 = new Persona(5L, "Jose Ruíz", "jruiz@umh.es");
-        Persona p6 = new Persona(6L, "Ana Esteve", "aesteve@uv.es");
-        Persona p7 = new Persona(7L, "Sonia Rovira", "srovira@upv.es");
-        Persona p8 = new Persona(8L, "Natalia Soraya", "nsoraya@uji.es");
-        Persona p9 = new Persona(9L, "Andrea Miguelez", "amiguelez@ua.es");
-        Persona p10 = new Persona(10L, "María Suárez", "msuarez@ua.es");
-        Persona p11 = new Persona(88849L, "Nicolás Manero", "nmanero@uji.es");
 
         List<Persona> personas = new ArrayList<>();
-        personas.add(p1);
-        personas.add(p2);
-        personas.add(p3);
-        personas.add(p4);
-        personas.add(p5);
-        personas.add(p6);
-        personas.add(p7);
-        personas.add(p8);
-        personas.add(p9);
-        personas.add(p10);
-        personas.add(p11);
+        personas.add(new Persona(1L, "Javier Pérez", "jperez@uji.es"));
+        personas.add(new Persona(2L, "Joaquin Rodríguez", "jrodriguez@uv.es"));
+        personas.add(new Persona(3L, "Antonio Fernández", "afernandez@upv.es"));
+        personas.add(new Persona(4L, "Luis Domínguez", "ldominguez@ua.es"));
+        personas.add(new Persona(5L, "Jose Ruíz", "jruiz@umh.es"));
+        personas.add(new Persona(6L, "Ana Esteve", "aesteve@uv.es"));
+        personas.add(new Persona(7L, "Sonia Rovira", "srovira@upv.es"));
+        personas.add(new Persona(8L, "Natalia Soraya", "nsoraya@uji.es"));
+        personas.add(new Persona(9L, "Andrea Miguelez", "amiguelez@ua.es"));
+        personas.add(new Persona(10L, "María Suárez", "msuarez@ua.es"));
+        personas.add(new Persona(88849L, "Nicolás Manero", "nmanero@uji.es"));
+        personas.add(new Persona(9792L, "Ricardo Borillo Domenech", "borillo@uji.es"));
 
         if (query == null)
         {

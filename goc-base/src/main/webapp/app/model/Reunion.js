@@ -16,6 +16,7 @@ Ext.define('goc.model.Reunion', {
         { name: 'completada', type: 'boolean' },
         { name: 'telematica', type: 'boolean' },
         { name: 'admiteSuplencia', type: 'boolean', defaultValue: true },
+        { name: 'admiteComentarios', type: 'boolean', defaultValue: true },
         { name: 'telematicaDescripcion', type: 'string' },
         { name: 'publica', type: 'boolean' },
         { name: 'numeroSesion', type: 'string' },
@@ -30,5 +31,5 @@ Ext.define('goc.model.Reunion', {
                 return Ext.Date.format(new Date(data.fecha), 'H:i');
             }
         }
-    ],
+    ]
 });

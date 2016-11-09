@@ -1,0 +1,1 @@
+alter table goc_reuniones add (admite_comentarios number(1) default 0);

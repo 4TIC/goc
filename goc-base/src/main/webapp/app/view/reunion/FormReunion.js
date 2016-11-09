@@ -178,83 +178,98 @@ Ext.define('goc.view.reunion.FormReunion',
                 fieldLabel : 'Número de sessió',
                 layout : 'hbox',
                 items : [
-                {
-                    fieldLabel : appI18N.reuniones.numeroSesion,
-                    name : 'numeroSesion',
-                    xtype : 'numberfield',
-                    bind :
                     {
-                        value : '{reunion.numeroSesion}',
-                        disabled : '{reunion.completada}'
+                        fieldLabel : appI18N.reuniones.numeroSesion,
+                        name : 'numeroSesion',
+                        xtype : 'numberfield',
+                        bind :
+                        {
+                            value : '{reunion.numeroSesion}',
+                            disabled : '{reunion.completada}'
+                        },
+                        width : 180
                     },
-                    width : 180
-                },
-                {
-                    xtype : 'tbfill',
-                    flex : 1
-                },
-                {
-                    boxLabel : appI18N.reuniones.admiteSuplencia,
-                    name : 'admiteSuplencia',
-                    bind :
                     {
-                        value : '{reunion.admiteSuplencia}',
-                        disabled : '{reunion.completada}'
+                        xtype : 'tbfill',
+                        flex : 1
                     },
-                    xtype : 'checkbox',
-                    checked: true,
-                    inputValue : '1'
-                },
-                {
-                    xtype : 'tbfill',
-                    flex : 1
-                },
-                {
-                    boxLabel : appI18N.reuniones.reunionPublica,
-                    name : 'publica',
-                    bind :
                     {
-                        value : '{reunion.publica}',
-                        disabled : '{reunion.completada}'
+                        boxLabel : appI18N.reuniones.admiteSuplencia,
+                        name : 'admiteSuplencia',
+                        bind :
+                        {
+                            value : '{reunion.admiteSuplencia}',
+                            disabled : '{reunion.completada}'
+                        },
+                        xtype : 'checkbox',
+                        checked: true,
+                        inputValue : '1'
                     },
-                    xtype : 'checkbox',
-                    inputValue : '1'
-                } ]
+                    {
+                        xtype : 'tbfill',
+                        flex : 1
+                    },
+                    {
+                        boxLabel : appI18N.reuniones.admiteComentarios,
+                        name : 'admiteComentarios',
+                        bind :
+                        {
+                            value : '{reunion.admiteComentarios}',
+                            disabled : '{reunion.completada}'
+                        },
+                        xtype : 'checkbox',
+                        checked: true,
+                        inputValue : '1'
+                    }
+                ]
             },
             {
                 xtype : 'fieldcontainer',
-                fieldLabel : appI18N.reuniones.telematica,
+                fieldLabel : appI18N.reuniones.tipo,
                 layout : 'hbox',
                 items : [
-
-                {
-                    name : 'telematica',
-                    bind :
                     {
-                        value : '{reunion.telematica}',
-                        disabled : '{reunion.completada}'
+                        boxLabel: appI18N.reuniones.reunionPublica,
+                        name: 'publica',
+                        bind: {
+                            value: '{reunion.publica}',
+                            disabled: '{reunion.completada}'
+                        },
+                        xtype: 'checkbox',
+                        inputValue: '1'
                     },
-                    xtype : 'checkbox',
-                    inputValue : '1',
-                    handler : function(grid, value)
                     {
-                        grid.up('formReunion').down('textareafield[name=telematicaDescripcion]').setVisible(value);
-                    }
-                },
-                {
-                    xtype : 'textareafield',
-                    padding : '0 0 0 10',
-                    name : 'telematicaDescripcion',
-                    labelAlign : 'top',
-                    flex : 1,
-                    hidden : true,
-                    emptyText : appI18N.reuniones.descripcionTelematica,
-                    bind :
+                        boxLabel : appI18N.reuniones.reunionTelematica,
+                        name : 'telematica',
+                        padding : '0 0 0 10',
+                        bind :
+                        {
+                            value : '{reunion.telematica}',
+                            disabled : '{reunion.completada}'
+                        },
+                        xtype : 'checkbox',
+                        inputValue : '1',
+                        handler : function(grid, value)
+                        {
+                            grid.up('formReunion').down('textareafield[name=telematicaDescripcion]').setVisible(value);
+                        }
+                    },
                     {
-                        value : '{reunion.telematicaDescripcion}',
-                        disabled : '{reunion.completada}'
+                        xtype : 'textareafield',
+                        padding : '0 0 0 10',
+                        name : 'telematicaDescripcion',
+                        columns: 40,
+                        labelAlign : 'top',
+                        flex : 1,
+                        hidden: true,
+                        emptyText : appI18N.reuniones.descripcionTelematica,
+                        bind :
+                        {
+                            value : '{reunion.telematicaDescripcion}',
+                            disabled : '{reunion.completada}'
+                        }
                     }
-                } ]
+                ]
             },
 
             {

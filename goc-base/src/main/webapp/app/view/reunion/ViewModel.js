@@ -13,7 +13,7 @@ Ext.define('goc.view.reunion.ViewModel', {
     ],
     stores: {
         reunionesStore: {
-            type: 'reuniones',
+            type: 'reuniones'
         },
         reunionDocumentosStore: {
             type: 'reunionDocumentos'

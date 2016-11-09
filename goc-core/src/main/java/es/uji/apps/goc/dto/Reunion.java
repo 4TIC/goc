@@ -51,6 +51,9 @@ public class Reunion implements Serializable
     @Column(name = "ADMITE_SUPLENCIA")
     private Boolean admiteSuplencia;
 
+    @Column(name = "ADMITE_COMENTARIOS")
+    private Boolean admiteComentarios;
+
     private Boolean telematica;
 
     @Column(name = "TELEMATICA_DESCRIPCION")
@@ -349,6 +352,16 @@ public class Reunion implements Serializable
         this.admiteSuplencia = admiteSuplencia;
     }
 
+    public Boolean isAdmiteComentarios()
+    {
+        return admiteComentarios;
+    }
+
+    public void setAdmiteComentarios(Boolean admiteComentarios)
+    {
+        this.admiteComentarios = admiteComentarios;
+    }
+
     public boolean noEsMiembro(Long connectedUserId)
     {
         return !esMiembro(connectedUserId);
@@ -375,7 +388,7 @@ public class Reunion implements Serializable
 
     public boolean esCreador(Long userId)
     {
-        return (userId == getCreadorId());
+        return (userId.equals(getCreadorId()));
     }
 
     public boolean noEsCreador(Long userId)

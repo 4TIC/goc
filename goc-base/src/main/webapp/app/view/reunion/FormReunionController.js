@@ -50,6 +50,7 @@ Ext.define('goc.view.reunion.FormReunionController', {
                     reunionId: reunionId,
                     reunionCompletada: reunionId ? reunion.get('completada') : false,
                     admiteSuplencia: formData.admiteSuplencia ? true: false,
+                    admiteComentarios: formData.admiteComentarios ? true : false,
                     organoId: organo.get('id'),
                     externo: organo.get('externo'),
                     store: store,
@@ -87,7 +88,7 @@ Ext.define('goc.view.reunion.FormReunionController', {
                 id: record.get('id'),
                 externo: record.get('externo'),
                 miembros: miembros
-            }
+            };
 
             datosOrganos.push(data);
         });

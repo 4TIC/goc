@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8" />
+    <title>Acta gestión organos colegiados</title>
     <link rel="stylesheet" type="text/css" href="/goc/css/jquery.modal.css" />
     <link rel="stylesheet" type="text/css" href="/goc/css/style.css" />
     <script src="/goc/js/jquery.min.js"></script>
@@ -38,7 +39,7 @@
         <li th:if="${reunion.urlGrabacion != null}">URL grabación: <a th:href="${reunion.urlGrabacion}" th:text="${reunion.urlGrabacion}"></a></li>
         <li th:if="${reunion.telematica}">Reunión telemática. Instrucciones: <span th:text="${reunion.telematicaDescripcion}"></span></li>
       </ul>
-      <h2 th:if="${not #lists.isEmpty(reunion.organos)}">Asistentes</h2>
+      <h2 th:if="${not #lists.isEmpty(reunion.organos)}">Organos y asistentes</h2>
       <ul th:if="${not #lists.isEmpty(reunion.organos)}">
         <li th:each="organo : ${reunion.organos}">
           <h3 th:text="${organo.nombre}">Organo asistente</h3>

@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8" />
+    <title>Acta gestió d'organs col·legiats</title>
     <link rel="stylesheet" type="text/css" href="/goc/css/jquery.modal.css" />
     <link rel="stylesheet" type="text/css" href="/goc/css/style.css" />
     <script src="/goc/js/jquery.min.js"></script>
@@ -38,7 +39,7 @@
         <li th:if="${reunion.urlGrabacion != null}">URL gravació: <a th:href="${reunion.urlGrabacion}" th:text="${reunion.urlGrabacion}"></a></li>
         <li th:if="${reunion.telematica}">Reunió telemàtica. Instruccions: <span th:text="${reunion.telematicaDescripcion}"></span></li>
       </ul>
-      <h2 th:if="${not #lists.isEmpty(reunion.organos)}">Asistents</h2>
+      <h2 th:if="${not #lists.isEmpty(reunion.organos)}">Organs i assistents</h2>
       <ul th:if="${not #lists.isEmpty(reunion.organos)}">
         <li th:each="organo : ${reunion.organos}">
           <h3 th:text="${organo.nombre}">Organo asistente</h3>
@@ -101,7 +102,7 @@
         <button class="post-comentario">Afegeix</button>
       </div>
       <br style="margin-top: 2em;"/>
-      <button th:if="!${reunion.completada}" class="add-comentario">Afegir un comentari</button>
+      <button th:if="${ not reunion.completada and reunion.admiteComentarios}" class="add-comentario">Afegir un comentari</button>
       <div class="comentarios"></div>
     </div>
     <script src="/goc/js/script.js"></script>

@@ -31,6 +31,8 @@ public class ReunionTemplate implements Serializable
 
     private Boolean admiteSuplencia;
 
+    private Boolean admiteComentarios;
+
     private String telematicaDescripcion;
 
     private String creadorNombre;
@@ -254,5 +256,15 @@ public class ReunionTemplate implements Serializable
 
     public void setComoAsistente(Boolean comoAsistente) {
         this.comoAsistente = comoAsistente;
+    }
+
+    public void setAdmiteComentarios(Boolean admiteComentarios)
+    {
+        this.admiteComentarios = admiteComentarios;
+    }
+
+    public Boolean isAdmiteComentarios()
+    {
+        return admiteComentarios;
     }
 }
