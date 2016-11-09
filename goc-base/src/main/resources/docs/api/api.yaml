@@ -110,6 +110,23 @@ paths:
             items:
               $ref: "#/definitions/Persona"
 
+  /cuentas/{username}:
+    get:
+      summary: Recuperacion de la persona asociada a una cuenta
+      description: |
+        A partir del username del usuario, permite extraer el valor del identificador de persona.
+      parameters:
+        - name: username
+          in: path
+          description: Nombre de usuario
+          required: true
+          type: string
+      responses:
+        200:
+          description: Persona asociada a esa cuenta
+          schema:
+            $ref: "#/definitions/Persona"
+
   /personas/{personaId}:
     get:
       summary: Información de una persona a partir de su id.

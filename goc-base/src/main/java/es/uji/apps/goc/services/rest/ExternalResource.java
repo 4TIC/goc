@@ -1,24 +1,14 @@
 package es.uji.apps.goc.services.rest;
 
-import java.util.List;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sun.jersey.api.core.InjectParam;
-
 import es.uji.apps.goc.dto.ReunionFirma;
 import es.uji.apps.goc.exceptions.RolesPersonaExternaException;
 import es.uji.apps.goc.firmas.FirmaService;
+import es.uji.apps.goc.model.Persona;
 import es.uji.apps.goc.notifications.CanNotSendException;
 import es.uji.apps.goc.notifications.MailSender;
 import es.uji.apps.goc.notifications.Mensaje;
@@ -26,6 +16,10 @@ import es.uji.apps.goc.services.ExternalService;
 import es.uji.apps.goc.services.PersonaService;
 import es.uji.commons.rest.CoreBaseService;
 import es.uji.commons.sso.AccessManager;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Path("external")
 public class ExternalResource extends CoreBaseService
@@ -130,6 +124,28 @@ public class ExternalResource extends CoreBaseService
             rows.add(menuEntry(mapper, "goc.view.historicoReunion.Main", "Històric de Reunions"));
         }
         return result;
+    }
+
+    @GET
+    @Path("cuentas/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Persona personaAsociadaACuenta(@PathParam("username") String username)
+            throws RolesPersonaExternaException
+    {
+        if (username == null)
+        {
+            throw new RuntimeException("Cuenta de usuario no definida");
+        }
+
+        Persona persona = new Persona();
+
+        if (username.equals("nmanero"))
+            persona.setId(88849L);
+
+        if (username.equals("borillo"))
+            persona.setId(9792L);
+
+        return persona;
     }
 
     private ObjectNode menuEntry(ObjectMapper mapper, String className, String title)
