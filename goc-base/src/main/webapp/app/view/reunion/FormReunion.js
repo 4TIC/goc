@@ -132,7 +132,6 @@ Ext.define('goc.view.reunion.FormReunion',
                     padding : '0 10 0 0'
                 },
                 {
-                    allowBlank : false,
                     name : 'duracion',
                     xtype : 'combo',
                     width : 120,
@@ -141,26 +140,31 @@ Ext.define('goc.view.reunion.FormReunion',
                     {
                         fields : [ 'id', 'value' ],
                         data : [
-                        {
-                            value : 30,
-                            texto : '0,5 ' + appI18N.reuniones.horas
-                        },
-                        {
-                            value : 60,
-                            texto : '1 ' + appI18N.reuniones.hora
-                        },
-                        {
-                            value : 90,
-                            texto : '1,5 ' + appI18N.reuniones.horas
-                        },
-                        {
-                            value : 120,
-                            texto : '2 ' + appI18N.reuniones.horas
-                        },
-                        {
-                            value : 150,
-                            texto : '2,5 ' + appI18N.reuniones.horas
-                        } ]
+                            {
+                                value : 30,
+                                texto : '0,5 ' + appI18N.reuniones.horas
+                            },
+                            {
+                                value : 60,
+                                texto : '1 ' + appI18N.reuniones.hora
+                            },
+                            {
+                                value : 90,
+                                texto : '1,5 ' + appI18N.reuniones.horas
+                            },
+                            {
+                                value : 120,
+                                texto : '2 ' + appI18N.reuniones.horas
+                            },
+                            {
+                                value : 150,
+                                texto : '2,5 ' + appI18N.reuniones.horas
+                            },
+                            {
+                                value : 180,
+                                texto : '3 ' + appI18N.reuniones.horas
+                            }
+                        ]
                     }),
                     triggerAction : 'all',
                     queryMode : 'local',
