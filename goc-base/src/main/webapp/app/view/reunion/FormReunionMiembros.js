@@ -65,6 +65,11 @@ Ext.define('goc.view.reunion.FormReunionMiembros', {
                 {
                     text: appI18N.common.nombre,
                     dataIndex: 'nombre',
+                    flex: 2
+                },
+                {
+                    text: appI18N.miembros.cargo,
+                    dataIndex: 'cargoNombre',
                     flex: 1
                 },
                 {

@@ -5,6 +5,7 @@ Ext.define('goc.store.OrganoReunionMiembros', {
         { name: 'id', type: 'number' },
         { name: 'nombre', type: 'string' },
         { name: 'email', type: 'string' },
+        { name: 'cargoNombre', type: 'string' },
         { name: 'asistencia', type: 'bool', defaultValue: true },
         { name: 'organoReunionId', type: 'number' },
         { name: 'reunionId', type: 'number' },
