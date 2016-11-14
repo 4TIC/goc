@@ -19,7 +19,7 @@ Ext.define('goc.view.miembro.Grid', {
         {
             text: appI18N.miembros.nombre,
             dataIndex: 'nombre',
-            flex: 1,
+            flex: 2,
             editor: {
                 field: {
                     allowBlank: false
@@ -39,6 +39,7 @@ Ext.define('goc.view.miembro.Grid', {
         {
             text: appI18N.miembros.cargo,
             dataIndex: 'cargoId',
+            flex: 1,
             renderer: function(value, cell) {
                 var viewModel = this.getView().up('miembroMainPanel').getViewModel();
                 var cargosStore = viewModel.getStore('cargosStore');
