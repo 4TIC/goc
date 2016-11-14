@@ -370,6 +370,7 @@ Ext.define('goc.view.reunion.FormReunion',
 
                 search :
                 {
+                    width: 500,
                     field : 'nombre',
                     bind :
                     {

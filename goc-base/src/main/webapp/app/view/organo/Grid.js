@@ -101,6 +101,6 @@ Ext.define('goc.view.organo.Grid', {
     listeners: {
         render: 'onLoad',
         beforeedit: 'decideRowIsEditable',
-        select: 'organoSelected',
+        select: 'organoSelected'
     }
 });
