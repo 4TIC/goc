@@ -25,7 +25,7 @@ public class OneFileMessageResolver extends AbstractMessageResolver
     {
         super();
 
-        configurationRegistry = new HashMap<String, Properties>();
+        configurationRegistry = new HashMap<>();
         this.application = application;
     }
 

@@ -2,9 +2,13 @@ package es.uji.apps.goc.services;
 
 import com.sun.jersey.api.core.InjectParam;
 import es.uji.apps.goc.dao.ReunionDAO;
+import es.uji.apps.goc.dto.OrganoLocal;
 import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.dto.ReunionTemplate;
+import es.uji.apps.goc.dto.TipoOrganoLocal;
 import es.uji.apps.goc.exceptions.*;
+import es.uji.apps.goc.model.Organo;
+import es.uji.apps.goc.model.TipoOrgano;
 import es.uji.apps.goc.templates.HTMLTemplate;
 import es.uji.apps.goc.templates.Template;
 import es.uji.commons.rest.CoreBaseService;
@@ -16,9 +20,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @Path("publicacion")
@@ -45,16 +52,16 @@ public class PublicacionService extends CoreBaseService
                 .getReunionesByAsistenteIdOrSuplenteId(connectedUserId);
 
         List<Long> reunionesIds = reunionesAsistente.stream().map(r -> r.getId())
-                .collect(Collectors.toList());
+                .collect(toList());
 
         List<ReunionTemplate> reunionesConvocante = reunionService
                 .getReunionesByCreadorId(connectedUserId).stream()
-                .filter(r -> !reunionesIds.contains(r.getId())).collect(Collectors.toList());
+                .filter(r -> !reunionesIds.contains(r.getId())).collect(toList());
 
         List<ReunionTemplate> reuniones = Stream
                 .concat(reunionesAsistente.stream(), reunionesConvocante.stream())
                 .sorted((r1, r2) -> r2.getFecha().compareTo(r1.getFecha()))
-                .collect(Collectors.toList());
+                .collect(toList());
 
         String applang = getLangCode(lang);
         Template template = new HTMLTemplate("reuniones-" + applang);
@@ -62,6 +69,42 @@ public class PublicacionService extends CoreBaseService
         template.put("reuniones", reuniones);
         template.put("applang", applang);
         template.put("connectedUserId", connectedUserId);
+
+        return template;
+    }
+
+    @GET
+    @Path("acuerdos")
+    @Produces(MediaType.TEXT_HTML)
+    public Template acuerdos(@QueryParam("lang") String lang, @QueryParam("tipoOrganoId") Long tipoOrganoId,
+                             @QueryParam("organoId") Long organoId)
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+        String applang = getLangCode(lang);
+
+        List<TipoOrganoLocal> tiposOrganos = reunionService.getTiposOrganosConReunionesPublicas();
+        List<OrganoLocal> organos = new ArrayList<>();
+        List<Reunion> reuniones = new ArrayList<>();
+
+        if (tipoOrganoId != null)
+        {
+            organos = reunionService.getOrganosConReunionesPublicas(tipoOrganoId);
+
+            if (organoId != null)
+            {
+                reuniones = reunionService.getReunionesPublicas(tipoOrganoId, organoId);
+            }
+        }
+
+        Template template = new HTMLTemplate("acuerdos-" + applang);
+        template.put("logo", logoUrl);
+        template.put("applang", applang);
+        template.put("connectedUserId", connectedUserId);
+        template.put("tiposOrganos", tiposOrganos);
+        template.put("tipoOrganoId", tipoOrganoId);
+        template.put("organoId", organoId);
+        template.put("organos", organos);
+        template.put("reuniones", reuniones);
 
         return template;
     }

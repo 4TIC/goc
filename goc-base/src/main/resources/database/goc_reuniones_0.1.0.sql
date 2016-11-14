@@ -1,0 +1,1 @@
+alter table goc_reuniones modify (duracion null);

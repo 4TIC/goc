@@ -15,7 +15,8 @@ public class TipoOrganoService
     @Autowired
     private TipoOrganoDAO tipoOrganoDAO;
 
-    public List<TipoOrgano> getTiposOrgano(Long connectedUserId) {
+    public List<TipoOrgano> getTiposOrgano(Long connectedUserId)
+    {
         return tipoOrganoDAO.getTiposOrgano();
     }
 

@@ -11,7 +11,7 @@ public abstract class GenericTemplate
     public GenericTemplate(String name)
     {
         this.name = name;
-        this.properties = new HashMap<String, Object>();
+        this.properties = new HashMap<>();
     }
 
     public void put(String key, Object value)

@@ -10,7 +10,10 @@ import java.util.Map;
 
 public class TemplateEngineFactory
 {
-    private static Map<String, TemplateEngine> templateEngines = new HashMap<String, TemplateEngine>();
+    private static Map<String, TemplateEngine> templateEngines = new HashMap<>();
+
+    private static Long TIME_TO_LIVE = 3600000L;
+
     @SuppressWarnings("unused")
     private String application;
 
@@ -40,7 +43,7 @@ public class TemplateEngineFactory
     public static TemplateEngine getTemplateEngine(String templateMode, String prefix,
                                                    String sufix, String application)
     {
-        return getTemplateEngine(templateMode, prefix, sufix, false, 3600000L, application);
+        return getTemplateEngine(templateMode, prefix, sufix, false, TIME_TO_LIVE, application);
     }
 
     public static TemplateEngine getTemplateEngine(String templateMode, String prefix,
@@ -49,7 +52,7 @@ public class TemplateEngineFactory
         if (templateEngines == null || !templateEngines.containsKey(templateMode))
         {
             TemplateEngine templateEngine = initializeTemplateEngine(templateMode, prefix, sufix,
-                    false, 3600000L, application);
+                    cacheable, timeToLive, application);
             templateEngines.put(templateMode, templateEngine);
         }
 

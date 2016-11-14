@@ -6,11 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.core.MediaType;
 
+import es.uji.apps.goc.dao.*;
+import es.uji.apps.goc.dto.*;
 import es.uji.apps.goc.exceptions.*;
+import es.uji.apps.goc.model.*;
+import es.uji.apps.goc.model.Cargo;
 import es.uji.apps.goc.notifications.AvisosReunion;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,36 +26,6 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.core.InjectParam;
-
-import es.uji.apps.goc.dao.MiembroDAO;
-import es.uji.apps.goc.dao.OrganoReunionDAO;
-import es.uji.apps.goc.dao.OrganoReunionMiembroDAO;
-import es.uji.apps.goc.dao.PuntoOrdenDiaDAO;
-import es.uji.apps.goc.dao.PuntoOrdenDiaDocumentoDAO;
-import es.uji.apps.goc.dao.ReunionDAO;
-import es.uji.apps.goc.dao.ReunionDocumentoDAO;
-import es.uji.apps.goc.dto.MiembroFirma;
-import es.uji.apps.goc.dto.MiembroTemplate;
-import es.uji.apps.goc.dto.OrganoFirma;
-import es.uji.apps.goc.dto.OrganoReunion;
-import es.uji.apps.goc.dto.OrganoReunionMiembro;
-import es.uji.apps.goc.dto.OrganoTemplate;
-import es.uji.apps.goc.dto.PuntoOrdenDia;
-import es.uji.apps.goc.dto.PuntoOrdenDiaDocumento;
-import es.uji.apps.goc.dto.PuntoOrdenDiaFirma;
-import es.uji.apps.goc.dto.PuntoOrdenDiaTemplate;
-import es.uji.apps.goc.dto.QReunion;
-import es.uji.apps.goc.dto.Reunion;
-import es.uji.apps.goc.dto.ReunionComentario;
-import es.uji.apps.goc.dto.ReunionDocumento;
-import es.uji.apps.goc.dto.ReunionFirma;
-import es.uji.apps.goc.dto.ReunionTemplate;
-import es.uji.apps.goc.model.Cargo;
-import es.uji.apps.goc.model.Comentario;
-import es.uji.apps.goc.model.Documento;
-import es.uji.apps.goc.model.Miembro;
-import es.uji.apps.goc.model.Organo;
-import es.uji.apps.goc.model.Persona;
 
 import static es.uji.apps.goc.dto.QReunion.reunion;
 
@@ -101,6 +74,12 @@ public class ReunionService
 
     @InjectParam
     private AvisosReunion avisosReunion;
+
+    @Autowired
+    private TipoOrganoDAO tipoOrganoDAO;
+
+    @Autowired
+    private OrganoDAO organoDAO;
 
 
     public List<Reunion> getReunionesByUserId(Boolean completada, Long connectedUserId)
@@ -930,5 +909,20 @@ public class ReunionService
         avisosReunion.enviaAvisoNuevaReunion(reunion);
 
         return null;
+    }
+
+    public List<TipoOrganoLocal> getTiposOrganosConReunionesPublicas()
+    {
+        return tipoOrganoDAO.getTiposOrganoConReunionesPublicas();
+    }
+
+    public List<OrganoLocal> getOrganosConReunionesPublicas(Long tipoOrganoId)
+    {
+        return organoDAO.getOrganosConReunionesPublicas(tipoOrganoId);
+    }
+
+    public List<Reunion> getReunionesPublicas(Long tipoOrganoId, Long organoId)
+    {
+        return reunionDAO.getReunionesPublicas(tipoOrganoId, organoId);
     }
 }

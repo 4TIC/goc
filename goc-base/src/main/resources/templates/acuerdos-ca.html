@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="/goc/css/jquery.modal.css" />
+    <link rel="stylesheet" type="text/css" href="/goc/css/style.css" />
+    <script src="/goc/js/jquery.min.js"></script>
+    <script src="/goc/js/jquery.modal.js"></script>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+        var applang = [[${applang}]];
+    /*]]>*/
+    </script>
+  </head>
+  <body>
+    <div class="content">
+      <div class="header">
+        <img class="logo" src="#" th:src="${logo}" />
+        <h1>Gestió d'òrgans col·legiats</h1>
+        <div class="topmenu">
+          <ul>
+            <li><a href="?lang=ca">Valencià</a></li>
+            <li><a href="?lang=es">Español</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <h1>Llistat de acords del òrgans col·legiats</h1>
+
+      <form action="/goc/rest/publicacion/acuerdos" method="GET">
+        <table border="0" cellpadding="2" cellspacing="2">
+          <tr>
+            <td><strong>Tipous d'òrgans:</strong></td>
+            <td>
+              <select name="tipoOrganoId" onchange="this.form.submit()">
+                <option value="">-- Tipus d'òrgans --</option>
+                <option th:each="tipoOrgano : ${tiposOrganos}" th:selected="${tipoOrganoId == tipoOrgano.id}" th:value="${tipoOrgano.id}" th:text="${tipoOrgano.nombre}">Tipo de organo</option>
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Òrgans:</strong></td>
+            <td>
+              <select name="organoId" onchange="this.form.submit()">
+                <option value="">-- Òrgans --</option>
+                <option th:each="organo : ${organos}" th:selected="${organoId == organo.id}" th:value="${organo.id}" th:text="${organo.nombre}">Òrgano</option>
+              </select>
+            </td>
+          </tr>
+        </table>
+
+        <div>
+          <div th:each="reunion : ${reuniones}" class="reunion">
+            <h2 th:text="${reunion.asunto}">Assumpte</h2>
+
+            <div>
+              <strong>Data:</strong>
+              <span th:text="${#dates.format(reunion.fecha,'dd/MM/yyyy HH:mm')}">Fecha</span>
+            </div>
+
+            <div>
+              <strong>Duració:</strong>
+              <span th:text="${reunion.duracion + ' minuts'}">Fecha</span>
+            </div>
+
+            <div>
+              <strong>Acords generals:</strong>
+              <span th:text="${reunion.acuerdos}">Acords</span>
+            </div>
+
+            <blockquote th:each="puntoDia : ${reunion.reunionPuntosOrdenDia}" class="punto-del-dia">
+              <div th:if="${puntoDia.publico}" th:remove="tag">
+                <h3 th:text="${puntoDia.titulo}"></h3>
+                <div th:text="${puntoDia.acuerdos}"></div>
+              </div>
+            </blockquote>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

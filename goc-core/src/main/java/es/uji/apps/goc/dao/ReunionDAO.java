@@ -1,16 +1,14 @@
 package es.uji.apps.goc.dao;
 
-import java.util.Date;
-import java.util.List;
-
+import com.mysema.query.jpa.impl.JPAQuery;
+import com.mysema.query.jpa.impl.JPAUpdateClause;
 import es.uji.apps.goc.dto.*;
+import es.uji.commons.db.BaseDAODatabaseImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mysema.query.jpa.impl.JPAQuery;
-import com.mysema.query.jpa.impl.JPAUpdateClause;
-
-import es.uji.commons.db.BaseDAODatabaseImpl;
+import java.util.Date;
+import java.util.List;
 
 @Repository
 public class ReunionDAO extends BaseDAODatabaseImpl
@@ -19,6 +17,7 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     private QOrganoReunion qOrganoReunion = QOrganoReunion.organoReunion;
     private QPuntoOrdenDia qPuntoOrdenDia = QPuntoOrdenDia.puntoOrdenDia;
     private QOrganoReunionMiembro qOrganoReunionMiembro = QOrganoReunionMiembro.organoReunionMiembro;
+    private QOrganoLocal qOrganoLocal = QOrganoLocal.organoLocal;
 
     public List<Reunion> getReunionesByUserId(Long connectedUserId)
     {
@@ -49,7 +48,7 @@ public class ReunionDAO extends BaseDAODatabaseImpl
 
     @Transactional
     public void marcarReunionComoCompletadaYActualizarAcuerdo(Long reunionId,
-            Long responsableActaId, String acuerdos)
+                                                              Long responsableActaId, String acuerdos)
     {
         JPAUpdateClause update = new JPAUpdateClause(entityManager, qReunion);
         update.set(qReunion.completada, true).set(qReunion.fechaCompletada, new Date())
@@ -71,7 +70,7 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     }
 
     public List<Reunion> getReunionesCompletadasByOrganoLocalIdAndUserId(Long organoId,
-            Long connectedUserId)
+                                                                         Long connectedUserId)
     {
         JPAQuery query = new JPAQuery(entityManager);
 
@@ -83,7 +82,7 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     }
 
     public List<Reunion> getReunionesByOrganoExternoIdAndUserId(String organoId,
-            Long connectedUserId)
+                                                                Long connectedUserId)
     {
         JPAQuery query = new JPAQuery(entityManager);
 
@@ -96,7 +95,7 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     }
 
     public List<Reunion> getReunionesCompletadasByOrganoExternoIdAndUserId(String organoId,
-            Long connectedUserId)
+                                                                           Long connectedUserId)
     {
         JPAQuery query = new JPAQuery(entityManager);
 
@@ -183,5 +182,20 @@ public class ReunionDAO extends BaseDAODatabaseImpl
 
         return query.from(qReunion).where(qReunion.creadorId.eq(connectedUserId))
                 .orderBy(qReunion.fechaCreacion.desc()).list(qReunion);
+    }
+
+    public List<Reunion> getReunionesPublicas(Long tipoOrganoId, Long organoId)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        return query.from(qReunion)
+                .leftJoin(qReunion.reunionOrganos, qOrganoReunion)
+                .leftJoin(qReunion.reunionPuntosOrdenDia).fetch()
+                .where(qOrganoReunion.tipoOrganoId.eq(tipoOrganoId)
+                        .and(qOrganoReunion.organoId.eq(String.valueOf(organoId)))
+                        .and(qReunion.publica.isTrue())
+                        .and(qReunion.completada.isTrue()))
+                .orderBy(qReunion.fechaCreacion.desc())
+                .list(qReunion);
     }
 }

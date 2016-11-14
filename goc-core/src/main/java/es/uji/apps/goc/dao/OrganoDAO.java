@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import es.uji.apps.goc.dto.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 
-import es.uji.apps.goc.dto.OrganoLocal;
-import es.uji.apps.goc.dto.QOrganoAutorizado;
-import es.uji.apps.goc.dto.QOrganoLocal;
-import es.uji.apps.goc.dto.TipoOrganoLocal;
 import es.uji.apps.goc.model.Organo;
 import es.uji.apps.goc.model.TipoOrgano;
 import es.uji.commons.db.BaseDAODatabaseImpl;
@@ -20,10 +17,15 @@ import es.uji.commons.db.BaseDAODatabaseImpl;
 @Repository
 public class OrganoDAO extends BaseDAODatabaseImpl
 {
+    private QOrganoLocal qOrganoLocal = QOrganoLocal.organoLocal;
+    private QOrganoAutorizado qOrganoAutorizado = QOrganoAutorizado.organoAutorizado;
+    private QReunion qReunion = QReunion.reunion;
+    private QOrganoReunion qOrganoReunion = QOrganoReunion.organoReunion;
+    private QTipoOrganoLocal qTipoOrganoLocal = QTipoOrganoLocal.tipoOrganoLocal;
+
     public List<Organo> getOrganosByUserId(Long connectedUserId)
     {
         JPAQuery query = new JPAQuery(entityManager);
-        QOrganoLocal qOrganoLocal = QOrganoLocal.organoLocal;
 
         List<OrganoLocal> organos = query.from(qOrganoLocal)
                 .where(qOrganoLocal.creadorId.eq(connectedUserId))
@@ -35,8 +37,6 @@ public class OrganoDAO extends BaseDAODatabaseImpl
     public List<Organo> getOrganosByAutorizadoId(Long connectedUserId)
     {
         JPAQuery query = new JPAQuery(entityManager);
-        QOrganoLocal qOrganoLocal = QOrganoLocal.organoLocal;
-        QOrganoAutorizado qOrganoAutorizado = QOrganoAutorizado.organoAutorizado;
 
         List<OrganoLocal> organos = query.from(qOrganoLocal, qOrganoAutorizado)
                 .where(qOrganoAutorizado.organoExterno.eq(false)
@@ -50,11 +50,13 @@ public class OrganoDAO extends BaseDAODatabaseImpl
     private List<Organo> organosLocalesToOrganos(List<OrganoLocal> organosDTO)
     {
         List<Organo> organos = new ArrayList<>();
+
         for (OrganoLocal organoLocalDTO : organosDTO)
         {
             Organo organo = organoLocalToOrgano(organoLocalDTO);
             organos.add(organo);
         }
+
         return organos;
     }
 
@@ -77,7 +79,6 @@ public class OrganoDAO extends BaseDAODatabaseImpl
     public Organo getOrganoByIdAndUserId(Long organoId, Long connectedUserId)
     {
         JPAQuery query = new JPAQuery(entityManager);
-        QOrganoLocal qOrganoLocal = QOrganoLocal.organoLocal;
 
         List<OrganoLocal> organos = query.from(qOrganoLocal)
                 .where(qOrganoLocal.id.eq(organoId).and(qOrganoLocal.creadorId.eq(connectedUserId)))
@@ -131,5 +132,18 @@ public class OrganoDAO extends BaseDAODatabaseImpl
         }
 
         return organoLocal;
+    }
+
+    public List<OrganoLocal> getOrganosConReunionesPublicas(Long tipoOrganoId)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        return query.from(qReunion, qOrganoLocal)
+                .leftJoin(qReunion.reunionOrganos, qOrganoReunion)
+                .where(qOrganoReunion.organoId.eq(qOrganoLocal.id.stringValue())
+                        .and(qOrganoReunion.tipoOrganoId.eq(tipoOrganoId))
+                        .and(qReunion.publica.isTrue())
+                        .and(qReunion.completada.isTrue()))
+                .list(qOrganoLocal);
     }
 }

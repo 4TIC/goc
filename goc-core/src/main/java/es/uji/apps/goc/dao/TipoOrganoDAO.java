@@ -3,20 +3,25 @@ package es.uji.apps.goc.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.uji.apps.goc.dto.*;
 import org.springframework.stereotype.Repository;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 
-import es.uji.apps.goc.dto.QTipoOrganoLocal;
-import es.uji.apps.goc.dto.TipoOrganoLocal;
 import es.uji.apps.goc.model.TipoOrgano;
 import es.uji.commons.db.BaseDAODatabaseImpl;
 
 @Repository
-public class TipoOrganoDAO extends BaseDAODatabaseImpl {
-    public List<TipoOrgano> getTiposOrgano() {
+public class TipoOrganoDAO extends BaseDAODatabaseImpl
+{
+    private QTipoOrganoLocal qTipoOrganoLocal = QTipoOrganoLocal.tipoOrganoLocal;
+    private QReunion qReunion = QReunion.reunion;
+    private QOrganoReunion qOrganoReunion = QOrganoReunion.organoReunion;
+    private QOrganoLocal qOrganoLocal = QOrganoLocal.organoLocal;
+
+    public List<TipoOrgano> getTiposOrgano()
+    {
         JPAQuery query = new JPAQuery(entityManager);
-        QTipoOrganoLocal qTipoOrganoLocal = QTipoOrganoLocal.tipoOrganoLocal;
 
         List<TipoOrganoLocal> tiposOrgano = query.from(qTipoOrganoLocal).list(qTipoOrganoLocal);
         return tiposOrganoDTOToTipoOrgano(tiposOrgano);
@@ -79,4 +84,15 @@ public class TipoOrganoDAO extends BaseDAODatabaseImpl {
         return tipoOrganoLocal;
     }
 
+    public List<TipoOrganoLocal> getTiposOrganoConReunionesPublicas()
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        return query.from(qReunion, qTipoOrganoLocal)
+                .leftJoin(qReunion.reunionOrganos, qOrganoReunion)
+                .where(qOrganoReunion.tipoOrganoId.eq(qTipoOrganoLocal.id)
+                        .and(qReunion.publica.isTrue())
+                        .and(qReunion.completada.isTrue()))
+                .list(qTipoOrganoLocal);
+    }
 }
