@@ -5,11 +5,19 @@
 
   <distributable/>
 
+  <!--
+    [Enable SSO] - Enable SAML2 SSO integration
+    Add to contextConfigLocation classpath:applicationContext-security.xml
+
+    [Disable SSO] - Creates authenticated user from properties file
+    Add to contextConfigLocation classpath:applicationContext-DISABLE-security.xml
+  -->
+
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
       classpath:applicationContext.xml
-      classpath:applicationContext-security.xml
+      classpath:applicationContext-DISABLE-security.xml
     </param-value>
   </context-param>
 
@@ -39,7 +47,7 @@
     <listener-class>es.uji.commons.rest.listeners.CleanUpOracleMBeansListener</listener-class>
   </listener>
 
-  <!-- Spring Security -->
+  <!-- Spring filters-->
 
   <filter>
     <filter-name>springSecurityFilterChain</filter-name>
@@ -51,9 +59,19 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+  <!-- Spring Security -->
+
+  <!--
+    [Enable SSO]
+    <filter-class>es.uji.apps.goc.auth.SpringSecurityAuth</filter-class>
+
+    [Disable SSO]
+    <filter-class>es.uji.apps.goc.auth.DefaulSessionFromPropertiesAuth</filter-class>
+  -->
+
   <filter>
     <filter-name>userRegistration</filter-name>
-    <filter-class>es.uji.apps.goc.auth.SpringSecurityAuth</filter-class>
+    <filter-class>es.uji.apps.goc.auth.DefaulSessionFromPropertiesAuth</filter-class>
     <init-param>
       <param-name>authToken</param-name>
       <param-value>${goc.external.authToken}</param-value>
@@ -72,6 +90,8 @@
     <filter-name>userRegistration</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+
+  <!-- Jersey Servlet -->
 
   <servlet>
     <servlet-name>rest-api</servlet-name>

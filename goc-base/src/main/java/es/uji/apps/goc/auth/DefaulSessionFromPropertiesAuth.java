@@ -3,6 +3,7 @@ package es.uji.apps.goc.auth;
 import es.uji.apps.goc.integrations.CuentasClient;
 import es.uji.commons.sso.User;
 import es.uji.commons.sso.dao.SessionDAO;
+import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.saml.SAMLCredential;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.UUID;
 
-public class SpringSecurityAuth implements Filter
+public class DefaulSessionFromPropertiesAuth implements Filter
 {
     private FilterConfig filterConfig = null;
 
@@ -31,7 +32,6 @@ public class SpringSecurityAuth implements Filter
             throws IOException, ServletException
     {
         HttpServletRequest clientRequest = (HttpServletRequest) request;
-        HttpServletResponse clientResponse = (HttpServletResponse) response;
 
         String url = clientRequest.getRequestURI();
         String headerAuthToken = clientRequest.getHeader("X-UJI-AuthToken");
@@ -44,19 +44,12 @@ public class SpringSecurityAuth implements Filter
             return;
         }
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        DefaultUser defaultUser = getDefaultUser();
 
-        if (authentication == null)
-        {
-            clientResponse.sendRedirect("/goc/forbidden.jsp");
-            filterChain.doFilter(request, response);
-            return;
-        }
+        String userName = defaultUser.defaultUsername;
+        String userId = defaultUser.defaultUserId;
 
-        SAMLCredential credential = (SAMLCredential) authentication.getCredentials();
-
-        String userName = credential.getAttributeAsString("displayName");
-        User user = createUserFromDefaulLocalValues(userName);
+        User user = createUserFromDefaulLocalValues(userName, userId);
         registerUserInHttpSession(clientRequest, user);
 
         filterChain.doFilter(request, response);
@@ -72,13 +65,13 @@ public class SpringSecurityAuth implements Filter
         return clientRequest.getSession().getAttribute("www$persona") != null;
     }
 
-    private User createUserFromDefaulLocalValues(String userName)
+    private User createUserFromDefaulLocalValues(String userName, String userId)
             throws IOException
     {
         try
         {
             User user = new User();
-            user.setId(getCuentasClient().obtainPersonaIdFrom(userName));
+            user.setId(Long.parseLong(userId));
             user.setName(userName);
             user.setActiveSession(UUID.randomUUID().toString());
 
@@ -96,18 +89,11 @@ public class SpringSecurityAuth implements Filter
         serverSession.setAttribute("www$persona", user);
     }
 
-    private SessionDAO getSessionDAO()
+    private DefaultUser getDefaultUser()
     {
         WebApplicationContext context = WebApplicationContextUtils
                 .getWebApplicationContext(filterConfig.getServletContext());
-        return context.getBean(SessionDAO.class);
-    }
-
-    private CuentasClient getCuentasClient()
-    {
-        WebApplicationContext context = WebApplicationContextUtils
-                .getWebApplicationContext(filterConfig.getServletContext());
-        return context.getBean(CuentasClient.class);
+        return context.getBean(DefaultUser.class);
     }
 
     private boolean isCorrectExternalAPICall(String url, String headerAuthToken)
@@ -131,6 +117,5 @@ public class SpringSecurityAuth implements Filter
     @Override
     public void destroy()
     {
-
     }
 }
