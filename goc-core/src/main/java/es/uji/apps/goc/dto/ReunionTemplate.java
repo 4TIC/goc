@@ -15,6 +15,8 @@ public class ReunionTemplate implements Serializable
 
     private Date fecha;
 
+    private Date fechaSegundaConvocatoria;
+
     private Long numeroSesion;
 
     private String descripcion;
@@ -266,5 +268,15 @@ public class ReunionTemplate implements Serializable
     public Boolean isAdmiteComentarios()
     {
         return admiteComentarios;
+    }
+
+    public Date getFechaSegundaConvocatoria()
+    {
+        return fechaSegundaConvocatoria;
+    }
+
+    public void setFechaSegundaConvocatoria(Date fechaSegundaConvocatoria)
+    {
+        this.fechaSegundaConvocatoria = fechaSegundaConvocatoria;
     }
 }

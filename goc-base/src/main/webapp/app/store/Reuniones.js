@@ -20,11 +20,19 @@ Ext.define('goc.store.Reuniones', {
             name: 'duracion'
         },
         { name: 'fecha', type: 'date', dateFormat: 'd/m/Y H:i:s' },
+        { name: 'fechaSegundaConvocatoria', type: 'date', dateFormat: 'd/m/Y H:i:s' },
         {
             name: 'hora',
             type: 'string',
             calculate: function(data) {
-                return Ext.Date.format(new Date(data.fecha), 'H:i');
+                return (data.fecha) ? Ext.Date.format(new Date(data.fecha), 'H:i') : '';
+            }
+        },
+        {
+            name: 'horaSegundaConvocatoria',
+            type: 'string',
+            calculate: function(data) {
+                return (data.fechaSegundaConvocatoria) ? Ext.Date.format(new Date(data.fechaSegundaConvocatoria), 'H:i') : '';
             }
         }
     ],

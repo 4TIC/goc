@@ -121,6 +121,8 @@ Ext.define('goc.view.reunion.FormReunionController', {
 
             if (record.create !== true) {
                 record.set('fecha', Ext.Date.parseDate(data.fecha + ' ' + data.hora, 'd/m/Y H:i'));
+                record.set('fechaSegundaConvocatoria', Ext.Date.parseDate(data.fecha + ' ' + data.horaSegundaConvocatoria, 'd/m/Y H:i'));
+
                 return record.save({
                     success: function () {
                         this.saveOrganos(data.id, organosStore.getData(), this.onClose);
@@ -132,6 +134,8 @@ Ext.define('goc.view.reunion.FormReunionController', {
             }
 
             record.fecha = Ext.Date.parseDate(data.fecha + ' ' + data.hora, 'd/m/Y H:i');
+            record.fechaSegundaConvocatoria = Ext.Date.parseDate(data.fecha + ' ' + data.hora, 'd/m/Y H:i');
+
             store.add(record);
             store.sync({
                 success: function () {

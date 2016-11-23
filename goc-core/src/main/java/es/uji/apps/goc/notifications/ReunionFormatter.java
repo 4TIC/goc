@@ -28,6 +28,12 @@ public class ReunionFormatter
 
         content.append("<div>");
         content.append("<strong>Fecha y hora:</strong> " + formatter.format(reunion.getFecha()) + "<br/>");
+
+        if (reunion.getFechaSegundaConvocatoria() != null)
+        {
+            content.append("<strong>Segunda convocatoria:</strong> " + formatter.format(reunion.getFechaSegundaConvocatoria()) + "<br/>");
+        }
+
         content.append("<strong>Duración:</strong> " + reunion.getDuracion() + " minutos<br/>");
         content.append("<br/>Para más información, consultar el detalle de la reunión en <a href=\"http://devel.uji.es/goc/rest/publicacion/reuniones/" + reunion.getId() + "\">" + "http://localhost:9007/goc/rest/publicacion/reuniones/" + reunion.getId() + "<br/>");
         content.append("</div>");

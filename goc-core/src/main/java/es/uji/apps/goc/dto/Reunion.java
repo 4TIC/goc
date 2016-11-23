@@ -25,6 +25,9 @@ public class Reunion implements Serializable
 
     private Date fecha;
 
+    @Column(name = "FECHA_SEGUNDA_CONVOCATORIA")
+    private Date fechaSegundaConvocatoria;
+
     private Long duracion;
 
     private String descripcion;
@@ -360,6 +363,16 @@ public class Reunion implements Serializable
     public void setAdmiteComentarios(Boolean admiteComentarios)
     {
         this.admiteComentarios = admiteComentarios;
+    }
+
+    public Date getFechaSegundaConvocatoria()
+    {
+        return fechaSegundaConvocatoria;
+    }
+
+    public void setFechaSegundaConvocatoria(Date fechaSegundaConvocatoria)
+    {
+        this.fechaSegundaConvocatoria = fechaSegundaConvocatoria;
     }
 
     public boolean noEsMiembro(Long connectedUserId)

@@ -272,8 +272,13 @@ public class ReunionResource extends CoreBaseService
         }
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
         LocalDateTime dateTime = LocalDateTime.parse(reunionUI.get("fecha"), formatter);
+        LocalDateTime dateTimeSegundaConvocatoria = LocalDateTime.parse(reunionUI.get("fechaSegundaConvocatoria"), formatter);
+
         Date fecha = Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant());
+        Date fechaSegundaConvocatoria = Date.from(dateTimeSegundaConvocatoria.atZone(ZoneId.systemDefault()).toInstant());
+
         Long numeroSesion = null;
 
         if (!reunionUI.get("numeroSesion").isEmpty())
@@ -286,7 +291,7 @@ public class ReunionResource extends CoreBaseService
         reunionService.compruebaReunionNoCompletada(reunionId);
         Reunion reunion = reunionUIToModel(reunionUI);
         reunion.setId(reunionId);
-        reunion = reunionService.updateReunion(reunionId, asunto, descripcion, duracion, fecha,
+        reunion = reunionService.updateReunion(reunionId, asunto, descripcion, duracion, fecha, fechaSegundaConvocatoria,
                 ubicacion, urlGrabacion, numeroSesion, publica, telematica, telematicaDescripcion,
                 admiteSuplencia, admiteComentarios, connectedUserId);
 
@@ -407,10 +412,14 @@ public class ReunionResource extends CoreBaseService
         reunion.setPublica(new Boolean(reunionUI.get("publica")));
         reunion.setAdmiteSuplencia(new Boolean(reunionUI.get("admiteSuplencia")));
         reunion.setAdmiteComentarios(new Boolean(reunionUI.get("admiteComentarios")));
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(reunionUI.get("fecha"), formatter);
+        LocalDateTime dateTimeSegundaConvocatoria = LocalDateTime.parse(reunionUI.get("fechaSegundaConvocatoria"), formatter);
 
         reunion.setFecha(Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant()));
+        reunion.setFecha(Date.from(dateTimeSegundaConvocatoria.atZone(ZoneId.systemDefault()).toInstant()));
+
         reunion.setDuracion(Long.parseLong(reunionUI.get("duracion")));
 
         return reunion;

@@ -108,9 +108,10 @@ public class ReunionService
     }
 
     public Reunion updateReunion(Long reunionId, String asunto, String descripcion, Long duracion,
-                                 Date fecha, String ubicacion, String urlGrabacion, Long numeroSesion, Boolean publica,
-                                 Boolean telematica, String telematicaDescripcion, Boolean admiteSuplencia,
-                                 Boolean admiteComentarios, Long connectedUserId) throws ReunionNoDisponibleException
+                                 Date fecha, Date fechaSegundaConvocatoria, String ubicacion, String urlGrabacion,
+                                 Long numeroSesion, Boolean publica, Boolean telematica, String telematicaDescripcion,
+                                 Boolean admiteSuplencia, Boolean admiteComentarios, Long connectedUserId)
+            throws ReunionNoDisponibleException
     {
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
 
@@ -125,6 +126,7 @@ public class ReunionService
         reunion.setUbicacion(ubicacion);
         reunion.setUrlGrabacion(urlGrabacion);
         reunion.setFecha(fecha);
+        reunion.setFechaSegundaConvocatoria(fechaSegundaConvocatoria);
         reunion.setNumeroSesion(numeroSesion);
         reunion.setPublica(publica);
         reunion.setTelematica(telematica);
@@ -493,6 +495,7 @@ public class ReunionService
         reunionTemplate.setAcuerdos(reunion.getAcuerdos());
         reunionTemplate.setUbicacion(reunion.getUbicacion());
         reunionTemplate.setFecha(reunion.getFecha());
+        reunionTemplate.setFechaSegundaConvocatoria(reunion.getFechaSegundaConvocatoria());
         reunionTemplate.setUrlGrabacion(reunion.getUrlGrabacion());
         reunionTemplate.setTelematica(reunion.isTelematica());
         reunionTemplate.setAdmiteSuplencia(reunion.isAdmiteSuplencia());

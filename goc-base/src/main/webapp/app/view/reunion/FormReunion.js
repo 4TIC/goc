@@ -178,6 +178,28 @@ Ext.define('goc.view.reunion.FormReunion',
                 } ]
             },
             {
+                xtype : 'fieldcontainer',
+                fieldLabel : appI18N.reuniones.fechaSegundaConvocatoria,
+                layout : 'hbox',
+                items : [
+                    {
+                        xtype : 'timefield',
+                        minValue : '07:00',
+                        maxValue : '23:00',
+                        name : 'horaSegundaConvocatoria',
+                        emptyText : appI18N.reuniones.horaInicioSegundaConvocatoria,
+                        format : 'H:i',
+                        altFormats : 'd/m/Y H:i:s',
+                        bind :
+                        {
+                            value : '{reunion.horaSegundaConvocatoria}',
+                            disabled : '{reunion.completada}'
+                        },
+                        padding : '0 10 0 0'
+                    }
+                ]
+            },
+            {
                 xtype : 'container',
                 fieldLabel : 'Número de sessió',
                 layout : 'hbox',
