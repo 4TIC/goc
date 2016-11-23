@@ -15,7 +15,7 @@ public class ReunionFormatter
         this.reunion = reunion;
     }
 
-    public String format()
+    public String format(String publicUrl)
     {
         StringBuffer content = new StringBuffer();
 
@@ -23,20 +23,18 @@ public class ReunionFormatter
 
         if (reunion.getDescripcion() != null && !reunion.getDescripcion().isEmpty())
         {
-            content.append("<div>" + reunion.getDescripcion() + "</div>");
+            content.append("<div><strong>Descripción:</strong><span>" + reunion.getDescripcion() + "</span></div>");
         }
 
-        content.append("<div>");
-        content.append("<strong>Fecha y hora:</strong> " + formatter.format(reunion.getFecha()) + "<br/>");
+        content.append("<div><strong>Fecha y hora:</strong> " + formatter.format(reunion.getFecha()) + "</div>");
 
         if (reunion.getFechaSegundaConvocatoria() != null)
         {
-            content.append("<strong>Segunda convocatoria:</strong> " + formatter.format(reunion.getFechaSegundaConvocatoria()) + "<br/>");
+            content.append("<div><strong>Segunda convocatoria:</strong> " + formatter.format(reunion.getFechaSegundaConvocatoria()) + "</div>");
         }
 
-        content.append("<strong>Duración:</strong> " + reunion.getDuracion() + " minutos<br/>");
-        content.append("<br/>Para más información, consultar el detalle de la reunión en <a href=\"http://devel.uji.es/goc/rest/publicacion/reuniones/" + reunion.getId() + "\">" + "http://localhost:9007/goc/rest/publicacion/reuniones/" + reunion.getId() + "<br/>");
-        content.append("</div>");
+        content.append("<div><strong>Duración:</strong> " + reunion.getDuracion() + " minutos</div><br/>");
+        content.append("<div>Para más información, consultar el detalle de la reunión en <a href=\"" + publicUrl + "/goc/rest/publicacion/reuniones/" + reunion.getId() + "\">" + publicUrl + "/goc/rest/publicacion/reuniones/" + reunion.getId() + "</div>");
 
         return content.toString();
     }

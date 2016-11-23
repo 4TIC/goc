@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,9 @@ public class AvisosReunion
     private OrganoReunionMiembroDAO organoReunionMiembroDAO;
     private NotificacionesDAO notificacionesDAO;
 
+    @Value("${goc.publicUrl}")
+    private String publicUrl;
+
     @Autowired
     public AvisosReunion(ReunionDAO reunionDAO, OrganoReunionMiembroDAO organoReunionMiembroDAO,
             NotificacionesDAO notificacionesDAO)
@@ -47,7 +51,7 @@ public class AvisosReunion
         mensaje.setContentType("text/html");
 
         ReunionFormatter formatter = new ReunionFormatter(reunion);
-        mensaje.setCuerpo(formatter.format());
+        mensaje.setCuerpo(formatter.format(publicUrl));
 
         mensaje.setReplyTo(reunion.getCreadorEmail());
         mensaje.setDestinos(miembros);
@@ -73,7 +77,7 @@ public class AvisosReunion
         mensaje.setContentType("text/html");
 
         ReunionFormatter formatter = new ReunionFormatter(reunion);
-        mensaje.setCuerpo(formatter.format());
+        mensaje.setCuerpo(formatter.format(publicUrl));
         mensaje.setReplyTo(reunion.getCreadorEmail());
 
         notificacionesDAO.enviaNotificacion(mensaje);
