@@ -18,9 +18,14 @@ paths:
         200:
           description: Lista de organos
           schema:
-            type: array
-            items:
-              $ref: "#/definitions/Organo"
+            type: object
+            properties:
+              success:
+                type: boolean
+              data:
+                type: array
+                items:
+                  $ref: "#/definitions/Organo"
 
   /organos/{organoId}/miembros:
     get:
@@ -37,9 +42,14 @@ paths:
         200:
           description: Lista de miembros de un órgano
           schema:
-            type: array
-            items:
-              $ref: "#/definitions/Miembro"
+            type: object
+            properties:
+              success:
+                type: boolean
+              data:
+                type: array
+                items:
+                  $ref: "#/definitions/Miembro"
 
   /config/menus:
     get:
@@ -49,9 +59,7 @@ paths:
         200:
           description: Listado de entradas del menú.
           schema:
-            type: array
-            items:
-              $ref: "#/definitions/Menu"
+            $ref: "#/definitions/Menu"
 
   /notificaciones:
     post:
@@ -101,9 +109,14 @@ paths:
         200:
           description: Lista de personas que cumplen con la cadena de búsqueda
           schema:
-            type: array
-            items:
-              $ref: "#/definitions/Persona"
+            type: object
+            properties:
+              success:
+                type: boolean
+              data:
+                type: array
+                items:
+                  $ref: "#/definitions/Persona"
 
   /cuentas/{username}:
     get:
@@ -136,7 +149,14 @@ paths:
         200:
           description: Información de persona
           schema:
-            $ref: "#/definitions/Persona"
+            type: object
+            properties:
+              success:
+                type: boolean
+              data:
+                type: array
+                items:
+                  $ref: "#/definitions/Persona"
 
   /personas/{personaId}/roles:
     get:
