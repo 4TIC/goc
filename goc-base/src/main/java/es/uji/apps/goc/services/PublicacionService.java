@@ -37,6 +37,9 @@ public class PublicacionService extends CoreBaseService
     @Value("${goc.logo}")
     private String logoUrl;
 
+    @Value("${goc.charset}")
+    private String charset;
+
     @InjectParam
     private ReunionService reunionService;
 
@@ -135,6 +138,7 @@ public class PublicacionService extends CoreBaseService
 
         Template template = new HTMLTemplate("reunion-" + applang);
         template.put("logo", logoUrl);
+        template.put("charset", charset);
         template.put("reunion", reunionTemplate);
         template.put("applang", applang);
         template.put("connectedUserId", connectedUserId);
