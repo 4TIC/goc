@@ -26,20 +26,25 @@ public class ReunionFirma implements Serializable
 
     private String descripcion;
 
+    @JsonProperty("url_grabacion")
     private String urlGrabacion;
 
     private String acuerdos;
 
     private Boolean telematica;
 
+    @JsonProperty("admite_suplencia")
     private Boolean admiteSuplencia;
 
     private Boolean completada;
 
+    @JsonProperty("creador_nombre")
     private String creadorNombre;
 
+    @JsonProperty("creador_email")
     private String creadorEmail;
 
+    @JsonProperty("telematica_descripcion")
     private String telematicaDescripcion;
 
     private List<OrganoFirma> organos;

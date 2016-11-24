@@ -1,15 +1,27 @@
 package es.uji.apps.goc.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 public class Documento
 {
     private Long id;
     private String descripcion;
+
+    @JsonProperty("mime_type")
     private String mimeType;
+
+    @JsonProperty("nombre_fichero")
     private String nombreFichero;
+
+    @JsonProperty("fecha_adicion")
     private Date fechaAdicion;
+
+    @JsonProperty("creador_id")
     private Long creadorId;
+
+    @JsonProperty("batos_base64")
     private String datosBase64;
 
     public Long getId()

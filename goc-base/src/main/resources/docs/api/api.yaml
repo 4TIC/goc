@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   title: "REST API: Gestión de órganos colegiados"
   description: Puntos de extensión a implementar
-  version: "1.0.0"
+  version: "0.1.0"
 host: ujiapps.uji.es
 schemes:
   - https
@@ -13,8 +13,7 @@ paths:
   /organos:
     get:
       summary: Órganos disponibles.
-      description: |
-        Obtiene una lista completa de los organos disponibles.
+      description: Obtiene una lista completa de los organos disponibles.
       responses:
         200:
           description: Lista de organos
@@ -26,8 +25,7 @@ paths:
   /organos/{organoId}/miembros:
     get:
       summary: Miembros pertenecientes a un órgano determinado.
-      description: |
-        Obtiene una lista de todos los miembros pertenecientes a un determinado órgano.
+      description: Obtiene una lista de todos los miembros pertenecientes a un determinado órgano.
       parameters:
         - name: organoId
           in: path
@@ -46,8 +44,7 @@ paths:
   /config/menus:
     get:
       summary: Listado de menús de acceso a las distintas funcionalidades de GOC.
-      description: |
-        Permite la carga del árbol lateral de navegación con las opciones principales de navegación.
+      description: Permite la carga del árbol lateral de navegación con las opciones principales de navegación.
       responses:
         200:
           description: Listado de entradas del menú.
@@ -63,8 +60,7 @@ paths:
         - application/json
       produces:
         - application/json
-      description: |
-        Permite el envío de correos de aviso a los miembros involucrados en las reuniones.
+      description: Permite el envío de correos de aviso a los miembros involucrados en las reuniones.
       parameters:
         - name: body
           in: body
@@ -81,8 +77,8 @@ paths:
         - application/json
       produces:
         - application/json
-      description: |
-        Firma el acta de una reunión ya concluida con todos los puntos acordados en ella
+      description: Firma el acta de una reunión ya concluida con todos los puntos acordados en ella.
+      parameters:
         - name: body
           in: body
           required: true
@@ -95,8 +91,7 @@ paths:
   /personas:
     get:
       summary: Directorio de personas de la institución.
-      description: |
-        A partir de una consulta devuelve un listado de personas pertenecientes a la institución.
+      description: A partir de una consulta devuelve un listado de personas pertenecientes a la institución.
       parameters:
         - name: query
           in: query
@@ -113,8 +108,7 @@ paths:
   /cuentas/{username}:
     get:
       summary: Recuperacion de la persona asociada a una cuenta
-      description: |
-        A partir del username del usuario, permite extraer el valor del identificador de persona.
+      description: A partir del username del usuario, permite extraer el valor del identificador de persona.
       parameters:
         - name: username
           in: path
@@ -130,8 +124,7 @@ paths:
   /personas/{personaId}:
     get:
       summary: Información de una persona a partir de su id.
-      description: |
-        Obtiene una persona del directorio de personas a partir de su Id.
+      description: Obtiene una persona del directorio de personas a partir de su Id.
       parameters:
         - name: personaId
           in: path
@@ -148,8 +141,7 @@ paths:
   /personas/{personaId}/roles:
     get:
       summary: Información de los roles de una persona a partir de su id.
-      description: |
-        Obtiene una persona del directorio de personas a partir de su Id.
+      description: Obtiene una persona del directorio de personas a partir de su Id.
       parameters:
         - name: personaId
           in: path
@@ -172,32 +164,65 @@ definitions:
       id:
         type: integer
         format: int64
-        description: Identificador de la reunión
+        description: Identificador de la reunión.
       asunto:
         type: string
-        description: Asunto principal de la reunión
+        description: Asunto principal de la reunión.
       fecha:
         type: string
         format: datetime
-        description: Fecha de realización de la reunión
+        description: Fecha de realización de la reunión.
       numero_sesion:
         type: number
-        description: Número de sesión de la reunión
+        description: Número de sesión de la reunión.
       duracion:
         type: number
-        description: Duración de la reunión en minutos
+        description: Duración de la reunión en minutos.
       ubicacion:
         type: string
-        description: Lugar de realización de la reunión
+        description: Lugar de realización de la reunión.
+      descripcion:
+        type: string
+        description: Descripción de la reunión.
+      url_grabacion:
+        type: string
+        description: URL de la grabación si
       acuerdos:
         type: string
-        description: |
-          Descripción de los acuerdos establecidos en la reunión
-      asistentes:
+        description: Descripción de los acuerdos establecidos en la reunión
+      telematica:
+        type: boolean
+        description: Verdadero si la reunión se realizará online
+      telematica_descripcion:
+        type: string
+        description: Datos para el acceso a la reunión telemática
+      admite_suplencia:
+        type: boolean
+        description: Verdadero si permite que los asistentes indiquen un suplente
+      completada:
+        type: boolean
+        description: Verdadero si la reunión ya se ha realizado y toda su información está completa.
+      creador_nombre:
+        type: string
+        description: Nombre del creador de la reunión
+      creador_email:
+        type: string
+        description: Email del creador de la reunión
+      organos:
         type: array
-        description: Lista de asistentes a la reunión
+        description: Lista de organos convocados
         items:
-          $ref: "#/definitions/Organo"
+          $ref: "#/definitions/OrganoFirma"
+      comentarios:
+        type: array
+        description: Lista de comentarios realizados por los asistentes
+        items:
+          $ref: "#/definitions/Comentario"
+      documentos:
+        type: array
+        description: Lista de documentos adjuntados a nivel de reunión
+        items:
+          $ref: "#/definitions/Documento"
       puntos_orden_dia:
         type: array
         description: Lista de puntos del orden del día
@@ -217,16 +242,20 @@ definitions:
       descripcion:
         type: string
         description: Descripción del punto del orden del día.
-      deliberaciones:
-        type: string
-        description: Deliberaciones del punto del orden del día.
+      orden:
+        type: number
+        description: Número identificativo del orden del punto del orden del día con respecto al resto.
       acuerdos:
         type: string
         description: Acuerdos del punto del orden del día.
-      orden:
-        type: number
-        description: |
-          Número identificativo del orden del punto del orden del día con respecto al resto.
+      deliberaciones:
+        type: string
+        description: Deliberaciones del punto del orden del día.
+      documentos:
+        type: array
+        description: Lista de documentos adjuntados a nivel de reunión
+        items:
+          $ref: "#/definitions/Documento"
 
   Organo:
     type: object
@@ -248,22 +277,52 @@ definitions:
         type: string
         description: Nombre del tipo de órgano.
 
+  OrganoFirma:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Identificadorr único del órgano.
+      nombre:
+        type: string
+        description: Nombre del órgano.
+      inactivo:
+        type: boolean
+        description: Verdadero si la reunión se ha archivado.
+      tipo_organo_id:
+        type: number
+        description: Identificar único del tipo de órgano.
+      tipo_codigo:
+        type: string
+        description: Valor enumerado que representa al órgano (p.e. DEPARTAMENTO).
+      tipo_nombre:
+        type: string
+        description: Nombre del tipo de órgano.
+
   Miembro:
     type: object
     properties:
       id:
         type: number
-        description: Identificadorr único del miembro.
+        description: Identificador único del miembro.
       nombre:
         type: string
         description: Nombre del miembro.
       email:
         type: string
         description: E-Mail del miembro.
-      organo:
-        $ref: "#/definitions/Organo"
-      cargo:
-        $ref: "#/definitions/Cargo"
+      organo_id:
+        type: string
+        description: Identificador del órgano.
+      organo_nombre:
+        type: string
+        description: Nombre del órgano.
+      cargo_id:
+        type: string
+        description: Identificador del cargo.
+      cargo_nombre:
+        type: string
+        description: Nombre del cargo.
 
   Persona:
     type: object
@@ -278,15 +337,51 @@ definitions:
         type: string
         description: E-Mail de la persona.
 
-  Cargo:
+  Comentario:
     type: object
     properties:
       id:
         type: number
         description: Identificadorr único del cargo.
-      nombre:
+      comentario:
         type: string
-        description: Nombre del cargo.
+        description: Texto del comentario.
+      fecha:
+        type: string
+        format: datetime
+        description: Fecha de realización del comentario
+      creador_id:
+        type: number
+        description: Id del usuario que ha creado el comentario.
+      creador_nombre:
+        type: string
+        description: Nombre del usuario que ha creado el comentario.
+
+  Documento:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Identificadorr único del documento.
+      descripcion:
+        type: string
+        description: Descripción del documento.
+      mime_type:
+        type: string
+        description: Tipo mime del contenido.
+      nombre_fichero:
+        type: string
+        description: Nombre del documento.
+      fecha_adicion:
+        type: string
+        format: datetime
+        description: Fecha en la que se añadió el documento.
+      creador_id:
+        type: number
+        description: Id del usuario que ha subido el documento.
+      datos_base64:
+        type: string
+        description: Contenido del documento en Base64.
 
   Mensaje:
     type: object

@@ -1,4 +1,6 @@
 package es.uji.apps.goc.dto;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class OrganoFirma
@@ -7,8 +9,13 @@ public class OrganoFirma
     private String nombre;
     private Boolean inactivo;
 
+    @JsonProperty("tipo_organo_id")
     private Long tipoOrganoId;
+
+    @JsonProperty("tipo_nombre")
     private String tipoNombre;
+
+    @JsonProperty("tipo_codigo")
     private String tipoCodigo;
 
     private List<MiembroFirma> asistentes;

@@ -1,5 +1,7 @@
 package es.uji.apps.goc.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 public class Comentario
@@ -7,7 +9,11 @@ public class Comentario
     private Long id;
     private String comentario;
     private Date fecha;
+
+    @JsonProperty("creador_id")
     private Long creadorId;
+
+    @JsonProperty("creador_nombre")
     private String creadorNombre;
 
     public Long getId()

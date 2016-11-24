@@ -82,10 +82,11 @@ public class ExternalResource extends CoreBaseService
         ArrayNode rows = result.putArray("row");
 
         Boolean admin = roles.stream().filter(r -> r.equals("ADMIN")).findAny().isPresent();
+        String currentLanguage = (lang != null) ? lang : "es";
 
         if (admin)
         {
-            if (lang.equals("es"))
+            if (currentLanguage.equals("es"))
             {
                 rows.add(menuEntry(mapper, "goc.view.organo.Main", "Órganos"));
                 rows.add(menuEntry(mapper, "goc.view.tipoOrgano.Main", "Tipos de órganos"));
@@ -109,7 +110,7 @@ public class ExternalResource extends CoreBaseService
 
         }
 
-        if (lang.equals("es"))
+        if (currentLanguage.equals("es"))
         {
             rows.add(menuEntry(mapper, "goc.view.organo.Main", "Órganos"));
             rows.add(menuEntry(mapper, "goc.view.miembro.Main", "Miembros"));
