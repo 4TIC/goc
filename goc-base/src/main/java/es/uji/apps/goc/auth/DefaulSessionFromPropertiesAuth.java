@@ -62,7 +62,7 @@ public class DefaulSessionFromPropertiesAuth implements Filter
 
     private boolean sessionAlreadyRegistered(HttpServletRequest clientRequest)
     {
-        return clientRequest.getSession().getAttribute("www$persona") != null;
+        return clientRequest.getSession().getAttribute(User.SESSION_USER) != null;
     }
 
     private User createUserFromDefaulLocalValues(String userName, String userId)
@@ -86,7 +86,7 @@ public class DefaulSessionFromPropertiesAuth implements Filter
     private void registerUserInHttpSession(HttpServletRequest clientRequest, User user)
     {
         HttpSession serverSession = clientRequest.getSession();
-        serverSession.setAttribute("www$persona", user);
+        serverSession.setAttribute(User.SESSION_USER, user);
     }
 
     private DefaultUser getDefaultUser()
