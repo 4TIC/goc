@@ -33,6 +33,17 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
     {
         var langSelector = '<select ';
 
+        var htmlLanguage = '<ul style="background: url(http://e-ujier.uji.es/img/portal2/imagenes/cabecera_1px.png) repeat-x scroll left top transparent; height: 70px; padding-top: 35px;" class="lang" />';
+
+        debugger;
+
+        if (mainLanguage && alternativeLanguage) {
+            htmlLanguage = '<ul style="background: url(http://e-ujier.uji.es/img/portal2/imagenes/cabecera_1px.png) repeat-x scroll left top transparent; height: 70px; padding-top: 35px;" class="lang">' +
+            '<li><a href="?lang=' + mainLanguage + '">' + mainLanguageDescription + '</a></li><li><a href="?lang=' + alternativeLanguage + '">' + alternativeLanguageDescription + '</a></li></ul>';
+        }
+
+        console.log(mainLanguage, alternativeLanguage, htmlLanguage);
+
         var logoPanel = new Ext.Panel(
             {
                 region: 'north',
@@ -43,17 +54,15 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
                         region: 'center',
                         border: 0,
                         html: '<div style="background: url(http://e-ujier.uji.es/img/portal2/imagenes/cabecera_1px.png) repeat-x scroll left top transparent; height: 70px;">' +
-                            '<img src="http://e-ujier.uji.es/img/portal2/imagenes/logo_uji_horizontal.png" style="float: left;margin: 10px 16px;" />' + 
-                            '<div style="float:left; margin-top:11px;">' + 
-                            '<span style="color: rgb(255,255, 255); font-family: Helvetica,Arial,sans-serif;font-size:1.2em;">E-UJIER@</span><br/>' + 
+                            '<img src="'  + logo + '" style="float: left;margin: 10px 16px;" />' +
+                            '<div style="float:left; margin-top:24px;">' +
                             '<span style="color: #CDCCE5; font-family: Helvetica,Arial,sans-serif; font-size:2em;">' + this.tituloAplicacion + '</span></div></div>'
                     },
                     {
                         region: 'east',
                         border: 0,
                         width: 150,
-                        html: '<ul style="background: url(http://e-ujier.uji.es/img/portal2/imagenes/cabecera_1px.png) repeat-x scroll left top transparent; height: 70px; padding-top: 35px;" class="lang">' +
-                              '<li><a href="?lang=ca">Valencià</a></li><li><a href="?lang=es">Español</a></li></ul>'
+                        html: htmlLanguage
                     },
                     {
                         region: 'east',
