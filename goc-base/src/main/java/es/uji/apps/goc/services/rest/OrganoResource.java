@@ -41,7 +41,8 @@ public class OrganoResource extends CoreBaseService
             throws OrganosExternosException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
-        List<Organo> listaOrganos = new ArrayList<>();
+
+        List<Organo> listaOrganos;
 
         if (reunionId != null)
         {
@@ -62,7 +63,7 @@ public class OrganoResource extends CoreBaseService
             throws OrganosExternosException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
-        List<Organo> listaOrganos = new ArrayList<>();
+        List<Organo> listaOrganos;
 
         if (reunionId != null)
         {
@@ -73,8 +74,10 @@ public class OrganoResource extends CoreBaseService
             listaOrganos = organoService.getOrganos(connectedUserId);
         }
 
-        listaOrganos = listaOrganos.stream().filter(o -> o.isExterno() || !o.isInactivo())
+        listaOrganos = listaOrganos.stream()
+                .filter(o -> o.isExterno() || !o.isInactivo())
                 .collect(Collectors.toList());
+
         return organosToUI(listaOrganos);
 
     }
@@ -96,6 +99,7 @@ public class OrganoResource extends CoreBaseService
         {
             listaOrganos = organoService.getOrganosPorAutorizadoId(connectedUserId);
         }
+
         return organosToUI(listaOrganos);
 
     }
@@ -108,18 +112,20 @@ public class OrganoResource extends CoreBaseService
         {
             listaUI.add(organoToUI(organo));
         }
+
         return listaUI;
     }
 
     private UIEntity organoToUI(Organo organo)
     {
         UIEntity ui = new UIEntity();
-
         ui.put("id", organo.getId());
         ui.put("nombre", organo.getNombre());
+        ui.put("nombreAlternativo", organo.getNombreAlternativo());
         ui.put("externo", organo.isExterno());
         ui.put("inactivo", organo.isInactivo());
         ui.put("tipoOrganoId", organo.getTipoOrgano().getId());
+
         return ui;
     }
 
@@ -144,10 +150,13 @@ public class OrganoResource extends CoreBaseService
             throws OrganoNoDisponibleException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
+
         String nombre = organoUI.get("nombre");
+        String nombreAlternativo = organoUI.get("nombreAlternativo");
         Long tipoOrganoId = Long.parseLong(organoUI.get("tipoOrganoId"));
         Boolean inactivo = new Boolean(organoUI.get("inactivo"));
-        Organo organo = organoService.updateOrgano(organoId, nombre, tipoOrganoId, inactivo,
+
+        Organo organo = organoService.updateOrgano(organoId, nombre, nombreAlternativo, tipoOrganoId, inactivo,
                 connectedUserId);
 
         return UIEntity.toUI(organo);
@@ -163,11 +172,13 @@ public class OrganoResource extends CoreBaseService
         }
 
         organo.setNombre(organoUI.get("nombre"));
+        organo.setNombreAlternativo(organoUI.get("nombreAlternativo"));
         organo.setInactivo(false);
 
         TipoOrgano tipoOrgano = new TipoOrgano();
         tipoOrgano.setId(Long.parseLong(organoUI.get("tipoOrganoId")));
         organo.setTipoOrgano(tipoOrgano);
+
         return organo;
     }
 
@@ -197,6 +208,7 @@ public class OrganoResource extends CoreBaseService
     public Response borraCargo(@PathParam("organoAutorizadoId") Long organoAutorizadoId)
     {
         organoService.removeAutorizado(organoAutorizadoId);
+
         return Response.ok().build();
     }
 

@@ -10,6 +10,8 @@ public class TipoOrgano
 
     private String nombre;
 
+    private String nombreAlternativo;
+
     private Set<Organo> organos;
 
     public Long getId()
@@ -38,10 +40,11 @@ public class TipoOrgano
         this.id = id;
     }
 
-    public TipoOrgano(Long id, String codigo, String nombre) {
+    public TipoOrgano(Long id, String codigo, String nombre, String nombreAlternativo) {
         this.id = id;
         this.codigo = codigo;
         this.nombre = nombre;
+        this.nombreAlternativo = nombreAlternativo;
     }
 
     public Set<Organo> getOrganos() {
@@ -60,5 +63,15 @@ public class TipoOrgano
     public void setCodigo(String codigo)
     {
         this.codigo = codigo;
+    }
+
+    public String getNombreAlternativo()
+    {
+        return nombreAlternativo;
+    }
+
+    public void setNombreAlternativo(String nombreAlternativo)
+    {
+        this.nombreAlternativo = nombreAlternativo;
     }
 }

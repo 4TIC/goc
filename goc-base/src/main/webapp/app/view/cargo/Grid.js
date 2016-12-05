@@ -1,4 +1,35 @@
 
+var cargoGridColumns = [
+    {
+        text: 'ID',
+        dataIndex: 'id',
+        hidden: true
+    },
+    {
+        text: getMultiLangLabel(appI18N.cargos.nombre, mainLanguage),
+        dataIndex: 'nombre',
+        flex: 1,
+        editor: {
+            field: {
+                allowBlank: false
+            }
+        }
+    }
+];
+
+if (isMultilanguageApplication()) {
+    cargoGridColumns.push({
+        text: getMultiLangLabel(appI18N.cargos.nombre, alternativeLanguage),
+        dataIndex: 'nombreAlternativo',
+        flex: 1,
+        editor: {
+            field: {
+                allowBlank: false
+            }
+        }
+    });
+}
+
 Ext.define('goc.view.cargo.Grid',{
     extend: 'Ext.ux.uji.grid.Panel',
 
@@ -15,18 +46,5 @@ Ext.define('goc.view.cargo.Grid',{
     title: 'Càrrecs',
     scrollable: true,
 
-    columns: [{
-        text: 'ID',
-        dataIndex: 'id',
-        hidden: true
-    }, {
-        text: appI18N.cargos.nombre,
-        dataIndex: 'nombre',
-        flex: 1,
-        editor: {
-            field: {
-                allowBlank: false
-            }
-        }
-    }]
+    columns: cargoGridColumns
 });

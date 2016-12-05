@@ -58,6 +58,7 @@ public class TipoOrganoResource extends CoreBaseService
             UIEntity tipoOrganoUI)
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
+
         TipoOrgano tipoOrgano = tipoOrganoUI.toModel(TipoOrgano.class);
         tipoOrgano = tipoOrganoService.updateTipoOrgano(tipoOrgano, connectedUserId);
 
@@ -69,7 +70,9 @@ public class TipoOrganoResource extends CoreBaseService
     public Response borraTipoOrgano(@PathParam("tipoOrganoId") Long tipoOrganoId, UIEntity entity)
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
+
         tipoOrganoService.removeTipoOrganoById(tipoOrganoId);
+
         return Response.ok().build();
     }
 }

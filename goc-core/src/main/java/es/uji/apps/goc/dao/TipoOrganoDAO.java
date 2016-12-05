@@ -17,20 +17,22 @@ public class TipoOrganoDAO extends BaseDAODatabaseImpl
     private QTipoOrganoLocal qTipoOrganoLocal = QTipoOrganoLocal.tipoOrganoLocal;
     private QReunion qReunion = QReunion.reunion;
     private QOrganoReunion qOrganoReunion = QOrganoReunion.organoReunion;
-    private QOrganoLocal qOrganoLocal = QOrganoLocal.organoLocal;
 
     public List<TipoOrgano> getTiposOrgano()
     {
         JPAQuery query = new JPAQuery(entityManager);
 
         List<TipoOrganoLocal> tiposOrgano = query.from(qTipoOrganoLocal).list(qTipoOrganoLocal);
+
         return tiposOrganoDTOToTipoOrgano(tiposOrgano);
     }
 
     private List<TipoOrgano> tiposOrganoDTOToTipoOrgano(List<TipoOrganoLocal> tiposOrganoDTO)
     {
         List<TipoOrgano> listaTipoOrgano = new ArrayList<>();
-        for (TipoOrganoLocal tipoOrganoDTO: tiposOrganoDTO) {
+
+        for (TipoOrganoLocal tipoOrganoDTO: tiposOrganoDTO)
+        {
             TipoOrgano tipoOrgano = tipoOrganoDTOToTipoOrgano(tipoOrganoDTO);
             listaTipoOrgano.add(tipoOrgano);
         }
@@ -44,6 +46,7 @@ public class TipoOrganoDAO extends BaseDAODatabaseImpl
         tipoOrgano.setId(tipoOrganoDTO.getId());
         tipoOrgano.setCodigo(tipoOrganoDTO.getCodigo());
         tipoOrgano.setNombre(tipoOrganoDTO.getNombre());
+        tipoOrgano.setNombreAlternativo(tipoOrganoDTO.getNombreAlternativo());
 
         return tipoOrgano;
     }
@@ -62,7 +65,9 @@ public class TipoOrganoDAO extends BaseDAODatabaseImpl
 
         tipoOrgano.setId(tipoOrganoLocal.getId());
         tipoOrgano.setNombre(tipoOrganoLocal.getNombre());
+        tipoOrgano.setNombreAlternativo(tipoOrganoLocal.getNombreAlternativo());
         tipoOrgano.setCodigo(tipoOrganoLocal.getCodigo());
+
         return tipoOrgano;
     }
 
@@ -80,7 +85,9 @@ public class TipoOrganoDAO extends BaseDAODatabaseImpl
 
         tipoOrganoLocal.setId(tipoOrgano.getId());
         tipoOrganoLocal.setNombre(tipoOrgano.getNombre());
+        tipoOrganoLocal.setNombreAlternativo(tipoOrgano.getNombreAlternativo());
         tipoOrganoLocal.setCodigo(tipoOrgano.getCodigo());
+
         return tipoOrganoLocal;
     }
 

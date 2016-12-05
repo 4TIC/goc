@@ -1,3 +1,72 @@
+
+var organoGridColumns = [
+    {
+        text: getMultiLangLabel(appI18N.organos.nombre, mainLanguage),
+        dataIndex: 'nombre',
+        flex: 1,
+        editor: {
+            field: {
+                allowBlank: false
+            }
+        }
+    }
+];
+
+if (isMultilanguageApplication()) {
+    organoGridColumns.push({
+        text: getMultiLangLabel(appI18N.organos.nombre, alternativeLanguage),
+        dataIndex: 'nombreAlternativo',
+        flex: 1,
+        editor: {
+            field: {
+                allowBlank: false
+            }
+        }
+    });
+}
+
+organoGridColumns.push({
+    text: appI18N.organos.tipoOrgano,
+    dataIndex: 'tipoOrganoId',
+    flex: 1,
+    renderer: function (id, meta, rec) {
+        var store = this.up('organoMainPanel').getViewModel().getStore('tipoOrganosStore');
+        var tipoOrganoRecord = store.getById(id);
+        return tipoOrganoRecord ? tipoOrganoRecord.get('nombre') : '';
+    },
+    editor: {
+        xtype: 'combobox',
+        bind: {
+            store: '{tipoOrganosStore}'
+        },
+        displayField: 'nombre',
+        valueField: 'id',
+        allowBlank: false,
+        editable: false,
+        listeners: {
+            expand: function() {
+                this.getStore().reload();
+            }
+        }
+    }
+});
+
+organoGridColumns.push({
+    text: appI18N.organos.externo,
+    width: 80,
+    renderer: function (id, meta, rec) {
+        return rec.get('externo') === 'true' ? 'Sí' : 'No';
+    }
+});
+
+organoGridColumns.push({
+    text: appI18N.organos.activo,
+    width: 80,
+    renderer: function (id, meta, rec) {
+        return rec.get('inactivo') ? 'No' : 'Sí';
+    }
+});
+
 Ext.define('goc.view.organo.Grid', {
     extend: 'Ext.ux.uji.grid.Panel',
     alias: 'widget.organoGrid',
@@ -50,53 +119,7 @@ Ext.define('goc.view.organo.Grid', {
             }
         }],
 
-    columns: [{
-        text: appI18N.organos.nombre,
-        dataIndex: 'nombre',
-        flex: 1,
-        editor: {
-            field: {
-                allowBlank: false
-            }
-        }
-    }, {
-        text: appI18N.organos.tipoOrgano,
-        dataIndex: 'tipoOrganoId',
-        flex: 1,
-        renderer: function (id, meta, rec) {
-            var store = this.up('organoMainPanel').getViewModel().getStore('tipoOrganosStore');
-            var tipoOrganoRecord = store.getById(id);
-            return tipoOrganoRecord ? tipoOrganoRecord.get('nombre') : '';
-        },
-        editor: {
-            xtype: 'combobox',
-            bind: {
-                store: '{tipoOrganosStore}'
-            },
-            displayField: 'nombre',
-            valueField: 'id',
-            allowBlank: false,
-            editable: false,
-            listeners: {
-                expand: function() {
-                    this.getStore().reload();
-                }
-            }
-        }
-    }, {
-        text: appI18N.organos.externo,
-        width: 80,
-        renderer: function (id, meta, rec) {
-            return rec.get('externo') === 'true' ? 'Sí' : 'No';
-        }
-    },
-        {
-            text: appI18N.organos.activo,
-            width: 80,
-            renderer: function (id, meta, rec) {
-                return rec.get('inactivo') ? 'No' : 'Sí';
-            }
-        }],
+    columns: organoGridColumns,
 
     listeners: {
         render: 'onLoad',

@@ -8,6 +8,7 @@ Ext.define('goc.model.TipoOrgano', {
     fields: [
         { name: 'id', type: 'number' },
         { name: 'codigo', type: 'string' },
-        { name: 'nombre', type: 'string' }
+        { name: 'nombre', type: 'string' },
+        { name: 'nombreAlternativo', type: 'string' }
     ]
 });

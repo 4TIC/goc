@@ -12,6 +12,9 @@ public class CargoExterno implements Serializable
     @JsonProperty("cargo_nombre")
     private String nombre;
 
+    @JsonProperty("cargo_nombre_alternativo")
+    private String nombreAlternativo;
+
     public Long getId()
     {
         return id;
@@ -30,5 +33,15 @@ public class CargoExterno implements Serializable
     public void setNombre(String nombre)
     {
         this.nombre = nombre;
+    }
+
+    public String getNombreAlternativo()
+    {
+        return nombreAlternativo;
+    }
+
+    public void setNombreAlternativo(String nombreAlternativo)
+    {
+        this.nombreAlternativo = nombreAlternativo;
     }
 }

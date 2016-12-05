@@ -44,9 +44,11 @@ public class ExternalOrganoResource extends CoreBaseService
 
             organoUI.put("id", organo.getId());
             organoUI.put("nombre", organo.getNombre());
+            organoUI.put("nombre_alternativo", organo.getNombreAlternativo());
             organoUI.put("tipo_id", organo.getTipoOrgano().getId());
             organoUI.put("tipo_codigo", organo.getTipoOrgano().getCodigo());
             organoUI.put("tipo_nombre", organo.getTipoOrgano().getNombre());
+            organoUI.put("tipo_nombre_alternativo", organo.getTipoOrgano().getNombreAlternativo());
 
             organosUI.add(organoUI);
         }
@@ -78,8 +80,10 @@ public class ExternalOrganoResource extends CoreBaseService
             miembroUI.put("email", miembro.getEmail());
             miembroUI.put("organo_id", miembro.getOrgano().getId());
             miembroUI.put("organo_nombre", miembro.getOrgano().getNombre());
+            miembroUI.put("organo_nombre_alternativo", miembro.getOrgano().getNombreAlternativo());
             miembroUI.put("cargo_id", miembro.getCargo().getId());
             miembroUI.put("cargo_nombre", miembro.getCargo().getNombre());
+            miembroUI.put("cargo_nombre_alternativo", miembro.getCargo().getNombreAlternativo());
 
             miembrosUI.add(miembroUI);
         }

@@ -7,6 +7,7 @@ Ext.define('goc.model.Cargo', {
     },
     fields: [
         { name: 'id', type: 'number' },
-        { name: 'nombre', type: 'string' }
+        { name: 'nombre', type: 'string' },
+        { name: 'nombreAlternativo', type: 'string' }
     ]
 });

@@ -8,6 +8,8 @@ public class Cargo
 
     private String nombre;
 
+    private String nombreAlternativo;
+
     private Set<Miembro> miembros;
 
     public Cargo() {}
@@ -41,5 +43,15 @@ public class Cargo
     public void setNombre(String nombre)
     {
         this.nombre = nombre;
+    }
+
+    public String getNombreAlternativo()
+    {
+        return nombreAlternativo;
+    }
+
+    public void setNombreAlternativo(String nombreAlternativo)
+    {
+        this.nombreAlternativo = nombreAlternativo;
     }
 }

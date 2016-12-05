@@ -34,6 +34,20 @@
         var alternativeLanguage = '<%= languageConfig.alternativeLanguage %>';
         var alternativeLanguageDescription = '<%= languageConfig.alternativeLanguageDescription %>';
         var logo = '<%= personalizationConfig.logo %>';
+
+        function getMultiLangLabel(value, lang) {
+            if (isMultilanguageApplication() && lang === mainLanguage)
+                return value + ' (' + mainLanguageDescription + ')';
+
+            if (isMultilanguageApplication() && lang === alternativeLanguage)
+                return value + ' (' + alternativeLanguageDescription + ')';
+
+            return value;
+        }
+
+        function isMultilanguageApplication() {
+            return (mainLanguage && mainLanguageDescription && alternativeLanguage && alternativeLanguageDescription);
+        }
     </script>
 
     <script type="text/javascript">

@@ -11,6 +11,8 @@ public class Organo
 
     private String nombre;
 
+    private String nombreAlternativo;
+
     private Set<OrganoReunion> organoReuniones;
 
     private Set<Miembro> miembros;
@@ -59,9 +61,10 @@ public class Organo
         this.externo = false;
     }
 
-    public Organo(String id, String nombre, TipoOrgano tipoOrgano) {
+    public Organo(String id, String nombre, String nombreAlternativo, TipoOrgano tipoOrgano) {
         this.id = id;
         this.nombre = nombre;
+        this.nombreAlternativo = nombreAlternativo;
         this.tipoOrgano = tipoOrgano;
         this.externo = true;
     }
@@ -70,9 +73,10 @@ public class Organo
         this.id = id;
     }
 
-    public Organo(String id, String nombre, TipoOrgano tipoOrgano, Boolean externo) {
+    public Organo(String id, String nombre, String nombreAlternativo, TipoOrgano tipoOrgano, Boolean externo) {
         this.id = id;
         this.nombre = nombre;
+        this.nombreAlternativo = nombreAlternativo;
         this.externo = externo;
         this.tipoOrgano = tipoOrgano;
     }
@@ -127,5 +131,15 @@ public class Organo
 
     public void setInactivo(Boolean inactivo) {
         this.inactivo = inactivo;
+    }
+
+    public String getNombreAlternativo()
+    {
+        return nombreAlternativo;
+    }
+
+    public void setNombreAlternativo(String nombreAlternativo)
+    {
+        this.nombreAlternativo = nombreAlternativo;
     }
 }

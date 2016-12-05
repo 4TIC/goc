@@ -53,6 +53,7 @@ public class OrganoService
         List<Organo> organos = new ArrayList<>();
         organos.addAll(getOrganosExternos());
         organos.addAll(organoDAO.getOrganosByUserId(connectedUserId));
+
         return organos;
     }
 
@@ -66,21 +67,27 @@ public class OrganoService
     {
         List<Organo> organos = new ArrayList<>();
         List<Organo> organosExternos = getOrganosExternos();
+
         List<String> listaOrganosIdsPermitidos = getOrganosIdsPermitidosAutorizado(connectedUserId);
-        organos.addAll(
-                organosExternos.stream().filter(o -> listaOrganosIdsPermitidos.contains(o.getId()))
-                        .collect(Collectors.toList()));
+        organos.addAll(organosExternos.stream()
+                .filter(o -> listaOrganosIdsPermitidos.contains(o.getId()))
+                .collect(Collectors.toList()));
+
         List<Organo> organosLocales = organoDAO.getOrganosByAutorizadoId(connectedUserId);
-        organos.addAll(
-                organosLocales.stream().filter(o -> !o.isInactivo()).collect(Collectors.toList()));
+        organos.addAll(organosLocales.stream()
+                .filter(o -> !o.isInactivo())
+                .collect(Collectors.toList()));
+
         return organos;
     }
 
     private List<String> getOrganosIdsPermitidosAutorizado(Long connectedUserId)
     {
-        List<OrganoAutorizado> organoAutorizados = organoAutorizadoDAO
-                .getAutorizadosByUserId(connectedUserId);
-        return organoAutorizados.stream().filter(c -> c.isOrganoExterno()).map(c -> c.getOrganoId())
+        List<OrganoAutorizado> organoAutorizados = organoAutorizadoDAO.getAutorizadosByUserId(connectedUserId);
+
+        return organoAutorizados.stream()
+                .filter(c -> c.isOrganoExterno())
+                .map(c -> c.getOrganoId())
                 .collect(Collectors.toList());
     }
 
@@ -89,8 +96,8 @@ public class OrganoService
         return organoDAO.insertOrgano(organo, connectedUserId);
     }
 
-    public Organo updateOrgano(Long organoId, String nombre, Long tipoOrganoId, Boolean inactivo,
-            Long connectedUserId) throws OrganoNoDisponibleException
+    public Organo updateOrgano(Long organoId, String nombre, String nombreAlternativo, Long tipoOrganoId,
+                               Boolean inactivo, Long connectedUserId) throws OrganoNoDisponibleException
     {
         Organo organo = organoDAO.getOrganoByIdAndUserId(organoId, connectedUserId);
 
@@ -100,9 +107,12 @@ public class OrganoService
         }
 
         organo.setNombre(nombre);
+        organo.setNombreAlternativo(nombreAlternativo);
+
         TipoOrgano tipoOrgano = new TipoOrgano(tipoOrganoId);
         organo.setTipoOrgano(tipoOrgano);
         organo.setInactivo(inactivo);
+
         return organoDAO.updateOrgano(organo);
     }
 
@@ -157,6 +167,7 @@ public class OrganoService
         List<Organo> organos = new ArrayList<>();
 
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
+
         for (OrganoReunion organoReunion : reunion.getReunionOrganos())
         {
             organos.add(getOrganoDeOrganoReunion(organoReunion));
@@ -172,6 +183,7 @@ public class OrganoService
         organo.setId(organoReunion.getOrganoId());
         organo.setExterno(organoReunion.isExterno());
         organo.setNombre(organoReunion.getOrganoNombre());
+        organo.setNombreAlternativo(organoReunion.getOrganoNombreAlternativo());
 
         TipoOrgano tipoOrgano = new TipoOrgano(organoReunion.getTipoOrganoId());
         organo.setTipoOrgano(tipoOrgano);
@@ -198,15 +210,18 @@ public class OrganoService
 
         organo.setId(organoExternoDTO.getId());
         organo.setNombre(organoExternoDTO.getNombre());
+        organo.setNombreAlternativo(organoExternoDTO.getNombreAlternativo());
         organo.setInactivo(organoExternoDTO.isInactivo());
         organo.setExterno(true);
 
         TipoOrgano tipoOrgano = new TipoOrgano();
         tipoOrgano.setId(organoExternoDTO.getTipoOrganoId());
         tipoOrgano.setNombre(organoExternoDTO.getTipoNombre());
+        tipoOrgano.setNombreAlternativo(organoExternoDTO.getTipoNombreAlternativo());
         tipoOrgano.setCodigo(organoExternoDTO.getTipoCodigo());
 
         organo.setTipoOrgano(tipoOrgano);
+
         return organo;
     }
 

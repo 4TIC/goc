@@ -21,7 +21,6 @@ public class OrganoDAO extends BaseDAODatabaseImpl
     private QOrganoAutorizado qOrganoAutorizado = QOrganoAutorizado.organoAutorizado;
     private QReunion qReunion = QReunion.reunion;
     private QOrganoReunion qOrganoReunion = QOrganoReunion.organoReunion;
-    private QTipoOrganoLocal qTipoOrganoLocal = QTipoOrganoLocal.tipoOrganoLocal;
 
     public List<Organo> getOrganosByUserId(Long connectedUserId)
     {
@@ -66,6 +65,7 @@ public class OrganoDAO extends BaseDAODatabaseImpl
 
         organo.setId(organoLocalDTO.getId().toString());
         organo.setNombre(organoLocalDTO.getNombre());
+        organo.setNombreAlternativo(organoLocalDTO.getNombreAlternativo());
         organo.setInactivo(organoLocalDTO.isInactivo());
         organo.setCreadorId(organoLocalDTO.getCreadorId());
         organo.setFechaCreacion(organoLocalDTO.getFechaCreacion());
@@ -122,6 +122,7 @@ public class OrganoDAO extends BaseDAODatabaseImpl
 
         organoLocal.setInactivo(organo.isInactivo());
         organoLocal.setNombre(organo.getNombre());
+        organoLocal.setNombreAlternativo(organo.getNombreAlternativo());
         organoLocal.setCreadorId(organo.getCreadorId());
         organoLocal.setFechaCreacion(organo.getFechaCreacion());
 

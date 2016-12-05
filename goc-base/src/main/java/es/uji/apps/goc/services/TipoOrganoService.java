@@ -30,7 +30,8 @@ public class TipoOrganoService
         return tipoOrganoDAO.updateTipoOrgano(tipoOrgano);
     }
 
-    public void removeTipoOrganoById(Long tipoOrganoId) {
+    public void removeTipoOrganoById(Long tipoOrganoId)
+    {
         tipoOrganoDAO.delete(TipoOrganoLocal.class, tipoOrganoId);
     }
 }

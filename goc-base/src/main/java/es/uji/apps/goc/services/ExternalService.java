@@ -16,13 +16,12 @@ public class ExternalService
     {
         List<Organo> listaOrganos = new ArrayList<>();
 
-        TipoOrgano t1 = new TipoOrgano(5L, "98", "Departamento Interno");
-        TipoOrgano t2 = new TipoOrgano(6L, "121", "Unidad de Gestión Interno");
+        TipoOrgano t1 = new TipoOrgano(5L, "98", "Departamento Interno", "Departament Intern");
+        TipoOrgano t2 = new TipoOrgano(6L, "121", "Unidad de Gestión Interno", "Unitat de Gestió Interna");
 
         for (Integer i = 1; i < 10; i++)
         {
-            Organo organo = new Organo("E" + i.toString(), "Organo " + i.toString() + " Interno", t1);
-            listaOrganos.add(organo);
+            listaOrganos.add(new Organo("E" + i.toString(), "Organo " + i.toString() + " Interno", "Órgan " + i.toString() + " Intern", t1));
         }
 
         return listaOrganos;
@@ -31,20 +30,23 @@ public class ExternalService
     public List<Miembro> getMiembrosByOrganoId(String organoId, Long connectedUserId)
     {
         List<Miembro> listaMiembros = new ArrayList<>();
+
         Organo organo = new Organo();
         organo.setId(organoId);
         organo.setNombre("Organo Interno " + organoId);
+        organo.setNombreAlternativo("Órgan Intern " + organoId);
 
         Cargo c1 = new Cargo("1");
         c1.setNombre("Presidente");
+        c1.setNombreAlternativo("President");
 
-        Miembro m1 = new Miembro(1L, "Miembro 1 Organo " + organo.getId(),
-                "miembro1@organo" + organo.getId() + ".com", organo, c1);
-
+        Miembro m1 = new Miembro(1L, "Miembro 1 Organo " + organo.getId(), "miembro1@organo" + organo.getId() + ".com",
+                organo, c1);
         listaMiembros.add(m1);
 
         Cargo c2 = new Cargo("2");
         c2.setNombre("Vocal");
+        c2.setNombreAlternativo("Vocal");
 
         for (Long i = 2L; i < 10L; i++)
         {
@@ -58,7 +60,6 @@ public class ExternalService
 
     public List<Persona> getPersonasByQueryString(String query, Long connectedUserId)
     {
-
         List<Persona> personas = new ArrayList<>();
         personas.add(new Persona(1L, "Javier Pérez", "jperez@uji.es"));
         personas.add(new Persona(2L, "Joaquin Rodríguez", "jrodriguez@uv.es"));
@@ -88,9 +89,7 @@ public class ExternalService
 
     public Persona getPersonaById(Long personaId, Long connectedUserId)
     {
-        Persona persona = new Persona(88849L, "Nicolás Manero", "nmanero@uji.es");
-
-        return persona;
+        return new Persona(88849L, "Nicolás Manero", "nmanero@uji.es");
     }
 
     public List<Role> getRolesByPersonaId(Long userId)
