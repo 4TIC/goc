@@ -25,6 +25,9 @@ public class ReunionDocumento implements Serializable
 
     private String descripcion;
 
+    @Column(name = "DESCRIPCION_ALT")
+    private String descripcionAlternativa;
+
     @Column(name="MIME_TYPE")
     private String mimeType;
 

@@ -3,15 +3,7 @@ package es.uji.apps.goc.dto;
 import java.io.Serializable;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "GOC_REUNIONES_PUNTOS_ORDEN_DIA")
@@ -25,15 +17,27 @@ public class PuntoOrdenDia implements Serializable
 
     private String titulo;
 
+    @Column(name = "TITULO_ALT")
+    private String tituloAlternativo;
+
     private String descripcion;
+
+    @Column(name = "DESCRIPCION_ALT")
+    private String descripcionAlternativa;
 
     private Long orden;
 
     private String acuerdos;
 
+    @Column(name = "ACUERDOS_ALT")
+    private String acuerdosAlternativos;
+
     private Boolean publico;
 
     private String deliberaciones;
+
+    @Column(name = "DELIBERACIONES_ALT")
+    private String deliberacionesAlternativas;
 
     @ManyToOne
     @JoinColumn(name = "REUNION_ID")
@@ -123,5 +127,46 @@ public class PuntoOrdenDia implements Serializable
     public void setPublico(Boolean publico)
     {
         this.publico = publico;
+    }
+
+
+    public String getTituloAlternativo()
+    {
+        return tituloAlternativo;
+    }
+
+    public void setTituloAlternativo(String tituloAlternativo)
+    {
+        this.tituloAlternativo = tituloAlternativo;
+    }
+
+    public String getDescripcionAlternativa()
+    {
+        return descripcionAlternativa;
+    }
+
+    public void setDescripcionAlternativa(String descripcionAlternativa)
+    {
+        this.descripcionAlternativa = descripcionAlternativa;
+    }
+
+    public String getAcuerdosAlternativos()
+    {
+        return acuerdosAlternativos;
+    }
+
+    public void setAcuerdosAlternativos(String acuerdosAlternativos)
+    {
+        this.acuerdosAlternativos = acuerdosAlternativos;
+    }
+
+    public String getDeliberacionesAlternativas()
+    {
+        return deliberacionesAlternativas;
+    }
+
+    public void setDeliberacionesAlternativas(String deliberacionesAlternativas)
+    {
+        this.deliberacionesAlternativas = deliberacionesAlternativas;
     }
 }

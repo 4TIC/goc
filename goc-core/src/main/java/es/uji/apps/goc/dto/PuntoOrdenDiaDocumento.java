@@ -17,6 +17,9 @@ public class PuntoOrdenDiaDocumento implements Serializable
 
     private String descripcion;
 
+    @Column(name = "DESCRIPCION_ALT")
+    private String descripcionAlternativa;
+
     @Column(name="MIME_TYPE")
     private String mimeType;
 
@@ -110,5 +113,15 @@ public class PuntoOrdenDiaDocumento implements Serializable
 
     public void setPuntoOrdenDia(PuntoOrdenDia puntoOrdenDia) {
         this.puntoOrdenDia = puntoOrdenDia;
+    }
+
+    public String getDescripcionAlternativa()
+    {
+        return descripcionAlternativa;
+    }
+
+    public void setDescripcionAlternativa(String descripcionAlternativa)
+    {
+        this.descripcionAlternativa = descripcionAlternativa;
     }
 }

@@ -23,6 +23,9 @@ public class Reunion implements Serializable
 
     private String asunto;
 
+    @Column(name = "ASUNTO_ALT")
+    private String asuntoAlternativo;
+
     private Date fecha;
 
     @Column(name = "FECHA_SEGUNDA_CONVOCATORIA")
@@ -32,7 +35,13 @@ public class Reunion implements Serializable
 
     private String descripcion;
 
+    @Column(name = "DESCRIPCION_ALT")
+    private String descripcionAlternativa;
+
     private String ubicacion;
+
+    @Column(name = "UBICACION_ALT")
+    private String ubicacionAlternativa;
 
     @Column(name = "URL_GRABACION")
     private String urlGrabacion;
@@ -62,9 +71,15 @@ public class Reunion implements Serializable
     @Column(name = "TELEMATICA_DESCRIPCION")
     private String telematicaDescripcion;
 
+    @Column(name = "TELEMATICA_DESCRIPCION_ALT")
+    private String telematicaDescripcionAlternativa;
+
     private Boolean publica;
 
     private String acuerdos;
+
+    @Column(name = "ACUERDOS_ALT")
+    private String acuerdosAlternativos;
 
     @Column(name = "NUMERO_SESION")
     private Long numeroSesion;
@@ -373,6 +388,56 @@ public class Reunion implements Serializable
     public void setFechaSegundaConvocatoria(Date fechaSegundaConvocatoria)
     {
         this.fechaSegundaConvocatoria = fechaSegundaConvocatoria;
+    }
+
+    public String getAsuntoAlternativo()
+    {
+        return asuntoAlternativo;
+    }
+
+    public void setAsuntoAlternativo(String asuntoAlternativo)
+    {
+        this.asuntoAlternativo = asuntoAlternativo;
+    }
+
+    public String getDescripcionAlternativa()
+    {
+        return descripcionAlternativa;
+    }
+
+    public void setDescripcionAlternativa(String descripcionAlternativa)
+    {
+        this.descripcionAlternativa = descripcionAlternativa;
+    }
+
+    public String getUbicacionAlternativa()
+    {
+        return ubicacionAlternativa;
+    }
+
+    public void setUbicacionAlternativa(String ubicacionAlternativa)
+    {
+        this.ubicacionAlternativa = ubicacionAlternativa;
+    }
+
+    public String getTelematicaDescripcionAlternativa()
+    {
+        return telematicaDescripcionAlternativa;
+    }
+
+    public void setTelematicaDescripcionAlternativa(String telematicaDescripcionAlternativa)
+    {
+        this.telematicaDescripcionAlternativa = telematicaDescripcionAlternativa;
+    }
+
+    public String getAcuerdosAlternativos()
+    {
+        return acuerdosAlternativos;
+    }
+
+    public void setAcuerdosAlternativos(String acuerdosAlternativos)
+    {
+        this.acuerdosAlternativos = acuerdosAlternativos;
     }
 
     public boolean noEsMiembro(Long connectedUserId)

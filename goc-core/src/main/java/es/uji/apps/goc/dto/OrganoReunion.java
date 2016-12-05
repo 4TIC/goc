@@ -37,6 +37,9 @@ public class OrganoReunion implements Serializable
     @Column(name = "ORGANO_NOMBRE")
     private String organoNombre;
 
+    @Column(name = "ORGANO_NOMBRE_ALT")
+    private String organoNombreAlternativo;
+
     @Column(name = "TIPO_ORGANO_ID")
     private Long tipoOrganoId;
 
@@ -109,5 +112,15 @@ public class OrganoReunion implements Serializable
     public void setExterno(Boolean externo)
     {
         this.externo = externo;
+    }
+
+    public String getOrganoNombreAlternativo()
+    {
+        return organoNombreAlternativo;
+    }
+
+    public void setOrganoNombreAlternativo(String organoNombreAlternativo)
+    {
+        this.organoNombreAlternativo = organoNombreAlternativo;
     }
 }

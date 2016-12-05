@@ -14,6 +14,9 @@ public class Cargo implements Serializable
 
     private String nombre;
 
+    @Column(name = "NOMBRE_ALT")
+    private String nombreAlternativo;
+
     @OneToMany(mappedBy = "cargo", cascade = CascadeType.ALL)
     private Set<MiembroLocal> miembrosLocales;
 
@@ -54,5 +57,15 @@ public class Cargo implements Serializable
     public void setMiembrosLocales(Set<MiembroLocal> miembrosLocales)
     {
         this.miembrosLocales = miembrosLocales;
+    }
+
+    public String getNombreAlternativo()
+    {
+        return nombreAlternativo;
+    }
+
+    public void setNombreAlternativo(String nombreAlternativo)
+    {
+        this.nombreAlternativo = nombreAlternativo;
     }
 }

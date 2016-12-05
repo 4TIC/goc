@@ -27,6 +27,9 @@ public class OrganoLocal implements Serializable
 
     private String nombre;
 
+    @Column(name = "NOMBRE_ALT")
+    private String nombreAlternativo;
+
     private Boolean inactivo;
 
     @Column(name="CREADOR_ID")
@@ -130,5 +133,15 @@ public class OrganoLocal implements Serializable
 
     public void setInactivo(Boolean inactivo) {
         this.inactivo = inactivo;
+    }
+
+    public String getNombreAlternativo()
+    {
+        return nombreAlternativo;
+    }
+
+    public void setNombreAlternativo(String nombreAlternativo)
+    {
+        this.nombreAlternativo = nombreAlternativo;
     }
 }

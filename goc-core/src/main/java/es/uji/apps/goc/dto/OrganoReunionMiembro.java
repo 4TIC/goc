@@ -45,6 +45,9 @@ public class OrganoReunionMiembro implements Serializable
     @Column(name = "CARGO_NOMBRE")
     private String cargoNombre;
 
+    @Column(name = "CARGO_NOMBRE_ALT")
+    private String cargoNombreAlternativo;
+
     @Column(name = "SUPLENTE_ID")
     private Long suplenteId;
 
@@ -223,5 +226,15 @@ public class OrganoReunionMiembro implements Serializable
     public void setSuplenteEmail(String suplenteEmail)
     {
         this.suplenteEmail = suplenteEmail;
+    }
+
+    public String getCargoNombreAlternativo()
+    {
+        return cargoNombreAlternativo;
+    }
+
+    public void setCargoNombreAlternativo(String cargoNombreAlternativo)
+    {
+        this.cargoNombreAlternativo = cargoNombreAlternativo;
     }
 }
