@@ -188,6 +188,9 @@ definitions:
       asunto:
         type: string
         description: Asunto principal de la reunión.
+      asunto_alternativo:
+        type: string
+        description: Asunto principal de la reunión alternativo.
       fecha:
         type: string
         format: datetime
@@ -201,21 +204,33 @@ definitions:
       ubicacion:
         type: string
         description: Lugar de realización de la reunión.
+      ubicacion_alternativa:
+        type: string
+        description: Lugar de realización de la reunión alternativa.
       descripcion:
         type: string
         description: Descripción de la reunión.
+      descripcion_alternativa:
+        type: string
+        description: Descripción de la reunión alternativa.
       url_grabacion:
         type: string
         description: URL de la grabación si
       acuerdos:
         type: string
         description: Descripción de los acuerdos establecidos en la reunión
+      acuerdos_alternativos:
+        type: string
+        description: Descripción de los acuerdos establecidos en la reunión alternativos
       telematica:
         type: boolean
         description: Verdadero si la reunión se realizará online
       telematica_descripcion:
         type: string
         description: Datos para el acceso a la reunión telemática
+      telematica_descripcion_alternativa:
+        type: string
+        description: Datos para el acceso a la reunión telemática alternativa
       admite_suplencia:
         type: boolean
         description: Verdadero si permite que los asistentes indiquen un suplente
@@ -249,7 +264,6 @@ definitions:
         items:
           $ref: "#/definitions/PuntoOrdenDia"
 
-
   PuntoOrdenDia:
     type: object
     properties:
@@ -259,18 +273,30 @@ definitions:
       titulo:
         type: string
         description: Título del punto del orden del día.
+      titulo_alternativo:
+        type: string
+        description: Título del punto del orden del día alternativo.
       descripcion:
         type: string
         description: Descripción del punto del orden del día.
+      descripcion_alternativa:
+        type: string
+        description: Descripción del punto del orden del día alternativa.
       orden:
         type: number
         description: Número identificativo del orden del punto del orden del día con respecto al resto.
       acuerdos:
         type: string
         description: Acuerdos del punto del orden del día.
+      acuerdos_alternativos:
+        type: string
+        description: Acuerdos del punto del orden del día alternativos.
       deliberaciones:
         type: string
         description: Deliberaciones del punto del orden del día.
+      deliberaciones_alternativas:
+        type: string
+        description: Deliberaciones del punto del orden del día alternativas.
       documentos:
         type: array
         description: Lista de documentos adjuntados a nivel de reunión
@@ -286,6 +312,9 @@ definitions:
       nombre:
         type: string
         description: Nombre del organo.
+      nombre_alternativo:
+        type: string
+        description: Nombre del organo idioma alternativo.
       tipo_id:
         type: number
         description: Identificar único del tipo de órgano.
@@ -296,6 +325,9 @@ definitions:
       tipo_nombre:
         type: string
         description: Nombre del tipo de órgano.
+      tipo_nombre_alternativo:
+        type: string
+        description: Nombre del tipo de órgano idioma alternativo.
 
   OrganoFirma:
     type: object
@@ -306,6 +338,9 @@ definitions:
       nombre:
         type: string
         description: Nombre del órgano.
+      nombre_alternativo:
+        type: string
+        description: Nombre del órgano alternativo.
       inactivo:
         type: boolean
         description: Verdadero si la reunión se ha archivado.
@@ -318,6 +353,9 @@ definitions:
       tipo_nombre:
         type: string
         description: Nombre del tipo de órgano.
+      tipo_nombre_alternativo:
+        type: string
+        description: Nombre del tipo de órgano alternativo.
 
   Miembro:
     type: object
@@ -337,12 +375,18 @@ definitions:
       organo_nombre:
         type: string
         description: Nombre del órgano.
+      organo_nombre_alternativo:
+        type: string
+        description: Nombre del órgano alternativo.
       cargo_id:
         type: string
         description: Identificador del cargo.
       cargo_nombre:
         type: string
         description: Nombre del cargo.
+      cargo_nombre_alternativo:
+        type: string
+        description: Nombre del cargo alternativo.
 
   Persona:
     type: object
@@ -362,7 +406,7 @@ definitions:
     properties:
       id:
         type: number
-        description: Identificadorr único del cargo.
+        description: Identificador único del cargo.
       comentario:
         type: string
         description: Texto del comentario.
@@ -382,10 +426,13 @@ definitions:
     properties:
       id:
         type: string
-        description: Identificadorr único del documento.
+        description: Identificador único del documento.
       descripcion:
         type: string
         description: Descripción del documento.
+      descripcion_alternativa:
+        type: string
+        description: Descripción del documento alternativa.
       mime_type:
         type: string
         description: Tipo mime del contenido.
@@ -444,10 +491,16 @@ definitions:
         description: Asunto del mensaje.
       title:
         type: string
-        description: Tipo MIME del contenido del mensaje.
+        description: Nombre del menú.
+      title_alternativo:
+        type: string
+        description: Nombre del menú alternativo.
       text:
         type: string
-        description: Contenido del mensaje.
+        description: Nombre del menú.
+      text_alternativo:
+        type: string
+        description: Nombre del menú alternativo.
       leaf:
         type: string
         description: Dirección de correo del emisor.
