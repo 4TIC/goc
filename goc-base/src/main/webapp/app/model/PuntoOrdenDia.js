@@ -8,11 +8,15 @@ Ext.define('goc.model.PuntoOrdenDia', {
     fields: [
         { name: 'id', type: 'number' },
         { name: 'titulo', type: 'string' },
+        { name: 'tituloAlternativo', type: 'string' },
         { name: 'descripcion', type: 'string' },
+        { name: 'descripcionAlternativa', type: 'string' },
         { name: 'deliberaciones', type: 'string' },
+        { name: 'deliberacionesAlternativas', type: 'string' },
         { name: 'acuerdos', type: 'string' },
+        { name: 'acuerdosAlternativos', type: 'string' },
         { name: 'orden', type: 'number' },
         { name: 'reunionId', type: 'number' },
-        { name: 'publico', type: 'boolean' },
+        { name: 'publico', type: 'boolean' }
     ],
 });

@@ -9,6 +9,9 @@ public class Documento
     private Long id;
     private String descripcion;
 
+    @JsonProperty("descripcion_alternativa")
+    private String descripcionAlternativa;
+
     @JsonProperty("mime_type")
     private String mimeType;
 
@@ -88,5 +91,15 @@ public class Documento
 
     public void setDatosBase64(String datosBase64) {
         this.datosBase64 = datosBase64;
+    }
+
+    public String getDescripcionAlternativa()
+    {
+        return descripcionAlternativa;
+    }
+
+    public void setDescripcionAlternativa(String descripcionAlternativa)
+    {
+        this.descripcionAlternativa = descripcionAlternativa;
     }
 }

@@ -8,8 +8,11 @@ Ext.define('goc.model.Reunion', {
     fields: [
         { name: 'id', type: 'number' },
         { name: 'asunto', type: 'string' },
+        { name: 'asuntoAlternativo', type: 'string' },
         { name: 'descripcion', type: 'string' },
+        { name: 'descripcionAlternativa', type: 'string' },
         { name: 'ubicacion', type: 'string' },
+        { name: 'ubicacionAlternativa', type: 'string' },
         { name: 'urlGrabacion', type: 'string' },
         { name: 'numeroDocumentos', type: 'number' },
         { name: 'fecha', type: 'date', dateFormat: 'd/m/Y H:i:s' },
@@ -19,6 +22,7 @@ Ext.define('goc.model.Reunion', {
         { name: 'admiteSuplencia', type: 'boolean', defaultValue: true },
         { name: 'admiteComentarios', type: 'boolean', defaultValue: true },
         { name: 'telematicaDescripcion', type: 'string' },
+        { name: 'telematicaDescripcionAlternativa', type: 'string' },
         { name: 'publica', type: 'boolean' },
         { name: 'numeroSesion', type: 'string' },
         {

@@ -124,4 +124,14 @@ public class ReunionDocumento implements Serializable
     public void setCreadorId(Long creadorId) {
         this.creadorId = creadorId;
     }
+
+    public String getDescripcionAlternativa()
+    {
+        return descripcionAlternativa;
+    }
+
+    public void setDescripcionAlternativa(String descripcionAlternativa)
+    {
+        this.descripcionAlternativa = descripcionAlternativa;
+    }
 }

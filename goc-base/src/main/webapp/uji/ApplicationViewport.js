@@ -35,8 +35,6 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
 
         var htmlLanguage = '<ul style="background: url(http://e-ujier.uji.es/img/portal2/imagenes/cabecera_1px.png) repeat-x scroll left top transparent; height: 70px; padding-top: 35px;" class="lang" />';
 
-        debugger;
-
         if (mainLanguage && alternativeLanguage) {
             htmlLanguage = '<ul style="background: url(http://e-ujier.uji.es/img/portal2/imagenes/cabecera_1px.png) repeat-x scroll left top transparent; height: 70px; padding-top: 35px;" class="lang">' +
             '<li><a href="?lang=' + mainLanguage + '">' + mainLanguageDescription + '</a></li><li><a href="?lang=' + alternativeLanguage + '">' + alternativeLanguageDescription + '</a></li></ul>';

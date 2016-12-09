@@ -15,6 +15,9 @@ public class ReunionFirma implements Serializable
 
     private String asunto;
 
+    @JsonProperty("asunto_alterntivo")
+    private String asuntoAlternativo;
+
     private Date fecha;
 
     @JsonProperty("numero_sesion")
@@ -24,12 +27,21 @@ public class ReunionFirma implements Serializable
 
     private String ubicacion;
 
+    @JsonProperty("ubicacion_alternativa")
+    private String ubicacionAlternativa;
+
     private String descripcion;
+
+    @JsonProperty("descripcion_alternativa")
+    private String descripcionAlternativa;
 
     @JsonProperty("url_grabacion")
     private String urlGrabacion;
 
     private String acuerdos;
+
+    @JsonProperty("acuerdos_alternativos")
+    private String acuerdosAlternativos;
 
     private Boolean telematica;
 
@@ -46,6 +58,9 @@ public class ReunionFirma implements Serializable
 
     @JsonProperty("telematica_descripcion")
     private String telematicaDescripcion;
+
+    @JsonProperty("telematica_descripcion_alternativa")
+    private String telematicaDescripcionAlternativa;
 
     private List<OrganoFirma> organos;
 
@@ -244,5 +259,55 @@ public class ReunionFirma implements Serializable
 
     public void setAdmiteSuplencia(Boolean admiteSuplencia) {
         this.admiteSuplencia = admiteSuplencia;
+    }
+
+    public String getAsuntoAlternativo()
+    {
+        return asuntoAlternativo;
+    }
+
+    public void setAsuntoAlternativo(String asuntoAlternativo)
+    {
+        this.asuntoAlternativo = asuntoAlternativo;
+    }
+
+    public String getUbicacionAlternativa()
+    {
+        return ubicacionAlternativa;
+    }
+
+    public void setUbicacionAlternativa(String ubicacionAlternativa)
+    {
+        this.ubicacionAlternativa = ubicacionAlternativa;
+    }
+
+    public String getDescripcionAlternativa()
+    {
+        return descripcionAlternativa;
+    }
+
+    public void setDescripcionAlternativa(String descripcionAlternativa)
+    {
+        this.descripcionAlternativa = descripcionAlternativa;
+    }
+
+    public String getAcuerdosAlternativos()
+    {
+        return acuerdosAlternativos;
+    }
+
+    public void setAcuerdosAlternativos(String acuerdosAlternativos)
+    {
+        this.acuerdosAlternativos = acuerdosAlternativos;
+    }
+
+    public String getTelematicaDescripcionAlternativa()
+    {
+        return telematicaDescripcionAlternativa;
+    }
+
+    public void setTelematicaDescripcionAlternativa(String telematicaDescripcionAlternativa)
+    {
+        this.telematicaDescripcionAlternativa = telematicaDescripcionAlternativa;
     }
 }

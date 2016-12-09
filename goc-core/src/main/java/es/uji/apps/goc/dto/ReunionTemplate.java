@@ -13,6 +13,8 @@ public class ReunionTemplate implements Serializable
 
     private String asunto;
 
+    private String asuntoAlternativo;
+
     private Date fecha;
 
     private Date fechaSegundaConvocatoria;
@@ -21,11 +23,17 @@ public class ReunionTemplate implements Serializable
 
     private String descripcion;
 
+    private String descripcionAlternativa;
+
     private Long duracion;
 
     private String ubicacion;
 
+    private String ubicacionAlternativa;
+
     private String acuerdos;
+
+    private String acuerdosAlternativos;
 
     private Boolean telematica;
 
@@ -36,6 +44,8 @@ public class ReunionTemplate implements Serializable
     private Boolean admiteComentarios;
 
     private String telematicaDescripcion;
+
+    private String telematicaDescripcionAlternativa;
 
     private String creadorNombre;
 
@@ -278,5 +288,55 @@ public class ReunionTemplate implements Serializable
     public void setFechaSegundaConvocatoria(Date fechaSegundaConvocatoria)
     {
         this.fechaSegundaConvocatoria = fechaSegundaConvocatoria;
+    }
+
+    public String getAsuntoAlternativo()
+    {
+        return asuntoAlternativo;
+    }
+
+    public void setAsuntoAlternativo(String asuntoAlternativo)
+    {
+        this.asuntoAlternativo = asuntoAlternativo;
+    }
+
+    public String getDescripcionAlternativa()
+    {
+        return descripcionAlternativa;
+    }
+
+    public void setDescripcionAlternativa(String descripcionAlternativa)
+    {
+        this.descripcionAlternativa = descripcionAlternativa;
+    }
+
+    public String getUbicacionAlternativa()
+    {
+        return ubicacionAlternativa;
+    }
+
+    public void setUbicacionAlternativa(String ubicacionAlternativa)
+    {
+        this.ubicacionAlternativa = ubicacionAlternativa;
+    }
+
+    public String getAcuerdosAlternativos()
+    {
+        return acuerdosAlternativos;
+    }
+
+    public void setAcuerdosAlternativos(String acuerdosAlternativos)
+    {
+        this.acuerdosAlternativos = acuerdosAlternativos;
+    }
+
+    public String getTelematicaDescripcionAlternativa()
+    {
+        return telematicaDescripcionAlternativa;
+    }
+
+    public void setTelematicaDescripcionAlternativa(String telematicaDescripcionAlternativa)
+    {
+        this.telematicaDescripcionAlternativa = telematicaDescripcionAlternativa;
     }
 }

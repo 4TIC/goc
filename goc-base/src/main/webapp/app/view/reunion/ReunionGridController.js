@@ -1,13 +1,16 @@
 Ext.define('goc.view.reunion.ReunionGridController', {
     extend: 'Ext.ux.uji.grid.PanelController',
     alias: 'controller.reunionGridController',
+
     onLoad: function () {
         var viewModel = this.getViewModel();
         viewModel.getStore('reunionesStore').load();
     },
+
     onAdd: function () {
         this.createModalReunion(null);
     },
+
     onEdit: function (grid, td, cellindex) {
         if (cellindex === 4) {
             return this.onAttachmentEdit();
@@ -70,10 +73,12 @@ Ext.define('goc.view.reunion.ReunionGridController', {
                     responsableId: record.get('miembroResponsableActaId'),
                     completada: record.get('completada'),
                     acuerdos: record.get('acuerdos'),
+                    acuerdosAlternativos: record.get('acuerdosAlterantivos'),
                     asistentesStore: asistentesStore
                 }
             }
         });
+
         this.modal.show();
     },
 
@@ -87,7 +92,8 @@ Ext.define('goc.view.reunion.ReunionGridController', {
                     externo: externo
                 }
             });
-        } else {
+        }
+        else {
             var comboTipoOrgano = grid.down('comboReunionTipoOrgano');
             grid.getStore().load({
                 params: {
@@ -133,7 +139,8 @@ Ext.define('goc.view.reunion.ReunionGridController', {
             var comboOrganos = grid.down('comboOrgano');
             comboOrganos.clearValue();
             this.filtraComboOrgano(id);
-        } else {
+        }
+        else {
             grid.getStore().load();
             this.limpiaFiltrosComboOrgano();
         }

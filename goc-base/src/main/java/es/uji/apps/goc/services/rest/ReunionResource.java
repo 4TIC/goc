@@ -62,13 +62,16 @@ public class ReunionResource extends CoreBaseService
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<UIEntity> getReuniones(@QueryParam("organoId") String organoId,
-                                       @QueryParam("tipoOrganoId") Long tipoOrganoId, @QueryParam("externo") Boolean externo)
+                                       @QueryParam("tipoOrganoId") Long tipoOrganoId,
+                                       @QueryParam("externo") Boolean externo)
             throws OrganosExternosException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
-        List<Reunion> listaReuniones = new ArrayList<>();
+
+        List<Reunion> listaReuniones;
 
         Boolean completada = false;
+
         if (tipoOrganoId != null)
         {
             listaReuniones = reunionService.getReunionesByTipoOrganoIdAndUserId(tipoOrganoId,
@@ -94,11 +97,12 @@ public class ReunionResource extends CoreBaseService
     @Path("completadas")
     @Produces(MediaType.APPLICATION_JSON)
     public List<UIEntity> getReunionesCompletadas(@QueryParam("organoId") String organoId,
-                                                  @QueryParam("tipoOrganoId") Long tipoOrganoId, @QueryParam("externo") Boolean externo)
+                                                  @QueryParam("tipoOrganoId") Long tipoOrganoId,
+                                                  @QueryParam("externo") Boolean externo)
             throws OrganosExternosException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
-        List<Reunion> listaReuniones = new ArrayList<>();
+        List<Reunion> listaReuniones;
 
         Boolean completada = true;
 
@@ -250,12 +254,16 @@ public class ReunionResource extends CoreBaseService
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
         String asunto = reunionUI.get("asunto");
+        String asuntoAlternativo = reunionUI.get("asuntoAlternativo");
         String descripcion = reunionUI.get("descripcion");
+        String descripcionAlternativa = reunionUI.get("descripcionAlternativa");
         String ubicacion = reunionUI.get("ubicacion");
+        String ubicacionAlternativa = reunionUI.get("ubicacionAlternativa");
         String urlGrabacion = reunionUI.get("urlGrabacion");
         Boolean publica = new Boolean(reunionUI.get("publica"));
         Boolean telematica = new Boolean(reunionUI.get("telematica"));
         String telematicaDescripcion = reunionUI.get("telematicaDescripcion");
+        String telematicaDescripcionAlternativa = reunionUI.get("telematicaDescripcionAlternativa");
         Boolean admiteSuplencia = new Boolean(reunionUI.get("admiteSuplencia"));
         Boolean admiteComentarios = new Boolean(reunionUI.get("admiteComentarios"));
 
@@ -291,9 +299,10 @@ public class ReunionResource extends CoreBaseService
         reunionService.compruebaReunionNoCompletada(reunionId);
         Reunion reunion = reunionUIToModel(reunionUI);
         reunion.setId(reunionId);
-        reunion = reunionService.updateReunion(reunionId, asunto, descripcion, duracion, fecha, fechaSegundaConvocatoria,
-                ubicacion, urlGrabacion, numeroSesion, publica, telematica, telematicaDescripcion,
-                admiteSuplencia, admiteComentarios, connectedUserId);
+        reunion = reunionService.updateReunion(reunionId, asunto, asuntoAlternativo, descripcion, descripcionAlternativa,
+                duracion, fecha, fechaSegundaConvocatoria, ubicacion, ubicacionAlternativa, urlGrabacion, numeroSesion,
+                publica, telematica, telematicaDescripcion, telematicaDescripcionAlternativa, admiteSuplencia,
+                admiteComentarios, connectedUserId);
 
         return UIEntity.toUI(reunion);
     }

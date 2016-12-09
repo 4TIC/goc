@@ -6,10 +6,12 @@ public class OrganoTemplate
 {
     private String id;
     private String nombre;
+    private String nombreAlternativo;
     private Boolean inactivo;
 
     private Long tipoOrganoId;
     private String tipoNombre;
+    private String tipoNombreAlternativo;
     private String tipoCodigo;
 
     private List<MiembroTemplate> asistentes;
@@ -87,5 +89,25 @@ public class OrganoTemplate
 
     public void setInactivo(Boolean inactivo) {
         this.inactivo = inactivo;
+    }
+
+    public String getNombreAlternativo()
+    {
+        return nombreAlternativo;
+    }
+
+    public void setNombreAlternativo(String nombreAlternativo)
+    {
+        this.nombreAlternativo = nombreAlternativo;
+    }
+
+    public String getTipoNombreAlternativo()
+    {
+        return tipoNombreAlternativo;
+    }
+
+    public void setTipoNombreAlternativo(String tipoNombreAlternativo)
+    {
+        this.tipoNombreAlternativo = tipoNombreAlternativo;
     }
 }

@@ -25,6 +25,7 @@ Ext.define('goc.view.reunion.Main',
                         xtype: 'ordenDiaGrid',
                         flex: 1,
                         width: '100%'
-                    }]
+                    }
+                ]
             }]
     });

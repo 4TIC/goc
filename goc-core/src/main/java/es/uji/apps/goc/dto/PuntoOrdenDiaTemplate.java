@@ -10,13 +10,21 @@ public class PuntoOrdenDiaTemplate
 
     private String titulo;
 
+    private String tituloAlternativo;
+
     private String descripcion;
+
+    private String descripcionAlternativa;
 
     private Long orden;
 
     private String acuerdos;
 
+    private String acuerdosAlternativos;
+
     private String deliberaciones;
+
+    private String deliberacionesAlternativas;
 
     private List<Documento> documentos;
 
@@ -86,5 +94,45 @@ public class PuntoOrdenDiaTemplate
 
     public void setDocumentos(List<Documento> documentos) {
         this.documentos = documentos;
+    }
+
+    public String getTituloAlternativo()
+    {
+        return tituloAlternativo;
+    }
+
+    public void setTituloAlternativo(String tituloAlternativo)
+    {
+        this.tituloAlternativo = tituloAlternativo;
+    }
+
+    public String getDescripcionAlternativa()
+    {
+        return descripcionAlternativa;
+    }
+
+    public void setDescripcionAlternativa(String descripcionAlternativa)
+    {
+        this.descripcionAlternativa = descripcionAlternativa;
+    }
+
+    public String getAcuerdosAlternativos()
+    {
+        return acuerdosAlternativos;
+    }
+
+    public void setAcuerdosAlternativos(String acuerdosAlternativos)
+    {
+        this.acuerdosAlternativos = acuerdosAlternativos;
+    }
+
+    public String getDeliberacionesAlternativas()
+    {
+        return deliberacionesAlternativas;
+    }
+
+    public void setDeliberacionesAlternativas(String deliberacionesAlternativas)
+    {
+        this.deliberacionesAlternativas = deliberacionesAlternativas;
     }
 }

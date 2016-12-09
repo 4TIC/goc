@@ -1,3 +1,69 @@
+
+var reunionesGridColumns = [
+    {
+        text: 'Id',
+        width: 80,
+        dataIndex: 'id',
+        hidden: true
+    },
+    {
+        text: getMultiLangLabel(appI18N.reuniones.asunto, mainLanguage),
+        dataIndex: 'asunto',
+        flex: 1,
+        renderer: function (asunto, celda, record) {
+            return asunto + '&nbsp;&nbsp;<a class="link" target="_blank" href="/goc/rest/publicacion/reuniones/' + record.get('id') + '"><i class="fa fa-external-link"></i></a>';
+        }
+    }
+];
+
+if (isMultilanguageApplication()) {
+    reunionesGridColumns.push({
+        text: getMultiLangLabel(appI18N.reuniones.asunto, alternativeLanguage),
+        dataIndex: 'asuntoAlternativo',
+        flex: 1,
+        renderer: function (asunto, celda, record) {
+            return asunto + '&nbsp;&nbsp;<a class="link" target="_blank" href="/goc/rest/publicacion/reuniones/' + record.get('id') + '"><i class="fa fa-external-link"></i></a>';
+        }
+    });
+}
+
+reunionesGridColumns.push({
+    text: appI18N.reuniones.fecha,
+    dataIndex: 'fecha',
+    width: 150,
+    format: 'd/m/Y H:i',
+    xtype: 'datecolumn'
+});
+
+reunionesGridColumns.push({
+    text: appI18N.reuniones.duracion,
+    dataIndex: 'duracion',
+    renderer: function (value) {
+        var duracionTexto =
+        {
+            30: '0,5 hores',
+            60: '1 hora',
+            90: '1,5 hores',
+            120: '2 hores',
+            150: '2,5 hores'
+        };
+
+        return duracionTexto[value];
+    }
+});
+
+reunionesGridColumns.push({
+    dataIndex: 'numeroDocumentos',
+    text: appI18N.reuniones.documentos,
+    align: 'center',
+    renderer: function (value) {
+        if (value > 0) {
+            return '<span class="fa fa-file-text-o"></span>'
+        }
+        return ''
+    }
+});
+
 Ext.define('goc.view.reunion.ReunionGrid',
     {
         extend: 'Ext.ux.uji.grid.Panel',
@@ -15,55 +81,7 @@ Ext.define('goc.view.reunion.ReunionGrid',
         title: appI18N.reuniones.tituloGridReuniones,
         margin: 5,
         border: 0,
-        columns: [
-            {
-                text: 'Id',
-                width: 80,
-                dataIndex: 'id',
-                hidden: true
-            },
-            {
-                text: appI18N.reuniones.asunto,
-                dataIndex: 'asunto',
-                flex: 1,
-                renderer: function (asunto, celda, record) {
-                    return asunto + '&nbsp;&nbsp;<a class="link" target="_blank" href="/goc/rest/publicacion/reuniones/' + record.get('id') + '"><i class="fa fa-external-link"></i></a>';
-                }
-            },
-            {
-                text: appI18N.reuniones.fecha,
-                dataIndex: 'fecha',
-                width: 150,
-                format: 'd/m/Y H:i',
-                xtype: 'datecolumn'
-            },
-            {
-                text: appI18N.reuniones.duracion,
-                dataIndex: 'duracion',
-                renderer: function (value) {
-                    var duracionTexto =
-                    {
-                        30: '0,5 hores',
-                        60: '1 hora',
-                        90: '1,5 hores',
-                        120: '2 hores',
-                        150: '2,5 hores'
-                    };
-
-                    return duracionTexto[value];
-                }
-            },
-            {
-                dataIndex: 'numeroDocumentos',
-                text: appI18N.reuniones.documentos,
-                align: 'center',
-                renderer: function (value) {
-                    if (value > 0) {
-                        return '<span class="fa fa-file-text-o"></span>'
-                    }
-                    return ''
-                }
-            }],
+        columns: reunionesGridColumns,
 
         tbar: [
             {

@@ -7,6 +7,7 @@ Ext.define('goc.model.PuntoOrdenDiaDocumento', {
     },
     fields: [
         { name: 'id', type: 'number' },
-        { name: 'descripcion', type: 'string' }
+        { name: 'descripcion', type: 'string' },
+        { name: 'descripcionAlternativa', type: 'string' }
     ],
 });

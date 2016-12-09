@@ -7,6 +7,10 @@ public class OrganoFirma
 {
     private String id;
     private String nombre;
+
+    @JsonProperty("nombre_alternativo")
+    private String nombreAlternativo;
+
     private Boolean inactivo;
 
     @JsonProperty("tipo_organo_id")
@@ -14,6 +18,9 @@ public class OrganoFirma
 
     @JsonProperty("tipo_nombre")
     private String tipoNombre;
+
+    @JsonProperty("tipo_nombre_alternativo")
+    private String tipoNombreAlternativo;
 
     @JsonProperty("tipo_codigo")
     private String tipoCodigo;
@@ -93,5 +100,25 @@ public class OrganoFirma
 
     public void setInactivo(Boolean inactivo) {
         this.inactivo = inactivo;
+    }
+
+    public String getNombreAlternativo()
+    {
+        return nombreAlternativo;
+    }
+
+    public void setNombreAlternativo(String nombreAlternativo)
+    {
+        this.nombreAlternativo = nombreAlternativo;
+    }
+
+    public String getTipoNombreAlternativo()
+    {
+        return tipoNombreAlternativo;
+    }
+
+    public void setTipoNombreAlternativo(String tipoNombreAlternativo)
+    {
+        this.tipoNombreAlternativo = tipoNombreAlternativo;
     }
 }

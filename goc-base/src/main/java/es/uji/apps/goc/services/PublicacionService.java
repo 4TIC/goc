@@ -1,6 +1,7 @@
 package es.uji.apps.goc.services;
 
 import com.sun.jersey.api.core.InjectParam;
+import es.uji.apps.goc.auth.LanguageConfig;
 import es.uji.apps.goc.dao.ReunionDAO;
 import es.uji.apps.goc.dto.OrganoLocal;
 import es.uji.apps.goc.dto.Reunion;
@@ -31,8 +32,11 @@ import static java.util.stream.Collectors.toList;
 @Path("publicacion")
 public class PublicacionService extends CoreBaseService
 {
-    @Autowired
+    @InjectParam
     private ReunionDAO reunionDAO;
+
+    @InjectParam
+    private LanguageConfig languageConfig;
 
     @Value("${goc.logo}")
     private String logoUrl;
@@ -71,6 +75,10 @@ public class PublicacionService extends CoreBaseService
         template.put("logo", logoUrl);
         template.put("reuniones", reuniones);
         template.put("applang", applang);
+        template.put("mainLanguage", languageConfig.mainLanguage);
+        template.put("alternativeLanguage", languageConfig.alternativeLanguage);
+        template.put("mainLanguageDescription", languageConfig.mainLanguageDescription);
+        template.put("alternativeLanguageDescription", languageConfig.alternativeLanguageDescription);
         template.put("connectedUserId", connectedUserId);
 
         return template;
@@ -102,6 +110,10 @@ public class PublicacionService extends CoreBaseService
         Template template = new HTMLTemplate("acuerdos-" + applang);
         template.put("logo", logoUrl);
         template.put("applang", applang);
+        template.put("mainLanguage", languageConfig.mainLanguage);
+        template.put("alternativeLanguage", languageConfig.alternativeLanguage);
+        template.put("mainLanguageDescription", languageConfig.mainLanguageDescription);
+        template.put("alternativeLanguageDescription", languageConfig.alternativeLanguageDescription);
         template.put("connectedUserId", connectedUserId);
         template.put("tiposOrganos", tiposOrganos);
         template.put("tipoOrganoId", tipoOrganoId);
@@ -141,6 +153,10 @@ public class PublicacionService extends CoreBaseService
         template.put("charset", charset);
         template.put("reunion", reunionTemplate);
         template.put("applang", applang);
+        template.put("mainLanguage", languageConfig.mainLanguage);
+        template.put("alternativeLanguage", languageConfig.alternativeLanguage);
+        template.put("mainLanguageDescription", languageConfig.mainLanguageDescription);
+        template.put("alternativeLanguageDescription", languageConfig.alternativeLanguageDescription);
         template.put("connectedUserId", connectedUserId);
 
         return template;
@@ -148,11 +164,10 @@ public class PublicacionService extends CoreBaseService
 
     private String getLangCode(String lang)
     {
-
-        if (lang == null || lang.isEmpty()
-                || !(lang.toLowerCase().equals("ca") || lang.toLowerCase().equals("es")))
+        if (lang == null || lang.isEmpty() ||
+                !(lang.toLowerCase().equals(languageConfig.mainLanguage) || lang.toLowerCase().equals(languageConfig.alternativeLanguage)))
         {
-            return "ca";
+            return languageConfig.mainLanguage;
         }
 
         return lang;

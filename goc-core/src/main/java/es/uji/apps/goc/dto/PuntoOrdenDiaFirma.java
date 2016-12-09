@@ -2,6 +2,7 @@ package es.uji.apps.goc.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import es.uji.apps.goc.model.Documento;
 
 public class PuntoOrdenDiaFirma
@@ -10,13 +11,25 @@ public class PuntoOrdenDiaFirma
 
     private String titulo;
 
+    @JsonProperty(value = "titulo_alternativo")
+    private String tituloAlternativo;
+
     private String descripcion;
+
+    @JsonProperty(value = "descripcion_alternativa")
+    private String descripcionAlterntiva;
 
     private Long orden;
 
     private String acuerdos;
 
+    @JsonProperty(value = "acuerdos_alternativos")
+    private String acuerdosAlternativos;
+
     private String deliberaciones;
+
+    @JsonProperty(value = "deliberaciones_alternativas")
+    private String deliberacionesAlternativos;
 
     private List<Documento> documentos;
 
@@ -86,5 +99,45 @@ public class PuntoOrdenDiaFirma
 
     public void setDocumentos(List<Documento> documentos) {
         this.documentos = documentos;
+    }
+
+    public String getTituloAlternativo()
+    {
+        return tituloAlternativo;
+    }
+
+    public void setTituloAlternativo(String tituloAlternativo)
+    {
+        this.tituloAlternativo = tituloAlternativo;
+    }
+
+    public String getDescripcionAlterntiva()
+    {
+        return descripcionAlterntiva;
+    }
+
+    public void setDescripcionAlterntiva(String descripcionAlterntiva)
+    {
+        this.descripcionAlterntiva = descripcionAlterntiva;
+    }
+
+    public String getAcuerdosAlternativos()
+    {
+        return acuerdosAlternativos;
+    }
+
+    public void setAcuerdosAlternativos(String acuerdosAlternativos)
+    {
+        this.acuerdosAlternativos = acuerdosAlternativos;
+    }
+
+    public String getDeliberacionesAlternativos()
+    {
+        return deliberacionesAlternativos;
+    }
+
+    public void setDeliberacionesAlternativos(String deliberacionesAlternativos)
+    {
+        this.deliberacionesAlternativos = deliberacionesAlternativos;
     }
 }
