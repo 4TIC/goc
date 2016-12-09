@@ -29,9 +29,12 @@ public class PuntoOrdenDiaService
 
     }
 
-    public PuntoOrdenDia updatePuntoOrdenDia(Long puntoOrdenDiaId, String titulo,
-            String descripcion, String deliberaciones, String acuerdos, Long orden, Boolean publico,
-            Long connectedUserId) throws PuntoOrdenDiaNoDisponibleException
+    public PuntoOrdenDia updatePuntoOrdenDia(Long puntoOrdenDiaId, String titulo, String tituloAlternativo,
+                                             String descripcion, String descripcionAlternativa, String deliberaciones,
+                                             String deliberacionesAlternativas, String acuerdos,
+                                             String acuerdosAlternativos, Long orden, Boolean publico,
+                                             Long connectedUserId)
+            throws PuntoOrdenDiaNoDisponibleException
     {
         PuntoOrdenDia puntoOrdenDia = puntoOrdenDiaDAO.getPuntoOrdenDiaById(puntoOrdenDiaId);
 
@@ -41,10 +44,14 @@ public class PuntoOrdenDiaService
         }
 
         puntoOrdenDia.setTitulo(titulo);
+        puntoOrdenDia.setTituloAlternativo(tituloAlternativo);
         puntoOrdenDia.setDescripcion(descripcion);
-        puntoOrdenDia.setOrden(orden);
+        puntoOrdenDia.setDescripcionAlternativa(descripcionAlternativa);
         puntoOrdenDia.setDeliberaciones(deliberaciones);
+        puntoOrdenDia.setDeliberacionesAlternativas(deliberacionesAlternativas);
         puntoOrdenDia.setAcuerdos(acuerdos);
+        puntoOrdenDia.setAcuerdosAlternativos(acuerdosAlternativos);
+        puntoOrdenDia.setOrden(orden);
         puntoOrdenDia.setPublico(publico);
 
         return puntoOrdenDiaDAO.update(puntoOrdenDia);
@@ -52,8 +59,7 @@ public class PuntoOrdenDiaService
 
     public PuntoOrdenDia addPuntoOrdenDia(PuntoOrdenDia puntoOrdenDia, Long connectedUserId)
     {
-        PuntoOrdenDia ultimo = puntoOrdenDiaDAO
-                .getUltimoPuntoOrdenDiaByReunionId(puntoOrdenDia.getReunion().getId());
+        PuntoOrdenDia ultimo = puntoOrdenDiaDAO.getUltimoPuntoOrdenDiaByReunionId(puntoOrdenDia.getReunion().getId());
 
         if (ultimo != null)
         {
@@ -70,8 +76,7 @@ public class PuntoOrdenDiaService
     public void subePuntoOrdenDia(Long reunionId, Long puntoOrdenDiaId, Long connectedUserId)
     {
         PuntoOrdenDia puntoOrdenDia = puntoOrdenDiaDAO.getPuntoOrdenDiaById(puntoOrdenDiaId);
-        PuntoOrdenDia anteriorPuntoOrdenDia = puntoOrdenDiaDAO
-                .getAnteriorPuntoOrdenDiaByOrden(puntoOrdenDia.getOrden());
+        PuntoOrdenDia anteriorPuntoOrdenDia = puntoOrdenDiaDAO.getAnteriorPuntoOrdenDiaByOrden(puntoOrdenDia.getOrden());
 
         if (anteriorPuntoOrdenDia != null)
         {
@@ -80,6 +85,7 @@ public class PuntoOrdenDiaService
             puntoOrdenDiaDAO.flush();
             puntoOrdenDiaDAO.actualizaOrden(anteriorPuntoOrdenDia.getId(), orden);
             puntoOrdenDiaDAO.flush();
+
             return;
         }
 

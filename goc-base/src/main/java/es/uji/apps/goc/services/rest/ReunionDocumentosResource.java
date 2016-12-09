@@ -75,6 +75,7 @@ public class ReunionDocumentosResource extends CoreBaseService
         ui.put("creadorId", reunionDocumento.getCreadorId());
         ui.put("fechaAdicion", reunionDocumento.getFechaAdicion());
         ui.put("descripcion", reunionDocumento.getDescripcion());
+        ui.put("descripcionAlternativa", reunionDocumento.getDescripcionAlternativa());
         ui.put("mimeType", reunionDocumento.getMimeType());
         ui.put("nombreFichero", reunionDocumento.getNombreFichero());
         return ui;
@@ -127,6 +128,7 @@ public class ReunionDocumentosResource extends CoreBaseService
         String mimeType = "";
         InputStream data = null;
         String descripcion = "";
+        String descripcionAlternativa = "";
 
         for (BodyPart bodyPart : multiPart.getBodyParts())
         {
@@ -148,16 +150,22 @@ public class ReunionDocumentosResource extends CoreBaseService
             {
                 ContentDisposition cd = bodyPart.getContentDisposition();
                 Map<String, String> parameters = cd.getParameters();
+
                 if (parameters.get("name").equals("descripcion"))
                 {
                     descripcion = bodyPart.getEntityAs(String.class);
+                }
+
+                if (parameters.get("name").equals("descripcionAlternativa"))
+                {
+                    descripcionAlternativa = bodyPart.getEntityAs(String.class);
                 }
             }
         }
 
         reunionService.compruebaReunionNoCompletada(reunionId);
         ReunionDocumento reunionDocumento = reunionDocumentoService.addDocumento(reunionId,
-                fileName, descripcion, mimeType, data, connectedUserId);
+                fileName, descripcion, descripcionAlternativa, mimeType, data, connectedUserId);
         return UIEntity.toUI(reunionDocumento);
     }
 }

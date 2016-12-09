@@ -1,10 +1,148 @@
+
+var formItems = [
+    {name: 'id', xtype: 'hidden', bind: '{puntoOrdenDia.id}'},
+    {
+        allowBlank: false,
+        fieldLabel: getMultiLangLabel(appI18N.reuniones.titulo, mainLanguage),
+        name: 'titulo',
+        emptyText: 'Títol',
+        bind: {
+            value: '{puntoOrdenDia.titulo}',
+            disabled: '{reunionCompletada}'
+        }
+    }
+];
+
+if (isMultilanguageApplication()) {
+    formItems.push({
+        allowBlank: false,
+        fieldLabel: getMultiLangLabel(appI18N.reuniones.titulo, alternativeLanguage),
+        name: 'tituloAlternativo',
+        emptyText: 'Títol',
+        bind: {
+            value: '{puntoOrdenDia.tituloAlternativo}',
+            disabled: '{reunionCompletada}'
+        }
+    });
+}
+
+formItems.push({
+    xtype: 'container',
+    layout: 'hbox',
+    items: [
+        {
+            xtype: 'tbfill',
+            flex: 1
+        },
+        {
+            boxLabel: appI18N.reuniones.publico,
+            name: 'publico',
+            bind: {
+                disabled: '{reunionCompletada}',
+                value: '{puntoOrdenDia.publico}'
+            },
+            xtype: 'checkbox',
+            inputValue: '1'
+        }]
+});
+
+formItems.push({
+    xtype: 'textareafield',
+    name: 'descripcion',
+    fieldLabel: getMultiLangLabel(appI18N.reuniones.descripcion, mainLanguage),
+    allowBlank: false,
+    labelAlign: 'top',
+    flex: 1,
+    emptyText: 'descripció',
+    bind: {
+        value: '{puntoOrdenDia.descripcion}',
+        disabled: '{reunionCompletada}'
+    }
+});
+
+if (isMultilanguageApplication()) {
+    formItems.push({
+        xtype: 'textareafield',
+        name: 'descripcionAlternativa',
+        fieldLabel: getMultiLangLabel(appI18N.reuniones.descripcion, alternativeLanguage),
+        allowBlank: false,
+        labelAlign: 'top',
+        flex: 1,
+        emptyText: 'descripció',
+        bind: {
+            value: '{puntoOrdenDia.descripcionAlternativa}',
+            disabled: '{reunionCompletada}'
+        }
+    });
+}
+
+formItems.push({
+    xtype: 'textareafield',
+    name: 'deliberaciones',
+    fieldLabel: getMultiLangLabel(appI18N.reuniones.deliberaciones, mainLanguage),
+    labelAlign: 'top',
+    flex: 1,
+    emptyText: 'deliberacions',
+    bind: {
+        value: '{puntoOrdenDia.deliberaciones}',
+        disabled: '{reunionCompletada}'
+    }
+});
+
+if (isMultilanguageApplication()) {
+    formItems.push({
+        xtype: 'textareafield',
+        name: 'deliberacionesAlternativas',
+        fieldLabel: getMultiLangLabel(appI18N.reuniones.deliberaciones, alternativeLanguage),
+        labelAlign: 'top',
+        flex: 1,
+        emptyText: 'deliberacions',
+        bind: {
+            value: '{puntoOrdenDia.deliberacionesAlternativas}',
+            disabled: '{reunionCompletada}'
+        }
+    });
+}
+
+formItems.push({
+    xtype: 'textareafield',
+    name: 'acuerdos',
+    fieldLabel: getMultiLangLabel(appI18N.reuniones.acuerdos, mainLanguage),
+    labelAlign: 'top',
+    flex: 1,
+    emptyText: 'acords',
+    bind: {
+        value: '{puntoOrdenDia.acuerdos}',
+        disabled: '{reunionCompletada}'
+    }
+});
+
+if (isMultilanguageApplication()) {
+    formItems.push({
+        xtype: 'textareafield',
+        name: 'acuerdosAlternativos',
+        fieldLabel: getMultiLangLabel(appI18N.reuniones.acuerdos, alternativeLanguage),
+        labelAlign: 'top',
+        flex: 1,
+        emptyText: 'acords',
+        bind: {
+            value: '{puntoOrdenDia.acuerdosAlternativos}',
+            disabled: '{reunionCompletada}'
+        }
+    });
+}
+
 Ext.define('goc.view.reunion.FormOrdenDia', {
     extend: 'Ext.window.Window',
     xtype: 'formOrdenDia',
+
     width: 640,
-    manageHeight: true,
+    height: 800,
     modal: true,
     bodyPadding: 10,
+    autoScroll: true,
+    y: -60,
+
     layout: {
         type: 'vbox',
         align: 'stretch'
@@ -50,75 +188,7 @@ Ext.define('goc.view.reunion.FormOrdenDia', {
                 anchor: '100%'
             },
 
-            items: [
-                {name: 'id', xtype: 'hidden', bind: '{puntoOrdenDia.id}'},
-                {
-                    allowBlank: false,
-                    fieldLabel: appI18N.reuniones.titulo,
-                    name: 'titulo',
-                    emptyText: 'Títol',
-                    bind: {
-                        value: '{puntoOrdenDia.titulo}',
-                        disabled: '{reunionCompletada}'
-                    }
-                },
-                {
-                    xtype: 'container',
-                    layout: 'hbox',
-                    items: [
-                        {
-                            xtype: 'tbfill',
-                            flex: 1
-                        },
-                        {
-                            boxLabel: appI18N.reuniones.publico,
-                            name: 'publico',
-                            bind: {
-                                disabled: '{reunionCompletada}',
-                                value: '{puntoOrdenDia.publico}'
-                            },
-                            xtype: 'checkbox',
-                            inputValue: '1'
-                        }]
-                },
-                {
-                    xtype: 'textareafield',
-                    name: 'descripcion',
-                    fieldLabel: appI18N.reuniones.descripcion,
-                    allowBlank: false,
-                    labelAlign: 'top',
-                    flex: 1,
-                    emptyText: 'descripció',
-                    bind: {
-                        value: '{puntoOrdenDia.descripcion}',
-                        disabled: '{reunionCompletada}'
-                    }
-                },
-                {
-                    xtype: 'textareafield',
-                    name: 'deliberaciones',
-                    fieldLabel: appI18N.reuniones.deliberaciones,
-                    labelAlign: 'top',
-                    flex: 1,
-                    emptyText: 'deliberacions',
-                    bind: {
-                        value: '{puntoOrdenDia.deliberaciones}',
-                        disabled: '{reunionCompletada}'
-                    }
-                },
-                {
-                    xtype: 'textareafield',
-                    name: 'acuerdos',
-                    fieldLabel: appI18N.reuniones.acuerdos,
-                    labelAlign: 'top',
-                    flex: 1,
-                    emptyText: 'acords',
-                    bind: {
-                        value: '{puntoOrdenDia.acuerdos}',
-                        disabled: '{reunionCompletada}'
-                    }
-                }
-            ]
+            items: formItems
         }]
     }]
 });

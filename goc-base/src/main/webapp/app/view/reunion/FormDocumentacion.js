@@ -1,3 +1,97 @@
+
+var gridColumns = [
+    {
+        text: getMultiLangLabel(appI18N.reuniones.descripcion, mainLanguage),
+        dataIndex: 'descripcion',
+        flex: 1
+    }
+];
+
+if (isMultilanguageApplication()) {
+    gridColumns.push({
+        text: getMultiLangLabel(appI18N.reuniones.descripcion, alternativeLanguage),
+        dataIndex: 'descripcionAlternativa',
+        flex: 1
+    });
+}
+
+gridColumns.push({
+    xtype: 'actioncolumn',
+    name: 'delete',
+    align: 'right',
+    width: 25,
+    bind: {
+        disabled: '{completada}'
+    },
+    items: [
+        {
+            iconCls: 'x-fa fa-remove',
+            name: 'delete',
+            isDisabled: function(grid) {
+                return this.disabled;
+            },
+            tooltip: appI18N.common.borrar,
+            handler: function (grid, index) {
+                var rec = grid.getStore().getAt(index);
+                var documentoId = rec.get('id');
+                grid.up('formDocumentacion').fireEvent('borraDocumento', documentoId);
+            }
+        }
+    ]
+});
+
+gridColumns.push({
+    xtype: 'actioncolumn',
+    align: 'right',
+    width: 25,
+    items: [
+        {
+            iconCls: 'x-fa fa-download',
+            tooltip: appI18N.reuniones.descargar,
+            handler: function (grid, index) {
+                var rec = grid.getStore().getAt(index);
+                var documentoId = rec.get('id');
+                grid.up('formDocumentacion').fireEvent('descargaDocumento', documentoId);
+            }
+        }
+    ]
+});
+
+var formItems = [
+    {
+        xtype: 'textfield',
+        fieldLabel: getMultiLangLabel(appI18N.reuniones.descripcion, mainLanguage),
+        allowBlank: false,
+        emptyText: getMultiLangLabel(appI18N.reuniones.descripcion, mainLanguage),
+        width: '100%',
+        flex: 1,
+        name: 'descripcion'
+    }
+];
+
+if (isMultilanguageApplication()) {
+    formItems.push({
+        xtype: 'textfield',
+        fieldLabel: getMultiLangLabel(appI18N.reuniones.descripcion, alternativeLanguage),
+        allowBlank: false,
+        emptyText: getMultiLangLabel(appI18N.reuniones.descripcion, alternativeLanguage),
+        width: '100%',
+        flex: 1,
+        name: 'descripcionAlternativa'
+    });
+}
+
+formItems.push({
+    xtype: 'filefield',
+    buttonOnly: true,
+    width: 40,
+    name: 'documento',
+    buttonConfig: {
+        text: '',
+        iconCls: 'fa fa-file'
+    }
+});
+
 Ext.define('goc.view.reunion.FormDocumentacion',
     {
         extend: 'Ext.window.Window',
@@ -38,50 +132,7 @@ Ext.define('goc.view.reunion.FormDocumentacion',
                     store: '{store}'
                 },
                 hideHeaders: true,
-                columns: [
-                    {
-                        text: appI18N.reuniones.descripcion,
-                        dataIndex: 'descripcion',
-                        flex: 1
-                    },
-                    {
-                        xtype: 'actioncolumn',
-                        name: 'delete',
-                        align: 'right',
-                        width: 25,
-                        bind: {
-                            disabled: '{completada}'
-                        },
-                        items: [
-                            {
-                                iconCls: 'x-fa fa-remove',
-                                name: 'delete',
-                                isDisabled: function(grid) {
-                                    return this.disabled;
-                                },
-                                tooltip: appI18N.common.borrar,
-                                handler: function (grid, index) {
-                                    var rec = grid.getStore().getAt(index);
-                                    var documentoId = rec.get('id');
-                                    grid.up('formDocumentacion').fireEvent('borraDocumento', documentoId);
-                                }
-                            }]
-                    },
-                    {
-                        xtype: 'actioncolumn',
-                        align: 'right',
-                        width: 25,
-                        items: [
-                            {
-                                iconCls: 'x-fa fa-download',
-                                tooltip: appI18N.reuniones.descargar,
-                                handler: function (grid, index) {
-                                    var rec = grid.getStore().getAt(index);
-                                    var documentoId = rec.get('id');
-                                    grid.up('formDocumentacion').fireEvent('descargaDocumento', documentoId);
-                                }
-                            }]
-                    }]
+                columns: gridColumns
             },
             {
                 xtype: 'form',
@@ -98,30 +149,9 @@ Ext.define('goc.view.reunion.FormDocumentacion',
                     {
                         xtype: 'fieldcontainer',
                         anchor: '100%',
-                        layout: 'hbox',
-                        items: [
-
-                            {
-                                xtype: 'textfield',
-                                fieldLabel: appI18N.reuniones.descripcion,
-                                allowBlank: false,
-                                emptyText: appI18N.reuniones.descripcion,
-                                width: '100%',
-                                flex: 1,
-                                name: 'descripcion'
-                            },
-                            {
-                                xtype: 'filefield',
-                                buttonOnly: true,
-                                width: 40,
-                                name: 'documento',
-                                buttonConfig: {
-                                    text: '',
-                                    iconCls: 'fa fa-file'
-                                }
-                            }
-                        ]
-                    },
+                        layout: 'vbox',
+                        items: formItems
+                    }
                 ],
                 buttons: [
                     {

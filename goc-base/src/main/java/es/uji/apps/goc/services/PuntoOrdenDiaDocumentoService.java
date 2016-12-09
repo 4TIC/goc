@@ -26,7 +26,9 @@ public class PuntoOrdenDiaDocumentoService
         return puntoOrdenDiaDocumentoDAO.getNumeroDocumentosPorPuntoOrdenDia();
     }
 
-    public PuntoOrdenDiaDocumento addDocumento(Long puntoOrdenDiaId, String fileName, String descripcion, String mimeType, InputStream data, Long connectedUserId)
+    public PuntoOrdenDiaDocumento addDocumento(Long puntoOrdenDiaId, String fileName, String descripcion,
+                                               String descripcionAlternativa, String mimeType, InputStream data,
+                                               Long connectedUserId)
     {
         PuntoOrdenDiaDocumento puntoOrdenDiaDocumento = new PuntoOrdenDiaDocumento();
         PuntoOrdenDia puntoOrdenDia = new PuntoOrdenDia(puntoOrdenDiaId);
@@ -35,6 +37,7 @@ public class PuntoOrdenDiaDocumentoService
         puntoOrdenDiaDocumento.setMimeType(mimeType);
         puntoOrdenDiaDocumento.setNombreFichero(fileName);
         puntoOrdenDiaDocumento.setDescripcion(descripcion);
+        puntoOrdenDiaDocumento.setDescripcionAlternativa(descripcionAlternativa);
         puntoOrdenDiaDocumento.setFechaAdicion(new Date());
         puntoOrdenDiaDocumento.setCreadorId(connectedUserId);
 

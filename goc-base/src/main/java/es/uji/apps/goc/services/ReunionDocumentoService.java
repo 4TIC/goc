@@ -37,7 +37,9 @@ public class ReunionDocumentoService
         reunionDocumentoDAO.delete(ReunionDocumento.class, documentoId);
     }
 
-    public ReunionDocumento addDocumento(Long reunionId, String fileName, String descripcion, String mimeType, InputStream data, Long connectedUserId)
+    public ReunionDocumento addDocumento(Long reunionId, String fileName, String descripcion,
+                                         String descripcionAlternativa, String mimeType, InputStream data,
+                                         Long connectedUserId)
     {
 
         ReunionDocumento reunionDocumento = new ReunionDocumento();
@@ -47,6 +49,7 @@ public class ReunionDocumentoService
         reunionDocumento.setMimeType(mimeType);
         reunionDocumento.setNombreFichero(fileName);
         reunionDocumento.setDescripcion(descripcion);
+        reunionDocumento.setDescripcionAlternativa(descripcionAlternativa);
         reunionDocumento.setFechaAdicion(new Date());
         reunionDocumento.setCreadorId(connectedUserId);
 

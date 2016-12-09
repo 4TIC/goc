@@ -151,16 +151,22 @@ public class ReunionPuntosOrdenDiaResource extends CoreBaseService
             PuntoOrdenDiaNoDisponibleException, ReunionYaCompletadaException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
+
         String titulo = puntoOrdenDiaUI.get("titulo");
+        String tituloAlternativo = puntoOrdenDiaUI.get("tituloAlternativo");
         String descripcion = puntoOrdenDiaUI.get("descripcion");
+        String descripcionAlternativa = puntoOrdenDiaUI.get("descripcionAlternativa");
         String deliberaciones = puntoOrdenDiaUI.get("deliberaciones");
+        String deliberacionesAlternativas = puntoOrdenDiaUI.get("deliberacionesAlternativas");
         String acuerdos = puntoOrdenDiaUI.get("acuerdos");
+        String acuerdosAlternativos = puntoOrdenDiaUI.get("acuerdosAlternativos");
         Boolean publico = new Boolean(puntoOrdenDiaUI.get("publico"));
         Long orden = ParamUtils.parseLong(puntoOrdenDiaUI.get("orden"));
 
         reunionService.compruebaReunionNoCompletada(reunionId);
-        PuntoOrdenDia puntoOrdenDia = puntoOrdenDiaService.updatePuntoOrdenDia(puntoOrdenDiaId,
-                titulo, descripcion, deliberaciones, acuerdos, orden, publico, connectedUserId);
+        PuntoOrdenDia puntoOrdenDia = puntoOrdenDiaService.updatePuntoOrdenDia(puntoOrdenDiaId, titulo,
+                tituloAlternativo, descripcion, descripcionAlternativa, deliberaciones, deliberacionesAlternativas,
+                acuerdos, acuerdosAlternativos, orden, publico, connectedUserId);
 
         return UIEntity.toUI(puntoOrdenDia);
     }
@@ -232,6 +238,7 @@ public class ReunionPuntosOrdenDiaResource extends CoreBaseService
         ui.put("creadorId", puntoOrdenDiaDocumento.getCreadorId());
         ui.put("fechaAdicion", puntoOrdenDiaDocumento.getFechaAdicion());
         ui.put("descripcion", puntoOrdenDiaDocumento.getDescripcion());
+        ui.put("descripcionAlternativa", puntoOrdenDiaDocumento.getDescripcionAlternativa());
         ui.put("mimeType", puntoOrdenDiaDocumento.getMimeType());
         ui.put("nombreFichero", puntoOrdenDiaDocumento.getNombreFichero());
         return ui;
@@ -291,6 +298,7 @@ public class ReunionPuntosOrdenDiaResource extends CoreBaseService
         String mimeType = "";
         InputStream data = null;
         String descripcion = "";
+        String descripcionAlternativa = "";
 
         for (BodyPart bodyPart : multiPart.getBodyParts())
         {
@@ -312,16 +320,22 @@ public class ReunionPuntosOrdenDiaResource extends CoreBaseService
             {
                 ContentDisposition cd = bodyPart.getContentDisposition();
                 Map<String, String> parameters = cd.getParameters();
+
                 if (parameters.get("name").equals("descripcion"))
                 {
                     descripcion = bodyPart.getEntityAs(String.class);
+                }
+
+                if (parameters.get("name").equals("descripcionAlternativa"))
+                {
+                    descripcionAlternativa = bodyPart.getEntityAs(String.class);
                 }
             }
         }
 
         reunionService.compruebaReunionNoCompletada(reunionId);
         PuntoOrdenDiaDocumento puntoOrdenDiaDocumento = puntoOrdenDiaDocumentoService.addDocumento(
-                puntoOrdenDiaId, fileName, descripcion, mimeType, data, connectedUserId);
+                puntoOrdenDiaId, fileName, descripcion, descripcionAlternativa, mimeType, data, connectedUserId);
         return UIEntity.toUI(puntoOrdenDiaDocumento);
     }
 }
