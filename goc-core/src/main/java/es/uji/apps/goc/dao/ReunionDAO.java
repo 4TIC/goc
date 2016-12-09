@@ -48,12 +48,15 @@ public class ReunionDAO extends BaseDAODatabaseImpl
 
     @Transactional
     public void marcarReunionComoCompletadaYActualizarAcuerdo(Long reunionId,
-                                                              Long responsableActaId, String acuerdos)
+                                                              Long responsableActaId, String acuerdos,
+                                                              String acuerdosAlternativos)
     {
         JPAUpdateClause update = new JPAUpdateClause(entityManager, qReunion);
         update.set(qReunion.completada, true).set(qReunion.fechaCompletada, new Date())
                 .set(qReunion.miembroResponsableActa.id, responsableActaId)
-                .set(qReunion.acuerdos, acuerdos).where(qReunion.id.eq(reunionId));
+                .set(qReunion.acuerdos, acuerdos)
+                .set(qReunion.acuerdosAlternativos, acuerdosAlternativos)
+                .where(qReunion.id.eq(reunionId));
         update.execute();
     }
 

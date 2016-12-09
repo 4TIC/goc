@@ -18,19 +18,24 @@ import es.uji.apps.goc.dto.OrganoExterno;
 public class JSONListaMiembrosExternosDeserializer extends JsonDeserializer<List<MiembroExterno>>
 {
     @Override
-    public List<MiembroExterno> deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+    public List<MiembroExterno> deserialize(JsonParser p, DeserializationContext ctxt)
+            throws IOException, JsonProcessingException
+    {
         List<MiembroExterno> listaMiembros = new ArrayList<>();
 
         ObjectCodec oc = p.getCodec();
         JsonNode nodes = oc.readTree(p);
 
-        for (JsonNode node: nodes) {
+        for (JsonNode node: nodes)
+        {
             listaMiembros.add(getMiembroExternoDesdeJsonNode(node));
         }
+
         return listaMiembros;
     }
 
-    private MiembroExterno getMiembroExternoDesdeJsonNode(JsonNode miembroNode) {
+    private MiembroExterno getMiembroExternoDesdeJsonNode(JsonNode miembroNode)
+    {
         MiembroExterno miembro = new MiembroExterno();
         miembro.setId(miembroNode.get("id").asLong());
         miembro.setNombre(miembroNode.get("nombre").asText());
@@ -40,6 +45,10 @@ public class JSONListaMiembrosExternosDeserializer extends JsonDeserializer<List
         JsonNode cargoNode = miembroNode.get("cargo");
         cargo.setId(cargoNode.get("cargo_id").asLong());
         cargo.setNombre(cargoNode.get("cargo_nombre").asText());
+
+        if (cargoNode.get("cargo_nombre_alternativo") != null)
+            cargo.setNombreAlternativo(cargoNode.get("cargo_nombre_alternativo").asText());
+
         miembro.setCargo(cargo);
 
         OrganoExterno organo = new OrganoExterno();
@@ -49,6 +58,10 @@ public class JSONListaMiembrosExternosDeserializer extends JsonDeserializer<List
         organo.setTipoOrganoId(organoNode.get("tipo_id").asLong());
         organo.setTipoCodigo(organoNode.get("tipo_codigo").asText());
         organo.setTipoNombre(organoNode.get("tipo_nombre").asText());
+
+        if (organoNode.get("tipo_nombre_alternativo") != null)
+            organo.setTipoNombre(organoNode.get("tipo_nombre_alternativo").asText());
+
         return miembro;
     }
 }

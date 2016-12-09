@@ -39,7 +39,9 @@ public class MiembroResource extends CoreBaseService
             @QueryParam("externo") Boolean externo) throws MiembrosExternosException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
+
         List<Miembro> listaMiembros = getMiembros(organoId, externo, connectedUserId);
+
         return UIEntity.toUI(listaMiembros);
     }
 
@@ -47,15 +49,16 @@ public class MiembroResource extends CoreBaseService
             throws MiembrosExternosException
     {
         List<Miembro> listaMiembros;
+
         if (externo != null && externo)
         {
             listaMiembros = miembroService.getMiembrosExternos(organoId, connectedUserId);
         }
         else
         {
-            listaMiembros = miembroService.getMiembrosLocales(Long.parseLong(organoId),
-                    connectedUserId);
+            listaMiembros = miembroService.getMiembrosLocales(Long.parseLong(organoId), connectedUserId);
         }
+
         return listaMiembros;
     }
 

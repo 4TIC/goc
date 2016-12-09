@@ -70,7 +70,6 @@ public class ReunionDocumentosResource extends CoreBaseService
     private UIEntity reunionDocumentoToUI(ReunionDocumento reunionDocumento)
     {
         UIEntity ui = new UIEntity();
-
         ui.put("id", reunionDocumento.getId());
         ui.put("creadorId", reunionDocumento.getCreadorId());
         ui.put("fechaAdicion", reunionDocumento.getFechaAdicion());
@@ -78,6 +77,7 @@ public class ReunionDocumentosResource extends CoreBaseService
         ui.put("descripcionAlternativa", reunionDocumento.getDescripcionAlternativa());
         ui.put("mimeType", reunionDocumento.getMimeType());
         ui.put("nombreFichero", reunionDocumento.getNombreFichero());
+
         return ui;
     }
 
@@ -164,6 +164,7 @@ public class ReunionDocumentosResource extends CoreBaseService
         }
 
         reunionService.compruebaReunionNoCompletada(reunionId);
+
         ReunionDocumento reunionDocumento = reunionDocumentoService.addDocumento(reunionId,
                 fileName, descripcion, descripcionAlternativa, mimeType, data, connectedUserId);
         return UIEntity.toUI(reunionDocumento);

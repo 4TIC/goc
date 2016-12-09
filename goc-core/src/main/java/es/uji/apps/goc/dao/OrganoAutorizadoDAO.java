@@ -21,7 +21,6 @@ public class OrganoAutorizadoDAO extends BaseDAODatabaseImpl
 
         return query.from(qOrganoAutorizado).where(qOrganoAutorizado.personaId.eq(connectedUserId))
                 .list(qOrganoAutorizado);
-
     }
 
     public List<OrganoAutorizado> getAutorizadosByOrgano(String organoId, Boolean externo)

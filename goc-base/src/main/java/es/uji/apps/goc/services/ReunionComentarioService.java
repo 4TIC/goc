@@ -36,12 +36,14 @@ public class ReunionComentarioService
     {
         ReunionComentario reunionComentario = new ReunionComentario();
         reunionComentario.setComentario((comentarioUI.get("comentario")));
+
         Reunion reunion = new Reunion(Long.parseLong(comentarioUI.get("reunionId")));
         reunionComentario.setReunion(reunion);
+
         reunionComentario.setCreadorId(connectedUserId);
-        reunionComentario
-                .setCreadorNombre(getNombreCreadorByReunionId(reunion.getId(), connectedUserId));
+        reunionComentario.setCreadorNombre(getNombreCreadorByReunionId(reunion.getId(), connectedUserId));
         reunionComentario.setFecha(new Date());
+
         return reunionComentarioDAO.insert(reunionComentario);
     }
 
@@ -50,16 +52,22 @@ public class ReunionComentarioService
         List<OrganoReunionMiembro> listaAsistentes = organoReunionMiembroDAO
                 .getMiembroByAsistenteIdOrSuplenteId(reunionId, connectedUserId);
 
-        if (listaAsistentes.size() == 0) {
+        if (listaAsistentes.size() == 0)
+        {
             return "";
         }
 
         OrganoReunionMiembro creador = listaAsistentes.get(0);
-        if (connectedUserId.equals(Long.parseLong(creador.getMiembroId()))) {
+
+        if (connectedUserId.equals(Long.parseLong(creador.getMiembroId())))
+        {
             return creador.getNombre();
-        } else if (creador.getSuplenteId().equals(connectedUserId)) {
+        }
+        else if (creador.getSuplenteId().equals(connectedUserId))
+        {
             return creador.getSuplenteNombre();
         }
+
         return "";
     }
 }

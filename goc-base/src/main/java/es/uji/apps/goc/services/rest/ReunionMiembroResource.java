@@ -55,20 +55,19 @@ public class ReunionMiembroResource extends CoreBaseService
         if (reunionId != null)
         {
             List<OrganoReunionMiembro> listaMiembros = reunionMiembroService
-                    .getMiembrosReunionByReunionIdAndOrganoId(reunionId, organoId, externo,
-                            connectedUserId);
+                    .getMiembrosReunionByReunionIdAndOrganoId(reunionId, organoId, externo, connectedUserId);
             return UIEntity.toUI(listaMiembros);
         }
 
-        List<Miembro> listaMiembros = new ArrayList<>();
+        List<Miembro> listaMiembros;
+
         if (externo)
         {
             listaMiembros = miembroService.getMiembrosExternos(organoId, connectedUserId);
         }
         else
         {
-            listaMiembros = miembroService.getMiembrosLocales(Long.parseLong(organoId),
-                    connectedUserId);
+            listaMiembros = miembroService.getMiembrosLocales(Long.parseLong(organoId), connectedUserId);
         }
 
         return miembrosToUI(listaMiembros, organoId, externo);
@@ -83,19 +82,20 @@ public class ReunionMiembroResource extends CoreBaseService
         {
             miembrosUI.add(miembroToUI(miembro, organoId, externo));
         }
+
         return miembrosUI;
     }
 
     private UIEntity miembroToUI(Miembro miembro, String organoId, Boolean externo)
     {
         UIEntity ui = new UIEntity();
-
         ui.put("id", miembro.getId());
         ui.put("nombre", miembro.getNombre());
         ui.put("email", miembro.getEmail());
         ui.put("organoId", organoId);
         ui.put("organoExterno", externo);
         ui.put("asistencia", true);
+
         return ui;
     }
 

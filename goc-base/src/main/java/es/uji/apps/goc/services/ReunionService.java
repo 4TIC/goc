@@ -112,7 +112,7 @@ public class ReunionService
                                  String ubicacion, String ubicacionAlternativa, String urlGrabacion, Long numeroSesion,
                                  Boolean publica, Boolean telematica, String telematicaDescripcion,
                                  String telematicaDescripcionAlternativa, Boolean admiteSuplencia,
-                                 Boolean admiteComentarios,Long connectedUserId)
+                                 Boolean admiteComentarios, Long connectedUserId)
             throws ReunionNoDisponibleException
     {
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
@@ -215,10 +215,10 @@ public class ReunionService
                 organoReunion.setOrganoNombre(organo.getNombre());
                 organoReunion.setOrganoNombreAlternativo(organo.getNombreAlternativo());
                 organoReunion.setTipoOrganoId(organo.getTipoOrgano().getId());
+
                 organoReunionDAO.insert(organoReunion);
 
-                organoReunionMiembroService.addOrganoReunionMiembros(organoReunion,
-                        connectedUserId);
+                organoReunionMiembroService.addOrganoReunionMiembros(organoReunion, connectedUserId);
             }
         }
     }
@@ -256,6 +256,7 @@ public class ReunionService
                 organoReunion.setOrganoNombre(organo.getNombre());
                 organoReunion.setOrganoNombreAlternativo(organo.getNombreAlternativo());
                 organoReunion.setTipoOrganoId(organo.getTipoOrgano().getId());
+
                 organoReunionDAO.insert(organoReunion);
 
                 organoReunionMiembroService.addOrganoReunionMiembros(organoReunion, connectedUserId);
@@ -282,7 +283,7 @@ public class ReunionService
     }
 
     @Transactional
-    public void firmarReunion(Long reunionId, String acuerdos, Long responsableActaId,
+    public void firmarReunion(Long reunionId, String acuerdos, String acuerdosAlternativos, Long responsableActaId,
             Long connectedUserId) throws ReunionYaCompletadaException, FirmaReunionException,
             OrganosExternosException, PersonasExternasException
     {
@@ -295,6 +296,7 @@ public class ReunionService
 
         reunion.setCompletada(true);
         reunion.setAcuerdos(acuerdos);
+        reunion.setAcuerdosAlternativos(acuerdosAlternativos);
 
         ReunionFirma reunionFirma = reunionFirmaDesdeReunion(reunion, connectedUserId);
 
@@ -307,8 +309,8 @@ public class ReunionService
             throw new FirmaReunionException();
         }
 
-        reunionDAO.marcarReunionComoCompletadaYActualizarAcuerdo(reunionId, responsableActaId,
-                acuerdos);
+        reunionDAO.marcarReunionComoCompletadaYActualizarAcuerdo(reunionId, responsableActaId, acuerdos,
+                acuerdosAlternativos);
     }
 
     private ReunionFirma reunionFirmaDesdeReunion(Reunion reunion, Long connectedUserId)
@@ -373,15 +375,15 @@ public class ReunionService
     {
         PuntoOrdenDiaFirma puntoOrdenDiaFirma = new PuntoOrdenDiaFirma();
         puntoOrdenDiaFirma.setId(puntoOrdenDia.getId());
+        puntoOrdenDiaFirma.setTitulo(puntoOrdenDia.getTitulo());
         puntoOrdenDiaFirma.setTituloAlternativo(puntoOrdenDia.getTituloAlternativo());
-        puntoOrdenDiaFirma.setOrden(puntoOrdenDia.getOrden());
         puntoOrdenDiaFirma.setAcuerdos(puntoOrdenDia.getAcuerdos());
         puntoOrdenDiaFirma.setAcuerdosAlternativos(puntoOrdenDia.getAcuerdosAlternativos());
         puntoOrdenDiaFirma.setDeliberaciones(puntoOrdenDia.getDeliberaciones());
         puntoOrdenDiaFirma.setDeliberacionesAlternativos(puntoOrdenDia.getDeliberacionesAlternativas());
         puntoOrdenDiaFirma.setDescripcion(puntoOrdenDia.getDescripcion());
         puntoOrdenDiaFirma.setDescripcionAlterntiva(puntoOrdenDia.getDescripcionAlternativa());
-        puntoOrdenDiaFirma.setTitulo(puntoOrdenDia.getTitulo());
+        puntoOrdenDiaFirma.setOrden(puntoOrdenDia.getOrden());
 
         List<PuntoOrdenDiaDocumento> documentos = puntoOrdenDiaDocumentoDAO.getDocumentosByPuntoOrdenDiaId(puntoOrdenDia.getId());
 
@@ -426,13 +428,13 @@ public class ReunionService
 
         for (ReunionComentario comentario : comentarios)
         {
-            listaComentariosFirma.add(getComentarioFirmaDessdeComentario(comentario));
+            listaComentariosFirma.add(getComentarioFirmaDesdeComentario(comentario));
         }
 
         return listaComentariosFirma;
     }
 
-    private Comentario getComentarioFirmaDessdeComentario(ReunionComentario comentario)
+    private Comentario getComentarioFirmaDesdeComentario(ReunionComentario comentario)
     {
         Comentario comentarioFirma = new Comentario();
         comentarioFirma.setId(comentario.getId());
@@ -479,9 +481,9 @@ public class ReunionService
         {
             if (completada)
             {
-                return reunionDAO.getReunionesCompletadasByOrganoExternoIdAndUserId(organoId,
-                        connectedUserId);
+                return reunionDAO.getReunionesCompletadasByOrganoExternoIdAndUserId(organoId, connectedUserId);
             }
+
             return reunionDAO.getReunionesByOrganoExternoIdAndUserId(organoId, connectedUserId);
         }
         else
@@ -491,8 +493,8 @@ public class ReunionService
                 return reunionDAO.getReunionesCompletadasByOrganoLocalIdAndUserId(
                         Long.parseLong(organoId), connectedUserId);
             }
-            return reunionDAO.getReunionesByOrganoLocalIdAndUserId(Long.parseLong(organoId),
-                    connectedUserId);
+
+            return reunionDAO.getReunionesByOrganoLocalIdAndUserId(Long.parseLong(organoId), connectedUserId);
         }
     }
 
@@ -782,6 +784,7 @@ public class ReunionService
         {
             listaDocumento.add(getDocumentoTemplateDesdePuntoOrdenDiaDocumento(puntoOrdenDiaDocumento));
         }
+
         return listaDocumento;
     }
 
@@ -912,6 +915,7 @@ public class ReunionService
             return reuniones.stream().filter(r -> r.isCompletada() != null && r.isCompletada())
                     .collect(Collectors.toList());
         }
+
         return reuniones.stream().filter(r -> r.isCompletada() == null || r.isCompletada() == false)
                 .collect(Collectors.toList());
     }

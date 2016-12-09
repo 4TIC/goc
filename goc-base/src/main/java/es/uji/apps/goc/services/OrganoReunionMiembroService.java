@@ -52,13 +52,11 @@ public class OrganoReunionMiembroService
         List<Miembro> miembros = new ArrayList();
         if (organoReunion.isExterno())
         {
-            miembros = miembroService.getMiembrosExternos(organoReunion.getOrganoId(),
-                    connectedUserId);
+            miembros = miembroService.getMiembrosExternos(organoReunion.getOrganoId(), connectedUserId);
         }
         else
         {
-            miembros = miembroService.getMiembrosLocales(Long.parseLong(organoReunion.getOrganoId()),
-                    connectedUserId);
+            miembros = miembroService.getMiembrosLocales(Long.parseLong(organoReunion.getOrganoId()), connectedUserId);
         }
 
         for (Miembro miembro : miembros)
@@ -74,6 +72,7 @@ public class OrganoReunionMiembroService
             {
                 organoReunionMiembro.setOrganoExterno(false);
             }
+
             organoReunionMiembro.setNombre(miembro.getNombre());
             organoReunionMiembro.setEmail(miembro.getEmail());
             organoReunionMiembro.setAsistencia(true);
@@ -82,6 +81,8 @@ public class OrganoReunionMiembroService
             organoReunionMiembro.setMiembroId(miembro.getPersonaId().toString());
             organoReunionMiembro.setCargoId(miembro.getCargo().getId());
             organoReunionMiembro.setCargoNombre(miembro.getCargo().getNombre());
+            organoReunionMiembro.setCargoNombreAlternativo(miembro.getCargo().getNombreAlternativo());
+
             organoReunionMiembroDAO.insert(organoReunionMiembro);
         }
     }

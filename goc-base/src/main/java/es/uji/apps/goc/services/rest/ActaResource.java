@@ -1,6 +1,7 @@
 package es.uji.apps.goc.services.rest;
 
 import com.sun.jersey.api.core.InjectParam;
+import es.uji.apps.goc.auth.LanguageConfig;
 import es.uji.apps.goc.dao.ReunionDAO;
 import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.dto.ReunionTemplate;
@@ -27,6 +28,9 @@ public class ActaResource
     private ReunionService reunionService;
 
     @InjectParam
+    private LanguageConfig languageConfig;
+
+    @InjectParam
     private PersonaService personaService;
 
     @InjectParam
@@ -40,8 +44,9 @@ public class ActaResource
     @Produces("application/pdf")
     @Transactional
     public Template reunion(@PathParam("reunionId") Long reunionId, @QueryParam("lang") String lang,
-                            @Context HttpServletRequest request) throws OrganosExternosException,
-            MiembrosExternosException, ReunionNoDisponibleException, PersonasExternasException, InvalidAccessException
+                            @Context HttpServletRequest request)
+            throws OrganosExternosException, MiembrosExternosException, ReunionNoDisponibleException,
+            PersonasExternasException, InvalidAccessException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
@@ -73,11 +78,10 @@ public class ActaResource
 
     private String getLangCode(String lang)
     {
-
-        if (lang == null || lang.isEmpty()
-                || !(lang.toLowerCase().equals("ca") || lang.toLowerCase().equals("es")))
+        if (lang == null || lang.isEmpty() ||
+                !(lang.toLowerCase().equals(languageConfig.mainLanguage) || lang.toLowerCase().equals(languageConfig.alternativeLanguage)))
         {
-            return "ca";
+            return languageConfig.mainLanguage;
         }
 
         return lang;

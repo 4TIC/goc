@@ -63,8 +63,7 @@ public class ReunionMiembroService
         }
         else
         {
-            listaMiembros = miembroService.getMiembrosLocales(Long.parseLong(organoId),
-                    connectedUserId);
+            listaMiembros = miembroService.getMiembrosLocales(Long.parseLong(organoId), connectedUserId);
         }
 
         return creaOrganoReunionMiembroDesdeListaMiembros(listaMiembros, externo, reunionId);
@@ -77,8 +76,7 @@ public class ReunionMiembroService
 
         for (Miembro miembro : listaMiembros)
         {
-            listaOrganoReunionMiembros
-                    .add(creaOrganoReunionMiembroDesdeMiembro(miembro, externo, reunionId));
+            listaOrganoReunionMiembros.add(creaOrganoReunionMiembroDesdeMiembro(miembro, externo, reunionId));
         }
 
         return listaOrganoReunionMiembros;
@@ -88,7 +86,6 @@ public class ReunionMiembroService
             Boolean externo, Long reunionId)
     {
         OrganoReunionMiembro organoReunionMiembro = new OrganoReunionMiembro();
-
         organoReunionMiembro.setId(miembro.getId());
         organoReunionMiembro.setNombre(miembro.getNombre());
         organoReunionMiembro.setEmail(miembro.getEmail());
@@ -97,13 +94,15 @@ public class ReunionMiembroService
         organoReunionMiembro.setOrganoExterno(externo);
         organoReunionMiembro.setReunionId(reunionId);
         organoReunionMiembro.setMiembroId(miembro.getId().toString());
+
         return organoReunionMiembro;
     }
 
-    public OrganoReunionMiembro updateReunionMiembro(Long miembroId, Boolean asistencia,
-            Long connectedUserId) throws MiembroNoDisponibleException
+    public OrganoReunionMiembro updateReunionMiembro(Long miembroId, Boolean asistencia, Long connectedUserId)
+            throws MiembroNoDisponibleException
     {
         OrganoReunionMiembro miembro = organoReunionMiembroDAO.getMiembroById(miembroId);
+
         if (miembro == null)
         {
             throw new MiembroNoDisponibleException();

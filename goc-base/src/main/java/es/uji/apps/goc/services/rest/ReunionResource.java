@@ -253,6 +253,7 @@ public class ReunionResource extends CoreBaseService
             throws ReunionNoDisponibleException, UrlGrabacionException, ReunionYaCompletadaException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
+
         String asunto = reunionUI.get("asunto");
         String asuntoAlternativo = reunionUI.get("asuntoAlternativo");
         String descripcion = reunionUI.get("descripcion");
@@ -297,8 +298,10 @@ public class ReunionResource extends CoreBaseService
         Long duracion = Long.parseLong(reunionUI.get("duracion"));
 
         reunionService.compruebaReunionNoCompletada(reunionId);
+
         Reunion reunion = reunionUIToModel(reunionUI);
         reunion.setId(reunionId);
+
         reunion = reunionService.updateReunion(reunionId, asunto, asuntoAlternativo, descripcion, descripcionAlternativa,
                 duracion, fecha, fechaSegundaConvocatoria, ubicacion, ubicacionAlternativa, urlGrabacion, numeroSesion,
                 publica, telematica, telematicaDescripcion, telematicaDescripcionAlternativa, admiteSuplencia,
@@ -315,11 +318,13 @@ public class ReunionResource extends CoreBaseService
             FirmaReunionException, OrganosExternosException, PersonasExternasException
     {
         String acuerdos = data.get("acuerdos");
+        String acuerdosAlternativos = data.get("acuerdosAlternativos");
+
         Long responsableActaId = Long.parseLong(data.get("responsable"));
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
         reunionService.compruebaReunionNoCompletada(reunionId);
-        reunionService.firmarReunion(reunionId, acuerdos, responsableActaId, connectedUserId);
+        reunionService.firmarReunion(reunionId, acuerdos, acuerdosAlternativos, responsableActaId, connectedUserId);
     }
 
     @PUT

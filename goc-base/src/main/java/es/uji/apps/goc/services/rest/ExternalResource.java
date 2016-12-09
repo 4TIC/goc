@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sun.jersey.api.core.InjectParam;
+import es.uji.apps.goc.auth.LanguageConfig;
 import es.uji.apps.goc.dto.ReunionFirma;
 import es.uji.apps.goc.exceptions.RolesPersonaExternaException;
 import es.uji.apps.goc.firmas.FirmaService;
@@ -26,6 +27,9 @@ public class ExternalResource extends CoreBaseService
 {
     @InjectParam
     private ExternalService externalService;
+
+    @InjectParam
+    private LanguageConfig languageConfig;
 
     @InjectParam
     private PersonaService personaService;
@@ -82,18 +86,17 @@ public class ExternalResource extends CoreBaseService
         ArrayNode rows = result.putArray("row");
 
         Boolean admin = roles.stream().filter(r -> r.equals("ADMIN")).findAny().isPresent();
-        String currentLanguage = (lang != null) ? lang : "es";
+        String currentLanguage = (lang != null) ? lang : languageConfig.mainLanguage;
 
         if (admin)
         {
-            if (currentLanguage.equals("es"))
+            if (currentLanguage.equals(languageConfig.mainLanguage))
             {
                 rows.add(menuEntry(mapper, "goc.view.organo.Main", "Órganos"));
                 rows.add(menuEntry(mapper, "goc.view.tipoOrgano.Main", "Tipos de órganos"));
                 rows.add(menuEntry(mapper, "goc.view.miembro.Main", "Miembros"));
                 rows.add(menuEntry(mapper, "goc.view.reunion.Main", "Reuniones"));
-                rows.add(menuEntry(mapper, "goc.view.historicoReunion.Main",
-                        "Histórico de Reuniones"));
+                rows.add(menuEntry(mapper, "goc.view.historicoReunion.Main", "Histórico de Reuniones"));
                 rows.add(menuEntry(mapper, "goc.view.cargo.Main", "Cargos"));
             }
             else
@@ -102,15 +105,15 @@ public class ExternalResource extends CoreBaseService
                 rows.add(menuEntry(mapper, "goc.view.tipoOrgano.Main", "Tipus d'òrgans"));
                 rows.add(menuEntry(mapper, "goc.view.miembro.Main", "Membres"));
                 rows.add(menuEntry(mapper, "goc.view.reunion.Main", "Reunions"));
-                rows.add(menuEntry(mapper, "goc.view.historicoReunion.Main",
-                        "Històric de Reunions"));
+                rows.add(menuEntry(mapper, "goc.view.historicoReunion.Main", "Històric de Reunions"));
                 rows.add(menuEntry(mapper, "goc.view.cargo.Main", "Càrrecs"));
             }
+
             return result;
 
         }
 
-        if (currentLanguage.equals("es"))
+        if (currentLanguage.equals(languageConfig.mainLanguage))
         {
             rows.add(menuEntry(mapper, "goc.view.organo.Main", "Órganos"));
             rows.add(menuEntry(mapper, "goc.view.miembro.Main", "Miembros"));
@@ -124,6 +127,7 @@ public class ExternalResource extends CoreBaseService
             rows.add(menuEntry(mapper, "goc.view.reunion.Main", "Reunions"));
             rows.add(menuEntry(mapper, "goc.view.historicoReunion.Main", "Històric de Reunions"));
         }
+
         return result;
     }
 
