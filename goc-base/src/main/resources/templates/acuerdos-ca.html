@@ -18,9 +18,9 @@
         <img class="logo" src="#" th:src="${logo}" />
         <h1>Gestió d'òrgans col·legiats</h1>
         <div class="topmenu">
-          <ul>
-            <li><a href="?lang=ca">Valencià</a></li>
-            <li><a href="?lang=es">Español</a></li>
+          <ul th:if="${alternativeLanguage and alternativeLanguage != ''}">
+            <li><a th:href="${'?lang=' + mainLanguage}" th:text="${mainLanguageDescription}">Español</a></li>
+            <li><a th:href="${'?lang=' + alternativeLanguage}" th:text="${alternativeLanguageDescription}">Valencià</a></li>
           </ul>
         </div>
       </div>
@@ -34,7 +34,7 @@
             <td>
               <select name="tipoOrganoId" onchange="this.form.submit()">
                 <option value="">-- Tipus d'òrgans --</option>
-                <option th:each="tipoOrgano : ${tiposOrganos}" th:selected="${tipoOrganoId == tipoOrgano.id}" th:value="${tipoOrgano.id}" th:text="${tipoOrgano.nombre}">Tipo de organo</option>
+                <option th:each="tipoOrgano : ${tiposOrganos}" th:selected="${tipoOrganoId == tipoOrgano.id}" th:value="${tipoOrgano.id}" th:text="${tipoOrgano.nombreAlternativo}">Tipo de organo</option>
               </select>
             </td>
           </tr>
@@ -44,7 +44,7 @@
             <td>
               <select name="organoId" onchange="this.form.submit()">
                 <option value="">-- Òrgans --</option>
-                <option th:each="organo : ${organos}" th:selected="${organoId == organo.id}" th:value="${organo.id}" th:text="${organo.nombre}">Òrgano</option>
+                <option th:each="organo : ${organos}" th:selected="${organoId == organo.id}" th:value="${organo.id}" th:text="${organo.nombreAlternativo}">Òrgano</option>
               </select>
             </td>
           </tr>
@@ -52,7 +52,7 @@
 
         <div>
           <div th:each="reunion : ${reuniones}" class="reunion">
-            <h2 th:text="${reunion.asunto}">Assumpte</h2>
+            <h2 th:text="${reunion.asuntoAlternativo}">Assumpte</h2>
 
             <div>
               <strong>Data:</strong>
@@ -66,13 +66,13 @@
 
             <div>
               <strong>Acords generals:</strong>
-              <span th:text="${reunion.acuerdos}">Acords</span>
+              <span th:text="${reunion.acuerdosAlternativos}">Acords</span>
             </div>
 
             <blockquote th:each="puntoDia : ${reunion.reunionPuntosOrdenDia}" class="punto-del-dia">
               <div th:if="${puntoDia.publico}" th:remove="tag">
-                <h3 th:text="${puntoDia.titulo}"></h3>
-                <div th:text="${puntoDia.acuerdos}"></div>
+                <h3 th:text="${puntoDia.tituloAlternativo}"></h3>
+                <div th:text="${puntoDia.acuerdosAlternativos}"></div>
               </div>
             </blockquote>
           </div>

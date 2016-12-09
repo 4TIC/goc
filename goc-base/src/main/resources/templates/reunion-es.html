@@ -19,9 +19,9 @@
         <img class="logo" src="#" th:src="${logo}" />
         <h1>Gestión de órganos colegiados</h1>
         <div class="topmenu">
-          <ul>
-            <li><a href="?lang=ca">Valencià</a></li>
-            <li><a href="?lang=es">Español</a></li>
+          <ul th:if="${alternativeLanguage and alternativeLanguage != ''}">
+            <li><a th:href="${'?lang=' + mainLanguage}" th:text="${mainLanguageDescription}">Español</a></li>
+            <li><a th:href="${'?lang=' + alternativeLanguage}" th:text="${alternativeLanguageDescription}">Valencià</a></li>
           </ul>
         </div>
       </div>
