@@ -17,6 +17,7 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>
       classpath:applicationContext.xml
+      classpath:applicationContext-swagger.xml
       classpath:applicationContext-DISABLE-security.xml
     </param-value>
   </context-param>
@@ -98,7 +99,7 @@
     <servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
     <init-param>
       <param-name>com.sun.jersey.config.property.packages</param-name>
-      <param-value>es.uji.commons.rest.json; com.fasterxml.jackson.jaxrs.json; es.uji.apps.goc.templates; es.uji.apps.goc.services.rest
+      <param-value>es.uji.commons.rest.json; com.fasterxml.jackson.jaxrs.json; es.uji.apps.goc.templates; es.uji.apps.goc.services.rest; io.swagger.jaxrs.json; io.swagger.jaxrs.listing
       </param-value>
     </init-param>
     <init-param>
@@ -120,4 +121,10 @@
     <servlet-name>rest-api</servlet-name>
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>Bootstrap</servlet-name>
+    <servlet-class>es.uji.apps.goc.Bootstrap</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
 </web-app>
