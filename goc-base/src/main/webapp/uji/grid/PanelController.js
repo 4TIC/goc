@@ -42,7 +42,8 @@ Ext.define('Ext.ux.uji.grid.PanelController', {
 
         if (records.length > 0)
         {
-            Ext.Msg.confirm('Esborrar', 'Esteu segur/a de voler esborrar el registre ?', function(btn, text)
+            Ext.Msg.confirm(appI18N.common.borradoRegistro || "Esborrar registre", appI18N.common.confirmarBorrado || 'Esteu segur/a de voler' +
+        ' esborrar el registre ?', function(btn, text)
             {
                 if (btn == 'yes')
                 {

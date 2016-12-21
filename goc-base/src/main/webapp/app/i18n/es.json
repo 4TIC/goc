@@ -14,11 +14,11 @@
     "nombre": "Nombre",
     "aviso": "Aviso",
     "sinResultados": "La búsqueda realizada no ha producido ningún resultado",
-    "confirmarBorrado": "¿Estás seguro de querer borrar el registro?",
+    "confirmarBorrado": "¿Estás seguro/a de querer borrar el registro?",
     "desconectar": "desconectarse",
     "conectadoComo": "Conectado com",
     "edicionRegistro": "Edició de registre",
-    "borradoRegistro": "Esborrar registre",
+    "borradoRegistro": "Borrar registro",
     "seleccionarParaEditarRegistro": "Debe seleccionar un registro para poder editarlo",
     "seleccionarParaBorrarRegistro": "Debe seleccionar un registro para poder borrarlo"
   },
