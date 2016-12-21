@@ -60,7 +60,7 @@
     "correo": "Correo",
     "cargo": "Cargo",
     "codigo": "Código",
-    "anyadirMiembro": "Afegir membre"
+    "anyadirMiembro": "Añadir miembro"
   },
   "reuniones": {
     "tituloPrincipal": "Reuniones",
@@ -149,7 +149,7 @@
     "tipo": "Tipo"
   },
   "historicoReuniones": {
-    "tituloGridReunionesCompletadas": "Històric de reunions completadas"
+    "tituloGridReunionesCompletadas": "Histórico de reuniones completadas"
   },
   "cargos": {
     "titulo": "Cargos",
