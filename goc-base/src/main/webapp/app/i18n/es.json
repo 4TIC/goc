@@ -17,7 +17,7 @@
     "confirmarBorrado": "¿Estás seguro/a de querer borrar el registro?",
     "desconectar": "desconectarse",
     "conectadoComo": "Conectado com",
-    "edicionRegistro": "Edició de registre",
+    "edicionRegistro": "Edición de registro",
     "borradoRegistro": "Borrar registro",
     "seleccionarParaEditarRegistro": "Debe seleccionar un registro para poder editarlo",
     "seleccionarParaBorrarRegistro": "Debe seleccionar un registro para poder borrarlo"
@@ -46,9 +46,9 @@
     "seleccionarParaBorrarAutorizacion": "Debe seleccionar una persona para quitar la autorización"
   },
   "tipoOrganos": {
-    "titulo": "Tipo de Órganos",
-    "nombre": "Nom",
-    "codigo": "Codi"
+    "titulo": "Tipos de Órganos",
+    "nombre": "Nombre",
+    "codigo": "Código"
   },
   "miembros": {
     "titulo": "Miembros",
