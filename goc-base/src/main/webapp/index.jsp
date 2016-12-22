@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Gestión de organos colegiados</title>
+    <title>Gestión de órganos colegiados</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="http://static.uji.es/js/extjs/ext-6.0.3.64/build/classic/theme-triton/resources/theme-triton-all.css">
     <link rel="stylesheet" type="text/css" href="http://static.uji.es/js/extjs/ext-6.0.3.64/build/packages/font-awesome/resources/font-awesome-all.css">

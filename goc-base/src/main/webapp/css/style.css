@@ -50,6 +50,9 @@ ul.lang {
     padding: 0;
     margin: 0;
     color: white;
+    background: url(//e-ujier.uji.es/img/portal2/imagenes/cabecera_1px.png) repeat-x scroll left top transparent;
+    height: 70px;
+    padding-top: 35px;
 }
 
 ul.lang li {
@@ -106,4 +109,36 @@ ul.lang li a {
     font-weight: bold;
     text-decoration: none;
     color: #222;
+}
+
+.header-center {
+    background: url(//e-ujier.uji.es/img/portal2/imagenes/cabecera_1px.png) repeat-x scroll left top transparent;
+    height: 70px;
+}
+
+.header-logo {
+    float: left;
+    margin: 10px 16px;
+}
+
+.header-title {
+    float:left;
+    margin-top:24px;
+}
+
+.header-title-def {
+    color: #CDCCE5;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size:2em;
+}
+
+.header-right {
+    background: url(//e-ujier.uji.es/img/portal2/imagenes/cabecera_1px.png) repeat-x scroll left top transparent;
+    height: 70px;
+    padding-top: 35px;
+}
+
+.header-right-title {
+    color: #CDCCE5;
+    font-family: Helvetica,Arial,sans-serif;
 }

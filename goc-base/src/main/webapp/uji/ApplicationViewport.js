@@ -33,10 +33,10 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
     {
         var langSelector = '<select ';
 
-        var htmlLanguage = '<ul style="background: url(http://e-ujier.uji.es/img/portal2/imagenes/cabecera_1px.png) repeat-x scroll left top transparent; height: 70px; padding-top: 35px;" class="lang" />';
+        var htmlLanguage = '<ul class="lang" />';
 
         if (mainLanguage && alternativeLanguage) {
-            htmlLanguage = '<ul style="background: url(http://e-ujier.uji.es/img/portal2/imagenes/cabecera_1px.png) repeat-x scroll left top transparent; height: 70px; padding-top: 35px;" class="lang">' +
+            htmlLanguage = '<ul class="lang">' +
             '<li><a href="?lang=' + mainLanguage + '">' + mainLanguageDescription + '</a></li><li><a href="?lang=' + alternativeLanguage + '">' + alternativeLanguageDescription + '</a></li></ul>';
         }
 
@@ -51,10 +51,10 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
                     {
                         region: 'center',
                         border: 0,
-                        html: '<div style="background: url(http://e-ujier.uji.es/img/portal2/imagenes/cabecera_1px.png) repeat-x scroll left top transparent; height: 70px;">' +
-                            '<img src="'  + logo + '" style="float: left;margin: 10px 16px;" />' +
-                            '<div style="float:left; margin-top:24px;">' +
-                            '<span style="color: #CDCCE5; font-family: Helvetica,Arial,sans-serif; font-size:2em;">' + this.tituloAplicacion + '</span></div></div>'
+                        html: '<div class="header-center">' +
+                            '<img src="'  + logo + '" class="header-logo" />' +
+                            '<div class="header-title">' +
+                            '<span class="header-title-def">' + this.tituloAplicacion + '</span></div></div>'
                     },
                     {
                         region: 'east',
@@ -66,8 +66,8 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
                         region: 'east',
                         border: 0,
                         width: 140,
-                        html: '<div style="background: url(http://e-ujier.uji.es/img/portal2/imagenes/cabecera_1px.png) repeat-x scroll left top transparent; height: 70px; padding-top: 35px">' +
-                            '<span style="color: #CDCCE5; font-family: Helvetica,Arial,sans-serif;"><img src="http://static.uji.es/js/extjs/uji-commons-extjs/img/lock.png"/>' + 
+                        html: '<div class="header-right">' +
+                            '<span class="header-right-title"><img src="http://static.uji.es/js/extjs/uji-commons-extjs/img/lock.png"/>' +
                             '<a style="color:inherit;" href="http://xmlrpc.uji.es/lsm/logout_sso.php">' + appI18N.common.desconectar + '</a></span></div>'
                     }
                 ]
