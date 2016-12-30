@@ -55,7 +55,9 @@ public class SpringSecurityAuth implements Filter
 
         SAMLCredential credential = (SAMLCredential) authentication.getCredentials();
 
-        String userName = credential.getAttributeAsString("displayName");
+        AuthConfig authConfig = getAuthConfig();
+
+        String userName = credential.getAttributeAsString(authConfig.userNameAttribute);
         User user = createUserFromDefaulLocalValues(userName);
         registerUserInHttpSession(clientRequest, user);
 
@@ -108,6 +110,13 @@ public class SpringSecurityAuth implements Filter
         WebApplicationContext context = WebApplicationContextUtils
                 .getWebApplicationContext(filterConfig.getServletContext());
         return context.getBean(CuentasClient.class);
+    }
+
+    private AuthConfig getAuthConfig()
+    {
+        WebApplicationContext context = WebApplicationContextUtils
+                .getWebApplicationContext(filterConfig.getServletContext());
+        return context.getBean(AuthConfig.class);
     }
 
     private boolean isCorrectExternalAPICall(String url, String headerAuthToken)
