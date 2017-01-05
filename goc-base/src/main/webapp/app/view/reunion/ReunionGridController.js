@@ -217,8 +217,6 @@ Ext.define('goc.view.reunion.ReunionGridController', {
         } else {
             var modalDefinition = this.getReunionModalDefinition(record, store, organosStore);
             this.modal = view.add(modalDefinition);
-            //this.modal.down('timefield[name=hora]').setValue('08:00');
-            this.modal.down('textfield[name=urlGrabacion]').setVisible(false);
             this.modal.show();
         }
     },
