@@ -414,8 +414,11 @@ public class ReunionResource extends CoreBaseService
         }
 
         reunion.setAsunto((reunionUI.get("asunto")));
+        reunion.setAsuntoAlternativo((reunionUI.get("asuntoAlternativo")));
         reunion.setDescripcion(reunionUI.get("descripcion"));
+        reunion.setDescripcionAlternativa(reunionUI.get("descripcionAlternativa"));
         reunion.setUbicacion(reunionUI.get("ubicacion"));
+        reunion.setUbicacionAlternativa(reunionUI.get("ubicacionAlternativa"));
         reunion.setUrlGrabacion(reunionUI.get("urlGrabacion"));
 
         if (!reunionUI.get("numeroSesion").isEmpty())
@@ -427,12 +430,15 @@ public class ReunionResource extends CoreBaseService
         reunion.setAdmiteSuplencia(new Boolean(reunionUI.get("admiteSuplencia")));
         reunion.setAdmiteComentarios(new Boolean(reunionUI.get("admiteComentarios")));
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        LocalDateTime dateTime = LocalDateTime.parse(reunionUI.get("fecha"), formatter);
-        LocalDateTime dateTimeSegundaConvocatoria = LocalDateTime.parse(reunionUI.get("fechaSegundaConvocatoria"), formatter);
+        if (reunionUI.get("fecha") != null && !reunionUI.get("fecha").isEmpty())
+        {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            LocalDateTime dateTime = LocalDateTime.parse(reunionUI.get("fecha"), formatter);
+            LocalDateTime dateTimeSegundaConvocatoria = LocalDateTime.parse(reunionUI.get("fechaSegundaConvocatoria"), formatter);
 
-        reunion.setFecha(Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant()));
-        reunion.setFecha(Date.from(dateTimeSegundaConvocatoria.atZone(ZoneId.systemDefault()).toInstant()));
+            reunion.setFecha(Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant()));
+            reunion.setFecha(Date.from(dateTimeSegundaConvocatoria.atZone(ZoneId.systemDefault()).toInstant()));
+        }
 
         reunion.setDuracion(Long.parseLong(reunionUI.get("duracion")));
 
