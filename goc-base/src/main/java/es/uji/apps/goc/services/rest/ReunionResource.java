@@ -283,10 +283,15 @@ public class ReunionResource extends CoreBaseService
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
         LocalDateTime dateTime = LocalDateTime.parse(reunionUI.get("fecha"), formatter);
-        LocalDateTime dateTimeSegundaConvocatoria = LocalDateTime.parse(reunionUI.get("fechaSegundaConvocatoria"), formatter);
-
         Date fecha = Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant());
-        Date fechaSegundaConvocatoria = Date.from(dateTimeSegundaConvocatoria.atZone(ZoneId.systemDefault()).toInstant());
+
+        Date fechaSegundaConvocatoria = null;
+
+        if (reunionUI.get("fechaSegundaConvocatoria") != null && !reunionUI.get("fechaSegundaConvocatoria").isEmpty())
+        {
+            LocalDateTime dateTimeSegundaConvocatoria = LocalDateTime.parse(reunionUI.get("fechaSegundaConvocatoria"), formatter);
+            fechaSegundaConvocatoria = Date.from(dateTimeSegundaConvocatoria.atZone(ZoneId.systemDefault()).toInstant());
+        }
 
         Long numeroSesion = null;
 
@@ -430,13 +435,17 @@ public class ReunionResource extends CoreBaseService
         reunion.setAdmiteSuplencia(new Boolean(reunionUI.get("admiteSuplencia")));
         reunion.setAdmiteComentarios(new Boolean(reunionUI.get("admiteComentarios")));
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
         if (reunionUI.get("fecha") != null && !reunionUI.get("fecha").isEmpty())
         {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
             LocalDateTime dateTime = LocalDateTime.parse(reunionUI.get("fecha"), formatter);
-            LocalDateTime dateTimeSegundaConvocatoria = LocalDateTime.parse(reunionUI.get("fechaSegundaConvocatoria"), formatter);
-
             reunion.setFecha(Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant()));
+        }
+
+        if (reunionUI.get("fechaSegundaConvocatoria") != null && !reunionUI.get("fechaSegundaConvocatoria").isEmpty())
+        {
+            LocalDateTime dateTimeSegundaConvocatoria = LocalDateTime.parse(reunionUI.get("fechaSegundaConvocatoria"), formatter);
             reunion.setFecha(Date.from(dateTimeSegundaConvocatoria.atZone(ZoneId.systemDefault()).toInstant()));
         }
 
