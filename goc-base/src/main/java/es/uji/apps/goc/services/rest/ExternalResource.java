@@ -252,7 +252,7 @@ public class ExternalResource extends CoreBaseService
                 items.add(menuEntry("goc.view.tipoOrgano.Main", "Tipos de órganos"));
                 items.add(menuEntry("goc.view.miembro.Main", "Miembros"));
                 items.add(menuEntry("goc.view.reunion.Main", "Reuniones"));
-                items.add(menuEntry("goc.view.historicoReunion.Main", "Histórico de Reuniones"));
+                items.add(menuEntry("goc.view.historicoReunion.Main", "Histórico de reuniones"));
                 items.add(menuEntry("goc.view.cargo.Main", "Cargos"));
             }
             else
@@ -261,7 +261,7 @@ public class ExternalResource extends CoreBaseService
                 items.add(menuEntry("goc.view.tipoOrgano.Main", "Tipus d'òrgans"));
                 items.add(menuEntry("goc.view.miembro.Main", "Membres"));
                 items.add(menuEntry("goc.view.reunion.Main", "Reunions"));
-                items.add(menuEntry("goc.view.historicoReunion.Main", "Històric de Reunions"));
+                items.add(menuEntry("goc.view.historicoReunion.Main", "Històric de reunions"));
                 items.add(menuEntry("goc.view.cargo.Main", "Càrrecs"));
             }
 
@@ -274,14 +274,14 @@ public class ExternalResource extends CoreBaseService
             items.add(menuEntry("goc.view.organo.Main", "Órganos"));
             items.add(menuEntry("goc.view.miembro.Main", "Miembros"));
             items.add(menuEntry("goc.view.reunion.Main", "Reuniones"));
-            items.add(menuEntry("goc.view.historicoReunion.Main", "Histórico de Reuniones"));
+            items.add(menuEntry("goc.view.historicoReunion.Main", "Histórico de reuniones"));
         }
         else
         {
             items.add(menuEntry("goc.view.organo.Main", "Òrgans"));
             items.add(menuEntry("goc.view.miembro.Main", "Membres"));
             items.add(menuEntry("goc.view.reunion.Main", "Reunions"));
-            items.add(menuEntry("goc.view.historicoReunion.Main", "Històric de Reunions"));
+            items.add(menuEntry("goc.view.historicoReunion.Main", "Històric de reunions"));
         }
 
         menu.setMenuItems(items);
