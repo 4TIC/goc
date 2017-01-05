@@ -155,18 +155,8 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
         var viewModel = this.getViewModel();
         var store = viewModel.getStore('puntosOrdenDiaStore');
 
-        if (record) {
-            var modalDefinition = this.getPuntoOrdenDiaModalDefinition(record, store);
-            this.modal = view.add(modalDefinition);
-            this.modal.down('textareafield[name=deliberaciones]').setVisible(true);
-            this.modal.down('textareafield[name=acuerdos]').setVisible(true);
-            this.modal.show();
-        } else {
-            var modalDefinition = this.getPuntoOrdenDiaModalDefinition(record, store);
-            this.modal = view.add(modalDefinition);
-            this.modal.down('textareafield[name=deliberaciones]').setVisible(false);
-            this.modal.down('textareafield[name=acuerdos]').setVisible(false);
-            this.modal.show();
-        }
+        var modalDefinition = this.getPuntoOrdenDiaModalDefinition(record, store);
+        this.modal = view.add(modalDefinition);
+        this.modal.show();
     }
 });

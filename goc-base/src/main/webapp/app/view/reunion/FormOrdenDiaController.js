@@ -22,7 +22,7 @@ Ext.define('goc.view.reunion.FormOrdenDiaController', {
     onSaveRecord: function (button, context) {
         var vm = this.getViewModel(),
             view = this.getView(),
-            form = Ext.ComponentQuery.query('form[name=puntoOrdenDia]')[0]
+            form = Ext.ComponentQuery.query('form[name=puntoOrdenDia]')[0];
 
         var reunionId = vm.get('reunionId');
         var grid = Ext.ComponentQuery.query('grid[name=ordenDia]')[0];
