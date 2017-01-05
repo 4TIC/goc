@@ -150,6 +150,7 @@
     "tipo": "Tipus"
   },
   "historicoReuniones": {
+    "tituloPrincipal": "Històric de reunions",
     "tituloGridReunionesCompletadas": "Històric de reunions completades"
   },
   "cargos": {

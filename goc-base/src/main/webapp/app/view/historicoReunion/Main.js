@@ -12,7 +12,7 @@ Ext.define('goc.view.historicoReunion.Main',
             'goc.view.historicoReunion.HistoricoReunionGridController',
             'goc.view.common.ComboOrgano',
             'goc.view.common.ComboTipoOrgano'],
-        title: appI18N.reuniones.tituloPrincipal,
+        title: appI18N.historicoReuniones.tituloPrincipal,
         layout: 'fit',
 
         items: [
