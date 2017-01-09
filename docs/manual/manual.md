@@ -1,9 +1,5 @@
 #Gestión de órganos colegiados (GOC)
 
-Fecha | Usuario | Tarea
------ | ------- | -----
-2016-12-16 | Nicolás Manero nicolas.manero@4tic.com | Creación del manual
-
 ##Cómo acceder
 El acceso principal a la aplicación se encuentra en http://ujiapps.uji.es/goc.
 
