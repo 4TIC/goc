@@ -40,8 +40,6 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
             '<li><a href="?lang=' + mainLanguage + '">' + mainLanguageDescription + '</a></li><li><a href="?lang=' + alternativeLanguage + '">' + alternativeLanguageDescription + '</a></li></ul>';
         }
 
-        console.log(mainLanguage, alternativeLanguage, htmlLanguage);
-
         var logoPanel = new Ext.Panel(
             {
                 region: 'north',
@@ -67,7 +65,7 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
                         border: 0,
                         width: 140,
                         html: '<div class="header-right">' +
-                            '<span class="header-right-title"><img src="http://static.uji.es/js/extjs/uji-commons-extjs/img/lock.png"/>' +
+                            '<span class="header-right-title"><img src="//static.uji.es/js/extjs/uji-commons-extjs/img/lock.png"/>' +
                             '<a style="color:inherit;" href="http://xmlrpc.uji.es/lsm/logout_sso.php">' + appI18N.common.desconectar + '</a></span></div>'
                     }
                 ]
@@ -237,7 +235,7 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
             frame : false,
             border : false,
             html : '<div style="font:normal 11px tahoma,arial,helvetica,sans-serif;border:1px solid gray;padding:8px;background-color:#fff;">' +
-                   '<img style="margin-right:4px;" align="left" src="http://static.uji.es/img/commons/loading.gif" /> Carregant...</div>',
+                   '<img style="margin-right:4px;" align="left" src="//static.uji.es/img/commons/loading.gif" /> Carregant...</div>',
             hidden : true,
             style : 'z-index: 80000; position:absolute; top:5px; right:5px;',
             renderTo : document.body,

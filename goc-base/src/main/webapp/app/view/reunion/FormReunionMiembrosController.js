@@ -50,7 +50,6 @@ Ext.define('goc.view.reunion.FormReunionMiembrosController', {
         var remoteLoad = viewModel.get('remoteLoad')
         var grid = this.getView().down('grid');
 
-        console.log('suplencia', viewModel.get('admiteSuplencia'));
         if (remoteLoad) {
 
             if (reunionId) {

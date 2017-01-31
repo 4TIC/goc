@@ -194,8 +194,6 @@ Ext.define('goc.view.reunion.ReunionGridController', {
     },
 
     createModalReunion: function (record) {
-        console.log(record);
-
         var view = this.getView().up('panel');
         var viewModel = this.getViewModel();
         var store = viewModel.getStore('reunionesStore');
