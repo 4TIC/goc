@@ -38,6 +38,7 @@
     "autorizados": "Autoritzats",
     "seleccionaEstadoOrganos": "Sel·lecciona l'estat",
     "seleccionaSuplente": "Sel·lecciona el suplent",
+    "seleccionaAutorizado": "Sel·lecciona l'autoritzat",
     "seleccionaTipoOrgano": "Sel·lecciona el tipus d'òrgan",
     "sinAutorizadosDisponibles": "Encara no n'hi han autoritzats per aquest òrgan",
     "borrarAutorizacion": "Esteu segur/a de voler treure l'autorització a aquesta persona?",

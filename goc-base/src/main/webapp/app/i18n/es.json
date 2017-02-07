@@ -38,6 +38,7 @@
     "autorizados": "Autorizados",
     "seleccionaEstadoOrganos": "Selecciona estado órganos",
     "seleccionaSuplente": "Selecciona el suplente",
+    "seleccionaAutorizado": "Selecciona el autorizado",
     "seleccionaTipoOrgano": "Selecciona el tipo de órgano",
     "sinAutorizadosDisponibles": "Todavía no hay autorizados para este órgano",
     "borrarAutorizacion": "¿Estás seguro de querer quitar la autorización a esta persona?",
