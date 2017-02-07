@@ -302,7 +302,7 @@ if (isMultilanguageApplication()) {
 }
 
 formReunionItems.push({
-    fieldLabel : 'URL gravació',
+    fieldLabel : appI18N.reuniones.urlGrabacionShort,
     name : 'urlGrabacion',
     emptyText : appI18N.reuniones.urlGrabacion,
     bind :
