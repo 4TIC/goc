@@ -68,7 +68,7 @@ Ext.define('goc.view.common.LookupWindowPersonas',
             var ref = this;
             this.botonBuscar = Ext.create('Ext.Button',
                 {
-                    text: 'Cerca',
+                    text: (appI18N ? appI18N.common.buscarRegistros : 'Cerca'),
                     margin: 10,
                     handler: function (boton, event) {
                         if (ref.queryField.getValue().length < 3) {
