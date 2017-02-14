@@ -365,7 +365,7 @@ public class ReunionResource extends CoreBaseService
 
         if (messageError == null)
         {
-            return new ResponseMessage(true, "Convocatoria enviada correctament");
+            return new ResponseMessage(true, "appI18N.reuniones.convocatoriaEnviada");
         }
 
         return new ResponseMessage(true, messageError);

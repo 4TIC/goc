@@ -1,5 +1,17 @@
 package es.uji.apps.goc.services;
 
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.core.InjectParam;
+
+import org.apache.commons.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,23 +21,48 @@ import java.util.stream.Collectors;
 
 import javax.ws.rs.core.MediaType;
 
-import es.uji.apps.goc.dao.*;
-import es.uji.apps.goc.dto.*;
-import es.uji.apps.goc.exceptions.*;
-import es.uji.apps.goc.model.*;
+import es.uji.apps.goc.dao.MiembroDAO;
+import es.uji.apps.goc.dao.OrganoDAO;
+import es.uji.apps.goc.dao.OrganoReunionDAO;
+import es.uji.apps.goc.dao.OrganoReunionMiembroDAO;
+import es.uji.apps.goc.dao.PuntoOrdenDiaDAO;
+import es.uji.apps.goc.dao.PuntoOrdenDiaDocumentoDAO;
+import es.uji.apps.goc.dao.ReunionDAO;
+import es.uji.apps.goc.dao.ReunionDocumentoDAO;
+import es.uji.apps.goc.dao.TipoOrganoDAO;
+import es.uji.apps.goc.dto.MiembroFirma;
+import es.uji.apps.goc.dto.MiembroTemplate;
+import es.uji.apps.goc.dto.OrganoFirma;
+import es.uji.apps.goc.dto.OrganoLocal;
+import es.uji.apps.goc.dto.OrganoReunion;
+import es.uji.apps.goc.dto.OrganoReunionMiembro;
+import es.uji.apps.goc.dto.OrganoTemplate;
+import es.uji.apps.goc.dto.PuntoOrdenDia;
+import es.uji.apps.goc.dto.PuntoOrdenDiaDocumento;
+import es.uji.apps.goc.dto.PuntoOrdenDiaFirma;
+import es.uji.apps.goc.dto.PuntoOrdenDiaTemplate;
+import es.uji.apps.goc.dto.QReunion;
+import es.uji.apps.goc.dto.Reunion;
+import es.uji.apps.goc.dto.ReunionComentario;
+import es.uji.apps.goc.dto.ReunionDocumento;
+import es.uji.apps.goc.dto.ReunionFirma;
+import es.uji.apps.goc.dto.ReunionTemplate;
+import es.uji.apps.goc.dto.TipoOrganoLocal;
+import es.uji.apps.goc.exceptions.FirmaReunionException;
+import es.uji.apps.goc.exceptions.MiembrosExternosException;
+import es.uji.apps.goc.exceptions.NotificacionesException;
+import es.uji.apps.goc.exceptions.OrganosExternosException;
+import es.uji.apps.goc.exceptions.PersonasExternasException;
+import es.uji.apps.goc.exceptions.ReunionNoAdmiteSuplenciaException;
+import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
+import es.uji.apps.goc.exceptions.ReunionYaCompletadaException;
 import es.uji.apps.goc.model.Cargo;
+import es.uji.apps.goc.model.Comentario;
+import es.uji.apps.goc.model.Documento;
+import es.uji.apps.goc.model.Miembro;
+import es.uji.apps.goc.model.Organo;
+import es.uji.apps.goc.model.Persona;
 import es.uji.apps.goc.notifications.AvisosReunion;
-import org.apache.commons.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.core.InjectParam;
 
 import static es.uji.apps.goc.dto.QReunion.reunion;
 
@@ -937,10 +974,10 @@ public class ReunionService
         Reunion reunion = reunionDAO.getReunionConMiembrosAndPuntosDiaById(reunionId);
 
         if (reunion.getReunionPuntosOrdenDia().size() == 0)
-            return "No se han definit els punts de l'ordre del dia";
+            return "appI18N.reuniones.reunionSinOrdenDia";
 
         if (reunion.noContieneMiembros())
-            return "No se han definit membres per a la reunio";
+            return "appI18N.reuniones.reunionSinMiembros";
 
         avisosReunion.enviaAvisoNuevaReunion(reunion);
 

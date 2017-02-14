@@ -149,7 +149,13 @@
     "seleccionarParaBorrarPuntoOrdenDia": "Cal sel·leccionar un punt de l'ordre del dia per a esborrar-ho",
     "seleccionarParaEditarPuntoOrdenDia": "Cal sel·leccionar un punt de l'ordre del dia per a editar-ho",
     "seleccionarParaDocumentacionPuntoOrdenDia": "Cal sel·leccionar un punt de l'ordre del dia per accedir a la seua documentació",
-    "tipo": "Tipus"
+    "tipo": "Tipus",
+    "convocatoriaEnviada": "Convocatòria enviada correctament",
+    "reunionSinOrdenDia": "No s'han definit els punts de l'ordre del dia",
+    "reunionSinMiembros": "No s'han definit membres per a la reunió",
+    "confirmacionEnvioTitulo": "Confirmació d'enviament de la convocatòria",
+    "confirmacionEnvioMensaje": "¿Estàs segur de que la reunió està completament definida i vols notificar als assistents?",
+    "resultadoEnvioConvocatoriaTitle": "Resultat de l'enviament de la convocatòria"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Històric de reunions",

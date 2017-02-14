@@ -30,7 +30,7 @@ Ext.define('goc.view.reunion.ReunionGridController', {
         var grid = this.getView();
         var record = grid.getView().getSelectionModel().getSelection()[0];
 
-        Ext.Msg.confirm("Confirmacion de envio de la convocatoria", "¿Estas seguro de que la reunion esta completamente definida y quieres notificar a los asistentes?", function(result) {
+        Ext.Msg.confirm(appI18N.reuniones.confirmacionEnvioTitulo, appI18N.reuniones.confirmacionEnvioMensaje, function(result) {
             if (result === 'yes') {
                 Ext.Ajax.request(
                     {
@@ -38,7 +38,8 @@ Ext.define('goc.view.reunion.ReunionGridController', {
                         method: 'PUT',
                         success: function (response) {
                             var data = Ext.decode(response.responseText);
-                            Ext.Msg.alert("Resultado del envio de la convocatoria", data.message);
+                            var mensajeRespuesta = (data.message && data.message.indexOf("appI18N") != -1) ? eval(data.message) : data.message;
+                            Ext.Msg.alert(appI18N.reuniones.resultadoEnvioConvocatoriaTitle, mensajeRespuesta);
                         },
                         scope: this
                     }

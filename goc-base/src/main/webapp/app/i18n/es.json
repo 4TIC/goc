@@ -148,7 +148,13 @@
     "seleccionarParaBorrarPuntoOrdenDia": "Debe seleccionar un punto del orden del día para borrarlo",
     "seleccionarParaEditarPuntoOrdenDia": "Debe seleccionar un punto del orden del día para editarlo",
     "seleccionarParaDocumentacionPuntoOrdenDia": "Debe seleccionar un punto del orden del día para acceder a su documentación",
-    "tipo": "Tipo"
+    "tipo": "Tipo",
+    "convocatoriaEnviada": "Convocatoria enviada correctamente",
+    "reunionSinOrdenDia": "No se han definido los puntos del orden del día",
+    "reunionSinMiembros": "No se han definido miembros para la reunión",
+    "confirmacionEnvioTitulo": "Confirmación de envío de la convocatoria",
+    "confirmacionEnvioMensaje": "¿Estás seguro de que la reunión está completamente definida y quieres notificar a los asistentes?",
+    "resultadoEnvioConvocatoriaTitle": "Resultado del envío de la convocatoria"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Histórico de reuniones",
