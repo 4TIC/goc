@@ -466,11 +466,10 @@ Ext.define('goc.view.reunion.FormReunion',
 {
     extend : 'Ext.window.Window',
     xtype : 'formReunion',
-    title : 'Gestió de reunions',
+    title : appI18N.reuniones.tituloPrincipal,
 
     width : 640,
-    height : 850,
-    y: -60,
+    height : '90%',
     modal : true,
     bodyPadding : 10,
     autoScroll: true,
@@ -487,7 +486,7 @@ Ext.define('goc.view.reunion.FormReunion',
     bbar : [ '->',
     {
         xtype : 'button',
-        text : 'Guardar',
+        text : appI18N.reuniones.guardar,
         bind :
         {
             disabled : '{reunion.completada}'

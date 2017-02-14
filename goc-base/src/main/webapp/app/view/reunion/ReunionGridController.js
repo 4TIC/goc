@@ -199,6 +199,7 @@ Ext.define('goc.view.reunion.ReunionGridController', {
         var viewModel = this.getViewModel();
         var store = viewModel.getStore('reunionesStore');
         var organosStore = Ext.create('goc.store.Organos');
+        var viewport = this.getView().up('viewport');
 
         if (record) {
             organosStore.load({
@@ -207,7 +208,7 @@ Ext.define('goc.view.reunion.ReunionGridController', {
                 },
                 callback: function (records) {
                     var modalDefinition = this.getReunionModalDefinition(record, store, organosStore);
-                    this.modal = view.add(modalDefinition);
+                    this.modal = viewport.add(modalDefinition);
                     this.modal.down('textfield[name=urlGrabacion]').setVisible(true);
                     this.modal.show();
                 },
@@ -215,7 +216,7 @@ Ext.define('goc.view.reunion.ReunionGridController', {
             });
         } else {
             var modalDefinition = this.getReunionModalDefinition(record, store, organosStore);
-            this.modal = view.add(modalDefinition);
+            this.modal = viewport.add(modalDefinition);
             this.modal.show();
         }
     },
