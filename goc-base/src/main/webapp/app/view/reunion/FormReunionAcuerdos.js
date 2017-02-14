@@ -1,3 +1,51 @@
+var formAcuerdosItems = [
+    {
+        name: 'id',
+        xtype: 'hidden',
+        bind: '{reunionId}'
+    },
+    {
+        xtype: 'textareafield',
+        name: 'acuerdos',
+        flex: 1,
+        height: 320,
+        emptyText: getMultiLangLabel(appI18N.reuniones.acuerdos, mainLanguage),
+        bind: {
+            value: '{acuerdos}',
+            disabled: '{completada}'
+        }
+    }];
+
+if (isMultilanguageApplication()) {
+    formAcuerdosItems.push({
+        xtype: 'textareafield',
+        name: 'acuerdosAlternativos',
+        flex: 1,
+        height: 320,
+        emptyText: getMultiLangLabel(appI18N.reuniones.acuerdos, alternativeLanguage),
+        bind: {
+            value: '{acuerdosAlternativos}',
+            disabled: '{completada}'
+        }
+    });
+}
+
+formAcuerdosItems.push({
+    allowBlank: false,
+    name: 'responsable',
+    xtype: 'combo',
+    width: 120,
+    displayField: 'info',
+    valueField: 'id',
+    editable: false,
+    emptyText: appI18N.reuniones.responsableActa,
+    bind: {
+        disabled: '{completada}',
+        value: '{responsableId}',
+        store: '{asistentesStore}'
+    }
+});
+
 Ext.define('goc.view.reunion.FormReunionAcuerdos',
     {
         extend: 'Ext.window.Window',
@@ -52,39 +100,7 @@ Ext.define('goc.view.reunion.FormReunionAcuerdos',
                             anchor: '100%'
                         },
 
-                        items: [
-                            {
-                                name: 'id',
-                                xtype: 'hidden',
-                                bind: '{reunionId}'
-                            },
-                            {
-                                xtype: 'textareafield',
-                                name: 'acuerdos',
-                                flex: 1,
-                                height: 320,
-                                emptyText: appI18N.reuniones.acuerdos,
-                                bind: {
-                                    value: '{acuerdos}',
-                                    disabled: '{completada}'
-                                }
-                            },
-                            {
-                                allowBlank: false,
-                                name: 'responsable',
-                                xtype: 'combo',
-                                width: 120,
-                                displayField: 'info',
-                                valueField: 'id',
-                                editable: false,
-                                emptyText: appI18N.reuniones.responsableActa,
-                                bind: {
-                                    disabled: '{completada}',
-                                    value: '{responsableId}',
-                                    store: '{asistentesStore}'
-                                }
-                            }
-                        ]
+                        items: formAcuerdosItems
                     }]
 
             }]

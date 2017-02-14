@@ -73,7 +73,7 @@ Ext.define('goc.view.reunion.ReunionGridController', {
                     responsableId: record.get('miembroResponsableActaId'),
                     completada: record.get('completada'),
                     acuerdos: record.get('acuerdos'),
-                    acuerdosAlternativos: record.get('acuerdosAlterantivos'),
+                    acuerdosAlternativos: record.get('acuerdosAlternativos'),
                     asistentesStore: asistentesStore
                 }
             }
