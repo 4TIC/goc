@@ -8,4 +8,7 @@ public class PersonalizationConfig
 {
     @Value("${goc.logo}")
     public String logo;
+
+    @Value("${goc.customCSS:}")
+    public String customCSS;
 }

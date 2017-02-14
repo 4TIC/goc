@@ -1,8 +1,8 @@
-<%@ page import="es.uji.commons.sso.User" %>
-<%@ page import="es.uji.apps.goc.auth.LanguageConfig" %>
 <%@ page import="org.springframework.web.context.WebApplicationContext" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
+<%@ page import="es.uji.apps.goc.auth.LanguageConfig" %>
 <%@ page import="es.uji.apps.goc.auth.PersonalizationConfig" %>
+<%@ page import="es.uji.commons.sso.User" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -12,20 +12,23 @@
     <link rel="stylesheet" type="text/css" href="//static.uji.es/js/extjs/ext-6.0.3.64/build/classic/theme-triton/resources/theme-triton-all.css">
     <link rel="stylesheet" type="text/css" href="//static.uji.es/js/extjs/ext-6.0.3.64/build/packages/font-awesome/resources/font-awesome-all.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <script type="text/javascript" src="//static.uji.es/js/extjs/ext-6.0.3.64/build/ext-all-debug.js"></script>
-
-    <title>Portal</title>
-
     <%
         User user = (User) session.getAttribute(User.SESSION_USER);
 
         WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
         LanguageConfig languageConfig = context.getBean(LanguageConfig.class);
         PersonalizationConfig personalizationConfig = context.getBean(PersonalizationConfig.class);
-    %>
 
+        if (personalizationConfig.customCSS != null && !personalizationConfig.customCSS.trim().equals("")) {
+    %>
+    <link rel="stylesheet" type="text/css" href="<%=personalizationConfig.customCSS%>">
+    <%   }  %>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script type="text/javascript" src="//static.uji.es/js/extjs/ext-6.0.3.64/build/ext-all-debug.js"></script>
+
+    <title>Portal</title>
     <script type="text/javascript">
         var login = '<%= user.getName() %>';
         var perId = <%= user.getId() %>;
