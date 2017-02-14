@@ -19,6 +19,8 @@ public class PersonaExternaDeserializer extends JsonDeserializer<PersonaExterna>
         ObjectCodec oc = jsonParser.getCodec();
         JsonNode data = oc.readTree(jsonParser);
 
+        data = (data.get("data") != null) ? data.get("data") : data;
+
         Long id = data.get("id").asLong();
         String nombre = data.get("nombre").asText();
         String email = data.get("email").asText();
