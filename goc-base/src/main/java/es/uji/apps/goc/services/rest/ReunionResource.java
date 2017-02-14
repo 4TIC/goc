@@ -2,11 +2,49 @@ package es.uji.apps.goc.services.rest;
 
 import com.mysema.query.Tuple;
 import com.sun.jersey.api.core.InjectParam;
+
+import org.springframework.beans.factory.annotation.Value;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import es.uji.apps.goc.dto.MiembroTemplate;
 import es.uji.apps.goc.dto.OrganoTemplate;
 import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.dto.ReunionTemplate;
-import es.uji.apps.goc.exceptions.*;
+import es.uji.apps.goc.exceptions.AsistenteNoEncontradoException;
+import es.uji.apps.goc.exceptions.FirmaReunionException;
+import es.uji.apps.goc.exceptions.MiembrosExternosException;
+import es.uji.apps.goc.exceptions.NotificacionesException;
+import es.uji.apps.goc.exceptions.OrganoConvocadoNoPermitidoException;
+import es.uji.apps.goc.exceptions.OrganosExternosException;
+import es.uji.apps.goc.exceptions.PersonasExternasException;
+import es.uji.apps.goc.exceptions.ReunionNoAdmiteSuplenciaException;
+import es.uji.apps.goc.exceptions.ReunionNoCompletadaException;
+import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
+import es.uji.apps.goc.exceptions.ReunionYaCompletadaException;
+import es.uji.apps.goc.exceptions.UrlGrabacionException;
 import es.uji.apps.goc.model.Organo;
 import es.uji.apps.goc.services.OrganoReunionMiembroService;
 import es.uji.apps.goc.services.OrganoService;
@@ -19,22 +57,6 @@ import es.uji.commons.rest.ParamUtils;
 import es.uji.commons.rest.ResponseMessage;
 import es.uji.commons.rest.UIEntity;
 import es.uji.commons.sso.AccessManager;
-import org.springframework.beans.factory.annotation.Value;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import static es.uji.apps.goc.dto.QReunionDocumento.reunionDocumento;
 
@@ -249,7 +271,7 @@ public class ReunionResource extends CoreBaseService
     @Path("{reunionId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public UIEntity modificaOrgano(@PathParam("reunionId") Long reunionId, UIEntity reunionUI)
+    public UIEntity modificaReunion(@PathParam("reunionId") Long reunionId, UIEntity reunionUI)
             throws ReunionNoDisponibleException, UrlGrabacionException, ReunionYaCompletadaException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
@@ -425,6 +447,9 @@ public class ReunionResource extends CoreBaseService
         reunion.setUbicacion(reunionUI.get("ubicacion"));
         reunion.setUbicacionAlternativa(reunionUI.get("ubicacionAlternativa"));
         reunion.setUrlGrabacion(reunionUI.get("urlGrabacion"));
+        reunion.setTelematica(new Boolean(reunionUI.get("telematica")));
+        reunion.setTelematicaDescripcion(reunionUI.get("telematicaDescripcion"));
+        reunion.setTelematicaDescripcionAlternativa(reunionUI.get("telematicaDescripcionAlternativa"));
 
         if (!reunionUI.get("numeroSesion").isEmpty())
         {
