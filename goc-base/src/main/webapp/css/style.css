@@ -142,3 +142,62 @@ ul.lang li a {
     color: #CDCCE5;
     font-family: Helvetica,Arial,sans-serif;
 }
+
+
+@media only screen and (max-device-width: 480px) {
+    .list li {
+        border-bottom: 1px solid #CCCCCC;
+        padding-bottom: 20px;
+        margin-top: 20px;
+        border-left: 3px solid #000;
+        padding-left: 20px;
+        list-style: none;
+    }
+
+    .list ul {
+        padding-left: 0;
+    }
+
+    li strong, .list li span.documentacion, .list li span.acta, .list li span.titulo, .list li span.certificado {
+        display: block;
+    }
+
+    .separador {
+        display: none;
+    }
+
+    li strong, .list li span.titulo {
+        font-size: 2em;
+    }
+
+    .list li span.documentacion a, .list li span.acta a, .list li span.certificado a {
+        display: block;
+    }
+
+    .list li span.documentacion, .list li span.acta, .list li span.certificado {
+        border-top: 1px solid #FFFFFF;
+        background-color: #eee;
+    }
+
+    .header img {
+        width: 200px;
+    }
+
+    .header h1 {
+        font-size: 4em;
+    }
+
+    .list {
+        clear: both;
+    }
+
+    .topmenu {
+        top: 10px;
+        right: 10px;
+        position: absolute;
+    }
+
+    .topmenu a {
+        font-size: 3em;
+    }
+}

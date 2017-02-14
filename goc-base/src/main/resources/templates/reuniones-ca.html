@@ -16,7 +16,7 @@
     <div class="content">
       <div class="header">
         <img class="logo" src="#" th:src="${logo}" />
-        <h1>Gestió d'Òrgans Col·legiats</h1>
+        <div class="h1"><h1>Gestió d'Òrgans Col·legiats</h1></div>
         <div class="topmenu">
           <ul th:if="${alternativeLanguage and alternativeLanguage != ''}">
             <li><a th:href="${'?lang=' + mainLanguage}" th:text="${mainLanguageDescription}">Español</a></li>
@@ -25,16 +25,18 @@
         </div>
       </div>
 
-      <h1>Llistat de reunions</h1>
-      <ul>
-        <li th:each="reunion : ${reuniones}">
-          <strong th:text="${#dates.format(reunion.fecha, 'dd/MM/YYYY HH:mm')}"></strong>
-          <span th:text="${reunion.asuntoAlternativo}"></span>
-          (<a th:href="'/goc/rest/publicacion/reuniones/' + ${reunion.id} + '?lang=' + ${applang}">Documentació</a> |
-           <a th:href="'/goc/rest/actas/' + ${reunion.id} + '?lang=' + ${applang}">Acta</a><span th:if="${reunion.completada and reunion.comoAsistente}"> | </span>
-           <a th:if="${reunion.completada and reunion.comoAsistente}" th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/asistencia' + '?lang=' + ${applang}">Certificat d'assistència</a>)
-        </li>
-      </ul>
+      <div class="list">
+          <h1>Llistat de reunions</h1>
+          <ul>
+            <li th:each="reunion : ${reuniones}">
+              <strong th:text="${#dates.format(reunion.fecha, 'dd/MM/YYYY HH:mm')}"></strong>
+              <span class="titulo" th:text="${reunion.asuntoAlternativo}"></span>
+              <span class="separador">(</span><span class="documentacion"><a th:href="'/goc/rest/publicacion/reuniones/' + ${reunion.id} + '?lang=' + ${applang}">Documentació</a></span> <span class="separador">|</span>
+               <span class="acta"><a th:href="'/goc/rest/actas/' + ${reunion.id} + '?lang=' + ${applang}">Acta</a></span><span class="separador" th:if="${reunion.completada and reunion.comoAsistente}"> | </span>
+               <span class="certificado"><a th:if="${reunion.completada and reunion.comoAsistente}" th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/asistencia' + '?lang=' + ${applang}">Certificat d'assistència</a></span><span class="separador">)</span>
+            </li>
+          </ul>
+      </div>
     </div>
   </body>
 </html>
