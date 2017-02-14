@@ -3,12 +3,14 @@ package es.uji.apps.goc.dao;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-import es.uji.apps.goc.exceptions.NotificacionesException;
-import es.uji.apps.goc.notifications.Mensaje;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import javax.ws.rs.core.MediaType;
+
+import es.uji.apps.goc.exceptions.NotificacionesException;
+import es.uji.apps.goc.notifications.Mensaje;
 
 @Repository
 public class NotificacionesDAO
@@ -28,7 +30,7 @@ public class NotificacionesDAO
                 .header("X-UJI-AuthToken", authToken)
                 .post(ClientResponse.class, mensaje);
 
-        if (response.getStatus() != 204)
+        if (response.getStatus() != 200)
         {
             throw new NotificacionesException();
         }
