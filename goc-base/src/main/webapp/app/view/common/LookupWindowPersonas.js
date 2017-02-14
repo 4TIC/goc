@@ -156,7 +156,7 @@ Ext.define('goc.view.common.LookupWindowPersonas',
 
                             proxy: {
                                 type: 'ajax',
-                                url: '/goc/rest/external/personas',
+                                url: '/goc/rest/personas',
 
                                 reader: {
                                     type: 'json',

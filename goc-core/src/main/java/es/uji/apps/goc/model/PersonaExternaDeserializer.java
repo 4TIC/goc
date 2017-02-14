@@ -1,16 +1,13 @@
 package es.uji.apps.goc.model;
 
-import java.io.IOException;
-
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import es.uji.apps.goc.dto.CargoExterno;
-import es.uji.apps.goc.dto.MiembroExterno;
-import es.uji.apps.goc.dto.OrganoExterno;
+import java.io.IOException;
+
 import es.uji.apps.goc.dto.PersonaExterna;
 
 public class PersonaExternaDeserializer extends JsonDeserializer<PersonaExterna>
@@ -20,9 +17,7 @@ public class PersonaExternaDeserializer extends JsonDeserializer<PersonaExterna>
             throws IOException
     {
         ObjectCodec oc = jsonParser.getCodec();
-        JsonNode node = oc.readTree(jsonParser);
-
-        JsonNode data = node.get("data");
+        JsonNode data = oc.readTree(jsonParser);
 
         Long id = data.get("id").asLong();
         String nombre = data.get("nombre").asText();

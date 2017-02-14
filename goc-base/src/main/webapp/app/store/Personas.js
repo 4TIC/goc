@@ -5,7 +5,7 @@ Ext.define('goc.store.Personas', {
 
     proxy: {
         type: 'rest',
-        url: '/goc/rest/external/personas',
+        url: '/goc/rest/personas',
         reader: {
             type: 'json',
             rootProperty: 'data'

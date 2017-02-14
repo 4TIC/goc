@@ -39,7 +39,7 @@ $(function () {
     function buscaPersona(query) {
         $.ajax({
             type: "GET",
-            url: "/goc/rest/external/personas/",
+            url: "/goc/rest/personas/",
             data: {query: query},
             contentType: "application/json; charset=utf-8",
             dataType: "json",
