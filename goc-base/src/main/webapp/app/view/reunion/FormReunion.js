@@ -45,7 +45,7 @@ if (isMultilanguageApplication()) {
 
 formReunionItems.push({
     xtype : 'fieldcontainer',
-    fieldLabel : appI18N.reuniones.fecha,
+    fieldLabel : appI18N.reuniones.fecha + "&nbsp;<span style='color:red'>*</span>",
     layout : 'hbox',
     items : [
 
