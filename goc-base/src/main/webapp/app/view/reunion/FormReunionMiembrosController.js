@@ -2,7 +2,7 @@ Ext.define('goc.view.reunion.FormReunionMiembrosController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.formReunionMiembrosController',
     onClose: function () {
-        var win = this.getView().up('window'); 
+        var win = this.getView(); 
         if (win) {
             win.destroy();
         }
