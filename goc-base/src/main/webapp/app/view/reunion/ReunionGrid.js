@@ -45,7 +45,8 @@ reunionesGridColumns.push({
             60: '1 ' + appI18N.reuniones.hora,
             90: '1,5 ' + appI18N.reuniones.horas,
             120: '2 ' + appI18N.reuniones.horas,
-            150: '2,5 ' + appI18N.reuniones.horas
+            150: '2,5 ' + appI18N.reuniones.horas,
+            180: '3 ' + appI18N.reuniones.horas
         };
 
         return duracionTexto[value];
