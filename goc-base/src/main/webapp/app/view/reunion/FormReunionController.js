@@ -32,7 +32,7 @@ Ext.define('goc.view.reunion.FormReunionController', {
     onDetalleAsistentesReunion: function (organo, reunionId) {
         var vm = this.getViewModel();
         var reunion = vm.get('reunion');
-        var view = this.getView().up('panel');
+        var view = this.getView();
         var remoteLoad = false;
         if (!this.getStoreDeMiembros(organo.get('id'), organo.get('externo'))) {
             this.creaStoreDeMiembros(organo.get('id'), organo.get('externo'));
