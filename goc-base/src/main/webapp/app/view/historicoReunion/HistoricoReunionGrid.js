@@ -42,11 +42,12 @@ Ext.define('goc.view.historicoReunion.HistoricoReunionGrid', {
             renderer: function (value) {
                 var duracionTexto =
                 {
-                    30: '0,5 hores',
-                    60: '1 hora',
-                    90: '1,5 hores',
-                    120: '2 hores',
-                    150: '2,5 hores'
+                    30: '0,5 ' + appI18N.reuniones.horas,
+                    60: '1 ' + appI18N.reuniones.hora,
+                    90: '1,5 ' + appI18N.reuniones.horas,
+                    120: '2 ' + appI18N.reuniones.horas,
+                    150: '2,5 ' + appI18N.reuniones.horas,
+                    180: '3 ' + appI18N.reuniones.horas
                 };
 
                 return duracionTexto[value];
