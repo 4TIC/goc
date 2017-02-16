@@ -2,14 +2,30 @@ package es.uji.apps.goc.services.rest;
 
 import com.sun.jersey.api.core.InjectParam;
 
-import org.springframework.beans.factory.annotation.Value;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 
 import es.uji.apps.goc.auth.LanguageConfig;
 import es.uji.apps.goc.auth.PersonalizationConfig;
 import es.uji.apps.goc.dto.ReunionFirma;
 import es.uji.apps.goc.exceptions.RolesPersonaExternaException;
 import es.uji.apps.goc.firmas.FirmaService;
-import es.uji.apps.goc.model.*;
+import es.uji.apps.goc.model.Menu;
+import es.uji.apps.goc.model.MenuItem;
+import es.uji.apps.goc.model.Miembro;
+import es.uji.apps.goc.model.Organo;
+import es.uji.apps.goc.model.Persona;
+import es.uji.apps.goc.model.Role;
 import es.uji.apps.goc.notifications.CanNotSendException;
 import es.uji.apps.goc.notifications.MailSender;
 import es.uji.apps.goc.notifications.Mensaje;
@@ -24,12 +40,6 @@ import es.uji.commons.rest.UIEntity;
 import es.uji.commons.sso.AccessManager;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 

@@ -11,4 +11,7 @@ public class PersonalizationConfig
 
     @Value("${goc.customCSS:}")
     public String customCSS;
+
+    @Value("${goc.rolAdministrador:ADMIN}")
+    public String rolAdministrador;
 }
