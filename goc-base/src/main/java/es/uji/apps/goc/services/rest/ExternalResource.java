@@ -51,7 +51,7 @@ public class ExternalResource extends CoreBaseService
     @InjectParam
     private FirmaService firmaService;
 
-    @Value("${goc.rolAdministrador:'ADMIN'}")
+    @Value("${goc.rolAdministrador:\"ADMIN\"}")
     public String rolAdministrador;
 
     @GET
