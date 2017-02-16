@@ -5,6 +5,7 @@ import com.sun.jersey.api.core.InjectParam;
 import org.springframework.beans.factory.annotation.Value;
 
 import es.uji.apps.goc.auth.LanguageConfig;
+import es.uji.apps.goc.auth.PersonalizationConfig;
 import es.uji.apps.goc.dto.ReunionFirma;
 import es.uji.apps.goc.exceptions.RolesPersonaExternaException;
 import es.uji.apps.goc.firmas.FirmaService;
@@ -51,8 +52,8 @@ public class ExternalResource extends CoreBaseService
     @InjectParam
     private FirmaService firmaService;
 
-    @Value("${goc.rolAdministrador:\"ADMIN\"}")
-    public String rolAdministrador;
+    @InjectParam
+    private PersonalizationConfig personalizationConfig;
 
     @GET
     @Path("organos")
@@ -247,7 +248,7 @@ public class ExternalResource extends CoreBaseService
 
         List<MenuItem> items = new ArrayList<>();
 
-        Boolean admin = roles.stream().filter(r -> r.equals(rolAdministrador)).findAny().isPresent();
+        Boolean admin = roles.stream().filter(r -> r.equals(personalizationConfig.rolAdministrador)).findAny().isPresent();
         String currentLanguage = (lang != null) ? lang : languageConfig.mainLanguage;
 
         if (admin)
