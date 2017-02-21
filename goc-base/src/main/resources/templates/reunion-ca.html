@@ -29,21 +29,21 @@
       <h1 style="clear:both;" th:text="'Reunió: ' + ${reunion.asuntoAlternativo}">Título reunión</h1>
       <h2>Informació bàsica</h2>
       <ul>
-        <li th:text="'Data: ' + ${#dates.format(reunion.fecha, 'dd/MM/YYYY HH:mm')}"></li>
-        <li th:if="${reunion.fechaSegundaConvocatoria}" th:text="'Segona convocatòria: ' + ${#dates.format(reunion.fechaSegundaConvocatoria, 'dd/MM/YYYY HH:mm')}"></li>
-        <li th:if="${reunion.responsableActa}" th:text="'Responsable d\'acta: ' + ${reunion.responsableActa}"></li>
-        <li th:if="${reunion.numeroSesion} != null" th:text="'Número de sessió: ' + ${reunion.numeroSesion}"></li>
-        <li th:if="${reunion.ubicacionAlternativa}" th:text="'Lloc: ' + ${reunion.ubicacionAlternativa}"></li>
-        <li th:text="'Duració: ' + ${reunion.duracion} + ' minuts'"></li>
-        <li th:if="${reunion.descripcionAlternativa}" th:text="'Descripció: ' + ${reunion.descripcionAlternativa}"></li>
-        <li th:if="${reunion.acuerdosAlternativos != null}" th:text="'Acords: ' + ${reunion.acuerdosAlternativos}"></li>
-        <li th:if="${reunion.urlGrabacion != null}">URL gravació: <a th:href="${reunion.urlGrabacion}" th:text="${reunion.urlGrabacion}"></a></li>
-        <li th:if="${reunion.telematica}">Reunió telemàtica. Instruccions: <span th:text="${reunion.telematicaDescripcionAlternativa}"></span></li>
+        <li th:utext="'&lt;strong&gt;Data&lt;/strong&gt;: ' + ${#dates.format(reunion.fecha, 'dd/MM/YYYY HH:mm')}"></li>
+        <li th:if="${reunion.fechaSegundaConvocatoria}" th:utext="'&lt;strong&gt;Segona convocatòria&lt;/strong&gt;: ' + ${#dates.format(reunion.fechaSegundaConvocatoria, 'dd/MM/YYYY HH:mm')}"></li>
+        <li th:if="${reunion.responsableActa}" th:utext="'&lt;strong&gt;Responsable d\'acta&lt;/strong&gt;: ' + ${reunion.responsableActa}"></li>
+        <li th:if="${reunion.numeroSesion} != null" th:utext="'&lt;strong&gt;Número de sessió&lt;/strong&gt;: ' + ${reunion.numeroSesion}"></li>
+        <li th:if="${reunion.ubicacionAlternativa}" th:utext="'&lt;strong&gt;Lloc&lt;/strong&gt;: ' + ${reunion.ubicacionAlternativa}"></li>
+        <li th:utext="'&lt;strong&gt;Duració&lt;/strong&gt;: ' + ${reunion.duracion} + ' minuts'"></li>
+        <li th:if="${reunion.descripcionAlternativa}" th:utext="'&lt;strong&gt;Descripció&lt;/strong&gt;: ' + ${reunion.descripcionAlternativa}"></li>
+        <li th:if="${reunion.acuerdosAlternativos != null}" th:utext="'&lt;strong&gt;Acords&lt;/strong&gt;: ' + ${reunion.acuerdosAlternativos}"></li>
+        <li th:if="${reunion.urlGrabacion != null}"><strong>URL gravació</strong>: <a th:href="${reunion.urlGrabacion}" th:text="${reunion.urlGrabacion}"></a></li>
+        <li th:if="${reunion.telematica}"><strong>Reunió telemàtica. Instruccions</strong>: <span th:text="${reunion.telematicaDescripcionAlternativa}"></span></li>
       </ul>
-      <h2 th:if="${not #lists.isEmpty(reunion.organos)}">Organs i assistents</h2>
+      <h2 th:if="${not #lists.isEmpty(reunion.organos)}">Òrgans i assistents</h2>
       <ul th:if="${not #lists.isEmpty(reunion.organos)}">
         <li th:each="organo : ${reunion.organos}">
-          <h3 th:text="${organo.nombreAlternativo}">Organo asistente</h3>
+          <h3 th:text="${organo.nombreAlternativo}">Òrgan assistent</h3>
           <ul th:with="miembros=${organo.asistentes}">
             <li th:each="miembro : ${miembros}">
               <div>

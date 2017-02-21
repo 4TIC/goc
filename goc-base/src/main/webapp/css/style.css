@@ -1,3 +1,8 @@
+body {
+    font-family: "Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;
+    color: #555;
+}
+
 .link {
     text-decoration: none;
     color: #222;
@@ -83,6 +88,11 @@ ul.lang li a {
     float: left;
 }
 
+h1 {
+    font-size: 2.1em !important;
+    font-weight: normal;
+}
+
 .topmenu {
     margin-top: 1em;
     float: right;
@@ -106,9 +116,15 @@ ul.lang li a {
 }
 
 .topmenu ul li a {
-    font-weight: bold;
+    font-weight: normal;
     text-decoration: none;
-    color: #222;
+    color: #333;
+}
+
+.topmenu ul li a:hover {
+    font-weight: normal;
+    text-decoration: underline;
+    color: #333;
 }
 
 .header-center {
@@ -141,6 +157,17 @@ ul.lang li a {
 .header-right-title {
     color: #CDCCE5;
     font-family: Helvetica,Arial,sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: inherit;
 }
 
 
@@ -185,6 +212,7 @@ ul.lang li a {
 
     .header h1 {
         font-size: 4em;
+        font-weight: normal;
     }
 
     .list {

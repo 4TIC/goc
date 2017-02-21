@@ -13,9 +13,9 @@ $(function () {
                 response.data.map(function (comentario) {
                     var creador = comentario.creadorNombre ? comentario.creadorNombre : comentario.creadorId;
                     html += '<div class="comentario">' +
-                        '  <p class=""autor">' + appI18N.acta.autor + ': ' + creador + '</p>' +
+                        '  <p class=""autor"><strong>' + appI18N.acta.autor + '</strong>: ' + creador + '</p>' +
                         '  <div class="texto">' + comentario.comentario + '</div>' +
-                        '  <p class="fecha">' + appI18N.acta.fecha + ': ' + comentario.fecha + '</p>' +
+                        '  <p class="fecha"><strong>' + appI18N.acta.fecha + '</strong>: ' + comentario.fecha + '</p>' +
                         '</div>';
                 });
 
