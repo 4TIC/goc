@@ -155,7 +155,8 @@
     "reunionSinMiembros": "No s'han definit membres per a la reunió",
     "confirmacionEnvioTitulo": "Confirmació d'enviament de la convocatòria",
     "confirmacionEnvioMensaje": "¿Estàs segur de que la reunió està completament definida i vols notificar als assistents?",
-    "resultadoEnvioConvocatoriaTitle": "Resultat de l'enviament de la convocatòria"
+    "resultadoEnvioConvocatoriaTitle": "Resultat de l'enviament de la convocatòria",
+    "titleSingular": "Reunió"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Històric de reunions",

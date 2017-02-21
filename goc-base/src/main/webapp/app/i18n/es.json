@@ -154,7 +154,8 @@
     "reunionSinMiembros": "No se han definido miembros para la reunión",
     "confirmacionEnvioTitulo": "Confirmación de envío de la convocatoria",
     "confirmacionEnvioMensaje": "¿Estás seguro de que la reunión está completamente definida y quieres notificar a los asistentes?",
-    "resultadoEnvioConvocatoriaTitle": "Resultado del envío de la convocatoria"
+    "resultadoEnvioConvocatoriaTitle": "Resultado del envío de la convocatoria",
+    "titleSingular": "Reunión"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Histórico de reuniones",

@@ -53,6 +53,7 @@ Ext.define('goc.view.reunion.ReunionGridController', {
         var grid = this.getView();
         var record = grid.getView().getSelectionModel().getSelection()[0];
         var viewModel = this.getViewModel();
+        var viewport = this.getView().up('viewport');
 
         if (!record) {
             return Ext.Msg.alert(appI18N.reuniones.cerrarActa, appI18N.reuniones.seleccionarParaCerrarActa);
@@ -65,11 +66,11 @@ Ext.define('goc.view.reunion.ReunionGridController', {
             autoLoad: true
         });
 
-        this.modal = view.add({
+        this.modal = viewport.add({
             xtype: 'formReunionAcuerdos',
             viewModel: {
                 data: {
-                    title: 'Reunió: ' + record.get('asunto'),
+                    title: appI18N.reuniones.titleSingular + ': ' + record.get('asunto'),
                     reunionId: record.get('id'),
                     responsableId: record.get('miembroResponsableActaId'),
                     completada: record.get('completada'),
