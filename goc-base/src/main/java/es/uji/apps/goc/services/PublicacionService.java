@@ -1,30 +1,38 @@
 package es.uji.apps.goc.services;
 
 import com.sun.jersey.api.core.InjectParam;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
 import es.uji.apps.goc.auth.LanguageConfig;
+import es.uji.apps.goc.auth.PersonalizationConfig;
 import es.uji.apps.goc.dao.ReunionDAO;
 import es.uji.apps.goc.dto.OrganoLocal;
 import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.dto.ReunionTemplate;
 import es.uji.apps.goc.dto.TipoOrganoLocal;
-import es.uji.apps.goc.exceptions.*;
-import es.uji.apps.goc.model.Organo;
-import es.uji.apps.goc.model.TipoOrgano;
+import es.uji.apps.goc.exceptions.InvalidAccessException;
+import es.uji.apps.goc.exceptions.MiembrosExternosException;
+import es.uji.apps.goc.exceptions.OrganosExternosException;
+import es.uji.apps.goc.exceptions.PersonasExternasException;
+import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
 import es.uji.apps.goc.templates.HTMLTemplate;
 import es.uji.apps.goc.templates.Template;
 import es.uji.commons.rest.CoreBaseService;
 import es.uji.commons.sso.AccessManager;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -46,6 +54,9 @@ public class PublicacionService extends CoreBaseService
 
     @InjectParam
     private ReunionService reunionService;
+
+    @InjectParam
+    private PersonalizationConfig personalizationConfig;
 
     @GET
     @Path("reuniones")
@@ -79,6 +90,7 @@ public class PublicacionService extends CoreBaseService
         template.put("alternativeLanguage", languageConfig.alternativeLanguage);
         template.put("mainLanguageDescription", languageConfig.mainLanguageDescription);
         template.put("alternativeLanguageDescription", languageConfig.alternativeLanguageDescription);
+        template.put("customCSS", (personalizationConfig.customCSS != null) ? personalizationConfig.customCSS : "");
         template.put("connectedUserId", connectedUserId);
 
         return template;
@@ -114,6 +126,7 @@ public class PublicacionService extends CoreBaseService
         template.put("alternativeLanguage", languageConfig.alternativeLanguage);
         template.put("mainLanguageDescription", languageConfig.mainLanguageDescription);
         template.put("alternativeLanguageDescription", languageConfig.alternativeLanguageDescription);
+        template.put("customCSS", (personalizationConfig.customCSS != null) ? personalizationConfig.customCSS : "");
         template.put("connectedUserId", connectedUserId);
         template.put("tiposOrganos", tiposOrganos);
         template.put("tipoOrganoId", tipoOrganoId);
@@ -157,6 +170,7 @@ public class PublicacionService extends CoreBaseService
         template.put("alternativeLanguage", languageConfig.alternativeLanguage);
         template.put("mainLanguageDescription", languageConfig.mainLanguageDescription);
         template.put("alternativeLanguageDescription", languageConfig.alternativeLanguageDescription);
+        template.put("customCSS", (personalizationConfig.customCSS != null) ? personalizationConfig.customCSS : "");
         template.put("connectedUserId", connectedUserId);
 
         return template;

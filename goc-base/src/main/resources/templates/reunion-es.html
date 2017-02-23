@@ -5,6 +5,8 @@
     <title>Acta gestión organos colegiados</title>
     <link rel="stylesheet" type="text/css" href="/goc/css/jquery.modal.css" />
     <link rel="stylesheet" type="text/css" href="/goc/css/style.css" />
+    <link th:if="${customCSS != ''}" rel="stylesheet" type="text/css" th:href="${customCSS}" />
+
     <script src="/goc/js/jquery.min.js"></script>
     <script src="/goc/js/jquery.modal.js"></script>
     <script th:inline="javascript">

@@ -18,12 +18,7 @@
         WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
         LanguageConfig languageConfig = context.getBean(LanguageConfig.class);
         PersonalizationConfig personalizationConfig = context.getBean(PersonalizationConfig.class);
-
-        if (personalizationConfig.customCSS != null && !personalizationConfig.customCSS.trim().equals("")) {
     %>
-    <link rel="stylesheet" type="text/css" href="<%=personalizationConfig.customCSS%>">
-    <%   }  %>
-
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script type="text/javascript" src="//static.uji.es/js/extjs/ext-6.2.1/build/ext-all-debug.js"></script>
