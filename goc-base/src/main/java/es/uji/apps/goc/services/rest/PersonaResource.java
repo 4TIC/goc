@@ -2,6 +2,7 @@ package es.uji.apps.goc.services.rest;
 
 import com.sun.jersey.api.core.InjectParam;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,8 @@ public class PersonaResource extends CoreBaseService
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<UIEntity> getPersonaByQueryString(@QueryParam("query") String query) throws PersonasExternasException {
+    public List<UIEntity> getPersonaByQueryString(@QueryParam("query") String query)
+        throws PersonasExternasException, UnsupportedEncodingException {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
         List<Persona> listaPersonas = personaService.getPersonasByQueryString(query, connectedUserId);
 

@@ -8,6 +8,8 @@ import com.sun.jersey.api.client.WebResource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +76,8 @@ public class PersonaService extends CoreBaseService {
     public List<Persona> getPersonasByQueryString(
         String query,
         Long connectedUserId
-    ) throws PersonasExternasException {
+    ) throws PersonasExternasException, UnsupportedEncodingException {
+        query = URLEncoder.encode(query, "UTF-8");
         WebResource getPersonasResource = Client.create().resource(this.personasExternasEndpoint + "?query=" + query);
 
         ClientResponse response =
