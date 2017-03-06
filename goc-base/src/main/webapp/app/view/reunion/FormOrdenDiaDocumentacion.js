@@ -79,7 +79,17 @@ formItems.push({
     buttonConfig: {
         text: '',
         iconCls: 'fa fa-file'
+    },
+    listeners: {
+        change: 'onFileChangeOrdenDia'
     }
+});
+
+formItems.push({
+    xtype: 'displayfield',
+    width: 200,
+    name: 'nombreDocumento',
+    reference: 'nombreDocumento'
 });
 
 

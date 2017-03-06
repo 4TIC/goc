@@ -80,7 +80,6 @@ Ext.define('goc.view.reunion.ReunionGridController', {
                 }
             }
         });
-
         this.modal.show();
     },
 
@@ -149,11 +148,13 @@ Ext.define('goc.view.reunion.ReunionGridController', {
     },
 
     onAttachmentEdit: function () {
+        console.log(this);
         var view = this.getView().up('panel');
         var grid = this.getView();
         var record = grid.getView().getSelectionModel().getSelection()[0];
         var viewModel = this.getViewModel();
         var store = Ext.create('goc.store.ReunionDocumentos');
+        console.log(view);
 
         if (!record) {
             return Ext.Msg.alert(appI18N.reuniones.documentacion, appI18N.reuniones.seleccionarParaDocumentacion);
@@ -170,7 +171,7 @@ Ext.define('goc.view.reunion.ReunionGridController', {
                 }
             }
         });
-
+        this.modal.height = '50%';
         this.modal.show();
 
     },

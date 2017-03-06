@@ -82,5 +82,11 @@ Ext.define('goc.view.reunion.FormDocumentacionController',
                 }
             });
         }
+    },
+
+    onFileChange: function (obj, value) {
+        var filename = value.substring(12, value.length),
+            labelNombreDocumento = this.getView().lookupReference('nombreDocumento');
+        labelNombreDocumento.setValue(filename);
     }
 });

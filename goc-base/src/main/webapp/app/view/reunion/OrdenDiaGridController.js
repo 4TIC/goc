@@ -120,7 +120,7 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
                 }
             }
         });
-
+        this.modal.height = '50%';
         this.modal.show();
 
     },

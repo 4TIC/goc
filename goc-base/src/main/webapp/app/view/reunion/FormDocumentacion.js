@@ -89,7 +89,17 @@ formItems.push({
     buttonConfig: {
         text: '',
         iconCls: 'fa fa-file'
+    },
+    listeners: {
+        change: 'onFileChange'
     }
+});
+
+formItems.push({
+    xtype: 'displayfield',
+    width: 200,
+    name: 'nombreDocumento',
+    reference: 'nombreDocumento'
 });
 
 Ext.define('goc.view.reunion.FormDocumentacion',
