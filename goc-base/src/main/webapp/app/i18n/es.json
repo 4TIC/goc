@@ -155,7 +155,8 @@
     "confirmacionEnvioTitulo": "Confirmación de envío de la convocatoria",
     "confirmacionEnvioMensaje": "¿Estás seguro de que la reunión está completamente definida y quieres notificar a los asistentes?",
     "resultadoEnvioConvocatoriaTitle": "Resultado del envío de la convocatoria",
-    "titleSingular": "Reunión"
+    "titleSingular": "Reunión",
+    "urlInvalida": "La URL de grabación de la reunión no tiene un formato válido"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Histórico de reuniones",

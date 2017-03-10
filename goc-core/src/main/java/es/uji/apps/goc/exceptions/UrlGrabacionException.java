@@ -7,7 +7,7 @@ public class UrlGrabacionException extends CoreDataBaseException
 {
     public UrlGrabacionException()
     {
-        super("La URL de gravació de la reunió no té un format vàlid.");
+        super("appI18N.reuniones.urlInvalida");
     }
 
     public UrlGrabacionException(String message)

@@ -220,7 +220,10 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
 
                 if (msgList)
                 {
-                    alert(msgList);
+                    if (msgList.indexOf("appI18N") != -1)
+                        alert(eval(msgList));
+                    else
+                        alert(msgList);
                 }
             }
         });
