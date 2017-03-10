@@ -120,6 +120,7 @@ $(function () {
 
     $('button.add-comentario').on('click', function () {
         $('div.nuevo-comentario').modal();
+        $('div.nuevo-comentario textarea').val('');
     });
 
     $('button.post-comentario').on('click', function () {
