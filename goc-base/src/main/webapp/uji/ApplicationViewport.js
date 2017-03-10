@@ -176,8 +176,8 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
         Ext.grid.RowEditor.prototype.saveBtnText = appI18N ? appI18N.common.actualizar : "Actualitzar";
 
         Ext.MessageBox.buttonText.yes = "Sí";
-        Ext.MessageBox.buttonText.ok = "Acceptar";
-        Ext.MessageBox.buttonText.cancel = "Cancel·lar";
+        Ext.MessageBox.buttonText.ok = appI18N ? appI18N.common.aceptar : "Acceptar";
+        Ext.MessageBox.buttonText.cancel = appI18N ? appI18N.common.cancelar : "Cancel·lar";
     },
 
     initGlobalAjaxEvents : function()
