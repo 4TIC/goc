@@ -43,7 +43,7 @@ Ext.define('goc.view.cargo.Grid',{
         type: 'cargos'
     },
 
-    title: 'Càrrecs',
+    title: appI18N.cargos.titulo,
     scrollable: true,
 
     columns: cargoGridColumns
