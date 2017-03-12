@@ -137,11 +137,10 @@ Ext.define('goc.view.reunion.FormOrdenDia', {
     xtype: 'formOrdenDia',
 
     width: 640,
-    height: 800,
+    height: '90%',
     modal: true,
     bodyPadding: 10,
     autoScroll: true,
-    y: -60,
 
     layout: {
         type: 'vbox',

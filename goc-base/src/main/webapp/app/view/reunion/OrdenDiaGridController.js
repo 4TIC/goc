@@ -154,9 +154,10 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
         var view = this.getView().up('panel');
         var viewModel = this.getViewModel();
         var store = viewModel.getStore('puntosOrdenDiaStore');
+        var viewport = this.getView().up('viewport');
 
         var modalDefinition = this.getPuntoOrdenDiaModalDefinition(record, store);
-        this.modal = view.add(modalDefinition);
+        this.modal = viewport.add(modalDefinition);
         this.modal.show();
     }
 });
