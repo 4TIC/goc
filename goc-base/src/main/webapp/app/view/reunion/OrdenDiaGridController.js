@@ -100,6 +100,7 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
         var record = grid.getView().getSelectionModel().getSelection()[0];
         var viewModel = this.getViewModel();
         var store = Ext.create('goc.store.PuntosOrdenDiaDocumentos');
+        var viewport = this.getView().up('viewport');
 
         var reunionGrid = Ext.ComponentQuery.query("reunionGrid")[0];
         var reunion = reunionGrid.getView().getSelectionModel().getSelection()[0];
@@ -108,7 +109,7 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
             return Ext.Msg.alert(appI18N.reuniones.cerrarActa, appI18N.reuniones.seleccionarParaDocumentacionPuntoOrdenDia);
         }
 
-        this.modal = view.add({
+        this.modal = viewport.add({
             xtype: 'formOrdenDiaDocumentacion',
             viewModel: {
                 data: {
@@ -120,9 +121,7 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
                 }
             }
         });
-        this.modal.height = '50%';
         this.modal.show();
-
     },
 
     getPuntoOrdenDiaModalDefinition: function (puntoOrdenDia, store) {

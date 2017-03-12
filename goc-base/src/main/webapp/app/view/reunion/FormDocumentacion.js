@@ -110,7 +110,7 @@ Ext.define('goc.view.reunion.FormDocumentacion',
             title: '{title}'
         },
         width: 640,
-        height: 440,
+        height: '90%',
         modal: true,
         bodyPadding: 10,
         layout: {

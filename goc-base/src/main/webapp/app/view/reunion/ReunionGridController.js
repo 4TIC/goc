@@ -154,13 +154,13 @@ Ext.define('goc.view.reunion.ReunionGridController', {
         var record = grid.getView().getSelectionModel().getSelection()[0];
         var viewModel = this.getViewModel();
         var store = Ext.create('goc.store.ReunionDocumentos');
-        console.log(view);
+        var viewport = this.getView().up('viewport');
 
         if (!record) {
             return Ext.Msg.alert(appI18N.reuniones.documentacion, appI18N.reuniones.seleccionarParaDocumentacion);
         }
 
-        this.modal = view.add({
+        this.modal = viewport.add({
             xtype: 'formDocumentacion',
             viewModel: {
                 data: {
@@ -171,9 +171,7 @@ Ext.define('goc.view.reunion.ReunionGridController', {
                 }
             }
         });
-        this.modal.height = '50%';
         this.modal.show();
-
     },
 
     getReunionModalDefinition: function (reunion, reunionesStore, organosStore) {
