@@ -20,7 +20,8 @@ Ext.define('goc.view.organo.MainController', {
             {
                 id: 'tipoOrganoId',
                 property: 'tipoOrganoId',
-                value: recordId
+                value: recordId,
+                exactMatch: true
             });
 
         store.addFilter(filter);
