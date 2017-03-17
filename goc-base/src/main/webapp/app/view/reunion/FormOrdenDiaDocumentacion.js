@@ -97,11 +97,12 @@ Ext.define('goc.view.reunion.FormOrdenDiaDocumentacion',
     {
         extend: 'Ext.window.Window',
         xtype: 'formOrdenDiaDocumentacion',
+        autoScroll: true,
         bind: {
             title: '{title}'
         },
         width: 640,
-        height: '90%',
+        minHeight: 540,
         modal: true,
         bodyPadding: 10,
         layout: {
@@ -133,10 +134,13 @@ Ext.define('goc.view.reunion.FormOrdenDiaDocumentacion',
                     store: '{store}'
                 },
                 hideHeaders: true,
-                columns: gridColumns
+                columns: gridColumns,
+                autoScroll: true,
+                minHeight: 150
             },
             {
                 xtype: 'form',
+                autoScroll: true,
                 bind: {
                     disabled: '{reunionCompletada}'
                 },
