@@ -137,7 +137,7 @@ Ext.define('goc.view.reunion.FormOrdenDia', {
     xtype: 'formOrdenDia',
 
     width: 640,
-    height: '90%',
+    maxHeight: 1000,
     modal: true,
     bodyPadding: 10,
     autoScroll: true,
@@ -189,5 +189,9 @@ Ext.define('goc.view.reunion.FormOrdenDia', {
 
             items: formItems
         }]
-    }]
+    }],
+
+    listeners: {
+        afterLayout: 'afterRenderFormOrdenDia'
+    }
 });

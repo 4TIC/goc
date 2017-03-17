@@ -54,6 +54,14 @@ Ext.define('goc.view.reunion.FormOrdenDiaController', {
                 scope: this
             });
         }
+    },
+
+    afterRenderFormOrdenDia: function(windowFormOrdenDia) {
+        var height = Ext.getBody().getViewSize().height;
+        if (windowFormOrdenDia.getHeight() > height) {
+            windowFormOrdenDia.setHeight(height-30);
+            windowFormOrdenDia.setPosition(windowFormOrdenDia.x, 15);
+        }
     }
 
 });
