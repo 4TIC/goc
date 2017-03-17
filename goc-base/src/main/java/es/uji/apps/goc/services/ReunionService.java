@@ -1030,7 +1030,16 @@ public class ReunionService
     }
 
     public List<Reunion> getReunionesPublicasAnyo(Integer anyo) {
-        return reunionDAO.getReunionesPublicasAnyo(anyo);
+        List<Long> ids = new ArrayList<>();
+        List<Reunion> reuniones = new ArrayList<>();
+        List<Reunion> reunionesPublicas = reunionDAO.getReunionesPublicasAnyo(anyo);
+        for(Reunion reunion : reunionesPublicas){
+            if(!ids.contains(reunion.getId())){
+                ids.add(reunion.getId());
+                reuniones.add(reunion);
+            }
+        }
+        return reuniones;
     }
 
     public List<Reunion> getReunionesPublicas(
