@@ -469,10 +469,12 @@ Ext.define('goc.view.reunion.FormReunion',
     title : appI18N.reuniones.tituloPrincipal,
 
     width : 640,
-    height : '90%',
+    maxHeight : 1000,
     modal : true,
     bodyPadding : 10,
     autoScroll: true,
+
+    viewConfig: 'fit',
 
     layout :
     {
@@ -533,6 +535,7 @@ Ext.define('goc.view.reunion.FormReunion',
     listeners :
     {
         borrarAsistenteReunion : 'onBorrarAsistenteReunion',
-        detalleAsistentesReunion : 'onDetalleAsistentesReunion'
+        detalleAsistentesReunion : 'onDetalleAsistentesReunion',
+        afterLayout: 'afterRenderFormReunion'
     }
 });

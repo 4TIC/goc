@@ -146,6 +146,13 @@ Ext.define('goc.view.reunion.FormReunionController', {
                 scope: this
             });
         }
-    }
+    },
 
+    afterRenderFormReunion: function(windowFormReunion) {
+        var height = Ext.getBody().getViewSize().height;
+        if (windowFormReunion.getHeight() > height) {
+            windowFormReunion.setHeight(height-30);
+            windowFormReunion.setPosition(windowFormReunion.x, 15);
+        }
+    }
 });
