@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -1042,12 +1041,9 @@ public class ReunionService
         for(Reunion reunion : reunionesTotal){
             if(!ids.contains(reunion.getId())){
                 ids.add(reunion.getId());
-                List<PuntoOrdenDia> puntosByReunionId = puntoOrdenDiaDAO.getPuntosByReunionId(reunion.getId());
-                reunion.setReunionPuntosOrdenDia(new HashSet(puntosByReunionId));
                 reuniones.add(reunion);
             }
         }
-
         return reuniones;
     }
 
