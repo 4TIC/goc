@@ -13,12 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.ws.rs.core.MediaType;
@@ -1008,17 +1007,8 @@ public class ReunionService
 
     public List<Reunion> getReunionesPublicas(Long tipoOrganoId, Long organoId, Integer anyo)
     {
-        List<Long> ids = new ArrayList<>();
-        List<Reunion> reuniones = new ArrayList<>();
         List<Reunion> reunionesPublicas = reunionDAO.getReunionesPublicas(tipoOrganoId, organoId, anyo);
-        for(Reunion reunion : reunionesPublicas){
-            if(!ids.contains(reunion.getId())){
-                ids.add(reunion.getId());
-                reuniones.add(reunion);
-            }
-        }
-        getPuntosOrdenDiaOrdenados(reuniones);
-        return reuniones;
+        return filtrarDuplicados(reunionesPublicas);
     }
 
     public List<Descriptor> getDescriptoresConReunionesPublicas(Integer anyo){
@@ -1042,34 +1032,23 @@ public class ReunionService
     }
 
     public List<Reunion> getReunionesPublicasAnyo(Integer anyo) {
-        List<Long> ids = new ArrayList<>();
-        List<Reunion> reuniones = new ArrayList<>();
         List<Reunion> reunionesPublicas = reunionDAO.getReunionesPublicasAnyo(anyo);
-        for(Reunion reunion : reunionesPublicas){
+        return filtrarDuplicados(reunionesPublicas);
+    }
+
+    private List<Reunion> filtrarDuplicados(List<Reunion> reunionesTotal){
+        List<Reunion> reuniones = new ArrayList<>();
+        List<Long> ids = new ArrayList<>();
+        for(Reunion reunion : reunionesTotal){
             if(!ids.contains(reunion.getId())){
                 ids.add(reunion.getId());
+                List<PuntoOrdenDia> puntosByReunionId = puntoOrdenDiaDAO.getPuntosByReunionId(reunion.getId());
+                reunion.setReunionPuntosOrdenDia(new HashSet(puntosByReunionId));
                 reuniones.add(reunion);
             }
         }
 
-        getPuntosOrdenDiaOrdenados(reuniones);
         return reuniones;
-    }
-
-    private void getPuntosOrdenDiaOrdenados(List<Reunion> reuniones) {
-        for(Reunion reunion : reuniones) {
-            Set<PuntoOrdenDia> puntosOrdenDiaOrdenados =
-                reunion.getReunionPuntosOrdenDia().stream().sorted(new Comparator<PuntoOrdenDia>() {
-                    @Override
-                    public int compare(
-                        PuntoOrdenDia o1,
-                        PuntoOrdenDia o2
-                    ) {
-                        return o1.getOrden().compareTo(o2.getOrden());
-                    }
-                }).collect(Collectors.toSet());
-            reunion.setReunionPuntosOrdenDia(puntosOrdenDiaOrdenados);
-        }
     }
 
     public List<Reunion> getReunionesPublicas(
@@ -1080,17 +1059,8 @@ public class ReunionService
         Integer anyo
     ) {
 
-        List<Long> ids = new ArrayList<>();
-        List<Reunion> reuniones = new ArrayList<>();
         List<Reunion> reunionesPublicas = reunionDAO.getReunionesPublicas(tipoOrganoId, organoId, descriptorId, claveId, anyo);
-        for(Reunion reunion : reunionesPublicas){
-            if(!ids.contains(reunion.getId())){
-                ids.add(reunion.getId());
-                reuniones.add(reunion);
-            }
-        }
-        getPuntosOrdenDiaOrdenados(reuniones);
-        return reuniones;
+        return filtrarDuplicados(reunionesPublicas);
     }
 
     public List<Reunion> getReunionesPublicasClave(
@@ -1098,16 +1068,7 @@ public class ReunionService
         Long claveId,
         Integer anyo
     ) {
-        List<Long> ids = new ArrayList<>();
-        List<Reunion> reuniones = new ArrayList<>();
         List<Reunion> reunionesPublicasClave = reunionDAO.getReunionesPublicasClave(descriptorId, claveId, anyo);
-        for(Reunion reunion : reunionesPublicasClave){
-            if(!ids.contains(reunion.getId())){
-                ids.add(reunion.getId());
-                reuniones.add(reunion);
-            }
-        }
-        getPuntosOrdenDiaOrdenados(reuniones);
-        return reuniones;
+        return filtrarDuplicados(reunionesPublicasClave);
     }
 }
