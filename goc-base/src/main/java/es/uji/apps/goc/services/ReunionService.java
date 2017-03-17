@@ -1006,7 +1006,16 @@ public class ReunionService
 
     public List<Reunion> getReunionesPublicas(Long tipoOrganoId, Long organoId, Integer anyo)
     {
-        return reunionDAO.getReunionesPublicas(tipoOrganoId, organoId, anyo);
+        List<Long> ids = new ArrayList<>();
+        List<Reunion> reuniones = new ArrayList<>();
+        List<Reunion> reunionesPublicas = reunionDAO.getReunionesPublicas(tipoOrganoId, organoId, anyo);
+        for(Reunion reunion : reunionesPublicas){
+            if(!ids.contains(reunion.getId())){
+                ids.add(reunion.getId());
+                reuniones.add(reunion);
+            }
+        }
+        return reuniones;
     }
 
     public List<Descriptor> getDescriptoresConReunionesPublicas(Integer anyo){
@@ -1077,7 +1086,6 @@ public class ReunionService
                 reuniones.add(reunion);
             }
         }
-
         return reuniones;
     }
 }
