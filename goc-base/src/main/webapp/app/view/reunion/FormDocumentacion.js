@@ -110,7 +110,8 @@ Ext.define('goc.view.reunion.FormDocumentacion',
             title: '{title}'
         },
         width: 640,
-        height: '90%',
+        minHeight: 540,
+        autoScroll: true,
         modal: true,
         bodyPadding: 10,
         layout: {
@@ -133,8 +134,9 @@ Ext.define('goc.view.reunion.FormDocumentacion',
                 xtype: 'grid',
                 flex: 1,
                 scrollable: true,
-                maxHeight: 180,
+                minHeight: 150,
                 margin: '5 0 5 0',
+                autoScroll: true,
                 viewConfig: {
                     emptyText: appI18N.reuniones.documentacionAdjuntaVacia
                 },
@@ -154,6 +156,7 @@ Ext.define('goc.view.reunion.FormDocumentacion',
                 layout: 'anchor',
                 border: false,
                 padding: 5,
+                autoScroll: true,
                 name: 'subirDocumento',
                 items: [
                     {
