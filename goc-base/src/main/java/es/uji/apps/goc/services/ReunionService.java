@@ -13,10 +13,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.ws.rs.core.MediaType;
@@ -1015,6 +1017,7 @@ public class ReunionService
                 reuniones.add(reunion);
             }
         }
+        getPuntosOrdenDiaOrdenados(reuniones);
         return reuniones;
     }
 
@@ -1048,7 +1051,25 @@ public class ReunionService
                 reuniones.add(reunion);
             }
         }
+
+        getPuntosOrdenDiaOrdenados(reuniones);
         return reuniones;
+    }
+
+    private void getPuntosOrdenDiaOrdenados(List<Reunion> reuniones) {
+        for(Reunion reunion : reuniones) {
+            Set<PuntoOrdenDia> puntosOrdenDiaOrdenados =
+                reunion.getReunionPuntosOrdenDia().stream().sorted(new Comparator<PuntoOrdenDia>() {
+                    @Override
+                    public int compare(
+                        PuntoOrdenDia o1,
+                        PuntoOrdenDia o2
+                    ) {
+                        return o1.getOrden().compareTo(o2.getOrden());
+                    }
+                }).collect(Collectors.toSet());
+            reunion.setReunionPuntosOrdenDia(puntosOrdenDiaOrdenados);
+        }
     }
 
     public List<Reunion> getReunionesPublicas(
@@ -1068,7 +1089,7 @@ public class ReunionService
                 reuniones.add(reunion);
             }
         }
-
+        getPuntosOrdenDiaOrdenados(reuniones);
         return reuniones;
     }
 
@@ -1086,6 +1107,7 @@ public class ReunionService
                 reuniones.add(reunion);
             }
         }
+        getPuntosOrdenDiaOrdenados(reuniones);
         return reuniones;
     }
 }
