@@ -17,6 +17,7 @@ import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.dto.ReunionComentario;
 import es.uji.apps.goc.exceptions.AsistenteNoEncontradoException;
 import es.uji.commons.rest.UIEntity;
+import es.uji.commons.sso.User;
 
 @Service
 @Component
@@ -38,9 +39,10 @@ public class ReunionComentarioService
     }
 
     @Transactional
-    public ReunionComentario addComentario(UIEntity comentarioUI, Long connectedUserId)
+    public ReunionComentario addComentario(UIEntity comentarioUI, User userConnected)
         throws AsistenteNoEncontradoException {
         Long reunionId = Long.parseLong(comentarioUI.get("reunionId"));
+        Long connectedUserId = userConnected.getId();
 
         List<OrganoReunionMiembro> listaAsistentes = organoReunionMiembroDAO
             .getMiembroByAsistenteIdOrSuplenteId(reunionId, connectedUserId);

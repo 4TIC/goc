@@ -156,6 +156,7 @@ public class OrganoDAO extends BaseDAODatabaseImpl
                         .and(qReunion.publica.isTrue())
                         .and(qReunion.completada.isTrue())
                         .and(beWhere))
+                .distinct()
                 .list(qOrganoLocal);
     }
 }

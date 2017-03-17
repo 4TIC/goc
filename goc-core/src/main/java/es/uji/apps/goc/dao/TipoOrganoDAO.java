@@ -1,13 +1,16 @@
 package es.uji.apps.goc.dao;
 
+import com.mysema.query.jpa.impl.JPAQuery;
+
+import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import es.uji.apps.goc.dto.*;
-import org.springframework.stereotype.Repository;
-
-import com.mysema.query.jpa.impl.JPAQuery;
-
+import es.uji.apps.goc.dto.QOrganoReunion;
+import es.uji.apps.goc.dto.QReunion;
+import es.uji.apps.goc.dto.QTipoOrganoLocal;
+import es.uji.apps.goc.dto.TipoOrganoLocal;
 import es.uji.apps.goc.model.TipoOrgano;
 import es.uji.commons.db.BaseDAODatabaseImpl;
 
@@ -100,6 +103,7 @@ public class TipoOrganoDAO extends BaseDAODatabaseImpl
                 .where(qOrganoReunion.tipoOrganoId.eq(qTipoOrganoLocal.id)
                         .and(qReunion.publica.isTrue())
                         .and(qReunion.completada.isTrue()))
+                .distinct()
                 .list(qTipoOrganoLocal);
     }
 }
