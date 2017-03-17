@@ -1,5 +1,7 @@
 package es.uji.apps.goc.services.rest;
 
+import com.sun.jersey.api.core.InjectParam;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +13,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.sun.jersey.api.core.InjectParam;
-
 import es.uji.apps.goc.dto.ReunionComentario;
 import es.uji.apps.goc.exceptions.ReunionYaCompletadaException;
 import es.uji.apps.goc.services.ReunionComentarioService;
@@ -20,6 +20,7 @@ import es.uji.apps.goc.services.ReunionService;
 import es.uji.commons.rest.CoreBaseService;
 import es.uji.commons.rest.UIEntity;
 import es.uji.commons.sso.AccessManager;
+import es.uji.commons.sso.User;
 
 @Path("/reuniones/{reunionId}/comentarios")
 public class ReunionComentarioResource extends CoreBaseService
@@ -46,11 +47,11 @@ public class ReunionComentarioResource extends CoreBaseService
     @Produces(MediaType.APPLICATION_JSON)
     public UIEntity addComentario(UIEntity comentarioUI) throws ReunionYaCompletadaException
     {
-        Long connectedUserId = AccessManager.getConnectedUserId(request);
+        User userConnected = AccessManager.getConnectedUser(request);
 
         reunionService.compruebaReunionNoCompletada(Long.parseLong(comentarioUI.get("reunionId")));
         ReunionComentario reunionComentario = reunionComentarioService.addComentario(comentarioUI,
-                connectedUserId);
+                userConnected);
 
         return UIEntity.toUI(reunionComentario);
     }
