@@ -20,7 +20,8 @@
     "edicionRegistro": "Edición de registro",
     "borradoRegistro": "Borrar registro",
     "seleccionarParaEditarRegistro": "Debe seleccionar un registro para poder editarlo",
-    "seleccionarParaBorrarRegistro": "Debe seleccionar un registro para poder borrarlo"
+    "seleccionarParaBorrarRegistro": "Debe seleccionar un registro para poder borrarlo",
+    "cerrar": "Cerrar"
   },
   "header": {
     "titulo": "Gestión de órganos colegiados"
@@ -156,7 +157,7 @@
     "confirmacionEnvioMensaje": "¿Estás seguro de que la reunión está completamente definida y quieres notificar a los asistentes?",
     "resultadoEnvioConvocatoriaTitle": "Resultado del envío de la convocatoria",
     "titleSingular": "Reunión",
-    "urlInvalida": "La URL de grabación de la reunión no tiene un formato válido"
+    "descriptoresYclaves": "Descriptores y claves"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Histórico de reuniones",
@@ -170,5 +171,16 @@
     "comentarios": "Comentarios",
     "autor": "Autor",
     "fecha": "Fecha"
+  },
+  "descriptores": {
+    "titulo": "Descriptores",
+    "descripcion": "Descripción",
+    "nombre": "Nombre",
+    "descriptorSingular": "Descriptor"
+  },
+  "claves": {
+    "titulo": "Claves",
+    "nombre": "Nombre",
+    "claveSingular": "Clave"
   }
 }

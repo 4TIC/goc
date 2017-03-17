@@ -30,7 +30,18 @@
       <h1>Llistat de acords del òrgans col·legiats</h1>
 
       <form action="/goc/rest/publicacion/acuerdos" method="GET">
+        <input type="hidden" name="lang" th:value="${lang}" />
         <table border="0" cellpadding="2" cellspacing="2">
+          <tr>
+            <td><strong>Any:</strong></td>
+            <td>
+              <select name="anyo" onchange="this.form.submit()">
+                <option value="">-- Anys --</option>
+                <option th:each="anyoCalculated : ${anyos}" th:selected="${anyo == anyoCalculated}" th:value="${anyoCalculated}" th:text="${anyoCalculated}">Any</option>
+              </select>
+            </td>
+          </tr>
+
           <tr>
             <td><strong>Tipous d'òrgans:</strong></td>
             <td>
@@ -47,6 +58,26 @@
               <select name="organoId" onchange="this.form.submit()">
                 <option value="">-- Òrgans --</option>
                 <option th:each="organo : ${organos}" th:selected="${organoId == organo.id}" th:value="${organo.id}" th:text="${organo.nombreAlternativo}">Òrgano</option>
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Descriptors:</strong></td>
+            <td>
+              <select name="descriptorId" onchange="this.form.submit()">
+                <option value="">-- Descriptor --</option>
+                <option th:each="desc : ${descriptores}" th:selected="${descriptorId == desc.id}" th:value="${desc.id}" th:text="${desc.descriptor}">Descriptor</option>
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Claus:</strong></td>
+            <td>
+              <select name="claveId" onchange="this.form.submit()">
+                <option value="">-- Clau --</option>
+                <option th:each="clave : ${claves}" th:selected="${claveId == clave.id}" th:value="${clave.id}" th:text="${clave.clave}">Clau</option>
               </select>
             </td>
           </tr>

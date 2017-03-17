@@ -140,5 +140,11 @@ Ext.define('goc.view.reunion.OrdenDiaGrid',
             iconCls: 'fa fa-check',
             text: appI18N.reuniones.documentacionAdjunta,
             handler: 'onAttachmentEdit'
+        }, ' | ',
+        {
+            xtype: 'button',
+            iconCls: 'fa fa-check',
+            text: appI18N.reuniones.descriptoresYclaves,
+            handler: 'onAttachmentEditDescriptores'
         }]
 });

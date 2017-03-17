@@ -21,6 +21,8 @@ import java.util.stream.Collectors;
 
 import javax.ws.rs.core.MediaType;
 
+import es.uji.apps.goc.dao.ClaveDAO;
+import es.uji.apps.goc.dao.DescriptorDAO;
 import es.uji.apps.goc.dao.MiembroDAO;
 import es.uji.apps.goc.dao.OrganoDAO;
 import es.uji.apps.goc.dao.OrganoReunionDAO;
@@ -30,6 +32,8 @@ import es.uji.apps.goc.dao.PuntoOrdenDiaDocumentoDAO;
 import es.uji.apps.goc.dao.ReunionDAO;
 import es.uji.apps.goc.dao.ReunionDocumentoDAO;
 import es.uji.apps.goc.dao.TipoOrganoDAO;
+import es.uji.apps.goc.dto.Clave;
+import es.uji.apps.goc.dto.Descriptor;
 import es.uji.apps.goc.dto.MiembroFirma;
 import es.uji.apps.goc.dto.MiembroTemplate;
 import es.uji.apps.goc.dto.OrganoFirma;
@@ -117,6 +121,12 @@ public class ReunionService
 
     @Autowired
     private OrganoDAO organoDAO;
+
+    @Autowired
+    private DescriptorDAO descriptorDAO;
+
+    @Autowired
+    private ClaveDAO claveDAO;
 
 
     public List<Reunion> getReunionesByUserId(Boolean completada, Long connectedUserId)
@@ -989,13 +999,76 @@ public class ReunionService
         return tipoOrganoDAO.getTiposOrganoConReunionesPublicas();
     }
 
-    public List<OrganoLocal> getOrganosConReunionesPublicas(Long tipoOrganoId)
+    public List<OrganoLocal> getOrganosConReunionesPublicas(Long tipoOrganoId, Integer anyo)
     {
-        return organoDAO.getOrganosConReunionesPublicas(tipoOrganoId);
+        return organoDAO.getOrganosConReunionesPublicas(tipoOrganoId, anyo);
     }
 
-    public List<Reunion> getReunionesPublicas(Long tipoOrganoId, Long organoId)
+    public List<Reunion> getReunionesPublicas(Long tipoOrganoId, Long organoId, Integer anyo)
     {
-        return reunionDAO.getReunionesPublicas(tipoOrganoId, organoId);
+        return reunionDAO.getReunionesPublicas(tipoOrganoId, organoId, anyo);
+    }
+
+    public List<Descriptor> getDescriptoresConReunionesPublicas(Integer anyo){
+        List<Reunion> reuniones = reunionDAO.getReunionesPublicas(anyo);
+        List<Long> idsReuniones = reuniones.stream().map(r -> r.getId()).collect(Collectors.toList());
+        return descriptorDAO.getDescriptoresConReunionesPublicas(idsReuniones, anyo);
+    }
+
+    public List<Integer> getAnyosConReunionesPublicas(){
+        return reunionDAO.getAnyosConReunionesPublicas();
+    }
+
+    public List<Clave> getClavesConReunionesPublicas(
+        List<Descriptor> descriptoresConReunionesPublicas,
+        Long descriptorId,
+        Integer anyo
+    ) {
+        List<Reunion> reuniones = reunionDAO.getReunionesPublicas(anyo);
+        List<Long> idsReuniones = reuniones.stream().map(r -> r.getId()).collect(Collectors.toList());
+        return claveDAO.getClavesConReunionesPublicas(idsReuniones, descriptorId, anyo);
+    }
+
+    public List<Reunion> getReunionesPublicasAnyo(Integer anyo) {
+        return reunionDAO.getReunionesPublicasAnyo(anyo);
+    }
+
+    public List<Reunion> getReunionesPublicas(
+        Long tipoOrganoId,
+        Long organoId,
+        Long descriptorId,
+        Long claveId,
+        Integer anyo
+    ) {
+
+        List<Long> ids = new ArrayList<>();
+        List<Reunion> reuniones = new ArrayList<>();
+        List<Reunion> reunionesPublicas = reunionDAO.getReunionesPublicas(tipoOrganoId, organoId, descriptorId, claveId, anyo);
+        for(Reunion reunion : reunionesPublicas){
+            if(!ids.contains(reunion.getId())){
+                ids.add(reunion.getId());
+                reuniones.add(reunion);
+            }
+        }
+
+        return reuniones;
+    }
+
+    public List<Reunion> getReunionesPublicasClave(
+        Long descriptorId,
+        Long claveId,
+        Integer anyo
+    ) {
+        List<Long> ids = new ArrayList<>();
+        List<Reunion> reuniones = new ArrayList<>();
+        List<Reunion> reunionesPublicasClave = reunionDAO.getReunionesPublicasClave(descriptorId, claveId, anyo);
+        for(Reunion reunion : reunionesPublicasClave){
+            if(!ids.contains(reunion.getId())){
+                ids.add(reunion.getId());
+                reuniones.add(reunion);
+            }
+        }
+
+        return reuniones;
     }
 }

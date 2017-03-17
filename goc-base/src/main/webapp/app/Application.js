@@ -29,6 +29,7 @@ Ext.Ajax.request(
                 Ext.require('goc.view.reunion.Main');
                 Ext.require('goc.view.historicoReunion.Main');
                 Ext.require('goc.view.common.LookupWindowPersonas');
+                Ext.require('goc.view.descriptor.Main');
 
                 Ext.ariaWarn = Ext.emptyFn;
 

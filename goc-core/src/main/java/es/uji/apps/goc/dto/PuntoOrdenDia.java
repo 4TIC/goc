@@ -46,6 +46,9 @@ public class PuntoOrdenDia implements Serializable
     @OneToMany(mappedBy = "puntoOrdenDia", cascade = CascadeType.REMOVE)
     private Set<PuntoOrdenDiaDocumento> puntoOrdenDiaDocumentos;
 
+    @OneToMany(mappedBy = "puntoOrdenDia", cascade = CascadeType.REMOVE)
+    private Set<PuntoOrdenDiaDescriptor> puntoOrdenDiaDescriptores;
+
     public PuntoOrdenDia() {}
     public PuntoOrdenDia(Long id) {
         this.id = id;
@@ -168,5 +171,13 @@ public class PuntoOrdenDia implements Serializable
     public void setDeliberacionesAlternativas(String deliberacionesAlternativas)
     {
         this.deliberacionesAlternativas = deliberacionesAlternativas;
+    }
+
+    public Set<PuntoOrdenDiaDescriptor> getPuntoOrdenDiaDescriptores() {
+        return puntoOrdenDiaDescriptores;
+    }
+
+    public void setPuntoOrdenDiaDescriptores(Set<PuntoOrdenDiaDescriptor> puntoOrdenDiaDescriptores) {
+        this.puntoOrdenDiaDescriptores = puntoOrdenDiaDescriptores;
     }
 }

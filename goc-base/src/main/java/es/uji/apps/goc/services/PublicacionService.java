@@ -20,6 +20,8 @@ import javax.ws.rs.core.MediaType;
 import es.uji.apps.goc.auth.LanguageConfig;
 import es.uji.apps.goc.auth.PersonalizationConfig;
 import es.uji.apps.goc.dao.ReunionDAO;
+import es.uji.apps.goc.dto.Clave;
+import es.uji.apps.goc.dto.Descriptor;
 import es.uji.apps.goc.dto.OrganoLocal;
 import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.dto.ReunionTemplate;
@@ -100,28 +102,55 @@ public class PublicacionService extends CoreBaseService
     @Path("acuerdos")
     @Produces(MediaType.TEXT_HTML)
     public Template acuerdos(@QueryParam("lang") String lang, @QueryParam("tipoOrganoId") Long tipoOrganoId,
-                             @QueryParam("organoId") Long organoId)
+                             @QueryParam("organoId") Long organoId, @QueryParam("descriptorId") Long descriptorId,
+                             @QueryParam("claveId") Long claveId, @QueryParam("anyo") Integer anyo)
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
         String applang = getLangCode(lang);
 
+        List<Integer> anyos = reunionService.getAnyosConReunionesPublicas();
         List<TipoOrganoLocal> tiposOrganos = reunionService.getTiposOrganosConReunionesPublicas();
         List<OrganoLocal> organos = new ArrayList<>();
+        List<Descriptor> descriptoresConReunionesPublicas = null;
+        List<Clave> claves = null;
         List<Reunion> reuniones = new ArrayList<>();
+
+        if(anyo != null){
+            reuniones = reunionService.getReunionesPublicasAnyo(anyo);
+        }
+
+        descriptoresConReunionesPublicas = reunionService.getDescriptoresConReunionesPublicas(anyo);
 
         if (tipoOrganoId != null)
         {
-            organos = reunionService.getOrganosConReunionesPublicas(tipoOrganoId);
+            organos = reunionService.getOrganosConReunionesPublicas(tipoOrganoId, anyo);
 
             if (organoId != null)
             {
-                reuniones = reunionService.getReunionesPublicas(tipoOrganoId, organoId);
+                reuniones = reunionService.getReunionesPublicas(tipoOrganoId, organoId, anyo);
+            }
+        }
+
+        if(!descriptoresConReunionesPublicas.isEmpty() && descriptorId != null)
+        {
+            claves = reunionService.getClavesConReunionesPublicas(descriptoresConReunionesPublicas, descriptorId, anyo);
+
+            if (claveId != null)
+            {
+                if (organoId != null)
+                {
+                    reuniones = reunionService.getReunionesPublicas(tipoOrganoId, organoId, descriptorId, claveId, anyo);
+                } else
+                {
+                    reuniones = reunionService.getReunionesPublicasClave(descriptorId, claveId, anyo);
+                }
             }
         }
 
         Template template = new HTMLTemplate("acuerdos-" + applang);
         template.put("logo", logoUrl);
         template.put("applang", applang);
+        template.put("lang", lang);
         template.put("mainLanguage", languageConfig.mainLanguage);
         template.put("alternativeLanguage", languageConfig.alternativeLanguage);
         template.put("mainLanguageDescription", languageConfig.mainLanguageDescription);
@@ -133,6 +162,12 @@ public class PublicacionService extends CoreBaseService
         template.put("organoId", organoId);
         template.put("organos", organos);
         template.put("reuniones", reuniones);
+        template.put("descriptores", descriptoresConReunionesPublicas);
+        template.put("descriptorId", descriptorId);
+        template.put("claves", claves);
+        template.put("claveId", claveId);
+        template.put("anyos", anyos);
+        template.put("anyo", anyo);
 
         return template;
     }

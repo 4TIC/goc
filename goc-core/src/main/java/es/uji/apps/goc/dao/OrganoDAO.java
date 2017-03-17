@@ -1,15 +1,21 @@
 package es.uji.apps.goc.dao;
 
+import com.mysema.query.jpa.impl.JPAQuery;
+import com.mysema.query.types.expr.BooleanExpression;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import es.uji.apps.goc.dto.*;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.mysema.query.jpa.impl.JPAQuery;
-
+import es.uji.apps.goc.dto.OrganoLocal;
+import es.uji.apps.goc.dto.QOrganoAutorizado;
+import es.uji.apps.goc.dto.QOrganoLocal;
+import es.uji.apps.goc.dto.QOrganoReunion;
+import es.uji.apps.goc.dto.QReunion;
+import es.uji.apps.goc.dto.TipoOrganoLocal;
 import es.uji.apps.goc.model.Organo;
 import es.uji.apps.goc.model.TipoOrgano;
 import es.uji.commons.db.BaseDAODatabaseImpl;
@@ -135,8 +141,12 @@ public class OrganoDAO extends BaseDAODatabaseImpl
         return organoLocal;
     }
 
-    public List<OrganoLocal> getOrganosConReunionesPublicas(Long tipoOrganoId)
+    public List<OrganoLocal> getOrganosConReunionesPublicas(Long tipoOrganoId, Integer anyo)
     {
+        BooleanExpression beWhere = null;
+        if(anyo != null){
+            beWhere = qReunion.fecha.year().eq(anyo);
+        }
         JPAQuery query = new JPAQuery(entityManager);
 
         return query.from(qReunion, qOrganoLocal)
@@ -144,7 +154,8 @@ public class OrganoDAO extends BaseDAODatabaseImpl
                 .where(qOrganoReunion.organoId.eq(qOrganoLocal.id.stringValue())
                         .and(qOrganoReunion.tipoOrganoId.eq(tipoOrganoId))
                         .and(qReunion.publica.isTrue())
-                        .and(qReunion.completada.isTrue()))
+                        .and(qReunion.completada.isTrue())
+                        .and(beWhere))
                 .list(qOrganoLocal);
     }
 }

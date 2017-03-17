@@ -20,5 +20,8 @@
     <class>es.uji.apps.goc.dto.PuntoOrdenDiaDocumento</class>
     <class>es.uji.apps.goc.dto.ReunionComentario</class>
     <class>es.uji.apps.goc.dto.OrganoAutorizado</class>
+    <class>es.uji.apps.goc.dto.Descriptor</class>
+    <class>es.uji.apps.goc.dto.Clave</class>
+    <class>es.uji.apps.goc.dto.PuntoOrdenDiaDescriptor</class>
   </persistence-unit>
 </persistence>

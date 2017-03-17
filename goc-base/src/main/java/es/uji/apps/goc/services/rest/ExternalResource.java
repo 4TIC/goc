@@ -271,6 +271,7 @@ public class ExternalResource extends CoreBaseService
                 items.add(menuEntry("goc.view.reunion.Main", "Reuniones"));
                 items.add(menuEntry("goc.view.historicoReunion.Main", "Histórico de reuniones"));
                 items.add(menuEntry("goc.view.cargo.Main", "Cargos"));
+                items.add(menuEntry("goc.view.descriptor.Main", "Descriptores"));
             }
             else
             {
@@ -280,6 +281,7 @@ public class ExternalResource extends CoreBaseService
                 items.add(menuEntry("goc.view.reunion.Main", "Reunions"));
                 items.add(menuEntry("goc.view.historicoReunion.Main", "Històric de reunions"));
                 items.add(menuEntry("goc.view.cargo.Main", "Càrrecs"));
+                items.add(menuEntry("goc.view.descriptor.Main", "Descriptors"));
             }
 
             menu.setMenuItems(items);

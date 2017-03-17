@@ -20,7 +20,8 @@
     "edicionRegistro": "Edició de registre",
     "borradoRegistro": "Esborrar registre",
     "seleccionarParaEditarRegistro": "Cal sel·leccionar un registre per a poder fer l'edició",
-    "seleccionarParaBorrarRegistro": "Cal sel·leccionar un registre per a poder esborrar-lo"
+    "seleccionarParaBorrarRegistro": "Cal sel·leccionar un registre per a poder esborrar-lo",
+    "cerrar": "Tancar"
   },
   "header": {
     "titulo": "Gestió d'òrgans col·legiats"
@@ -157,7 +158,7 @@
     "confirmacionEnvioMensaje": "¿Estàs segur de que la reunió està completament definida i vols notificar als assistents?",
     "resultadoEnvioConvocatoriaTitle": "Resultat de l'enviament de la convocatòria",
     "titleSingular": "Reunió",
-    "urlInvalida": "La URL de gravació de la reunió no té un format vàlid"
+    "descriptoresYclaves": "Descriptors i claus"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Històric de reunions",
@@ -171,5 +172,16 @@
     "comentarios": "Comentaris",
     "autor": "Autor",
     "fecha": "Data"
+  },
+  "descriptores": {
+    "titulo": "Descriptors",
+    "descripcion": "Descripció",
+    "nombre": "Nom",
+    "descriptorSingular": "Descriptor"
+  },
+  "claves": {
+    "titulo": "Claus",
+    "nombre": "Nom",
+    "claveSingular": "Clau"
   }
 }

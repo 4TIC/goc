@@ -2,13 +2,24 @@ package es.uji.apps.goc.dao;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.jpa.impl.JPAUpdateClause;
-import es.uji.apps.goc.dto.*;
-import es.uji.commons.db.BaseDAODatabaseImpl;
+import com.mysema.query.types.expr.BooleanExpression;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+
+import es.uji.apps.goc.dto.QClave;
+import es.uji.apps.goc.dto.QDescriptor;
+import es.uji.apps.goc.dto.QOrganoLocal;
+import es.uji.apps.goc.dto.QOrganoReunion;
+import es.uji.apps.goc.dto.QOrganoReunionMiembro;
+import es.uji.apps.goc.dto.QPuntoOrdenDia;
+import es.uji.apps.goc.dto.QPuntoOrdenDiaDescriptor;
+import es.uji.apps.goc.dto.QReunion;
+import es.uji.apps.goc.dto.Reunion;
+import es.uji.commons.db.BaseDAODatabaseImpl;
 
 @Repository
 public class ReunionDAO extends BaseDAODatabaseImpl
@@ -18,6 +29,9 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     private QPuntoOrdenDia qPuntoOrdenDia = QPuntoOrdenDia.puntoOrdenDia;
     private QOrganoReunionMiembro qOrganoReunionMiembro = QOrganoReunionMiembro.organoReunionMiembro;
     private QOrganoLocal qOrganoLocal = QOrganoLocal.organoLocal;
+    private QPuntoOrdenDiaDescriptor qPuntoOrdenDiaDescriptor = QPuntoOrdenDiaDescriptor.puntoOrdenDiaDescriptor;
+    private QDescriptor qDescriptor = QDescriptor.descriptor1;
+    private QClave qClave = QClave.clave1;
 
     public List<Reunion> getReunionesByUserId(Long connectedUserId)
     {
@@ -187,8 +201,12 @@ public class ReunionDAO extends BaseDAODatabaseImpl
                 .orderBy(qReunion.fechaCreacion.desc()).list(qReunion);
     }
 
-    public List<Reunion> getReunionesPublicas(Long tipoOrganoId, Long organoId)
+    public List<Reunion> getReunionesPublicas(Long tipoOrganoId, Long organoId, Integer anyo)
     {
+        BooleanExpression beWhere = null;
+        if(anyo != null){
+            beWhere = qReunion.fecha.year().eq(anyo);
+        }
         JPAQuery query = new JPAQuery(entityManager);
 
         return query.from(qReunion)
@@ -197,8 +215,102 @@ public class ReunionDAO extends BaseDAODatabaseImpl
                 .where(qOrganoReunion.tipoOrganoId.eq(tipoOrganoId)
                         .and(qOrganoReunion.organoId.eq(String.valueOf(organoId)))
                         .and(qReunion.publica.isTrue())
-                        .and(qReunion.completada.isTrue()))
+                        .and(qReunion.completada.isTrue())
+                        .and(beWhere))
                 .orderBy(qReunion.fechaCreacion.desc())
                 .list(qReunion);
+    }
+
+    public List<Integer> getAnyosConReunionesPublicas()
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        return query.from(qReunion)
+            .where(qReunion.publica.isTrue()
+                .and(qReunion.completada.isTrue()))
+            .distinct()
+            .list(qReunion.fecha.year());
+    }
+
+    public List<Reunion> getReunionesPublicas(Integer anyo) {
+        BooleanExpression beWhere = null;
+        if(anyo != null){
+            beWhere = qReunion.fecha.year().eq(anyo);
+        }
+        JPAQuery query = new JPAQuery(entityManager);
+
+        return query.from(qReunion)
+            .leftJoin(qReunion.reunionOrganos, qOrganoReunion)
+            .leftJoin(qReunion.reunionPuntosOrdenDia).fetch()
+            .where(qReunion.publica.isTrue()
+                .and(qReunion.completada.isTrue())
+                .and(beWhere))
+            .orderBy(qReunion.fechaCreacion.desc())
+            .list(qReunion);
+    }
+
+    public List<Reunion> getReunionesPublicasAnyo(Integer anyo) {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        return query.from(qReunion)
+            .leftJoin(qReunion.reunionOrganos, qOrganoReunion)
+            .leftJoin(qReunion.reunionPuntosOrdenDia).fetch()
+            .where(qReunion.publica.isTrue()
+                .and(qReunion.completada.isTrue())
+                .and(qReunion.fecha.year().eq(anyo)))
+            .orderBy(qReunion.fechaCreacion.desc())
+            .list(qReunion);
+    }
+
+    public List<Reunion> getReunionesPublicas(
+        Long tipoOrganoId,
+        Long organoId,
+        Long descriptorId,
+        Long claveId,
+        Integer anyo
+    ) {
+        BooleanExpression beWhere = null;
+        if(anyo != null){
+            beWhere = qReunion.fecha.year().eq(anyo);
+        }
+
+        JPAQuery query = new JPAQuery(entityManager);
+
+        return query.from(qReunion)
+                .join(qReunion.reunionOrganos, qOrganoReunion)
+                .join(qReunion.reunionPuntosOrdenDia, qPuntoOrdenDia).fetch()
+                .join(qPuntoOrdenDia.puntoOrdenDiaDescriptores, qPuntoOrdenDiaDescriptor)
+                .join(qPuntoOrdenDiaDescriptor.clave, qClave)
+                .where(qReunion.publica.isTrue()
+                    .and(qReunion.completada.isTrue())
+                    .and(qOrganoReunion.organoId.eq(String.valueOf(organoId)))
+                    .and(qClave.id.eq(claveId))
+                    .and(beWhere))
+                .orderBy(qReunion.fechaCreacion.desc())
+                .list(qReunion);
+    }
+
+    public List<Reunion> getReunionesPublicasClave(
+        Long descriptorId,
+        Long claveId,
+        Integer anyo
+    ) {
+        BooleanExpression beWhere = null;
+        if(anyo != null){
+            beWhere = qReunion.fecha.year().eq(anyo);
+        }
+
+        JPAQuery query = new JPAQuery(entityManager);
+
+        return query.from(qReunion)
+            .join(qReunion.reunionPuntosOrdenDia, qPuntoOrdenDia).fetch()
+            .join(qPuntoOrdenDia.puntoOrdenDiaDescriptores, qPuntoOrdenDiaDescriptor)
+            .join(qPuntoOrdenDiaDescriptor.clave, qClave)
+            .where(qReunion.publica.isTrue()
+                .and(qReunion.completada.isTrue())
+                .and(qClave.id.eq(claveId))
+                .and(beWhere))
+            .orderBy(qReunion.fechaCreacion.desc())
+            .list(qReunion);
     }
 }
