@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import es.uji.apps.goc.dto.ReunionComentario;
+import es.uji.apps.goc.exceptions.AsistenteNoEncontradoException;
 import es.uji.apps.goc.exceptions.ReunionYaCompletadaException;
 import es.uji.apps.goc.services.ReunionComentarioService;
 import es.uji.apps.goc.services.ReunionService;
@@ -45,8 +46,8 @@ public class ReunionComentarioResource extends CoreBaseService
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public UIEntity addComentario(UIEntity comentarioUI) throws ReunionYaCompletadaException
-    {
+    public UIEntity addComentario(UIEntity comentarioUI)
+        throws ReunionYaCompletadaException, AsistenteNoEncontradoException {
         User userConnected = AccessManager.getConnectedUser(request);
 
         reunionService.compruebaReunionNoCompletada(Long.parseLong(comentarioUI.get("reunionId")));

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import javax.ws.rs.GET;
@@ -23,6 +24,8 @@ import es.uji.apps.goc.dao.ReunionDAO;
 import es.uji.apps.goc.dto.Clave;
 import es.uji.apps.goc.dto.Descriptor;
 import es.uji.apps.goc.dto.OrganoLocal;
+import es.uji.apps.goc.dto.OrganoReunion;
+import es.uji.apps.goc.dto.OrganoReunionMiembro;
 import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.dto.ReunionTemplate;
 import es.uji.apps.goc.dto.TipoOrganoLocal;
@@ -183,6 +186,24 @@ public class PublicacionService extends CoreBaseService
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
+        Set<OrganoReunion> reunionOrganos = reunion.getReunionOrganos();
+        boolean permitirComentarios = false;
+        for(OrganoReunion organoReunion : reunionOrganos)
+        {
+            Set<OrganoReunionMiembro> miembros = organoReunion.getMiembros();
+            for(OrganoReunionMiembro miembro : miembros)
+            {
+                if (miembro.getMiembroId().equals(connectedUserId))
+                {
+                    permitirComentarios = true;
+                }
+            }
+        }
+
+        if(reunion.getCreadorId().equals(connectedUserId))
+        {
+            permitirComentarios = true;
+        }
 
         if (reunion == null)
         {
@@ -207,6 +228,7 @@ public class PublicacionService extends CoreBaseService
         template.put("alternativeLanguageDescription", languageConfig.alternativeLanguageDescription);
         template.put("customCSS", (personalizationConfig.customCSS != null) ? personalizationConfig.customCSS : "");
         template.put("connectedUserId", connectedUserId);
+        template.put("permitirComentarios", permitirComentarios);
 
         return template;
     }

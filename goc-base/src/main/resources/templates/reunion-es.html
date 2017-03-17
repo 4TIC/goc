@@ -105,8 +105,8 @@
         <button class="post-comentario">Añadir</button>
       </div>
       <br style="margin-top: 2em;"/>
-      <button th:if="!${reunion.completada}" class="add-comentario">Añadir un comentario</button>
-      <div class="comentarios"></div>
+      <button th:if="${ not reunion.completada and reunion.admiteComentarios and permitirComentarios}"   class="add-comentario">Añadir un comentario</button>
+      <div th:if="${permitirComentarios}" class="comentarios"></div>
     </div>
     <script src="/goc/js/script.js"></script>
   </body>
