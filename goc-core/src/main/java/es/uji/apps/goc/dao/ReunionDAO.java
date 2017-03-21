@@ -211,13 +211,13 @@ public class ReunionDAO extends BaseDAODatabaseImpl
 
         return query.from(qReunion)
                 .leftJoin(qReunion.reunionOrganos, qOrganoReunion)
-                .leftJoin(qReunion.reunionPuntosOrdenDia, qPuntoOrdenDia).fetch()
+                .leftJoin(qReunion.reunionPuntosOrdenDia).fetch()
                 .where(qOrganoReunion.tipoOrganoId.eq(tipoOrganoId)
                         .and(qOrganoReunion.organoId.eq(String.valueOf(organoId)))
                         .and(qReunion.publica.isTrue())
                         .and(qReunion.completada.isTrue())
                         .and(beWhere))
-                .orderBy(qReunion.fechaCreacion.desc(), qPuntoOrdenDia.orden.asc())
+                .orderBy(qReunion.fechaCreacion.desc())
                 .list(qReunion);
     }
 
@@ -241,11 +241,11 @@ public class ReunionDAO extends BaseDAODatabaseImpl
 
         return query.from(qReunion)
             .leftJoin(qReunion.reunionOrganos, qOrganoReunion)
-            .leftJoin(qReunion.reunionPuntosOrdenDia, qPuntoOrdenDia).fetch()
+            .leftJoin(qReunion.reunionPuntosOrdenDia).fetch()
             .where(qReunion.publica.isTrue()
                 .and(qReunion.completada.isTrue())
                 .and(beWhere))
-            .orderBy(qReunion.fechaCreacion.desc(), qPuntoOrdenDia.orden.asc())
+            .orderBy(qReunion.fechaCreacion.desc())
             .list(qReunion);
     }
 
@@ -254,11 +254,11 @@ public class ReunionDAO extends BaseDAODatabaseImpl
 
         return query.from(qReunion)
             .leftJoin(qReunion.reunionOrganos, qOrganoReunion)
-            .leftJoin(qReunion.reunionPuntosOrdenDia, qPuntoOrdenDia).fetch()
+            .leftJoin(qReunion.reunionPuntosOrdenDia).fetch()
             .where(qReunion.publica.isTrue()
                 .and(qReunion.completada.isTrue())
                 .and(qReunion.fecha.year().eq(anyo)))
-            .orderBy(qReunion.fechaCreacion.desc(), qPuntoOrdenDia.orden.asc())
+            .orderBy(qReunion.fechaCreacion.desc())
             .list(qReunion);
     }
 
@@ -286,7 +286,8 @@ public class ReunionDAO extends BaseDAODatabaseImpl
                     .and(qOrganoReunion.organoId.eq(String.valueOf(organoId)))
                     .and(qClave.id.eq(claveId))
                     .and(beWhere))
-                .orderBy(qReunion.fechaCreacion.desc(), qPuntoOrdenDia.orden.asc())
+                .orderBy(qReunion.fechaCreacion.desc())
+                .distinct()
                 .list(qReunion);
     }
 
@@ -310,7 +311,8 @@ public class ReunionDAO extends BaseDAODatabaseImpl
                 .and(qReunion.completada.isTrue())
                 .and(qClave.id.eq(claveId))
                 .and(beWhere))
-            .orderBy(qReunion.fechaCreacion.desc(), qPuntoOrdenDia.orden.asc())
+            .orderBy(qReunion.fechaCreacion.desc())
+            .distinct()
             .list(qReunion);
     }
 }

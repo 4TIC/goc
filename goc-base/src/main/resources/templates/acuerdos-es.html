@@ -102,7 +102,7 @@
               <span th:text="${reunion.acuerdos}">Acords</span>
             </div>
 
-            <blockquote th:each="puntoDia : ${reunion.reunionPuntosOrdenDia}" class="punto-del-dia">
+            <blockquote th:each="puntoDia : ${reunion.puntosOrdenDia}" class="punto-del-dia">
               <div th:if="${puntoDia.publico}" th:remove="tag">
                 <h3 th:text="${puntoDia.titulo}"></h3>
                 <div th:text="${puntoDia.acuerdos}"></div>

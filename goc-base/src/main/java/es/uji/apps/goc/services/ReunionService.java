@@ -813,6 +813,7 @@ public class ReunionService
         puntoOrdenDiaTemplate.setDescripcionAlternativa(puntoOrdenDia.getDescripcionAlternativa());
         puntoOrdenDiaTemplate.setTitulo(puntoOrdenDia.getTitulo());
         puntoOrdenDiaTemplate.setTituloAlternativo(puntoOrdenDia.getTituloAlternativo());
+        puntoOrdenDiaTemplate.setPublico(puntoOrdenDia.isPublico());
 
         List<PuntoOrdenDiaDocumento> documentos = puntoOrdenDiaDocumentoDAO
                 .getDocumentosByPuntoOrdenDiaId(puntoOrdenDia.getId());

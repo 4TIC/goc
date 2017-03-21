@@ -26,6 +26,8 @@ public class PuntoOrdenDiaTemplate
 
     private String deliberacionesAlternativas;
 
+    private boolean publico;
+
     private List<Documento> documentos;
 
     public Long getId()
@@ -134,5 +136,13 @@ public class PuntoOrdenDiaTemplate
     public void setDeliberacionesAlternativas(String deliberacionesAlternativas)
     {
         this.deliberacionesAlternativas = deliberacionesAlternativas;
+    }
+
+    public boolean isPublico() {
+        return publico;
+    }
+
+    public void setPublico(boolean publico) {
+        this.publico = publico;
     }
 }

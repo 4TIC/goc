@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.ws.rs.GET;
@@ -117,9 +118,13 @@ public class PublicacionService extends CoreBaseService
         List<Descriptor> descriptoresConReunionesPublicas = null;
         List<Clave> claves = null;
         List<Reunion> reuniones = new ArrayList<>();
+        List<ReunionTemplate> reunionesTemplate = null;
 
         if(anyo != null){
             reuniones = reunionService.getReunionesPublicasAnyo(anyo);
+            reunionesTemplate =
+                reuniones.stream().map(r -> reunionService.getReunionTemplateDesdeReunion(r, connectedUserId))
+                    .collect(Collectors.toList());
         }
 
         descriptoresConReunionesPublicas = reunionService.getDescriptoresConReunionesPublicas(anyo);
@@ -131,6 +136,9 @@ public class PublicacionService extends CoreBaseService
             if (organoId != null)
             {
                 reuniones = reunionService.getReunionesPublicas(tipoOrganoId, organoId, anyo);
+                reunionesTemplate =
+                    reuniones.stream().map(r -> reunionService.getReunionTemplateDesdeReunion(r, connectedUserId))
+                        .collect(Collectors.toList());
             }
         }
 
@@ -143,9 +151,15 @@ public class PublicacionService extends CoreBaseService
                 if (organoId != null)
                 {
                     reuniones = reunionService.getReunionesPublicas(tipoOrganoId, organoId, descriptorId, claveId, anyo);
+                    reunionesTemplate =
+                        reuniones.stream().map(r -> reunionService.getReunionTemplateDesdeReunion(r, connectedUserId))
+                            .collect(Collectors.toList());
                 } else
                 {
                     reuniones = reunionService.getReunionesPublicasClave(descriptorId, claveId, anyo);
+                    reunionesTemplate =
+                        reuniones.stream().map(r -> reunionService.getReunionTemplateDesdeReunion(r, connectedUserId))
+                            .collect(Collectors.toList());
                 }
             }
         }
@@ -164,7 +178,7 @@ public class PublicacionService extends CoreBaseService
         template.put("tipoOrganoId", tipoOrganoId);
         template.put("organoId", organoId);
         template.put("organos", organos);
-        template.put("reuniones", reuniones);
+        template.put("reuniones", reunionesTemplate);
         template.put("descriptores", descriptoresConReunionesPublicas);
         template.put("descriptorId", descriptorId);
         template.put("claves", claves);
