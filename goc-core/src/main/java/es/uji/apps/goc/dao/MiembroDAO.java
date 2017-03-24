@@ -1,17 +1,18 @@
 package es.uji.apps.goc.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.ws.rs.core.MediaType;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Repository;
-
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ws.rs.core.MediaType;
 
 import es.uji.apps.goc.dto.MiembroExterno;
 import es.uji.apps.goc.dto.MiembroLocal;
@@ -91,6 +92,7 @@ public class MiembroDAO extends BaseDAODatabaseImpl
         return creaListaMiembrosDesdeListaMiembrosLocales(miembrosLocales);
     }
 
+    @Transactional
     public Miembro insertMiembro(Miembro miembro, Long connectedUserId)
     {
         MiembroLocal miembroLocal = new MiembroLocal();

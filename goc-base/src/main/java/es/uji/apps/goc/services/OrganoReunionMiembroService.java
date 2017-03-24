@@ -1,12 +1,12 @@
 package es.uji.apps.goc.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import es.uji.apps.goc.dao.OrganoReunionDAO;
 import es.uji.apps.goc.dao.OrganoReunionMiembroDAO;
@@ -61,28 +61,7 @@ public class OrganoReunionMiembroService
 
         for (Miembro miembro : miembros)
         {
-            OrganoReunionMiembro organoReunionMiembro = new OrganoReunionMiembro();
-            organoReunionMiembro.setOrganoReunion(organoReunion);
-
-            if (organoReunion.isExterno())
-            {
-                organoReunionMiembro.setOrganoExterno(true);
-            }
-            else
-            {
-                organoReunionMiembro.setOrganoExterno(false);
-            }
-
-            organoReunionMiembro.setNombre(miembro.getNombre());
-            organoReunionMiembro.setEmail(miembro.getEmail());
-            organoReunionMiembro.setAsistencia(true);
-            organoReunionMiembro.setOrganoId(miembro.getOrgano().getId());
-            organoReunionMiembro.setReunionId(organoReunion.getReunion().getId());
-            organoReunionMiembro.setMiembroId(miembro.getPersonaId().toString());
-            organoReunionMiembro.setCargoId(miembro.getCargo().getId());
-            organoReunionMiembro.setCargoNombre(miembro.getCargo().getNombre());
-            organoReunionMiembro.setCargoNombreAlternativo(miembro.getCargo().getNombreAlternativo());
-
+            OrganoReunionMiembro organoReunionMiembro = miembro.toOrganoReunionMiembro(organoReunion);
             organoReunionMiembroDAO.insert(organoReunionMiembro);
         }
     }

@@ -1,5 +1,8 @@
 package es.uji.apps.goc.model;
 
+import es.uji.apps.goc.dto.OrganoReunion;
+import es.uji.apps.goc.dto.OrganoReunionMiembro;
+
 public class Miembro
 {
     private Long id;
@@ -84,5 +87,31 @@ public class Miembro
     public void setPersonaId(Long personaId)
     {
         this.personaId = personaId;
+    }
+
+    public OrganoReunionMiembro toOrganoReunionMiembro(OrganoReunion organoReunion) {
+        OrganoReunionMiembro organoReunionMiembro = new OrganoReunionMiembro();
+        organoReunionMiembro.setOrganoReunion(organoReunion);
+
+        if (organoReunion.isExterno())
+        {
+            organoReunionMiembro.setOrganoExterno(true);
+        }
+        else
+        {
+            organoReunionMiembro.setOrganoExterno(false);
+        }
+
+        organoReunionMiembro.setNombre(this.getNombre());
+        organoReunionMiembro.setEmail(this.getEmail());
+        organoReunionMiembro.setAsistencia(true);
+        organoReunionMiembro.setOrganoId(this.getOrgano().getId());
+        organoReunionMiembro.setReunionId(organoReunion.getReunion().getId());
+        organoReunionMiembro.setMiembroId(this.getPersonaId().toString());
+        organoReunionMiembro.setCargoId(this.getCargo().getId());
+        organoReunionMiembro.setCargoNombre(this.getCargo().getNombre());
+        organoReunionMiembro.setCargoNombreAlternativo(this.getCargo().getNombreAlternativo());
+
+        return organoReunionMiembro;
     }
 }

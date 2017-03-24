@@ -1,10 +1,10 @@
 package es.uji.apps.goc.dao;
 
-import java.util.List;
+import com.mysema.query.jpa.impl.JPAQuery;
 
 import org.springframework.stereotype.Repository;
 
-import com.mysema.query.jpa.impl.JPAQuery;
+import java.util.List;
 
 import es.uji.apps.goc.dto.OrganoReunion;
 import es.uji.apps.goc.dto.QOrganoReunion;
@@ -84,4 +84,10 @@ public class OrganoReunionDAO extends BaseDAODatabaseImpl
                 .and(qOrganoReunion.externo.eq(false))).list(qOrganoReunion);
     }
 
+    public List<OrganoReunion> getOrganosReunionNoCompletadasByOrganoId(Long organoLocalId)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+        return query.from(qOrganoReunion).where(qOrganoReunion.organoId.eq(organoLocalId.toString())
+            .and(qOrganoReunion.externo.eq(false)).and(qOrganoReunion.reunion.completada.isFalse())).list(qOrganoReunion);
+    }
 }
