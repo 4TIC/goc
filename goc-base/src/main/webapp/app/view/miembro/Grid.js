@@ -55,10 +55,14 @@ Ext.define('goc.view.miembro.Grid', {
                     store: '{cargosStore}'
                 },
                 triggerAction: 'all',
-                queryMode: 'local',
                 displayField: 'nombre',
                 valueField: 'id',
-                editable: false
+                editable: false,
+                listeners: {
+                    expand: function() {
+                        this.getStore().reload();
+                    }
+                }
             }
         }
     ],
