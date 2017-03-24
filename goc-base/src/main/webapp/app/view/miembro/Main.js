@@ -28,11 +28,13 @@ Ext.define('goc.view.miembro.Main', {
             allowBlank: false,
             fieldLabel: appI18N.miembros.organo,
             triggerAction: 'all',
-            queryMode: 'local',
             displayField: 'nombre',
             valueField: 'id',
             editable: false,
             listeners: {
+                expand: function() {
+                    this.getStore().reload();
+                },
                 select: 'onOrganoSelected'
             }
         },
