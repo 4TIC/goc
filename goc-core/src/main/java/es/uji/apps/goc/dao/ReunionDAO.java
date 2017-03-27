@@ -311,7 +311,6 @@ public class ReunionDAO extends BaseDAODatabaseImpl
                 .and(qClave.id.eq(claveId))
                 .and(beWhere))
             .orderBy(qReunion.fechaCreacion.desc())
-            .distinct()
             .list(qReunion);
     }
 }
