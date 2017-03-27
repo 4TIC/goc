@@ -104,5 +104,9 @@ Ext.define('goc.view.reunion.FormReunionAcuerdos',
                         items: formAcuerdosItems
                     }]
 
-            }]
+            }],
+
+        listeners: {
+            afterLayout: 'afterRenderFormCerrarActa'
+        }
     });

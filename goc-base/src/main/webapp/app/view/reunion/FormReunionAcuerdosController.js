@@ -34,5 +34,13 @@ Ext.define('goc.view.reunion.FormReunionAcuerdosController',
                 scope: this
             });
         }
+    },
+
+    afterRenderFormCerrarActa: function(windowFormCerrarActa) {
+        var height = Ext.getBody().getViewSize().height;
+        if (windowFormCerrarActa.getHeight() > height) {
+            windowFormCerrarActa.setHeight(height-30);
+            windowFormCerrarActa.setPosition(windowFormCerrarActa.x, 15);
+        }
     }
 });
