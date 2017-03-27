@@ -21,8 +21,7 @@ import es.uji.commons.sso.User;
 
 @Service
 @Component
-public class ReunionComentarioService
-{
+public class ReunionComentarioService {
     @Autowired
     private ReunionComentarioDAO reunionComentarioDAO;
 
@@ -32,24 +31,28 @@ public class ReunionComentarioService
     @Autowired
     private ReunionDAO reunionDAO;
 
-    public List<ReunionComentario> getComentariosByReunionId(Long reunionId, Long connectedUserId)
-    {
+    public List<ReunionComentario> getComentariosByReunionId(
+        Long reunionId,
+        Long connectedUserId
+    ) {
         return reunionComentarioDAO.getComentariosByReunionId(reunionId);
 
     }
 
     @Transactional
-    public ReunionComentario addComentario(UIEntity comentarioUI, User userConnected)
-        throws AsistenteNoEncontradoException {
+    public ReunionComentario addComentario(
+        UIEntity comentarioUI,
+        User userConnected
+    ) throws AsistenteNoEncontradoException {
         Long reunionId = Long.parseLong(comentarioUI.get("reunionId"));
         Long connectedUserId = userConnected.getId();
 
-        List<OrganoReunionMiembro> listaAsistentes = organoReunionMiembroDAO
-            .getMiembroByAsistenteIdOrSuplenteId(reunionId, connectedUserId);
+        List<OrganoReunionMiembro> listaAsistentes =
+            organoReunionMiembroDAO.getMiembroByAsistenteIdOrSuplenteId(reunionId, connectedUserId);
         Reunion reunionBD = reunionDAO.getReunionById(reunionId);
         List<OrganoReunionMiembro> listaAstenteFiltrada =
             listaAsistentes.stream().filter(l -> l.getMiembroId().equals(connectedUserId)).collect(Collectors.toList());
-        if(listaAstenteFiltrada.isEmpty() && !reunionBD.getCreadorId().equals(connectedUserId)){
+        if (listaAstenteFiltrada.isEmpty() && !reunionBD.getCreadorId().equals(connectedUserId)) {
             throw new AsistenteNoEncontradoException();
         }
 
@@ -60,30 +63,31 @@ public class ReunionComentarioService
         reunionComentario.setReunion(reunion);
 
         reunionComentario.setCreadorId(connectedUserId);
-        reunionComentario.setCreadorNombre(getNombreCreadorByReunionId(reunion.getId(), connectedUserId));
+        String nombreCreadorByReunionId = getNombreCreadorByReunionId(reunion.getId(), connectedUserId);
+        nombreCreadorByReunionId = (nombreCreadorByReunionId == null || nombreCreadorByReunionId.equals("")) ?
+            reunionBD.getCreadorNombre() :
+            nombreCreadorByReunionId; reunionComentario.setCreadorNombre(nombreCreadorByReunionId);
         reunionComentario.setFecha(new Date());
 
         return reunionComentarioDAO.insert(reunionComentario);
     }
 
-    private String getNombreCreadorByReunionId(Long reunionId, Long connectedUserId)
-    {
-        List<OrganoReunionMiembro> listaAsistentes = organoReunionMiembroDAO
-                .getMiembroByAsistenteIdOrSuplenteId(reunionId, connectedUserId);
+    private String getNombreCreadorByReunionId(
+        Long reunionId,
+        Long connectedUserId
+    ) {
+        List<OrganoReunionMiembro> listaAsistentes =
+            organoReunionMiembroDAO.getMiembroByAsistenteIdOrSuplenteId(reunionId, connectedUserId);
 
-        if (listaAsistentes.size() == 0)
-        {
+        if (listaAsistentes.size() == 0) {
             return "";
         }
 
         OrganoReunionMiembro creador = listaAsistentes.get(0);
 
-        if (connectedUserId.equals(Long.parseLong(creador.getMiembroId())))
-        {
+        if (connectedUserId.equals(Long.parseLong(creador.getMiembroId()))) {
             return creador.getNombre();
-        }
-        else if (creador.getSuplenteId().equals(connectedUserId))
-        {
+        } else if (creador.getSuplenteId().equals(connectedUserId)) {
             return creador.getSuplenteNombre();
         }
 
