@@ -84,7 +84,10 @@ public class ClaveResource {
         @PathParam("idClave") Long idClave,
         UIEntity clave
     ) {
-        Clave newClave = claveService.updateClave(clave.toModel(Clave.class));
+        Clave claveModel = clave.toModel(Clave.class);
+        Long idDescriptor = Long.parseLong(clave.get("idDescriptor"));
+        claveModel.setDescriptor(new Descriptor(idDescriptor));
+        Clave newClave = claveService.updateClave(claveModel);
 
         return UIEntity.toUI(newClave);
     }
