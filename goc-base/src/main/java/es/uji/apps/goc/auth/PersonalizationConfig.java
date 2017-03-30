@@ -14,4 +14,10 @@ public class PersonalizationConfig
 
     @Value("${goc.rolAdministrador:ADMIN}")
     public String rolAdministrador;
+
+    @Value("${goc.rolUsuario:USUARIO}")
+    public String rolUsuario;
+
+    @Value("${goc.rolGestor:GESTOR}")
+    public String rolGestor;
 }

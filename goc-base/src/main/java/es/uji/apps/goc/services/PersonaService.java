@@ -5,6 +5,10 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 
+import com.sun.jersey.api.core.InjectParam;
+import es.uji.apps.goc.Bootstrap;
+import es.uji.apps.goc.auth.PersonalizationConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -23,22 +27,29 @@ import es.uji.apps.goc.model.Persona;
 import es.uji.commons.rest.CoreBaseService;
 
 @Service
-public class PersonaService extends CoreBaseService {
+public class PersonaService extends CoreBaseService
+{
     @Value("${goc.external.authToken}")
     private String authToken;
 
     @Value("${goc.external.personasEndpoint}")
     private String personasExternasEndpoint;
 
-    public Persona getPersonaFromDirectoryByPersonaId(Long personaId) throws PersonasExternasException {
-        WebResource getOrganosResource =
-            Client.create().resource(this.personasExternasEndpoint + "/" + personaId.toString());
+    @Autowired
+    private PersonalizationConfig personalizationConfig;
 
-        ClientResponse response =
-            getOrganosResource.type(MediaType.APPLICATION_JSON).header("X-UJI-AuthToken", authToken)
+    public Persona getPersonaFromDirectoryByPersonaId(Long personaId)
+            throws PersonasExternasException
+    {
+        WebResource getOrganosResource =
+                Client.create().resource(this.personasExternasEndpoint + "/" + personaId.toString());
+
+        ClientResponse response = getOrganosResource.type(MediaType.APPLICATION_JSON)
+                .header("X-UJI-AuthToken", authToken)
                 .get(ClientResponse.class);
 
-        if (response.getStatus() != 200) {
+        if (response.getStatus() != 200)
+        {
             throw new PersonasExternasException();
         }
 
@@ -47,7 +58,8 @@ public class PersonaService extends CoreBaseService {
         return personaExternaToPersona(personaExterna);
     }
 
-    private Persona personaExternaToPersona(PersonaExterna personaExterna) {
+    private Persona personaExternaToPersona(PersonaExterna personaExterna)
+    {
         Persona persona = new Persona();
 
         persona.setId(personaExterna.getId());
@@ -57,44 +69,50 @@ public class PersonaService extends CoreBaseService {
         return persona;
     }
 
-    public List<String> getRolesFromPersonaId(Long personaId) throws RolesPersonaExternaException {
+    public List<String> getRolesFromPersonaId(Long personaId)
+            throws RolesPersonaExternaException
+    {
         WebResource getOrganosResource =
-            Client.create().resource(this.personasExternasEndpoint + "/" + personaId.toString() + "/roles");
+                Client.create().resource(this.personasExternasEndpoint + "/" + personaId.toString() + "/roles");
 
-        ClientResponse response =
-            getOrganosResource.type(MediaType.APPLICATION_JSON).header("X-UJI-AuthToken", authToken)
+        ClientResponse response = getOrganosResource.type(MediaType.APPLICATION_JSON)
+                .header("X-UJI-AuthToken", authToken)
                 .get(ClientResponse.class);
 
-        if (response.getStatus() != 200) {
+        if (response.getStatus() != 200)
+        {
             throw new RolesPersonaExternaException();
         }
 
-        return response.getEntity(new GenericType<List<String>>() {
+        return response.getEntity(new GenericType<List<String>>()
+        {
         });
     }
 
-    public List<Persona> getPersonasByQueryString(
-        String query,
-        Long connectedUserId
-    ) throws PersonasExternasException, UnsupportedEncodingException {
+    public List<Persona> getPersonasByQueryString(String query, Long connectedUserId)
+            throws PersonasExternasException, UnsupportedEncodingException
+    {
         query = URLEncoder.encode(query, "UTF-8");
         WebResource getPersonasResource = Client.create().resource(this.personasExternasEndpoint + "?query=" + query);
 
-        ClientResponse response =
-            getPersonasResource.type(MediaType.APPLICATION_JSON).header("X-UJI-AuthToken", authToken)
+        ClientResponse response = getPersonasResource.type(MediaType.APPLICATION_JSON)
+                .header("X-UJI-AuthToken", authToken)
                 .get(ClientResponse.class);
 
-        if (response.getStatus() != 200) {
+        if (response.getStatus() != 200)
+        {
             throw new PersonasExternasException();
         }
 
-        JSONListaPersonasExternasDeserializer jsonDeserializer = response.getEntity(JSONListaPersonasExternasDeserializer.class);
+        JSONListaPersonasExternasDeserializer jsonDeserializer =
+                response.getEntity(JSONListaPersonasExternasDeserializer.class);
 
         List<PersonaExterna> listaPersonasExternos = jsonDeserializer.getPersonas();
         return creaListaMiembroDesdeListaMiembrosExternos(listaPersonasExternos);
     }
 
-    private List<Persona> creaListaMiembroDesdeListaMiembrosExternos(List<PersonaExterna> listaPersonasExternas) {
+    private List<Persona> creaListaMiembroDesdeListaMiembrosExternos(List<PersonaExterna> listaPersonasExternas)
+    {
         List<Persona> listaPersonas = new ArrayList<>();
 
         for (PersonaExterna personaExterna : listaPersonasExternas)
@@ -103,5 +121,26 @@ public class PersonaService extends CoreBaseService {
         }
 
         return listaPersonas;
+    }
+
+    public Boolean isAdmin(Long connectedUserId)
+            throws RolesPersonaExternaException
+    {
+        return hasPerfil(connectedUserId, personalizationConfig.rolAdministrador);
+    }
+
+    public Boolean isGestor(Long connectedUserId)
+            throws RolesPersonaExternaException
+    {
+        return hasPerfil(connectedUserId, personalizationConfig.rolGestor);
+    }
+
+    public Boolean hasPerfil(Long connectedUserId, String rol)
+            throws RolesPersonaExternaException
+    {
+        return getRolesFromPersonaId(connectedUserId).stream()
+                .filter(r -> r.equals(rol))
+                .findAny()
+                .isPresent();
     }
 }

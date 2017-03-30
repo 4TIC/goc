@@ -44,7 +44,7 @@ import io.swagger.annotations.ApiOperation;
 import static java.util.stream.Collectors.toList;
 
 @Path("external")
-@Api(value="/external", tags = "external")
+@Api(value = "/external", tags = "external")
 public class ExternalResource extends CoreBaseService
 {
     @InjectParam
@@ -62,17 +62,10 @@ public class ExternalResource extends CoreBaseService
     @InjectParam
     private FirmaService firmaService;
 
-    @InjectParam
-    private PersonalizationConfig personalizationConfig;
-
     @GET
     @Path("organos")
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(
-        value = "Órganos disponibles",
-        notes = "Obtiene una lista completa de los organos disponibles",
-        response = WrappedOrganos.class
-    )
+    @ApiOperation(value = "Órganos disponibles", notes = "Obtiene una lista completa de los organos disponibles", response = WrappedOrganos.class)
     public List<UIEntity> getOrganosExternos()
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
@@ -106,16 +99,11 @@ public class ExternalResource extends CoreBaseService
     @GET
     @Path("organos/{organoId}/miembros")
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(
-        value = "Miembros pertenecientes a un órgano determinado",
-        notes = "Obtiene una lista de todos los miembros pertenecientes a un determinado órgano",
-        response = WrappedMiembros.class
-    )
+    @ApiOperation(value = "Miembros pertenecientes a un órgano determinado", notes = "Obtiene una lista de todos los miembros pertenecientes a un determinado órgano", response = WrappedMiembros.class)
     public List<UIEntity> getMiembrosByOrganoExternoId(@PathParam("organoId") String organoId)
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
-        List<Miembro> listaMiembros = externalService.getMiembrosByOrganoId(organoId,
-                connectedUserId);
+        List<Miembro> listaMiembros = externalService.getMiembrosByOrganoId(organoId, connectedUserId);
 
         return miembroToUI(listaMiembros);
     }
@@ -146,11 +134,7 @@ public class ExternalResource extends CoreBaseService
     @GET
     @Path("personas")
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(
-        value = "Directorio de personas de la institución",
-        notes = "A partir de una consulta devuelve un listado de personas pertenecientes a la institución",
-        response = WrappedPersonas.class
-    )
+    @ApiOperation(value = "Directorio de personas de la institución", notes = "A partir de una consulta devuelve un listado de personas pertenecientes a la institución", response = WrappedPersonas.class)
     public List<UIEntity> getPersonaByQueryString(@QueryParam("query") String query)
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
@@ -163,13 +147,15 @@ public class ExternalResource extends CoreBaseService
     {
         List<UIEntity> personasUI = new ArrayList<>();
 
-        for (Persona persona: listaPersonas) {
+        for (Persona persona : listaPersonas)
+        {
             personasUI.add(personaToUI(persona));
         }
         return personasUI;
     }
 
-    private UIEntity personaToUI(Persona persona) {
+    private UIEntity personaToUI(Persona persona)
+    {
         UIEntity personaUI = new UIEntity();
 
         personaUI.put("id", persona.getId());
@@ -182,11 +168,7 @@ public class ExternalResource extends CoreBaseService
     @GET
     @Path("personas/{personaId}")
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(
-        value = "Información de una persona a partir de su id",
-        notes = "Obtiene una persona del directorio de personas a partir de su Id",
-        response = WrappedPersona.class
-    )
+    @ApiOperation(value = "Información de una persona a partir de su id", notes = "Obtiene una persona del directorio de personas a partir de su Id", response = WrappedPersona.class)
     public UIEntity getPersonaById(@PathParam("personaId") Long personaId)
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
@@ -198,32 +180,24 @@ public class ExternalResource extends CoreBaseService
     @GET
     @Path("personas/{personaId}/roles")
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(
-        value = "Información de los roles de una persona a partir de su id",
-        notes = "Obtiene una persona del directorio de personas a partir de su Id"
-    )
+    @ApiOperation(value = "Información de los roles de una persona a partir de su id", notes = "Obtiene una persona del directorio de personas a partir de su Id")
     public List<String> getRolesByPersonaId(@PathParam("personaId") Long personaId)
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
         List<Role> rolesByPersonaId = externalService.getRolesByPersonaId(personaId);
 
-        if (rolesByPersonaId == null && rolesByPersonaId.isEmpty())
-            return Collections.EMPTY_LIST;
+        if (rolesByPersonaId == null && rolesByPersonaId.isEmpty()) return Collections.EMPTY_LIST;
 
-        return rolesByPersonaId.stream()
-                .map(role -> role.toString())
-                .collect(toList());
+        return rolesByPersonaId.stream().map(role -> role.toString()).collect(toList());
     }
 
     @POST
     @Path("notificaciones")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(
-        value = "Envío de notificaciones",
-        notes = "Permite el envío de correos de aviso a los miembros involucrados en las reuniones"
-    )
-    public void enviaNotificacion(Mensaje mensaje) throws CanNotSendException
+    @ApiOperation(value = "Envío de notificaciones", notes = "Permite el envío de correos de aviso a los miembros involucrados en las reuniones")
+    public void enviaNotificacion(Mensaje mensaje)
+            throws CanNotSendException
     {
         mailSender.send(mensaje);
     }
@@ -232,10 +206,7 @@ public class ExternalResource extends CoreBaseService
     @Path("firmas")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(
-        value = "Firma del acta de una reunión",
-        notes = "Firma el acta de una reunión ya concluida con todos los puntos acordados en ella"
-    )
+    @ApiOperation(value = "Firma del acta de una reunión", notes = "Firma el acta de una reunión ya concluida con todos los puntos acordados en ella")
     public void firmaReunion(ReunionFirma reunionFirma)
     {
         firmaService.firmaReunion(reunionFirma);
@@ -244,24 +215,16 @@ public class ExternalResource extends CoreBaseService
     @GET
     @Path("config/menus")
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(
-        value = "Listado de menús de acceso a las distintas funcionalidades de GOC",
-        notes = "Permite la carga del árbol lateral de navegación con las opciones principales de navegación"
-    )
-    public Menu menus(@QueryParam("lang") String lang) throws RolesPersonaExternaException
+    @ApiOperation(value = "Listado de menús de acceso a las distintas funcionalidades de GOC", notes = "Permite la carga del árbol lateral de navegación con las opciones principales de navegación")
+    public Menu menus(@QueryParam("lang") String lang)
+            throws RolesPersonaExternaException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
-
-        List<String> roles = personaService.getRolesFromPersonaId(connectedUserId);
-
         Menu menu = new Menu();
-
         List<MenuItem> items = new ArrayList<>();
-
-        Boolean admin = roles.stream().filter(r -> r.equals(personalizationConfig.rolAdministrador)).findAny().isPresent();
         String currentLanguage = (lang != null) ? lang : languageConfig.mainLanguage;
 
-        if (admin)
+        if (personaService.isAdmin(connectedUserId))
         {
             if (currentLanguage.equals(languageConfig.mainLanguage))
             {
@@ -288,16 +251,26 @@ public class ExternalResource extends CoreBaseService
             return menu;
         }
 
+        if (personaService.isGestor(connectedUserId))
+        {
+            if (currentLanguage.equals(languageConfig.mainLanguage))
+            {
+                items.add(menuEntry("goc.view.organo.Main", "Órganos"));
+            }
+            else
+            {
+                items.add(menuEntry("goc.view.organo.Main", "Òrgans"));
+            }
+        }
+
         if (currentLanguage.equals(languageConfig.mainLanguage))
         {
-            items.add(menuEntry("goc.view.organo.Main", "Órganos"));
             items.add(menuEntry("goc.view.miembro.Main", "Miembros"));
             items.add(menuEntry("goc.view.reunion.Main", "Reuniones"));
             items.add(menuEntry("goc.view.historicoReunion.Main", "Histórico de reuniones"));
         }
         else
         {
-            items.add(menuEntry("goc.view.organo.Main", "Òrgans"));
             items.add(menuEntry("goc.view.miembro.Main", "Membres"));
             items.add(menuEntry("goc.view.reunion.Main", "Reunions"));
             items.add(menuEntry("goc.view.historicoReunion.Main", "Històric de reunions"));
@@ -310,10 +283,7 @@ public class ExternalResource extends CoreBaseService
     @GET
     @Path("cuentas/{username}")
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(
-        value = "Recuperacion de la persona asociada a una cuenta",
-        notes = "A partir del username del usuario, permite extraer el valor del identificador de persona"
-    )
+    @ApiOperation(value = "Recuperacion de la persona asociada a una cuenta", notes = "A partir del username del usuario, permite extraer el valor del identificador de persona")
     public Persona personaAsociadaACuenta(@PathParam("username") String username)
             throws RolesPersonaExternaException
     {
@@ -324,11 +294,9 @@ public class ExternalResource extends CoreBaseService
 
         Persona persona = new Persona();
 
-        if (username.equals("nmanero"))
-            persona.setId(88849L);
+        if (username.equals("nmanero")) persona.setId(88849L);
 
-        if (username.equals("borillo"))
-            persona.setId(9792L);
+        if (username.equals("borillo")) persona.setId(9792L);
 
         return persona;
     }
