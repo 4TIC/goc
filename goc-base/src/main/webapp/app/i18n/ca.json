@@ -158,7 +158,8 @@
     "confirmacionEnvioMensaje": "¿Estàs segur de que la reunió està completament definida i vols notificar als assistents?",
     "resultadoEnvioConvocatoriaTitle": "Resultat de l'enviament de la convocatòria",
     "titleSingular": "Reunió",
-    "descriptoresYclaves": "Descriptors i claus"
+    "descriptoresYclaves": "Descriptors i claus",
+    "deseaBorrarComentario": "Desitgeu esborrar el comentari?"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Històric de reunions",

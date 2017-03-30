@@ -157,7 +157,8 @@
     "confirmacionEnvioMensaje": "¿Estás seguro de que la reunión está completamente definida y quieres notificar a los asistentes?",
     "resultadoEnvioConvocatoriaTitle": "Resultado del envío de la convocatoria",
     "titleSingular": "Reunión",
-    "descriptoresYclaves": "Descriptores y claves"
+    "descriptoresYclaves": "Descriptores y claves",
+    "deseaBorrarComentario": "¿Desea borrar el comentario?"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Histórico de reuniones",
