@@ -92,6 +92,7 @@ public class PublicacionService extends CoreBaseService
         template.put("logo", logoUrl);
         template.put("reuniones", reuniones);
         template.put("applang", applang);
+        template.put("charset", charset);
         template.put("mainLanguage", languageConfig.mainLanguage);
         template.put("alternativeLanguage", languageConfig.alternativeLanguage);
         template.put("mainLanguageDescription", languageConfig.mainLanguageDescription);
@@ -167,6 +168,7 @@ public class PublicacionService extends CoreBaseService
         Template template = new HTMLTemplate("acuerdos-" + applang);
         template.put("logo", logoUrl);
         template.put("applang", applang);
+        template.put("charset", charset);
         template.put("lang", lang);
         template.put("mainLanguage", languageConfig.mainLanguage);
         template.put("alternativeLanguage", languageConfig.alternativeLanguage);
