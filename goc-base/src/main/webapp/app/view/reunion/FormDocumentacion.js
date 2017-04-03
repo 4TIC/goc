@@ -97,7 +97,7 @@ formItems.push({
 
 formItems.push({
     xtype: 'displayfield',
-    width: 200,
+    width: '100%',
     name: 'nombreDocumento',
     reference: 'nombreDocumento'
 });
