@@ -329,7 +329,7 @@ public class ReunionService
         }
     }
 
-    @Transactional
+    @Transactional(rollbackFor = FirmaReunionException.class)
     public void firmarReunion(Long reunionId, String acuerdos, String acuerdosAlternativos, Long responsableActaId,
             Long connectedUserId) throws ReunionYaCompletadaException, FirmaReunionException,
             OrganosExternosException, PersonasExternasException
