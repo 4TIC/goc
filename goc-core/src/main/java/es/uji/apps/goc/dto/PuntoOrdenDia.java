@@ -47,6 +47,9 @@ public class PuntoOrdenDia implements Serializable
     private Set<PuntoOrdenDiaDocumento> puntoOrdenDiaDocumentos;
 
     @OneToMany(mappedBy = "puntoOrdenDia", cascade = CascadeType.REMOVE)
+    private Set<PuntoOrdenDiaAcuerdo> puntoOrdenDiaAcuerdos;
+
+    @OneToMany(mappedBy = "puntoOrdenDia", cascade = CascadeType.REMOVE)
     private Set<PuntoOrdenDiaDescriptor> puntoOrdenDiaDescriptores;
 
     public PuntoOrdenDia() {}
@@ -179,5 +182,15 @@ public class PuntoOrdenDia implements Serializable
 
     public void setPuntoOrdenDiaDescriptores(Set<PuntoOrdenDiaDescriptor> puntoOrdenDiaDescriptores) {
         this.puntoOrdenDiaDescriptores = puntoOrdenDiaDescriptores;
+    }
+
+    public Set<PuntoOrdenDiaAcuerdo> getPuntoOrdenDiaAcuerdos()
+    {
+        return puntoOrdenDiaAcuerdos;
+    }
+
+    public void setPuntoOrdenDiaAcuerdos(Set<PuntoOrdenDiaAcuerdo> puntoOrdenDiaAcuerdos)
+    {
+        this.puntoOrdenDiaAcuerdos = puntoOrdenDiaAcuerdos;
     }
 }

@@ -5,6 +5,8 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.core.InjectParam;
 
+import es.uji.apps.goc.dao.*;
+import es.uji.apps.goc.dto.*;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,37 +23,6 @@ import java.util.stream.Collectors;
 
 import javax.ws.rs.core.MediaType;
 
-import es.uji.apps.goc.dao.ClaveDAO;
-import es.uji.apps.goc.dao.DescriptorDAO;
-import es.uji.apps.goc.dao.MiembroDAO;
-import es.uji.apps.goc.dao.OrganoDAO;
-import es.uji.apps.goc.dao.OrganoReunionDAO;
-import es.uji.apps.goc.dao.OrganoReunionMiembroDAO;
-import es.uji.apps.goc.dao.PuntoOrdenDiaDAO;
-import es.uji.apps.goc.dao.PuntoOrdenDiaDocumentoDAO;
-import es.uji.apps.goc.dao.ReunionDAO;
-import es.uji.apps.goc.dao.ReunionDocumentoDAO;
-import es.uji.apps.goc.dao.TipoOrganoDAO;
-import es.uji.apps.goc.dto.Clave;
-import es.uji.apps.goc.dto.Descriptor;
-import es.uji.apps.goc.dto.MiembroFirma;
-import es.uji.apps.goc.dto.MiembroTemplate;
-import es.uji.apps.goc.dto.OrganoFirma;
-import es.uji.apps.goc.dto.OrganoLocal;
-import es.uji.apps.goc.dto.OrganoReunion;
-import es.uji.apps.goc.dto.OrganoReunionMiembro;
-import es.uji.apps.goc.dto.OrganoTemplate;
-import es.uji.apps.goc.dto.PuntoOrdenDia;
-import es.uji.apps.goc.dto.PuntoOrdenDiaDocumento;
-import es.uji.apps.goc.dto.PuntoOrdenDiaFirma;
-import es.uji.apps.goc.dto.PuntoOrdenDiaTemplate;
-import es.uji.apps.goc.dto.QReunion;
-import es.uji.apps.goc.dto.Reunion;
-import es.uji.apps.goc.dto.ReunionComentario;
-import es.uji.apps.goc.dto.ReunionDocumento;
-import es.uji.apps.goc.dto.ReunionFirma;
-import es.uji.apps.goc.dto.ReunionTemplate;
-import es.uji.apps.goc.dto.TipoOrganoLocal;
 import es.uji.apps.goc.exceptions.FirmaReunionException;
 import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.exceptions.NotificacionesException;
@@ -112,6 +83,9 @@ public class ReunionService
 
     @InjectParam
     private PuntoOrdenDiaDocumentoDAO puntoOrdenDiaDocumentoDAO;
+
+    @InjectParam
+    private PuntoOrdenDiaAcuerdoDAO puntoOrdenDiaAcuerdoDAO;
 
     @InjectParam
     private AvisosReunion avisosReunion;
@@ -818,7 +792,11 @@ public class ReunionService
         List<PuntoOrdenDiaDocumento> documentos = puntoOrdenDiaDocumentoDAO
                 .getDocumentosByPuntoOrdenDiaId(puntoOrdenDia.getId());
 
+        List<PuntoOrdenDiaAcuerdo> acuerdos = puntoOrdenDiaAcuerdoDAO
+                .getAcuerdosByPuntoOrdenDiaId(puntoOrdenDia.getId());
+
         puntoOrdenDiaTemplate.setDocumentos(getDocumentosTemplateDesdePuntosOrdenDiaDocumentos(documentos));
+        puntoOrdenDiaTemplate.setDocumentosAcuerdos(getAcuerdosTemplateDesdePuntosOrdenDiaAcuerdos(acuerdos));
 
         return puntoOrdenDiaTemplate;
     }
@@ -836,6 +814,19 @@ public class ReunionService
         return listaDocumento;
     }
 
+    private List<Documento> getAcuerdosTemplateDesdePuntosOrdenDiaAcuerdos(
+            List<PuntoOrdenDiaAcuerdo> acuerdos)
+    {
+        List<Documento> listaDocumento = new ArrayList<>();
+
+        for (PuntoOrdenDiaAcuerdo puntoOrdenDiaAcuerdo : acuerdos)
+        {
+            listaDocumento.add(getAcuerdoTemplateDesdePuntoOrdenDiaAcuerdo(puntoOrdenDiaAcuerdo));
+        }
+
+        return listaDocumento;
+    }
+
     private Documento getDocumentoTemplateDesdePuntoOrdenDiaDocumento(
             PuntoOrdenDiaDocumento puntoOrdenDiaDocumento)
     {
@@ -847,6 +838,22 @@ public class ReunionService
         documento.setFechaAdicion(puntoOrdenDiaDocumento.getFechaAdicion());
         documento.setCreadorId(puntoOrdenDiaDocumento.getCreadorId());
         documento.setNombreFichero(puntoOrdenDiaDocumento.getNombreFichero());
+
+        return documento;
+    }
+
+    private Documento getAcuerdoTemplateDesdePuntoOrdenDiaAcuerdo(
+            PuntoOrdenDiaAcuerdo puntoOrdenDiaAcuerdo)
+    {
+        Documento documento = new Documento();
+
+        documento.setId(puntoOrdenDiaAcuerdo.getId());
+        documento.setDescripcion(puntoOrdenDiaAcuerdo.getDescripcion());
+        documento.setDescripcionAlternativa(puntoOrdenDiaAcuerdo.getDescripcionAlternativa());
+        documento.setMimeType(puntoOrdenDiaAcuerdo.getMimeType());
+        documento.setFechaAdicion(puntoOrdenDiaAcuerdo.getFechaAdicion());
+        documento.setCreadorId(puntoOrdenDiaAcuerdo.getCreadorId());
+        documento.setNombreFichero(puntoOrdenDiaAcuerdo.getNombreFichero());
 
         return documento;
     }

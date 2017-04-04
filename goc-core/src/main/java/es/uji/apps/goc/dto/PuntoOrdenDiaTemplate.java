@@ -30,6 +30,8 @@ public class PuntoOrdenDiaTemplate
 
     private List<Documento> documentos;
 
+    private List<Documento> documentosAcuerdos;
+
     public Long getId()
     {
         return id;
@@ -144,5 +146,15 @@ public class PuntoOrdenDiaTemplate
 
     public void setPublico(boolean publico) {
         this.publico = publico;
+    }
+
+    public List<Documento> getDocumentosAcuerdos()
+    {
+        return documentosAcuerdos;
+    }
+
+    public void setDocumentosAcuerdos(List<Documento> documentosAcuerdos)
+    {
+        this.documentosAcuerdos = documentosAcuerdos;
     }
 }
