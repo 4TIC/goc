@@ -1,5 +1,29 @@
 package es.uji.apps.goc.services.rest;
 
+import com.mysema.query.Tuple;
+import com.sun.jersey.api.core.InjectParam;
+import com.sun.jersey.core.header.ContentDisposition;
+import com.sun.jersey.multipart.BodyPart;
+import com.sun.jersey.multipart.BodyPartEntity;
+import com.sun.jersey.multipart.FormDataMultiPart;
+import es.uji.apps.goc.dto.*;
+import es.uji.apps.goc.exceptions.DocumentoNoEncontradoException;
+import es.uji.apps.goc.exceptions.PuntoOrdenDiaNoDisponibleException;
+import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
+import es.uji.apps.goc.exceptions.ReunionYaCompletadaException;
+import es.uji.apps.goc.model.DocumentoUI;
+import es.uji.apps.goc.services.PuntoOrdenDiaDocumentoService;
+import es.uji.apps.goc.services.PuntoOrdenDiaService;
+import es.uji.apps.goc.services.ReunionService;
+import es.uji.commons.rest.CoreBaseService;
+import es.uji.commons.rest.ParamUtils;
+import es.uji.commons.rest.StreamUtils;
+import es.uji.commons.rest.UIEntity;
+import es.uji.commons.sso.AccessManager;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -7,40 +31,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
-import com.mysema.query.Tuple;
-import com.sun.jersey.api.core.InjectParam;
-import com.sun.jersey.core.header.ContentDisposition;
-import com.sun.jersey.multipart.BodyPart;
-import com.sun.jersey.multipart.BodyPartEntity;
-import com.sun.jersey.multipart.FormDataMultiPart;
-
-import es.uji.apps.goc.dto.PuntoOrdenDia;
-import es.uji.apps.goc.dto.PuntoOrdenDiaDocumento;
-import es.uji.apps.goc.dto.QPuntoOrdenDiaDocumento;
-import es.uji.apps.goc.dto.Reunion;
-import es.uji.apps.goc.exceptions.DocumentoNoEncontradoException;
-import es.uji.apps.goc.exceptions.PuntoOrdenDiaNoDisponibleException;
-import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
-import es.uji.apps.goc.exceptions.ReunionYaCompletadaException;
-import es.uji.apps.goc.services.PuntoOrdenDiaDocumentoService;
-import es.uji.apps.goc.services.PuntoOrdenDiaService;
-import es.uji.apps.goc.services.ReunionService;
-import es.uji.commons.rest.CoreBaseService;
-import es.uji.commons.rest.ParamUtils;
-import es.uji.commons.rest.UIEntity;
-import es.uji.commons.sso.AccessManager;
 
 @Path("/reuniones/{reunionId}/puntosOrdenDia")
 public class ReunionPuntosOrdenDiaResource extends CoreBaseService
@@ -63,22 +53,26 @@ public class ReunionPuntosOrdenDiaResource extends CoreBaseService
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
         List<PuntoOrdenDia> listaPuntosOrdenDia = puntoOrdenDiaService.getPuntosByReunionId(reunionId, connectedUserId);
-        List<Tuple> listaNumeroDocumentosPorPuntoOrdenDiaId = puntoOrdenDiaDocumentoService.getNumeroDocumentosPorReunion(connectedUserId);
+        List<Tuple> listaNumeroDocumentosPorPuntoOrdenDiaId =
+                puntoOrdenDiaDocumentoService.getNumeroDocumentosPorReunion(connectedUserId);
+        List<Tuple> listaNumeroAcuerdosPorPuntoOrdenDiaId =
+                puntoOrdenDiaDocumentoService.getNumeroAcuerdosPorReunion(connectedUserId);
 
-        return puntosOrdenDiaConNumeroDocumentosToUI(listaPuntosOrdenDia, listaNumeroDocumentosPorPuntoOrdenDiaId);
+        return puntosOrdenDiaConNumeroDocumentosToUI(listaPuntosOrdenDia, listaNumeroDocumentosPorPuntoOrdenDiaId, listaNumeroAcuerdosPorPuntoOrdenDiaId);
     }
 
-    private List<UIEntity> puntosOrdenDiaConNumeroDocumentosToUI(
-            List<PuntoOrdenDia> listaPuntosOrdenDia,
-            List<Tuple> listaNumeroDocumentosPorPuntoOrdenDiaId)
+    private List<UIEntity> puntosOrdenDiaConNumeroDocumentosToUI(List<PuntoOrdenDia> listaPuntosOrdenDia,
+            List<Tuple> listaNumeroDocumentosPorPuntoOrdenDiaId, List<Tuple> listaNumeroAcuerdosPorPuntoOrdenDiaId)
     {
         List<UIEntity> puntosOrdenDiaUI = new ArrayList<>();
 
         for (PuntoOrdenDia puntoOrdenDia : listaPuntosOrdenDia)
         {
             UIEntity puntoOrdenDiaUI = UIEntity.toUI(puntoOrdenDia);
-            puntoOrdenDiaUI.put("numeroDocumentos", getNumeroDocumentosByPuntoOrdenDiaId(
-                    puntoOrdenDia.getId(), listaNumeroDocumentosPorPuntoOrdenDiaId));
+            puntoOrdenDiaUI.put("numeroDocumentos", getNumeroDocumentosByPuntoOrdenDiaId(puntoOrdenDia.getId(),
+                    listaNumeroDocumentosPorPuntoOrdenDiaId));
+            puntoOrdenDiaUI.put("numeroAcuerdos", getNumeroAcuerdosByPuntoOrdenDiaId(puntoOrdenDia.getId(),
+                    listaNumeroAcuerdosPorPuntoOrdenDiaId));
             puntosOrdenDiaUI.add(puntoOrdenDiaUI);
         }
 
@@ -97,6 +91,24 @@ public class ReunionPuntosOrdenDiaResource extends CoreBaseService
             if (id.equals(puntoOrdenDiaId))
             {
                 return tupla.get(QPuntoOrdenDiaDocumento.puntoOrdenDiaDocumento.puntoOrdenDia.id.count());
+            }
+        }
+
+        return num;
+    }
+
+    private Long getNumeroAcuerdosByPuntoOrdenDiaId(Long puntoOrdenDiaId,
+            List<Tuple> listaNumeroAcuerdosPorPuntoOrdenDiaId)
+    {
+        Long num = 0L;
+
+        for (Tuple tupla : listaNumeroAcuerdosPorPuntoOrdenDiaId)
+        {
+            Long id = tupla.get(QPuntoOrdenDiaAcuerdo.puntoOrdenDiaAcuerdo.puntoOrdenDia.id);
+
+            if (id.equals(puntoOrdenDiaId))
+            {
+                return tupla.get(QPuntoOrdenDiaAcuerdo.puntoOrdenDiaAcuerdo.puntoOrdenDia.id.count());
             }
         }
 
@@ -143,9 +155,8 @@ public class ReunionPuntosOrdenDiaResource extends CoreBaseService
     @Path("{puntoOrdenDiaId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public UIEntity modificaPuntoOrdenDia(@PathParam("puntoOrdenDiaId") Long puntoOrdenDiaId,
-            UIEntity puntoOrdenDiaUI) throws ReunionNoDisponibleException,
-            PuntoOrdenDiaNoDisponibleException, ReunionYaCompletadaException
+    public UIEntity modificaPuntoOrdenDia(@PathParam("puntoOrdenDiaId") Long puntoOrdenDiaId, UIEntity puntoOrdenDiaUI)
+            throws ReunionNoDisponibleException, PuntoOrdenDiaNoDisponibleException, ReunionYaCompletadaException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
@@ -162,9 +173,10 @@ public class ReunionPuntosOrdenDiaResource extends CoreBaseService
 
         reunionService.compruebaReunionNoCompletada(reunionId);
 
-        PuntoOrdenDia puntoOrdenDia = puntoOrdenDiaService.updatePuntoOrdenDia(puntoOrdenDiaId, titulo,
-                tituloAlternativo, descripcion, descripcionAlternativa, deliberaciones, deliberacionesAlternativas,
-                acuerdos, acuerdosAlternativos, orden, publico, connectedUserId);
+        PuntoOrdenDia puntoOrdenDia =
+                puntoOrdenDiaService.updatePuntoOrdenDia(puntoOrdenDiaId, titulo, tituloAlternativo, descripcion,
+                        descripcionAlternativa, deliberaciones, deliberacionesAlternativas, acuerdos,
+                        acuerdosAlternativos, orden, publico, connectedUserId);
 
         return UIEntity.toUI(puntoOrdenDia);
     }
@@ -172,7 +184,8 @@ public class ReunionPuntosOrdenDiaResource extends CoreBaseService
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public UIEntity addPuntoOrdenDia(UIEntity puntoOrdenDiaUI) throws ReunionYaCompletadaException
+    public UIEntity addPuntoOrdenDia(UIEntity puntoOrdenDiaUI)
+            throws ReunionYaCompletadaException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
@@ -216,10 +229,24 @@ public class ReunionPuntosOrdenDiaResource extends CoreBaseService
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
-        List<PuntoOrdenDiaDocumento> documentos = puntoOrdenDiaDocumentoService
-                .getDocumentosByPuntoOrdenDiaId(puntoOrdenDiaId, connectedUserId);
+        List<PuntoOrdenDiaDocumento> documentos =
+                puntoOrdenDiaDocumentoService.getDocumentosByPuntoOrdenDiaId(puntoOrdenDiaId, connectedUserId);
 
         return puntoOrdenDiaDocumentosToUI(documentos);
+    }
+
+    @GET
+    @Path("{puntoOrdenDiaId}/acuerdos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UIEntity> getPuntoOrdenDiaAcuerdos(@PathParam("reunionId") Long reunionId,
+            @PathParam("puntoOrdenDiaId") Long puntoOrdenDiaId)
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+
+        List<PuntoOrdenDiaAcuerdo> acuerdos =
+                puntoOrdenDiaDocumentoService.getAcuerdosByPuntoOrdenDiaId(puntoOrdenDiaId, connectedUserId);
+
+        return puntoOrdenDiaAcuerdosToUI(acuerdos);
     }
 
     private List<UIEntity> puntoOrdenDiaDocumentosToUI(List<PuntoOrdenDiaDocumento> documentos)
@@ -228,58 +255,103 @@ public class ReunionPuntosOrdenDiaResource extends CoreBaseService
 
         for (PuntoOrdenDiaDocumento puntoOrdenDiaDocumento : documentos)
         {
-            listaUI.add(puntoOrdenDiaDocumentoToUI(puntoOrdenDiaDocumento));
+            listaUI.add(puntoOrdenDiaDocumentoToUI(DocumentoUI.fromPuntoDiaDocumento(puntoOrdenDiaDocumento)));
         }
 
         return listaUI;
     }
 
-    private UIEntity puntoOrdenDiaDocumentoToUI(PuntoOrdenDiaDocumento puntoOrdenDiaDocumento)
+    private List<UIEntity> puntoOrdenDiaAcuerdosToUI(List<PuntoOrdenDiaAcuerdo> acuerdos)
+    {
+        List<UIEntity> listaUI = new ArrayList<>();
+
+        for (PuntoOrdenDiaAcuerdo puntoOrdenDiaAcuerdo : acuerdos)
+        {
+            listaUI.add(puntoOrdenDiaDocumentoToUI(DocumentoUI.fromPuntoDiaAcuerdos(puntoOrdenDiaAcuerdo)));
+        }
+
+        return listaUI;
+    }
+
+    private UIEntity puntoOrdenDiaDocumentoToUI(DocumentoUI documento)
     {
         UIEntity ui = new UIEntity();
 
-        ui.put("id", puntoOrdenDiaDocumento.getId());
-        ui.put("creadorId", puntoOrdenDiaDocumento.getCreadorId());
-        ui.put("fechaAdicion", puntoOrdenDiaDocumento.getFechaAdicion());
-        ui.put("descripcion", puntoOrdenDiaDocumento.getDescripcion());
-        ui.put("descripcionAlternativa", puntoOrdenDiaDocumento.getDescripcionAlternativa());
-        ui.put("mimeType", puntoOrdenDiaDocumento.getMimeType());
-        ui.put("nombreFichero", puntoOrdenDiaDocumento.getNombreFichero());
+        ui.put("id", documento.getId());
+        ui.put("creadorId", documento.getCreadorId());
+        ui.put("fechaAdicion", documento.getFechaAdicion());
+        ui.put("descripcion", documento.getDescripcion());
+        ui.put("descripcionAlternativa", documento.getDescripcionAlternativa());
+        ui.put("mimeType", documento.getMimeType());
+        ui.put("nombreFichero", documento.getNombreFichero());
+
         return ui;
     }
 
     @GET
     @Path("{puntoOrdenDiaId}/documentos/{documentoId}/descargar")
-    public Response descargarPuntoOrdenDiaDocumento(
-            @PathParam("puntoOrdenDiaId") Long puntoOrdenDiaId,
-            @PathParam("documentoId") Long documentoId) throws DocumentoNoEncontradoException
+    public Response descargarPuntoOrdenDiaDocumento(@PathParam("puntoOrdenDiaId") Long puntoOrdenDiaId,
+            @PathParam("documentoId") Long documentoId)
+            throws DocumentoNoEncontradoException, IOException
     {
-        Long connectedUserId = AccessManager.getConnectedUserId(request);
-
         PuntoOrdenDiaDocumento documento = puntoOrdenDiaDocumentoService.getDocumentoById(documentoId);
-
-        String nombreFichero = null;
-        String contentType = null;
-        byte[] data = null;
 
         if (documento == null)
         {
             throw new DocumentoNoEncontradoException();
         }
 
-        data = documento.getDatos();
-        nombreFichero = documento.getNombreFichero();
-        contentType = documento.getMimeType();
+        DocumentoUI documentoAux = new DocumentoUI();
+
+        documentoAux.setData(documento.getDatos());
+        documentoAux.setNombreFichero(documento.getNombreFichero());
+        documentoAux.setMimeType(documento.getMimeType());
+
+        return sendDocumento(documentoAux);
+    }
+
+    @GET
+    @Path("{puntoOrdenDiaId}/acuerdos/{acuerdoId}/descargar")
+    public Response descargarPuntoOrdenDiaAcuerdo(@PathParam("puntoOrdenDiaId") Long puntoOrdenDiaId,
+            @PathParam("acuerdoId") Long acuerdoId)
+            throws DocumentoNoEncontradoException, IOException
+    {
+        PuntoOrdenDiaAcuerdo acuerdo = puntoOrdenDiaDocumentoService.getAcuerdoById(acuerdoId);
+
+        if (acuerdo == null)
+        {
+            throw new DocumentoNoEncontradoException();
+        }
+
+        DocumentoUI documento = new DocumentoUI();
+
+        documento.setData(acuerdo.getDatos());
+        documento.setNombreFichero(acuerdo.getNombreFichero());
+        documento.setMimeType(acuerdo.getMimeType());
+
+        return sendDocumento(documento);
+    }
+
+    private Response sendDocumento(DocumentoUI documento)
+            throws IOException
+    {
+        String nombreFichero = documento.getNombreFichero();
+        String contentType = documento.getMimeType();
+        byte[] data = documento.getData();
 
         return Response.ok(data)
                 .header("Content-Disposition", "attachment; filename = \"" + nombreFichero + "\"")
-                .header("Content-Length", data.length).header("Content-Type", contentType).build();
+                .header("Content-Length", data.length)
+                .header("Content-Type", contentType)
+                .build();
+
     }
 
     @DELETE
     @Path("{puntoOrdenDiaId}/documentos/{documentoId}")
     public Response borrarDocumentoPuntoOrdenDia(@PathParam("puntoOrdenDiaId") Long puntoOrdenDiaId,
-            @PathParam("documentoId") Long documentoId) throws ReunionYaCompletadaException
+            @PathParam("documentoId") Long documentoId)
+            throws ReunionYaCompletadaException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
@@ -289,19 +361,63 @@ public class ReunionPuntosOrdenDiaResource extends CoreBaseService
         return Response.ok().build();
     }
 
+    @DELETE
+    @Path("{puntoOrdenDiaId}/acuerdos/{acuerdoId}")
+    public Response borrarAcuerdoPuntoOrdenDia(@PathParam("puntoOrdenDiaId") Long puntoOrdenDiaId,
+            @PathParam("acuerdoId") Long acuerdoId)
+            throws ReunionYaCompletadaException
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+
+        reunionService.compruebaReunionNoCompletada(reunionId);
+        puntoOrdenDiaDocumentoService.borrarAcuerdo(acuerdoId, puntoOrdenDiaId, connectedUserId);
+
+        return Response.ok().build();
+    }
+
     @POST
     @Path("{puntoOrdenDiaId}/documentos")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.TEXT_HTML)
     public UIEntity subirDocumentoPuntoOrdenDia(@PathParam("puntoOrdenDiaId") Long puntoOrdenDiaId,
-            FormDataMultiPart multiPart) throws IOException, ReunionYaCompletadaException
+            FormDataMultiPart multiPart)
+            throws IOException, ReunionYaCompletadaException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
+        DocumentoUI documento = extractDocumentoFromMultipart(multiPart);
+
+        PuntoOrdenDiaDocumento puntoOrdenDiaDocumento =
+                puntoOrdenDiaDocumentoService.addDocumento(puntoOrdenDiaId, documento, connectedUserId);
+
+        return UIEntity.toUI(puntoOrdenDiaDocumento);
+    }
+
+    @POST
+    @Path("{puntoOrdenDiaId}/acuerdos")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.TEXT_HTML)
+    public UIEntity subirAcuerdoPuntoOrdenDia(@PathParam("puntoOrdenDiaId") Long puntoOrdenDiaId,
+            FormDataMultiPart multiPart)
+            throws IOException, ReunionYaCompletadaException
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+        DocumentoUI documento = extractDocumentoFromMultipart(multiPart);
+
+        PuntoOrdenDiaAcuerdo puntoOrdenDiaAcuerdo =
+                puntoOrdenDiaDocumentoService.addAcuerdo(puntoOrdenDiaId, documento, connectedUserId);
+
+        return UIEntity.toUI(puntoOrdenDiaAcuerdo);
+    }
+
+    private DocumentoUI extractDocumentoFromMultipart(FormDataMultiPart multiPart)
+            throws IOException
+    {
         String fileName = "";
         String mimeType = "";
         InputStream data = null;
         String descripcion = "";
         String descripcionAlternativa = "";
+        DocumentoUI documento = new DocumentoUI();
 
         for (BodyPart bodyPart : multiPart.getBodyParts())
         {
@@ -336,11 +452,12 @@ public class ReunionPuntosOrdenDiaResource extends CoreBaseService
             }
         }
 
-        reunionService.compruebaReunionNoCompletada(reunionId);
+        documento.setDescripcion(descripcion);
+        documento.setDescripcionAlternativa(descripcionAlternativa);
+        documento.setNombreFichero(fileName);
+        documento.setMimeType(mimeType);
+        documento.setData(StreamUtils.inputStreamToByteArray(data));
 
-        PuntoOrdenDiaDocumento puntoOrdenDiaDocumento = puntoOrdenDiaDocumentoService.addDocumento(
-                puntoOrdenDiaId, fileName, descripcion, descripcionAlternativa, mimeType, data, connectedUserId);
-
-        return UIEntity.toUI(puntoOrdenDiaDocumento);
+        return documento;
     }
 }

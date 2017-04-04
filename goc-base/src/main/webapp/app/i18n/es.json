@@ -158,7 +158,14 @@
     "resultadoEnvioConvocatoriaTitle": "Resultado del envío de la convocatoria",
     "titleSingular": "Reunión",
     "descriptoresYclaves": "Descriptores y claves",
-    "deseaBorrarComentario": "¿Desea borrar el comentario?"
+    "deseaBorrarComentario": "¿Desea borrar el comentario?",
+    "acuerdos": "Acuerdos",
+    "subirNuevoAcuerdo": "Subir un nuevo acuerdo",
+    "acuerdosAdjuntosVacia": "Todavía no hay acuerdos",
+    "subirAcuerdo": "Subir acuerdo",
+    "acuerdosDelPunto": "Acuerdos del punto",
+    "seleccionarParaAcuerdosPuntoOrdenDia": "Debe seleccionar un punto del orden del día para acceder a sus acuerdos",
+    "preguntaBorrarAcuerdo": "¿Estás seguro/a de querer borrar el acuerdo?"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Histórico de reuniones",

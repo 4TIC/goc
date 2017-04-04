@@ -159,7 +159,14 @@
     "resultadoEnvioConvocatoriaTitle": "Resultat de l'enviament de la convocatòria",
     "titleSingular": "Reunió",
     "descriptoresYclaves": "Descriptors i claus",
-    "deseaBorrarComentario": "Desitgeu esborrar el comentari?"
+    "deseaBorrarComentario": "Desitgeu esborrar el comentari?",
+    "acuerdos": "Acords",
+    "subirNuevoAcuerdo": "Pujar un nou acord",
+    "acuerdosAdjuntosVacia": "Encara no n'hi ha acords",
+    "subirAcuerdo": "Pujar acord",
+    "acuerdosDelPunto": "Acords del punt",
+    "seleccionarParaAcuerdosPuntoOrdenDia": "Cal sel·leccionar un punt de l'ordre del dia per accedir als seus acords",
+    "preguntaBorrarAcuerdo": "Esteu segur/a de voler esborrar l'acord?"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Històric de reunions",

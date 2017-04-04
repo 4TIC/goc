@@ -1,13 +1,12 @@
 package es.uji.apps.goc.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import es.uji.apps.goc.model.Comentario;
+import es.uji.apps.goc.model.Documento;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import es.uji.apps.goc.model.Comentario;
-import es.uji.apps.goc.model.Documento;
 
 public class ReunionFirma implements Serializable
 {

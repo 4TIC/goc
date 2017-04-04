@@ -124,6 +124,35 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
         this.modal.show();
     },
 
+    onAttachmentAcuerdosEdit: function () {
+        var grid = this.getView();
+        var record = grid.getView().getSelectionModel().getSelection()[0];
+        var store = Ext.create('goc.store.PuntosOrdenDiaAcuerdos');
+        var viewport = this.getView().up('viewport');
+
+        var reunionGrid = Ext.ComponentQuery.query("reunionGrid")[0];
+        var reunion = reunionGrid.getView().getSelectionModel().getSelection()[0];
+
+        if (!record) {
+            return Ext.Msg.alert(appI18N.reuniones.cerrarActa, appI18N.reuniones.seleccionarParaAcuerdosPuntoOrdenDia);
+        }
+
+        this.modal = viewport.add({
+            xtype: 'formOrdenDiaAcuerdos',
+            viewModel: {
+                data: {
+                    title: appI18N.reuniones.acuerdosDelPunto + ': ' + record.get('titulo'),
+                    puntoOrdenDiaId: record.get('id'),
+                    reunionId: this.reunionId,
+                    reunionCompletada: reunion.get('completada'),
+                    store: store
+                }
+            }
+        });
+        
+        this.modal.show();
+    },
+
     onAttachmentEditDescriptores: function () {
         var view = this.getView().up('panel');
         var grid = this.getView();
