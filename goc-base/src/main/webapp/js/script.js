@@ -23,7 +23,7 @@ $(function()
                     var creador = comentario.creadorNombre ? comentario.creadorNombre : comentario.creadorId;
                     html +=
                     '<div>' +
-                    '  <a href="#" class="delete-comentario" data-id="' + comentario.id + '">x</a>' +
+                    '  <a href="#" class="delete-comentario" data-id="' + comentario.id + '"><i class="fa fa-times"></i></a>' +
                     '  <div class="comentario">' +
                     '    <p class=""autor"><strong>' + appI18N.acta.autor + '</strong>: ' + creador + '</p>' +
                     '    <div class="texto">' + comentario.comentario + '</div>' +
