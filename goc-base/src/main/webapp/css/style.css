@@ -176,6 +176,54 @@ a:hover {
     color: inherit;
 }
 
+i.fa-caret-right, .fa-caret-down{
+    padding-left: 16px;
+    font-size: 1.4em !important;
+}
+
+i.fa-angle-double-left, i.fa-angle-double-right {
+    padding: 8px;
+    font-size: 1.4em !important;
+}
+
+div.collapsed {
+    display: none;
+}
+
+div.expanded {
+    display: initial;
+}
+
+div.pagination-centered {
+    justify-content: center;
+    display: inline-flex;
+    line-height: 1.6em;
+    vertical-align: middle;
+    width: 100%;
+    margin-top: 1.6em;
+}
+
+div.pagination {
+    margin-right: 1em;
+    margin-left: 1em;
+}
+
+div.pagination a {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none
+}
+
+div.reunion-titulo {
+    display: inline-block;
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-top: 0.8em;
+}
+
+div.reunion > div > div {
+    padding-left: 1.6em;
+}
 
 @media only screen and (max-device-width: 480px) {
     .list li {

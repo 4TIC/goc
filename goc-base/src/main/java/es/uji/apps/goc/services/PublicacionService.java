@@ -2,6 +2,7 @@ package es.uji.apps.goc.services;
 
 import com.sun.jersey.api.core.InjectParam;
 
+import es.uji.apps.goc.model.AcuerdosSearch;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,11 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import es.uji.apps.goc.auth.LanguageConfig;
@@ -46,6 +43,7 @@ import static java.util.stream.Collectors.toList;
 @Path("publicacion")
 public class PublicacionService extends CoreBaseService
 {
+    public static final int RESULTADOS_POR_PAGINA = 5;
     @InjectParam
     private ReunionDAO reunionDAO;
 
@@ -67,23 +65,23 @@ public class PublicacionService extends CoreBaseService
     @GET
     @Path("reuniones")
     @Produces(MediaType.TEXT_HTML)
-    public Template reuniones(@QueryParam("lang") String lang) throws OrganosExternosException,
-            MiembrosExternosException, ReunionNoDisponibleException, PersonasExternasException
+    public Template reuniones(@QueryParam("lang") String lang)
+            throws OrganosExternosException, MiembrosExternosException, ReunionNoDisponibleException,
+            PersonasExternasException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
-        List<ReunionTemplate> reunionesAsistente = reunionService
-                .getReunionesByAsistenteIdOrSuplenteId(connectedUserId);
+        List<ReunionTemplate> reunionesAsistente =
+                reunionService.getReunionesByAsistenteIdOrSuplenteId(connectedUserId);
 
-        List<Long> reunionesIds = reunionesAsistente.stream().map(r -> r.getId())
+        List<Long> reunionesIds = reunionesAsistente.stream().map(r -> r.getId()).collect(toList());
+
+        List<ReunionTemplate> reunionesConvocante = reunionService.getReunionesByCreadorId(connectedUserId)
+                .stream()
+                .filter(r -> !reunionesIds.contains(r.getId()))
                 .collect(toList());
 
-        List<ReunionTemplate> reunionesConvocante = reunionService
-                .getReunionesByCreadorId(connectedUserId).stream()
-                .filter(r -> !reunionesIds.contains(r.getId())).collect(toList());
-
-        List<ReunionTemplate> reuniones = Stream
-                .concat(reunionesAsistente.stream(), reunionesConvocante.stream())
+        List<ReunionTemplate> reuniones = Stream.concat(reunionesAsistente.stream(), reunionesConvocante.stream())
                 .sorted((r1, r2) -> r2.getFecha().compareTo(r1.getFecha()))
                 .collect(toList());
 
@@ -107,8 +105,9 @@ public class PublicacionService extends CoreBaseService
     @Path("acuerdos")
     @Produces(MediaType.TEXT_HTML)
     public Template acuerdos(@QueryParam("lang") String lang, @QueryParam("tipoOrganoId") Long tipoOrganoId,
-                             @QueryParam("organoId") Long organoId, @QueryParam("descriptorId") Long descriptorId,
-                             @QueryParam("claveId") Long claveId, @QueryParam("anyo") Integer anyo)
+            @QueryParam("organoId") Long organoId, @QueryParam("descriptorId") Long descriptorId,
+            @QueryParam("claveId") Long claveId, @QueryParam("anyo") Integer anyo,
+            @QueryParam("pagina") @DefaultValue("0") Integer pagina)
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
         String applang = getLangCode(lang);
@@ -121,48 +120,48 @@ public class PublicacionService extends CoreBaseService
         List<Reunion> reuniones = new ArrayList<>();
         List<ReunionTemplate> reunionesTemplate = null;
 
-        if(anyo != null){
-            reuniones = reunionService.getReunionesPublicasAnyo(anyo);
-            reunionesTemplate =
-                reuniones.stream().map(r -> reunionService.getReunionTemplateDesdeReunion(r, connectedUserId))
-                    .collect(Collectors.toList());
-        }
-
         descriptoresConReunionesPublicas = reunionService.getDescriptoresConReunionesPublicas(anyo);
 
         if (tipoOrganoId != null)
         {
             organos = reunionService.getOrganosConReunionesPublicas(tipoOrganoId, anyo);
-
-            if (organoId != null)
-            {
-                reuniones = reunionService.getReunionesPublicas(tipoOrganoId, organoId, anyo);
-                reunionesTemplate =
-                    reuniones.stream().map(r -> reunionService.getReunionTemplateDesdeReunion(r, connectedUserId))
-                        .collect(Collectors.toList());
-            }
         }
 
-        if(!descriptoresConReunionesPublicas.isEmpty() && descriptorId != null)
+        if (!descriptoresConReunionesPublicas.isEmpty() && descriptorId != null)
         {
-            claves = reunionService.getClavesConReunionesPublicas(descriptoresConReunionesPublicas, descriptorId, anyo);
+            claves = reunionService.getClavesConReunionesPublicas(descriptorId, anyo);
+        }
 
-            if (claveId != null)
+        Integer numReuniones = 0;
+
+        if (descriptorId == null)
+        {
+            claveId = null;
+        }
+
+        if (tipoOrganoId == null)
+        {
+            organoId = null;
+        }
+
+        if (anyo != null)
+        {
+            AcuerdosSearch acuerdosSearch =
+                    new AcuerdosSearch(anyo, pagina * RESULTADOS_POR_PAGINA, RESULTADOS_POR_PAGINA);
+
+            if (!descriptoresConReunionesPublicas.isEmpty())
             {
-                if (organoId != null)
-                {
-                    reuniones = reunionService.getReunionesPublicas(tipoOrganoId, organoId, descriptorId, claveId, anyo);
-                    reunionesTemplate =
-                        reuniones.stream().map(r -> reunionService.getReunionTemplateDesdeReunion(r, connectedUserId))
-                            .collect(Collectors.toList());
-                } else
-                {
-                    reuniones = reunionService.getReunionesPublicasClave(descriptorId, claveId, anyo);
-                    reunionesTemplate =
-                        reuniones.stream().map(r -> reunionService.getReunionTemplateDesdeReunion(r, connectedUserId))
-                            .collect(Collectors.toList());
-                }
+                acuerdosSearch.setClaveId(claveId);
+                acuerdosSearch.setDescriptorId(descriptorId);
             }
+
+            acuerdosSearch.setTipoOrganoId(tipoOrganoId);
+            acuerdosSearch.setOrganoId(organoId);
+
+            reuniones = reunionService.getReunionesPublicas(acuerdosSearch);
+            numReuniones = reunionService.getNumReunionesPublicas(acuerdosSearch);
+
+            reunionesTemplate = buildReunionTemplate(connectedUserId, reuniones);
         }
 
         Template template = new HTMLTemplate("acuerdos-" + applang);
@@ -188,7 +187,28 @@ public class PublicacionService extends CoreBaseService
         template.put("anyos", anyos);
         template.put("anyo", anyo);
 
+        if (pagina > 0)
+        {
+            template.put("hasPrevPage", true);
+        }
+
+        if (numReuniones > ((pagina * RESULTADOS_POR_PAGINA) + RESULTADOS_POR_PAGINA))
+        {
+            template.put("hasNextPage", true);
+        }
+
+        template.put("pagina", pagina);
+
         return template;
+    }
+
+    private List<ReunionTemplate> buildReunionTemplate(Long connectedUserId, List<Reunion> reuniones)
+    {
+        List<ReunionTemplate> reunionesTemplate;
+        reunionesTemplate = reuniones.stream()
+                .map(r -> reunionService.getReunionTemplateDesdeReunion(r, connectedUserId))
+                .collect(Collectors.toList());
+        return reunionesTemplate;
     }
 
     @GET
@@ -196,18 +216,18 @@ public class PublicacionService extends CoreBaseService
     @Produces(MediaType.TEXT_HTML)
     @Transactional
     public Template reunion(@PathParam("reunionId") Long reunionId, @QueryParam("lang") String lang)
-            throws OrganosExternosException, MiembrosExternosException,
-            ReunionNoDisponibleException, PersonasExternasException, InvalidAccessException
+            throws OrganosExternosException, MiembrosExternosException, ReunionNoDisponibleException,
+            PersonasExternasException, InvalidAccessException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
         Set<OrganoReunion> reunionOrganos = reunion.getReunionOrganos();
         boolean permitirComentarios = false;
-        for(OrganoReunion organoReunion : reunionOrganos)
+        for (OrganoReunion organoReunion : reunionOrganos)
         {
             Set<OrganoReunionMiembro> miembros = organoReunion.getMiembros();
-            for(OrganoReunionMiembro miembro : miembros)
+            for (OrganoReunionMiembro miembro : miembros)
             {
                 if (miembro.getMiembroId().equals(connectedUserId))
                 {
@@ -216,7 +236,7 @@ public class PublicacionService extends CoreBaseService
             }
         }
 
-        if(reunion.getCreadorId().equals(connectedUserId))
+        if (reunion.getCreadorId().equals(connectedUserId))
         {
             permitirComentarios = true;
         }
@@ -228,8 +248,7 @@ public class PublicacionService extends CoreBaseService
 
         reunion.tieneAcceso(connectedUserId);
 
-        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion,
-                connectedUserId);
+        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId);
 
         String applang = getLangCode(lang);
 
@@ -251,8 +270,8 @@ public class PublicacionService extends CoreBaseService
 
     private String getLangCode(String lang)
     {
-        if (lang == null || lang.isEmpty() ||
-                !(lang.toLowerCase().equals(languageConfig.mainLanguage) || lang.toLowerCase().equals(languageConfig.alternativeLanguage)))
+        if (lang == null || lang.isEmpty() || !(lang.toLowerCase()
+                .equals(languageConfig.mainLanguage) || lang.toLowerCase().equals(languageConfig.alternativeLanguage)))
         {
             return languageConfig.mainLanguage;
         }

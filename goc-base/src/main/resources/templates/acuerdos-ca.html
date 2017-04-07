@@ -4,6 +4,7 @@
     <meta th:charset="${charset}" />
     <link rel="stylesheet" type="text/css" href="/goc/css/jquery.modal.css" />
     <link rel="stylesheet" type="text/css" href="/goc/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/goc/css/font-awesome.min.css" />
     <link th:if="${customCSS != ''}" rel="stylesheet" type="text/css" th:href="${customCSS}" />
 
     <script src="/goc/js/jquery.min.js"></script>
@@ -29,8 +30,9 @@
 
       <h1>Llistat de acords del òrgans col·legiats</h1>
 
-      <form action="/goc/rest/publicacion/acuerdos" method="GET">
+      <form name="form-busqueda" action="/goc/rest/publicacion/acuerdos" method="GET">
         <input type="hidden" name="lang" th:value="${lang}" />
+        <input type="hidden" name="pagina" th:value="${pagina}" />
         <table border="0" cellpadding="2" cellspacing="2">
           <tr>
             <td><strong>Any:</strong></td>
@@ -45,7 +47,7 @@
           <tr>
             <td><strong>Tipous d'òrgans:</strong></td>
             <td>
-              <select name="tipoOrganoId" onchange="this.form.submit()">
+              <select name="tipoOrganoId" onchange="document['form-busqueda'].organoId.value=''; this.form.submit()">
                 <option value="">-- Tipus d'òrgans --</option>
                 <option th:each="tipoOrgano : ${tiposOrganos}" th:selected="${tipoOrganoId == tipoOrgano.id}" th:value="${tipoOrgano.id}" th:text="${tipoOrgano.nombreAlternativo}">Tipo de organo</option>
               </select>
@@ -65,7 +67,7 @@
           <tr>
             <td><strong>Descriptors:</strong></td>
             <td>
-              <select name="descriptorId" onchange="this.form.submit()">
+              <select name="descriptorId" onchange="document['form-busqueda'].claveId.value=''; this.form.submit()">
                 <option value="">-- Descriptor --</option>
                 <option th:each="desc : ${descriptores}" th:selected="${descriptorId == desc.id}" th:value="${desc.id}" th:text="${desc.descriptor}">Descriptor</option>
               </select>
@@ -85,32 +87,41 @@
 
         <div>
           <div th:each="reunion : ${reuniones}" class="reunion">
-            <h2 th:text="${reunion.asuntoAlternativo}">Assumpte</h2>
-
-            <div>
-              <strong>Data:</strong>
-              <span th:text="${#dates.format(reunion.fecha,'dd/MM/yyyy HH:mm')}">Fecha</span>
-            </div>
-
-            <div>
-              <strong>Duració:</strong>
-              <span th:text="${reunion.duracion + ' minuts'}">Fecha</span>
-            </div>
-
-            <div>
-              <strong>Acords generals:</strong>
-              <span th:text="${reunion.acuerdosAlternativos}">Acords</span>
-            </div>
-
-            <blockquote th:each="puntoDia : ${reunion.reunionPuntosOrdenDia}" class="punto-del-dia">
-              <div th:if="${puntoDia.publico}" th:remove="tag">
-                <h3 th:text="${puntoDia.tituloAlternativo}"></h3>
-                <div th:text="${puntoDia.acuerdosAlternativos}"></div>
+            <div class="reunion-titulo" th:text="${reunion.asuntoAlternativo}">Assumpte</div>
+            <div class="collapsible collapsed">
+              <div>
+                <strong>Data:</strong>
+                <span th:text="${#dates.format(reunion.fecha,'dd/MM/yyyy HH:mm')}">Fecha</span>
               </div>
-            </blockquote>
+
+              <div>
+                <strong>Duració:</strong>
+                <span th:text="${reunion.duracion + ' minuts'}">Fecha</span>
+              </div>
+
+              <div>
+                <strong>Acords generals:</strong>
+                <span th:text="${reunion.acuerdosAlternativos}">Acords</span>
+              </div>
+              <blockquote th:each="puntoDia : ${reunion.reunionPuntosOrdenDia}" class="punto-del-dia">
+                <div th:if="${puntoDia.publico}" th:remove="tag">
+                  <h3 th:text="${puntoDia.tituloAlternativo}"></h3>
+                  <div th:text="${puntoDia.acuerdosAlternativos}"></div>
+                </div>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+        <div class="pagination-centered">
+          <div class="pagination" th:if="${hasPrevPage}">
+            <a class="prevPage" href="#"><i class="fa fa-angle-double-left"></i>anterior</a>
+          </div>
+          <div class="pagination" th:if="${hasNextPage}">
+            <a class="nextPage" href="#">següent<i class="fa fa-angle-double-right"></i></a>
           </div>
         </div>
       </form>
     </div>
+    <script src="/goc/js/acuerdos.js"></script>
   </body>
 </html>
