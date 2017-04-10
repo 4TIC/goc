@@ -32,7 +32,7 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
         var reunionId = this.reunionId;
 
         if (records.length === 0) {
-            return Ext.Msg.alert(appI18N.reuniones.cerrarActa, appI18N.reuniones.seleccionarParaBorrarPuntoOrdenDia);
+            return Ext.Msg.alert(appI18N.common.borradoRegistro, appI18N.reuniones.seleccionarParaBorrarPuntoOrdenDia);
         }
 
         if (records.length === 1 && records[0].phantom === true) {
@@ -88,7 +88,7 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
         var record = grid.getView().getSelectionModel().getSelection()[0];
 
         if (!record) {
-            return Ext.Msg.alert(appI18N.reuniones.cerrarActa, appI18N.reuniones.seleccionarParaEditarPuntoOrdenDia);
+            return Ext.Msg.alert(appI18N.common.edicionRegistro, appI18N.reuniones.seleccionarParaEditarPuntoOrdenDia);
         }
 
         this.createModalPuntoOrdenDia(record);
@@ -106,7 +106,7 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
         var reunion = reunionGrid.getView().getSelectionModel().getSelection()[0];
 
         if (!record) {
-            return Ext.Msg.alert(appI18N.reuniones.cerrarActa, appI18N.reuniones.seleccionarParaDocumentacionPuntoOrdenDia);
+            return Ext.Msg.alert(appI18N.reuniones.documentacion, appI18N.reuniones.seleccionarParaDocumentacionPuntoOrdenDia);
         }
 
         this.modal = viewport.add({
@@ -134,7 +134,7 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
         var reunion = reunionGrid.getView().getSelectionModel().getSelection()[0];
 
         if (!record) {
-            return Ext.Msg.alert(appI18N.reuniones.cerrarActa, appI18N.reuniones.seleccionarParaAcuerdosPuntoOrdenDia);
+            return Ext.Msg.alert(appI18N.reuniones.acuerdos, appI18N.reuniones.seleccionarParaAcuerdosPuntoOrdenDia);
         }
 
         this.modal = viewport.add({
@@ -163,7 +163,7 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
         var reunion = reunionGrid.getView().getSelectionModel().getSelection()[0];
 
         if (!record) {
-            return Ext.Msg.alert(appI18N.reuniones.cerrarActa, appI18N.reuniones.seleccionarParaDocumentacionPuntoOrdenDia);
+            return Ext.Msg.alert(appI18N.reuniones.descriptoresYclaves, appI18N.reuniones.seleccionarParaDocumentacionPuntoOrdenDia);
         }
 
         this.modal = view.add({
