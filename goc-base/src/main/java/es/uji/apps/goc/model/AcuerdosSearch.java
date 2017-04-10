@@ -1,5 +1,7 @@
 package es.uji.apps.goc.model;
 
+import java.util.Date;
+
 public class AcuerdosSearch
 {
     private Integer startSearch;
@@ -9,6 +11,8 @@ public class AcuerdosSearch
     private Long organoId;
     private Long descriptorId;
     private Long claveId;
+    private Date fInicio;
+    private Date fFin;
 
     public AcuerdosSearch(Integer anyo, Integer startSearch, Integer numResults)
     {
@@ -85,5 +89,25 @@ public class AcuerdosSearch
     public void setClaveId(Long claveId)
     {
         this.claveId = claveId;
+    }
+
+    public Date getfInicio()
+    {
+        return fInicio;
+    }
+
+    public void setfInicio(Date fInicio)
+    {
+        this.fInicio = fInicio;
+    }
+
+    public Date getfFin()
+    {
+        return fFin;
+    }
+
+    public void setfFin(Date fFin)
+    {
+        this.fFin = fFin;
     }
 }

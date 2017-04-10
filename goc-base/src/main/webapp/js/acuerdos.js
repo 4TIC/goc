@@ -34,4 +34,23 @@ $(function()
 
         form.submit();
     });
+
+    $(document).ready(function()
+    {
+        $('input[name=fInicio]').datepicker({
+            firstDay: 1,
+            dateFormat: 'dd/mm/yy',
+            onClose: function( selectedDate ) {
+                $( "input[name=fFin]" ).datepicker( "option", "minDate", selectedDate );
+            }
+        });
+
+        $('input[name=fFin]').datepicker({
+            firstDay: 1,
+            dateFormat: 'dd/mm/yy',
+            onClose: function( selectedDate ) {
+                $( "input[name=fInicio]" ).datepicker( "option", "maxDate", selectedDate );
+            }
+        });
+    });
 });

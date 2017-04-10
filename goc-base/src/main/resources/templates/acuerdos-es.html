@@ -5,10 +5,13 @@
     <link rel="stylesheet" type="text/css" href="/goc/css/jquery.modal.css" />
     <link rel="stylesheet" type="text/css" href="/goc/css/style.css" />
     <link rel="stylesheet" type="text/css" href="/goc/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="/goc/css/jquery-ui.min.css" />
     <link th:if="${customCSS != ''}" rel="stylesheet" type="text/css" th:href="${customCSS}" />
 
     <script src="/goc/js/jquery.min.js"></script>
     <script src="/goc/js/jquery.modal.js"></script>
+    <script src="/goc/js/jquery-ui.min.js"></script>
+    <script src="/goc/js/datepicker-es.js"></script>
     <script th:inline="javascript">
     /*<![CDATA[*/
         var applang = [[${applang}]];
@@ -37,7 +40,7 @@
           <tr>
             <td><strong>Año:</strong></td>
             <td>
-              <select name="anyo" onchange="this.form.submit()">
+              <select name="anyo" onchange="this.form.submit();">
                 <option value="">-- Años --</option>
                 <option th:each="anyoCalculated : ${anyos}" th:selected="${anyo == anyoCalculated}" th:value="${anyoCalculated}" th:text="${anyoCalculated}">Año</option>
               </select>
@@ -47,7 +50,7 @@
           <tr>
             <td><strong>Tipos de órgano:</strong></td>
             <td>
-              <select name="tipoOrganoId" onchange="document['form-busqueda'].organoId.value=''; this.form.submit()">
+              <select name="tipoOrganoId" onchange="document['form-busqueda'].organoId.value=''; this.form.submit();">
                 <option value="">-- Tipos de órgano --</option>
                 <option th:each="tipoOrgano : ${tiposOrganos}" th:selected="${tipoOrganoId == tipoOrgano.id}" th:value="${tipoOrgano.id}" th:text="${tipoOrgano.nombre}">Tipo de organo</option>
               </select>
@@ -57,7 +60,7 @@
           <tr>
             <td><strong>Órganos:</strong></td>
             <td>
-              <select name="organoId" onchange="this.form.submit()">
+              <select name="organoId" onchange="this.form.submit();">
                 <option value="">-- Órganos --</option>
                 <option th:each="organo : ${organos}" th:selected="${organoId == organo.id}" th:value="${organo.id}" th:text="${organo.nombre}">Òrgano</option>
               </select>
@@ -67,7 +70,7 @@
           <tr>
             <td><strong>Descriptores:</strong></td>
             <td>
-              <select name="descriptorId" onchange="document['form-busqueda'].claveId.value=''; this.form.submit()">
+              <select name="descriptorId" onchange="document['form-busqueda'].claveId.value=''; this.form.submit();">
                 <option value="">-- Descriptores --</option>
                 <option th:each="desc : ${descriptores}" th:selected="${descriptorId == desc.id}" th:value="${desc.id}" th:text="${desc.descriptor}">Descriptor</option>
               </select>
@@ -77,10 +80,20 @@
           <tr>
             <td><strong>Claves:</strong></td>
             <td>
-              <select name="claveId" onchange="this.form.submit()">
+              <select name="claveId" onchange="this.form.submit();">
                 <option value="">-- Claves --</option>
                 <option th:each="clave : ${claves}" th:selected="${claveId == clave.id}" th:value="${clave.id}" th:text="${clave.clave}">Clave</option>
               </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Entre:</strong></td>
+            <td>
+            <input name="fInicio" th:value="${fInicio}" placeholder="dd/mm/aaaa" />
+            <strong> y </strong>
+            <input name="fFin" th:value="${fFin}" placeholder="dd/mm/aaaa" />
+            <button type="submit">Aplicar</button>
             </td>
           </tr>
         </table>

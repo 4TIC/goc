@@ -4,11 +4,12 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.core.InjectParam;
-
 import es.uji.apps.goc.dao.*;
 import es.uji.apps.goc.dto.*;
+import es.uji.apps.goc.exceptions.*;
 import es.uji.apps.goc.model.*;
 import es.uji.apps.goc.model.Cargo;
+import es.uji.apps.goc.notifications.AvisosReunion;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,24 +17,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import javax.ws.rs.core.MediaType;
-
-import es.uji.apps.goc.exceptions.FirmaReunionException;
-import es.uji.apps.goc.exceptions.MiembrosExternosException;
-import es.uji.apps.goc.exceptions.NotificacionesException;
-import es.uji.apps.goc.exceptions.OrganosExternosException;
-import es.uji.apps.goc.exceptions.PersonasExternasException;
-import es.uji.apps.goc.exceptions.ReunionNoAdmiteSuplenciaException;
-import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
-import es.uji.apps.goc.exceptions.ReunionYaCompletadaException;
-import es.uji.apps.goc.notifications.AvisosReunion;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static es.uji.apps.goc.dto.QReunion.reunion;
 
@@ -1019,7 +1005,8 @@ public class ReunionService
         List<Reunion> reunionesPublicas =
                 reunionDAO.getReunionesPublicasPaginated(acuerdosSearch.getTipoOrganoId(), acuerdosSearch.getOrganoId(),
                         acuerdosSearch.getDescriptorId(), acuerdosSearch.getClaveId(), acuerdosSearch.getAnyo(),
-                        acuerdosSearch.getStartSearch(), acuerdosSearch.getNumResults());
+                        acuerdosSearch.getfInicio(), acuerdosSearch.getfFin(), acuerdosSearch.getStartSearch(),
+                        acuerdosSearch.getNumResults());
         return filtrarDuplicados(reunionesPublicas);
     }
 
@@ -1027,7 +1014,8 @@ public class ReunionService
     {
         List<Reunion> reunionesPublicasClave =
                 reunionDAO.getReunionesPublicas(acuerdosSearch.getTipoOrganoId(), acuerdosSearch.getOrganoId(),
-                        acuerdosSearch.getDescriptorId(), acuerdosSearch.getClaveId(), acuerdosSearch.getAnyo());
+                        acuerdosSearch.getDescriptorId(), acuerdosSearch.getClaveId(), acuerdosSearch.getAnyo(),
+                        acuerdosSearch.getfInicio(), acuerdosSearch.getfFin());
         return filtrarDuplicados(reunionesPublicasClave).size();
     }
 

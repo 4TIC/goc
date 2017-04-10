@@ -1,26 +1,15 @@
 package es.uji.apps.goc.dao;
 
-import com.mysema.query.JoinExpression;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.jpa.impl.JPAUpdateClause;
 import com.mysema.query.types.expr.BooleanExpression;
-
+import es.uji.apps.goc.dto.*;
+import es.uji.commons.db.BaseDAODatabaseImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-
-import es.uji.apps.goc.dto.QClave;
-import es.uji.apps.goc.dto.QDescriptor;
-import es.uji.apps.goc.dto.QOrganoLocal;
-import es.uji.apps.goc.dto.QOrganoReunion;
-import es.uji.apps.goc.dto.QOrganoReunionMiembro;
-import es.uji.apps.goc.dto.QPuntoOrdenDia;
-import es.uji.apps.goc.dto.QPuntoOrdenDiaDescriptor;
-import es.uji.apps.goc.dto.QReunion;
-import es.uji.apps.goc.dto.Reunion;
-import es.uji.commons.db.BaseDAODatabaseImpl;
 
 @Repository
 public class ReunionDAO extends BaseDAODatabaseImpl
@@ -227,17 +216,18 @@ public class ReunionDAO extends BaseDAODatabaseImpl
 
     public List<Reunion> getReunionesPublicas(Integer anyo)
     {
-        return getReunionesPublicas(null, null, null, null, anyo);
+        return getReunionesPublicas(null, null, null, null, anyo, null, null);
     }
 
     public List<Reunion> getReunionesPublicas(Long tipoOrganoId, Long organoId, Long descriptorId, Long claveId,
-            Integer anyo)
+            Integer anyo, Date fInicio, Date fFin)
     {
-        return getReunionesPublicasPaginated(tipoOrganoId, organoId, descriptorId, claveId, anyo, null, null);
+        return getReunionesPublicasPaginated(tipoOrganoId, organoId, descriptorId, claveId, anyo, fInicio, fFin, null,
+                null);
     }
 
     public List<Reunion> getReunionesPublicasPaginated(Long tipoOrganoId, Long organoId, Long descriptorId,
-            Long claveId, Integer anyo, Integer startSeach, Integer numResults)
+            Long claveId, Integer anyo, Date fInicio, Date fFin, Integer startSeach, Integer numResults)
     {
         BooleanExpression whereAnyo = null;
         BooleanExpression whereOrgano = null;
@@ -293,6 +283,14 @@ public class ReunionDAO extends BaseDAODatabaseImpl
                 .and(whereTipoOrgano)
                 .and(whereOrgano)
                 .and(whereAnyo)).orderBy(qReunion.fechaCreacion.desc());
+
+        if (fInicio != null) {
+            query.where(qReunion.fecha.goe(fInicio));
+        }
+
+        if (fFin != null) {
+            query.where(qReunion.fecha.loe(fFin));
+        }
 
         if (startSeach != null && numResults != null)
         {

@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -107,6 +110,7 @@ public class PublicacionService extends CoreBaseService
     public Template acuerdos(@QueryParam("lang") String lang, @QueryParam("tipoOrganoId") Long tipoOrganoId,
             @QueryParam("organoId") Long organoId, @QueryParam("descriptorId") Long descriptorId,
             @QueryParam("claveId") Long claveId, @QueryParam("anyo") Integer anyo,
+            @QueryParam("fInicio") String fInicio, @QueryParam("fFin") String fFin,
             @QueryParam("pagina") @DefaultValue("0") Integer pagina)
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
@@ -132,37 +136,23 @@ public class PublicacionService extends CoreBaseService
             claves = reunionService.getClavesConReunionesPublicas(descriptorId, anyo);
         }
 
-        Integer numReuniones = 0;
+        AcuerdosSearch acuerdosSearch = new AcuerdosSearch(anyo, pagina * RESULTADOS_POR_PAGINA, RESULTADOS_POR_PAGINA);
 
-        if (descriptorId == null)
+        if (!descriptoresConReunionesPublicas.isEmpty())
         {
-            claveId = null;
+            acuerdosSearch.setClaveId(claveId);
+            acuerdosSearch.setDescriptorId(descriptorId);
         }
 
-        if (tipoOrganoId == null)
-        {
-            organoId = null;
-        }
+        acuerdosSearch.setfInicio(getDate(fInicio));
+        acuerdosSearch.setfFin(getDate(fFin));
+        acuerdosSearch.setTipoOrganoId(tipoOrganoId);
+        acuerdosSearch.setOrganoId(organoId);
 
-        if (anyo != null)
-        {
-            AcuerdosSearch acuerdosSearch =
-                    new AcuerdosSearch(anyo, pagina * RESULTADOS_POR_PAGINA, RESULTADOS_POR_PAGINA);
+        reuniones = reunionService.getReunionesPublicas(acuerdosSearch);
+        Integer numReuniones = reunionService.getNumReunionesPublicas(acuerdosSearch);
 
-            if (!descriptoresConReunionesPublicas.isEmpty())
-            {
-                acuerdosSearch.setClaveId(claveId);
-                acuerdosSearch.setDescriptorId(descriptorId);
-            }
-
-            acuerdosSearch.setTipoOrganoId(tipoOrganoId);
-            acuerdosSearch.setOrganoId(organoId);
-
-            reuniones = reunionService.getReunionesPublicas(acuerdosSearch);
-            numReuniones = reunionService.getNumReunionesPublicas(acuerdosSearch);
-
-            reunionesTemplate = buildReunionTemplate(connectedUserId, reuniones);
-        }
+        reunionesTemplate = buildReunionTemplate(connectedUserId, reuniones);
 
         Template template = new HTMLTemplate("acuerdos-" + applang);
         template.put("logo", logoUrl);
@@ -186,6 +176,8 @@ public class PublicacionService extends CoreBaseService
         template.put("claveId", claveId);
         template.put("anyos", anyos);
         template.put("anyo", anyo);
+        template.put("fInicio", fInicio);
+        template.put("fFin", fFin);
 
         if (pagina > 0)
         {
@@ -200,6 +192,20 @@ public class PublicacionService extends CoreBaseService
         template.put("pagina", pagina);
 
         return template;
+    }
+
+    public Date getDate(String value)
+    {
+        try
+        {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+            return formatter.parse(value);
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
 
     private List<ReunionTemplate> buildReunionTemplate(Long connectedUserId, List<Reunion> reuniones)

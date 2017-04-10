@@ -5,10 +5,13 @@
     <link rel="stylesheet" type="text/css" href="/goc/css/jquery.modal.css" />
     <link rel="stylesheet" type="text/css" href="/goc/css/style.css" />
     <link rel="stylesheet" type="text/css" href="/goc/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="/goc/css/jquery-ui.min.css" />
     <link th:if="${customCSS != ''}" rel="stylesheet" type="text/css" th:href="${customCSS}" />
 
     <script src="/goc/js/jquery.min.js"></script>
     <script src="/goc/js/jquery.modal.js"></script>
+    <script src="/goc/js/jquery-ui.min.js"></script>
+    <script src="/goc/js/datepicker-ca.js"></script>
     <script th:inline="javascript">
     /*<![CDATA[*/
         var applang = [[${applang}]];
@@ -47,7 +50,7 @@
           <tr>
             <td><strong>Tipous d'òrgans:</strong></td>
             <td>
-              <select name="tipoOrganoId" onchange="document['form-busqueda'].organoId.value=''; this.form.submit()">
+              <select name="tipoOrganoId" onchange="document['form-busqueda'].organoId.value=''; this.form.submit();">
                 <option value="">-- Tipus d'òrgans --</option>
                 <option th:each="tipoOrgano : ${tiposOrganos}" th:selected="${tipoOrganoId == tipoOrgano.id}" th:value="${tipoOrgano.id}" th:text="${tipoOrgano.nombreAlternativo}">Tipo de organo</option>
               </select>
@@ -57,7 +60,7 @@
           <tr>
             <td><strong>Òrgans:</strong></td>
             <td>
-              <select name="organoId" onchange="this.form.submit()">
+              <select name="organoId" onchange="this.form.submit();">
                 <option value="">-- Òrgans --</option>
                 <option th:each="organo : ${organos}" th:selected="${organoId == organo.id}" th:value="${organo.id}" th:text="${organo.nombreAlternativo}">Òrgano</option>
               </select>
@@ -67,7 +70,7 @@
           <tr>
             <td><strong>Descriptors:</strong></td>
             <td>
-              <select name="descriptorId" onchange="document['form-busqueda'].claveId.value=''; this.form.submit()">
+              <select name="descriptorId" onchange="document['form-busqueda'].claveId.value=''; this.form.submit();">
                 <option value="">-- Descriptor --</option>
                 <option th:each="desc : ${descriptores}" th:selected="${descriptorId == desc.id}" th:value="${desc.id}" th:text="${desc.descriptor}">Descriptor</option>
               </select>
@@ -77,12 +80,23 @@
           <tr>
             <td><strong>Claus:</strong></td>
             <td>
-              <select name="claveId" onchange="this.form.submit()">
+              <select name="claveId" onchange="this.form.submit();">
                 <option value="">-- Clau --</option>
                 <option th:each="clave : ${claves}" th:selected="${claveId == clave.id}" th:value="${clave.id}" th:text="${clave.clave}">Clau</option>
               </select>
             </td>
           </tr>
+
+          <tr>
+            <td><strong>Entre:</strong></td>
+            <td>
+              <input name="fInicio" th:value="${fInicio}" placeholder="dd/mm/aaaa" />
+              <strong> y </strong>
+              <input name="fFin" th:value="${fFin}" placeholder="dd/mm/aaaa" />
+              <button type="submit">Aplicar</button>
+            </td>
+          </tr>
+
         </table>
 
         <div>
@@ -103,7 +117,7 @@
                 <strong>Acords generals:</strong>
                 <span th:text="${reunion.acuerdosAlternativos}">Acords</span>
               </div>
-              <blockquote th:each="puntoDia : ${reunion.reunionPuntosOrdenDia}" class="punto-del-dia">
+              <blockquote th:each="puntoDia : ${reunion.puntosOrdenDia}" class="punto-del-dia">
                 <div th:if="${puntoDia.publico}" th:remove="tag">
                   <h3 th:text="${puntoDia.tituloAlternativo}"></h3>
                   <div th:text="${puntoDia.acuerdosAlternativos}"></div>
