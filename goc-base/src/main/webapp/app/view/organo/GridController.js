@@ -1,29 +1,35 @@
 Ext.define('goc.view.organo.GridController', {
-    extend: 'Ext.ux.uji.grid.PanelController',
-    alias: 'controller.organoGridController',
-    onLoad: function() {
+    extend : 'Ext.ux.uji.grid.PanelController',
+    alias : 'controller.organoGridController',
+    onLoad : function()
+    {
         var comboEstado = this.getView().up('organoMainPanel').down('comboEstadoOrgano');
         comboEstado.setValue(false);
 
         var viewModel = this.getViewModel();
         viewModel.getStore('organosStore').load();
         viewModel.getStore('tipoOrganosStore').load({
-            callback: function() {
+            callback : function()
+            {
                 var grid = this.getView();
                 grid.getView().refresh();
             },
-            scope: this
+            scope : this
         });
     },
-    decideRowIsEditable: function(editor, context) {
+    decideRowIsEditable : function(editor, context)
+    {
         return context.record.get('externo') !== 'true' || context.record.phantom;
     },
 
-    organoSelected: function(controller, record) {
+    organoSelected : function(controller, record)
+    {
         var grid = this.getView();
         var toolbar = grid.down("toolbar");
-        toolbar.items.each(function(button) {
-            if (button.name !== 'add') {
+        toolbar.items.each(function(button)
+        {
+            if (button.name !== 'add')
+            {
                 button.setDisabled(record.get("externo") === "true");
             }
         });
@@ -33,7 +39,8 @@ Ext.define('goc.view.organo.GridController', {
 
     },
 
-    initFilters: function() {
+    initFilters : function()
+    {
         var grid = this.getView();
         var comboEstado = grid.up('organoMainPanel').down('comboEstadoOrgano');
         var comboTipoOrgano = grid.up('organoMainPanel').down('comboTipoOrgano');
@@ -45,24 +52,34 @@ Ext.define('goc.view.organo.GridController', {
         store.clearFilter();
     },
 
-    onAdd: function() {
+    onAdd : function()
+    {
         this.initFilters();
         var grid = this.getView();
-        var rec = Ext.create(grid.getStore().model.entityName, { id : null });
+        var rec = Ext.create(grid.getStore().model.entityName, {id : null});
         grid.getStore().insert(0, rec);
         var editor = grid.plugins[0];
         editor.cancelEdit();
         editor.startEdit(rec, 0);
     },
 
+    cancelEdit : function()
+    {
+        var editor = this.getView().plugins[0];
+        editor.cancelEdit();
+    },
 
-    onToggleEstado: function() {
+    onToggleEstado : function()
+    {
         var grid = this.getView();
         var record = grid.getView().getSelectionModel().getSelection()[0];
 
-        if (record.phantom === true) {
+        if (record.phantom === true)
+        {
             return grid.getStore().remove(records);
         }
+
+        this.cancelEdit();
 
         if (record.get('inactivo') === false)
         {
@@ -72,9 +89,11 @@ Ext.define('goc.view.organo.GridController', {
                 {
                     record.set('inactivo', true);
                     grid.getStore().sync({
-                        success: function() {
+                        success : function()
+                        {
                             grid.getSelectionModel().clearSelections();
                             grid.getView().refresh();
+                            grid.up('panel').down('grid[name=autorizadoGrid]').clearStore();
                         }
                     });
                 }
@@ -83,11 +102,13 @@ Ext.define('goc.view.organo.GridController', {
 
         record.set('inactivo', false);
         grid.getStore().sync({
-            success: function() {
+            success : function()
+            {
                 grid.getSelectionModel().clearSelections();
                 grid.getView().refresh();
+                grid.up('panel').down('grid[name=autorizadoGrid]').clearStore();
             }
         });
-
     }
-});
+})
+;

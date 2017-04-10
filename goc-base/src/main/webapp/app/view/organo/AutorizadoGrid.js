@@ -47,5 +47,7 @@ Ext.define('goc.view.organo.AutorizadoGrid',
         iconCls : 'fa fa-remove',
         text : appI18N.common.borrar,
         handler : 'onDelete'
-    } ]
+    } ],
+
+    
 });
