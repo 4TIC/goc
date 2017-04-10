@@ -13,6 +13,8 @@ Ext.define('goc.view.reunion.FormReunionAcuerdosController',
         {
             win.destroy();
         }
+
+        grid.up('panel').down('grid[name=ordenDia]').clearStore();
     },
 
     onSaveRecord : function(button, context)
