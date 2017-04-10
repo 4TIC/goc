@@ -44,10 +44,10 @@
         <li th:if="${reunion.urlGrabacion != null}"><strong>URL grabación</strong>: <a th:href="${reunion.urlGrabacion}" th:text="${reunion.urlGrabacion}"></a></li>
         <li th:if="${reunion.telematica}"><strong>Reunión telemática. Instrucciones</strong>: <span th:text="${reunion.telematicaDescripcion}"></span></li>
       </ul>
-      <h2 th:if="${not #lists.isEmpty(reunion.organos)}">Organos y asistentes</h2>
+      <h2 th:if="${not #lists.isEmpty(reunion.organos)}">Órganos y asistentes</h2>
       <ul th:if="${not #lists.isEmpty(reunion.organos)}">
         <li th:each="organo : ${reunion.organos}">
-          <h3 th:text="${organo.nombre}">Organo asistente</h3>
+          <h3 th:text="${organo.nombre}">Órgano asistente</h3>
           <ul th:with="miembros=${organo.asistentes}">
             <li th:each="miembro : ${miembros}">
               <div>
@@ -74,16 +74,16 @@
       <ol th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}">
         <li th:each="puntoOrdenDia : ${reunion.puntosOrdenDia}">
           <span th:text="${puntoOrdenDia.titulo}"></span>
-          <div th:if="${puntoOrdenDia.descripcion} != null" th:text="'Descripció: ' + ${puntoOrdenDia.descripcion}"></div>
-          <div th:if="${puntoOrdenDia.deliberaciones} != null" th:text="'Deliberacions: ' + ${puntoOrdenDia.deliberaciones}"></div>
-          <div th:if="${puntoOrdenDia.acuerdos} != null" th:text="'Acords: ' + ${puntoOrdenDia.acuerdos}"></div>
-          <span th:if="${not #lists.isEmpty(puntoOrdenDia.documentos)}">Documentació:</span>
+          <div th:if="${puntoOrdenDia.descripcion} != null" th:text="'Descripción: ' + ${puntoOrdenDia.descripcion}"></div>
+          <div th:if="${puntoOrdenDia.deliberaciones} != null" th:text="'Deliberaciones: ' + ${puntoOrdenDia.deliberaciones}"></div>
+          <div th:if="${puntoOrdenDia.acuerdos} != null" th:text="'Acuerdos: ' + ${puntoOrdenDia.acuerdos}"></div>
+          <span th:if="${not #lists.isEmpty(puntoOrdenDia.documentos)}">Documentación:</span>
           <ul th:with="documentos=${puntoOrdenDia.documentos}">
             <li th:each="documento : ${documentos}"><a th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/puntosOrdenDia/' + ${puntoOrdenDia.id} + '/documentos/' + ${documento.id} + '/descargar'" th:text="${documento.descripcion}">Descripcion documento</a></li>
           </ul>
-          <span th:if="${not #lists.isEmpty(puntoOrdenDia.documentosAcuerdos)}">Acords:</span>
+          <span th:if="${not #lists.isEmpty(puntoOrdenDia.documentosAcuerdos)}">Acuerdos:</span>
           <ul th:with="acuerdos=${puntoOrdenDia.documentosAcuerdos}">
-            <li th:each="acuerdo : ${acuerdos}"><a th:href="'/goc/rest/reuniones/' + ${acuerdo.id} + '/puntosOrdenDia/' + ${puntoOrdenDia.id} + '/acuerdos/' + ${acuerdo.id} + '/descargar'" th:text="${acuerdo.descripcion}">Descripcion acuerdo</a></li>
+            <li th:each="acuerdo : ${acuerdos}"><a th:href="'/goc/rest/reuniones/' + ${acuerdo.id} + '/puntosOrdenDia/' + ${puntoOrdenDia.id} + '/acuerdos/' + ${acuerdo.id} + '/descargar'" th:text="${acuerdo.descripcion}">Descripción acuerdo</a></li>
           </ul>
           <br />
         </li>

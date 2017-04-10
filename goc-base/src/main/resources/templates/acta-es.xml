@@ -136,7 +136,7 @@
             <fo:block th:text="${rowStat.index+1} + '.'" />
           </fo:list-item-label>
           <fo:list-item-body start-indent="body-start()">
-            <fo:block th:text="${puntoOrdenDia.acuerdos == null} ? 'Sense acords': ${puntoOrdenDia.acuerdos}" />
+            <fo:block th:text="${puntoOrdenDia.acuerdos == null} ? 'Sin acuerdos': ${puntoOrdenDia.acuerdos}" />
           </fo:list-item-body>
         </fo:list-item>
       </fo:list-block>
@@ -146,8 +146,8 @@
         </fo:block>
 
         <fo:block space-after="0.25cm" space-before="0.25cm" border-bottom="1px solid #CCC" th:each="comentario : ${reunion.comentarios}">
-          <fo:block space-after="0.2cm" font-size="10pt" th:text="'Data: ' + ${#dates.format(reunion.fecha)}" />
-          <fo:block space-after="0.2cm" font-size="10pt" th:text="'Assistent: ' + ${comentario.creadorNombre}" />
+          <fo:block space-after="0.2cm" font-size="10pt" th:text="'Fecha: ' + ${#dates.format(reunion.fecha)}" />
+          <fo:block space-after="0.2cm" font-size="10pt" th:text="'Asistente: ' + ${comentario.creadorNombre}" />
           <fo:block space-after="0.2cm" th:text="'Comentari: ' + ${comentario.comentario}" />
         </fo:block>
       </fo:block>
