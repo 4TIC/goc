@@ -21,9 +21,11 @@ import com.sun.jersey.api.core.InjectParam;
 import es.uji.apps.goc.dto.OrganoAutorizado;
 import es.uji.apps.goc.exceptions.OrganoNoDisponibleException;
 import es.uji.apps.goc.exceptions.OrganosExternosException;
+import es.uji.apps.goc.exceptions.RolesPersonaExternaException;
 import es.uji.apps.goc.model.Organo;
 import es.uji.apps.goc.model.TipoOrgano;
 import es.uji.apps.goc.services.OrganoService;
+import es.uji.apps.goc.services.PersonaService;
 import es.uji.commons.rest.CoreBaseService;
 import es.uji.commons.rest.ParamUtils;
 import es.uji.commons.rest.UIEntity;
@@ -34,6 +36,9 @@ public class OrganoResource extends CoreBaseService
 {
     @InjectParam
     OrganoService organoService;
+
+    @InjectParam
+    PersonaService personaService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -74,12 +79,33 @@ public class OrganoResource extends CoreBaseService
             listaOrganos = organoService.getOrganos(connectedUserId);
         }
 
-        listaOrganos = listaOrganos.stream()
-                .filter(o -> o.isExterno() || !o.isInactivo())
-                .collect(Collectors.toList());
+        listaOrganos = listaOrganos.stream().filter(o -> o.isExterno() || !o.isInactivo()).collect(Collectors.toList());
 
         return organosToUI(listaOrganos);
 
+    }
+
+    @GET
+    @Path("activos/usuario")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UIEntity> getOrganosActivosByUserId()
+            throws OrganosExternosException, RolesPersonaExternaException
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+        List<Organo> listaOrganos;
+
+        if (personaService.isUsuario(connectedUserId))
+        {
+            listaOrganos = organoService.getOrganosPorAutorizadoId(connectedUserId);
+        }
+        else
+        {
+            listaOrganos = organoService.getOrganos(connectedUserId);
+        }
+
+        listaOrganos = listaOrganos.stream().filter(o -> o.isExterno() || !o.isInactivo()).collect(Collectors.toList());
+
+        return organosToUI(listaOrganos);
     }
 
     @GET
@@ -186,7 +212,8 @@ public class OrganoResource extends CoreBaseService
     @Path("autorizados")
     @Produces(MediaType.APPLICATION_JSON)
     public List<UIEntity> getAutorizados(@QueryParam("organoId") String organoId,
-            @QueryParam("externo") Boolean externo) throws OrganosExternosException
+            @QueryParam("externo") Boolean externo)
+            throws OrganosExternosException
     {
         return UIEntity.toUI(organoService.getAutorizados(organoId, externo));
     }
@@ -197,8 +224,7 @@ public class OrganoResource extends CoreBaseService
     @Produces(MediaType.APPLICATION_JSON)
     public UIEntity addCargo(UIEntity autorizado)
     {
-        OrganoAutorizado newOrganoAutorizado = organoService
-                .addAutorizado(autorizado.toModel(OrganoAutorizado.class));
+        OrganoAutorizado newOrganoAutorizado = organoService.addAutorizado(autorizado.toModel(OrganoAutorizado.class));
 
         return UIEntity.toUI(newOrganoAutorizado);
     }

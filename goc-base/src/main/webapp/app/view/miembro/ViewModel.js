@@ -1,8 +1,8 @@
 Ext.define('goc.view.miembro.ViewModel', {
-    extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.miembroViewModel',
+    extend : 'Ext.app.ViewModel',
+    alias : 'viewmodel.miembroViewModel',
 
-    requires: [
+    requires : [
         'goc.model.Miembro',
         'goc.model.Organo',
         'goc.store.Miembros',
@@ -10,15 +10,15 @@ Ext.define('goc.view.miembro.ViewModel', {
         'goc.store.Cargos'
     ],
 
-    stores: {
-        miembrosStore: {
-            type: 'miembros'
+    stores : {
+        miembrosStore : {
+            type : 'miembros'
         },
-        cargosStore: {
-            type: 'cargos'
+        cargosStore : {
+            type : 'cargos'
         },
-        organosStore: {
-            type: 'organos'
+        organosStore : {
+            type : 'organos'
         }
     }
 });
