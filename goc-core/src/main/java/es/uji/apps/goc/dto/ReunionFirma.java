@@ -14,7 +14,7 @@ public class ReunionFirma implements Serializable
 
     private String asunto;
 
-    @JsonProperty("asunto_alterntivo")
+    @JsonProperty("asunto_alternativo")
     private String asuntoAlternativo;
 
     private Date fecha;
