@@ -17,6 +17,7 @@ Ext.define('goc.view.organo.GridController', {
             scope : this
         });
     },
+    
     decideRowIsEditable : function(editor, context)
     {
         return context.record.get('externo') !== 'true' || context.record.phantom;
@@ -69,6 +70,8 @@ Ext.define('goc.view.organo.GridController', {
         var vm = this.getViewModel();
         var store = this.getStore('organosStore');
         store.clearFilter();
+
+        grid.up('organoMainPanel').fireEvent('filtrarOrganos', false);
     },
 
     onAdd : function()
