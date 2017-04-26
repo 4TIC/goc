@@ -123,28 +123,29 @@ public class PersonaService extends CoreBaseService
         return listaPersonas;
     }
 
-    public Boolean isAdmin(Long connectedUserId)
+    public Boolean isAdmin(List<String> roles)
             throws RolesPersonaExternaException
     {
-        return getRolesFromPersonaId(connectedUserId).contains(personalizationConfig.rolAdministrador);
+        return roles.contains(personalizationConfig.rolAdministrador);
     }
 
-    public Boolean isGestor(Long connectedUserId)
+    public Boolean isGestor(List<String> roles)
             throws RolesPersonaExternaException
     {
-        List<String> roles = getRolesFromPersonaId(connectedUserId);
-
         return roles.contains(personalizationConfig.rolGestor) && !roles.contains(personalizationConfig.rolAdministrador);
     }
 
     public Boolean isUsuario(Long connectedUserId)
             throws RolesPersonaExternaException
     {
-        List<String> roles = getRolesFromPersonaId(connectedUserId);
-
-        return roles.contains(personalizationConfig.rolUsuario) && !(roles.contains(personalizationConfig.rolGestor) || roles.contains(personalizationConfig.rolAdministrador));
+        return isUsuario(getRolesFromPersonaId(connectedUserId));
     }
 
+    public Boolean isUsuario(List<String> roles)
+            throws RolesPersonaExternaException
+    {
+        return roles.contains(personalizationConfig.rolUsuario) && !(roles.contains(personalizationConfig.rolGestor) || roles.contains(personalizationConfig.rolAdministrador));
+    }
     public Boolean hasPerfil(Long connectedUserId, String rol)
             throws RolesPersonaExternaException
     {

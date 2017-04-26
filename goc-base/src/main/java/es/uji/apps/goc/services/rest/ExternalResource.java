@@ -224,7 +224,11 @@ public class ExternalResource extends CoreBaseService
         List<MenuItem> items = new ArrayList<>();
         String currentLanguage = (lang != null) ? lang : languageConfig.mainLanguage;
 
-        if (personaService.isAdmin(connectedUserId))
+        List<String> roles = personaService.getRolesFromPersonaId(connectedUserId);
+
+        if (roles.isEmpty()) return new Menu();
+
+        if (personaService.isAdmin(roles))
         {
             if (currentLanguage.equals(languageConfig.mainLanguage))
             {
@@ -251,7 +255,7 @@ public class ExternalResource extends CoreBaseService
             return menu;
         }
 
-        if (personaService.isGestor(connectedUserId))
+        if (personaService.isGestor(roles))
         {
             if (currentLanguage.equals(languageConfig.mainLanguage))
             {
