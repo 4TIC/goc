@@ -26,17 +26,36 @@ Ext.define('goc.view.organo.GridController', {
     {
         var grid = this.getView();
         var toolbar = grid.down("toolbar");
+
+        var recordModel = grid.getSelectedRow();
+        var gridAutorizados = grid.up('panel').down('grid[name=autorizadoGrid]');
+
+        if (!recordModel)
+        {
+            gridAutorizados.clearStore();
+            gridAutorizados.disable();
+
+            toolbar.items.each(function(button)
+            {
+                if (button.name !== 'add')
+                {
+                    button.setDisabled();
+                }
+            });
+
+            return;
+        }
+
         toolbar.items.each(function(button)
         {
             if (button.name !== 'add')
             {
-                button.setDisabled(record.get("externo") === "true");
+                button.setDisabled(record[0].get("externo") === "true");
             }
         });
 
         var record = grid.getView().getSelectionModel().getSelection()[0];
-        grid.up('panel').down('grid[name=autorizadoGrid]').fireEvent('organoSelected', record);
-
+        gridAutorizados.fireEvent('organoSelected', record);
     },
 
     initFilters : function()

@@ -11,6 +11,9 @@ Ext.define('goc.view.organo.MainController', {
         var vm = this.getViewModel();
         var store = vm.getStore('organosStore');
 
+        var grid = this.getView().down('grid[name=organosGrid]');
+        grid.getSelectionModel().deselectAll();
+
         if (!recordId) {
             store.removeFilter('tipoOrganoId');
             return;
@@ -31,6 +34,9 @@ Ext.define('goc.view.organo.MainController', {
         var vm = this.getViewModel();
         var store = vm.getStore('organosStore');
 
+        var grid = this.getView().down('grid[name=organosGrid]');
+        grid.getSelectionModel().deselectAll();
+
         var filter = new Ext.util.Filter({
             property: 'inactivo',
             value: inactivos
@@ -40,3 +46,4 @@ Ext.define('goc.view.organo.MainController', {
 
     }
 });
+
