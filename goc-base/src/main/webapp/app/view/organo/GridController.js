@@ -55,7 +55,9 @@ Ext.define('goc.view.organo.GridController', {
             }
         });
 
-        var record = grid.getView().getSelectionModel().getSelection()[0];
+        var selection = grid.getView().getSelectionModel().getSelection();
+
+        var record = selection[selection.length-1];
         gridAutorizados.fireEvent('organoSelected', record);
     },
 
