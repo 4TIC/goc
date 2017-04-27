@@ -66,7 +66,7 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
                         width: 140,
                         html: '<div class="header-right">' +
                             '<span class="header-right-title"><img src="//static.uji.es/js/extjs/uji-commons-extjs/img/lock.png"/>' +
-                            '<a style="color:inherit;" href="http://xmlrpc.uji.es/lsm/logout_sso.php">' + appI18N.common.desconectar + '</a></span></div>'
+                            '<a style="color:inherit;" href="' + disconnectLink + '">' + appI18N.common.desconectar + '</a></span></div>'
                     }
                 ]
             }

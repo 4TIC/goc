@@ -20,4 +20,7 @@ public class PersonalizationConfig
 
     @Value("${goc.rolGestor:GESTOR}")
     public String rolGestor;
+
+    @Value("${goc.disconnectLink:#}")
+    public String disconnectLink;
 }
