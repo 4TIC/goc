@@ -6,26 +6,27 @@ Ext.define('goc.view.organo.AutorizadoGridController',
 
     organoSelected : function(organo)
     {
-        if (organo === this.organo) {
+        if (organo === this.organo)
+        {
             return;
         }
 
         this.organo = organo;
 
-        if (organo.get('inactivo')) {
-            return this.getView().setDisabled(true);
-        }
-        
-        var viewModel = this.getViewModel();
-        this.getView().setDisabled(false);
-        viewModel.getStore('organoAutorizadosStore').load(
+        this.getViewModel().getStore('organoAutorizadosStore').load(
         {
-            params :
-            {
+            params : {
                 organoId : organo.get('id'),
                 externo : organo.get('externo')
             }
         });
+
+        if (organo.get('inactivo'))
+        {
+            return this.getView().setDisabled(true);
+        }
+
+        this.getView().setDisabled(false);
     },
 
     onAdd : function()
@@ -57,9 +58,9 @@ Ext.define('goc.view.organo.AutorizadoGridController',
                 organoExterno : record.get('externo')
             });
 
-
             var existeAutorizado = store.find('personaId', autorizado.get('personaId'));
-            if (existeAutorizado === -1) {
+            if (existeAutorizado === -1)
+            {
                 store.add(autorizado);
                 store.sync();
             }
@@ -71,15 +72,19 @@ Ext.define('goc.view.organo.AutorizadoGridController',
         var grid = this.getView();
         var record = grid.getView().getSelectionModel().getSelection()[0];
 
-        if (!record) {
+        if (!record)
+        {
             return Ext.Msg.alert(appI18N.organos.borrarAutorizacion, appI18N.organos.seleccionarParaBorrarAutorizacion);
-        };
+        }
+        ;
 
         var vm = this.getViewModel();
         var store = vm.getStore('organoAutorizadosStore');
 
-        Ext.Msg.confirm(appI18N.common.borrar, appI18N.organos.borrarAutorizacion, function (result) {
-            if (result === 'yes') {
+        Ext.Msg.confirm(appI18N.common.borrar, appI18N.organos.borrarAutorizacion, function(result)
+        {
+            if (result === 'yes')
+            {
                 store.remove(record);
                 store.sync();
             }
