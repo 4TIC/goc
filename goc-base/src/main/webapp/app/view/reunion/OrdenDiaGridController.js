@@ -3,7 +3,6 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
     alias: 'controller.ordenDiaGridController',
     reunionId: null,
     onRefresh: function (reunionId) {
-        if (reunionId === this.reunionId) return;
         this.reunionId = reunionId;
 
         var viewModel = this.getViewModel();
@@ -149,7 +148,7 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
                 }
             }
         });
-        
+
         this.modal.show();
     },
 

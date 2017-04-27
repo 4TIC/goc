@@ -2,17 +2,9 @@ Ext.define('goc.view.organo.AutorizadoGridController',
 {
     extend : 'Ext.ux.uji.grid.PanelController',
     alias : 'controller.autorizadoGridController',
-    organo : null,
 
     organoSelected : function(organo)
     {
-        if (organo === this.organo)
-        {
-            return;
-        }
-
-        this.organo = organo;
-
         this.getViewModel().getStore('organoAutorizadosStore').load(
         {
             params : {
