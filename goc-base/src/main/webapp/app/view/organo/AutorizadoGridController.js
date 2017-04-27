@@ -33,7 +33,7 @@ Ext.define('goc.view.organo.AutorizadoGridController',
         var window = Ext.create('goc.view.common.LookupWindowPersonas',
         {
             appPrefix : 'goc',
-            title : appI18N.organos.seleccionaSuplente
+            title : appI18N.organos.seleccionaAutorizado
         });
 
         window.show();
