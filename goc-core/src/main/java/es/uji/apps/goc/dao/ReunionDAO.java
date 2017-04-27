@@ -8,6 +8,8 @@ import es.uji.commons.db.BaseDAODatabaseImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -284,12 +286,14 @@ public class ReunionDAO extends BaseDAODatabaseImpl
                 .and(whereOrgano)
                 .and(whereAnyo)).orderBy(qReunion.fechaCreacion.desc());
 
-        if (fInicio != null) {
+        if (fInicio != null)
+        {
             query.where(qReunion.fecha.goe(fInicio));
         }
 
-        if (fFin != null) {
-            query.where(qReunion.fecha.loe(fFin));
+        if (fFin != null)
+        {
+            query.where(qReunion.fecha.lt(add1Day(fFin)));
         }
 
         if (startSeach != null && numResults != null)
@@ -298,5 +302,14 @@ public class ReunionDAO extends BaseDAODatabaseImpl
         }
 
         return query.list(qReunion);
+    }
+
+    private Date add1Day(Date fecha)
+    {
+        Calendar c = Calendar.getInstance();
+        c.setTime(fecha);
+        c.add(Calendar.DATE, 1);
+
+        return c.getTime();
     }
 }
