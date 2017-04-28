@@ -141,6 +141,7 @@
     "multiSearchEliminarOrgano": "Eliminar aquest òrgan",
     "multiSearchBuscarOrgano": "Cerca d'Òrgans per afegir",
     "seleccionarParaCerrarActa": "Cal sel·leccionar una reunió per a poder tancar l'acta",
+    "seleccionarParaEnviarConvocatoria": "Cal sel·leccionar una reunió per a enviar convocatòria",
     "documentacion": "Documentació",
     "seleccionarParaDocumentacion": "Cal sel·leccionar una reunió per accedir a la seua documentació",
     "seleccionarParaAnyadirSuplente": "Cal sel·leccionar un assistent per a poder afegir un suplent",

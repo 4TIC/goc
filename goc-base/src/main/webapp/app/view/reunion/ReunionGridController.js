@@ -36,6 +36,11 @@ Ext.define('goc.view.reunion.ReunionGridController', {
         var grid = this.getView();
         var record = grid.getView().getSelectionModel().getSelection()[0];
 
+        if (!record)
+        {
+            return Ext.Msg.alert(appI18N.reuniones.enviarConvocatoria, appI18N.reuniones.seleccionarParaEnviarConvocatoria);
+        }
+
         Ext.Msg.confirm(appI18N.reuniones.confirmacionEnvioTitulo, appI18N.reuniones.confirmacionEnvioMensaje, function(result)
         {
             if (result === 'yes')

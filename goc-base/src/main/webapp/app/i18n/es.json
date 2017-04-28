@@ -140,6 +140,7 @@
     "multiSearchEliminarOrgano": "Eliminar este órgano",
     "multiSearchBuscarOrgano": "Buscar órganos a añadir",
     "seleccionarParaCerrarActa": "Debe seleccionar una reunión para poder cerrar el acta",
+    "seleccionarParaEnviarConvocatoria": "Debe seleccionar una reunión para enviar convocatoria",
     "documentacion": "Documentación",
     "seleccionarParaDocumentacion": "Debe seleccionar una reunión para acceder a su documentación",
     "seleccionarParaAnyadirSuplente": "Debe selecciónar un asistente para añadir un suplente",
