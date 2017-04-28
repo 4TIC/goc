@@ -40,6 +40,7 @@ Ext.define('goc.view.descriptor.GridClave', {
     name: 'claveGrid',
     title: appI18N ? appI18N.claves.titulo : 'Claus',
     scrollable: true,
+    disabled: true,
     tbar: [
         {
             xtype: 'button',
