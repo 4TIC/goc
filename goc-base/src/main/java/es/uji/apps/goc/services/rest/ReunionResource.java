@@ -371,6 +371,22 @@ public class ReunionResource extends CoreBaseService
         return new ResponseMessage(true, messageError);
     }
 
+    @GET
+    @Path("{reunionId}/checktoclose")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public ResponseMessage checkReunionToClose(@PathParam("reunionId") Long reunionId)
+    {
+        String messageError = reunionService.checkReunionToClose(reunionId);
+
+        if (messageError == null)
+        {
+            return new ResponseMessage(true, "");
+        }
+
+        return new ResponseMessage(true, messageError);
+    }
+
     @PUT
     @Path("{reunionId}/organos")
     @Consumes(MediaType.APPLICATION_JSON)

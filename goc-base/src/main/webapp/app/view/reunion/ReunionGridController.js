@@ -70,28 +70,47 @@ Ext.define('goc.view.reunion.ReunionGridController', {
             return Ext.Msg.alert(appI18N.reuniones.cerrarActa, appI18N.reuniones.seleccionarParaCerrarActa);
         }
 
-        var asistentesStore = Ext.create('goc.store.OrganoReunionMiembros', {
-            proxy : {
-                url : '/goc/rest/reuniones/' + record.get('id') + '/miembros'
-            },
-            autoLoad : true
-        });
+        Ext.Ajax.request(
+        {
+            url : '/goc/rest/reuniones/' + record.get('id') + '/checktoclose',
+            method : 'GET',
+            success : function(response)
+            {
+                var data = Ext.decode(response.responseText);
 
-        this.modal = viewport.add({
-            xtype : 'formReunionAcuerdos',
-            viewModel : {
-                data : {
-                    title : appI18N.reuniones.titleSingular + ': ' + record.get('asunto'),
-                    reunionId : record.get('id'),
-                    responsableId : record.get('miembroResponsableActaId'),
-                    completada : record.get('completada'),
-                    acuerdos : record.get('acuerdos'),
-                    acuerdosAlternativos : record.get('acuerdosAlternativos'),
-                    asistentesStore : asistentesStore
+                if (data.message)
+                {
+                    var mensajeRespuesta = (data.message && data.message.indexOf("appI18N") != -1) ? eval(data.message) : data.message;
+                    Ext.Msg.alert(appI18N.reuniones.resultadoEnvioConvocatoriaTitle, mensajeRespuesta);
+                    return;
                 }
-            }
-        });
-        this.modal.show();
+
+                var asistentesStore = Ext.create('goc.store.OrganoReunionMiembros', {
+                    proxy : {
+                        url : '/goc/rest/reuniones/' + record.get('id') + '/miembros'
+                    },
+                    autoLoad : true
+                });
+
+                this.modal = viewport.add({
+                    xtype : 'formReunionAcuerdos',
+                    viewModel : {
+                        data : {
+                            title : appI18N.reuniones.titleSingular + ': ' + record.get('asunto'),
+                            reunionId : record.get('id'),
+                            responsableId : record.get('miembroResponsableActaId'),
+                            completada : record.get('completada'),
+                            acuerdos : record.get('acuerdos'),
+                            acuerdosAlternativos : record.get('acuerdosAlternativos'),
+                            asistentesStore : asistentesStore
+                        }
+                    }
+                });
+                this.modal.show();
+            },
+            scope : this
+        }
+        );
     },
 
     organoSelected : function(id, externo)

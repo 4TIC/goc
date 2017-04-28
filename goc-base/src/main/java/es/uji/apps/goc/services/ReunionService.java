@@ -962,12 +962,29 @@ public class ReunionService
     {
         Reunion reunion = reunionDAO.getReunionConMiembrosAndPuntosDiaById(reunionId);
 
-        if (reunion.getReunionPuntosOrdenDia().size() == 0) return "appI18N.reuniones.reunionSinOrdenDia";
-
-        if (reunion.noContieneMiembros()) return "appI18N.reuniones.reunionSinMiembros";
+        String error = checkAllFeaturesOfReunion(reunion);
+        if (error != null) return error;
 
         avisosReunion.enviaAvisoNuevaReunion(reunion);
 
+        return null;
+    }
+
+    public String checkReunionToClose(Long reunionId)
+    {
+        Reunion reunion = reunionDAO.getReunionConMiembrosAndPuntosDiaById(reunionId);
+
+        String error = checkAllFeaturesOfReunion(reunion);
+        if (error != null) return error;
+
+        return null;
+    }
+
+    private String checkAllFeaturesOfReunion(Reunion reunion)
+    {
+        if (reunion.getReunionPuntosOrdenDia().size() == 0) return "appI18N.reuniones.reunionSinOrdenDia";
+
+        if (reunion.noContieneMiembros()) return "appI18N.reuniones.reunionSinMiembros";
         return null;
     }
 
