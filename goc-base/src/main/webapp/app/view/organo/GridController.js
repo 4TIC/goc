@@ -79,12 +79,7 @@ Ext.define('goc.view.organo.GridController', {
     onAdd : function()
     {
         this.initFilters();
-        var grid = this.getView();
-        var rec = Ext.create(grid.getStore().model.entityName, {id : null});
-        grid.getStore().insert(0, rec);
-        var editor = grid.plugins[0];
-        editor.cancelEdit();
-        editor.startEdit(rec, 0);
+        this.callParent();
     },
 
     cancelEdit : function()

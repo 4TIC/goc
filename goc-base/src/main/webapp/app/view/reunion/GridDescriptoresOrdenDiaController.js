@@ -72,8 +72,18 @@ Ext.define('goc.view.reunion.GridDescriptoresOrdenDiaController', {
         record.set('idClave', idClave);
         record.set('descriptor', descriptor.get('descriptor'));
         record.set('clave', clave.get('clave'));
+
+        var model = grid.getStore().getModel();
+
+        if (record.id === 'none')
+        {
+            model.getField('id').persist = false;
+        }
+
         grid.getStore().sync();
-        grid.setSelection(null);
+        //grid.setSelection(null);
+
+        model.getField('id').persist = true;
     },
 
     onBeforeEdit: function () {

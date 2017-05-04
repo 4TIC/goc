@@ -54,6 +54,7 @@ Ext.define('goc.view.organo.AutorizadoGridController',
             if (existeAutorizado === -1)
             {
                 store.add(autorizado);
+                store.getModel().getField('id').persist = false
                 store.sync();
             }
         });
