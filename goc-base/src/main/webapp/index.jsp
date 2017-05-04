@@ -32,7 +32,6 @@
         var alternativeLanguage = '<%= languageConfig.alternativeLanguage %>';
         var alternativeLanguageDescription = '<%= languageConfig.alternativeLanguageDescription %>';
         var logo = '<%= personalizationConfig.logo %>';
-        var disconnectLink = '<%= personalizationConfig.disconnectLink %>';
 
         function getMultiLangLabel(value, lang) {
             if (isMultilanguageApplication() && lang === mainLanguage)
