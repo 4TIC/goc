@@ -1,11 +1,11 @@
-Ext.Loader.setPath('Ext.ux', '//static.uji.es/js/extjs/ext-6.0.3.64/packages/ux/classic/src');
+Ext.Loader.setPath('Ext.ux', '//static.uji.es/js/extjs/ext-6.2.1/packages/ux/classic/src');
 Ext.Loader.setPath('Ext.ux.uji', 'uji');
 Ext.Loader.setPath('goc', 'app');
 
 var appI18N;
 Ext.Ajax.request(
 {
-    url : '//static.uji.es/js/extjs/ext-6.0.3.64/build/classic/locale/locale-' + appLang + '.js',
+    url : '//static.uji.es/js/extjs/ext-6.2.1/build/classic/locale/locale-' + appLang + '.js',
     success : function(response)
     {
         eval(response.responseText);
