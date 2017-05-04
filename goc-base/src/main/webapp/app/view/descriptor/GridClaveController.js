@@ -40,12 +40,14 @@ Ext.define('goc.view.descriptor.GridClaveController', {
 
     onAdd : function()
     {
+        var gridDescriptores = this.getView().up('panel').down('grid[name=descriptoresGrid]');
+
+        if (!gridDescriptores || !gridDescriptores.getSelectedRow()) return;
+
         this.initFilters();
+
         var grid = this.getView();
-        var rec = Ext.create(grid.getStore().model.entityName, {
-            id : null,
-            idDescriptor : this.descriptor.get('id')
-        });
+        var rec = Ext.create(grid.getStore().model.entityName, { id : null, idDescriptor: gridDescriptores.getSelectedRow().get('id') });
         grid.getStore().insert(0, rec);
         var editor = grid.plugins[0];
         editor.cancelEdit();

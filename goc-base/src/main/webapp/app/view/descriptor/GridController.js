@@ -1,45 +1,56 @@
 Ext.define('goc.view.descriptor.GridController', {
-    extend: 'Ext.ux.uji.grid.PanelController',
-    alias: 'controller.descriptorGridController',
-    onLoad: function() {
+    extend : 'Ext.ux.uji.grid.PanelController',
+    alias : 'controller.descriptorGridController',
+    onLoad : function()
+    {
         var viewModel = this.getViewModel();
         viewModel.getStore('descriptoresStore').load();
     },
 
-    descriptorSelected: function(controller, record) {
+    descriptorSelected : function(controller, record)
+    {
         var grid = this.getView();
         var toolbar = grid.down("toolbar");
-        toolbar.items.each(function(button) {
-            if (button.name !== 'add') {
+        toolbar.items.each(function(button)
+        {
+            if (button.name !== 'add')
+            {
                 button.setDisabled(false);
             }
         });
 
-        var record = grid.getView().getSelectionModel().getSelection()[0];
-        if(!record.phantom) {
+        var selection = grid.getView().getSelectionModel().getSelection();
+        
+        var record = selection[selection.length - 1];
+        if (!record.phantom)
+        {
             grid.up('panel').down('grid[name=claveGrid]').fireEvent('descriptorSelected', record);
         }
 
     },
 
-    initFilters: function() {
-        var store = this.getStore('descriptoresStore');
-        store.clearFilter();
+    onEditComplete : function(editor, context)
+    {
+        this.callParent(arguments);
+
+        var claveGrid = this.getView().up('panel').down('grid[name=claveGrid]');
+
+        if (claveGrid)
+        {
+            claveGrid.setDisabled(false);
+        }
     },
 
-    onAdd: function() {
-        this.initFilters();
-        var grid = this.getView();
-        var rec = Ext.create(grid.getStore().model.entityName, { id : null });
-        grid.getStore().insert(0, rec);
-        var editor = grid.plugins[0];
-        editor.cancelEdit();
-        editor.startEdit(rec, 0);
-    },
+    onAdd : function()
+    {
+        var claveGrid = this.getView().up('panel').down('grid[name=claveGrid]');
 
-    onEditComplete: function(editor, context) {
-        var grid = this.getView();
-        grid.getStore().sync();
-        grid.setSelection(null);
+        if (claveGrid)
+        {
+            claveGrid.clearStore();
+            claveGrid.setDisabled(true);
+        }
+
+        this.callParent();
     }
 });

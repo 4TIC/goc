@@ -67,7 +67,7 @@ Ext.define('goc.view.descriptor.Grid', {
     name: 'descriptoresGrid',
     title: appI18N ? appI18N.descriptores.titulo : 'Descriptors',
     scrollable: true,
-
+    multiSelect : false,
     tbar: [
         {
             xtype: 'button',
