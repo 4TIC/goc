@@ -5,6 +5,6 @@ Ext.define('Ext.ux.uji.data.identifier.None',
 
     generate : function()
     {
-        return null;
+        return 'none';
     }
 });

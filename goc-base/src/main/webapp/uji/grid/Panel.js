@@ -122,7 +122,7 @@ Ext.define('Ext.ux.uji.grid.Panel',
 
         if (selection.length > 0)
         {
-            return selection[0].get("id");
+            return selection[selection.length-1].get("id");
         }
     },
 
@@ -132,7 +132,7 @@ Ext.define('Ext.ux.uji.grid.Panel',
 
         if (selection.length > 0)
         {
-            return selection[0];
+            return selection[selection.length-1];
         }
     },
 
