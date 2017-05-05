@@ -70,6 +70,8 @@ public class ReunionFirma implements Serializable
     @JsonProperty("puntos_orden_dia")
     private List<PuntoOrdenDiaFirma> puntosOrdenDia;
 
+    private String responsableActa;
+
     public ReunionFirma() {}
 
     public ReunionFirma(Long id) {
@@ -308,5 +310,15 @@ public class ReunionFirma implements Serializable
     public void setTelematicaDescripcionAlternativa(String telematicaDescripcionAlternativa)
     {
         this.telematicaDescripcionAlternativa = telematicaDescripcionAlternativa;
+    }
+
+    public String getResponsableActa()
+    {
+        return responsableActa;
+    }
+
+    public void setResponsableActa(String responsableActa)
+    {
+        this.responsableActa = responsableActa;
     }
 }
