@@ -303,7 +303,7 @@ public class ReunionService
         reunion.setAcuerdos(acuerdos);
         reunion.setAcuerdosAlternativos(acuerdosAlternativos);
 
-        ReunionFirma reunionFirma = reunionFirmaDesdeReunion(reunion, connectedUserId);
+        ReunionFirma reunionFirma = reunionFirmaDesdeReunion(reunion, responsableActaId, connectedUserId);
 
         WebResource getFirmasResource = Client.create().resource(this.firmasEndpoint);
         ClientResponse response = getFirmasResource.type(MediaType.APPLICATION_JSON)
@@ -319,7 +319,7 @@ public class ReunionService
                 acuerdosAlternativos);
     }
 
-    private ReunionFirma reunionFirmaDesdeReunion(Reunion reunion, Long connectedUserId)
+    private ReunionFirma reunionFirmaDesdeReunion(Reunion reunion, Long responsableActaId, Long connectedUserId)
             throws OrganosExternosException, PersonasExternasException
     {
         ReunionFirma reunionFirma = new ReunionFirma();
@@ -344,6 +344,14 @@ public class ReunionService
         reunionFirma.setCompletada(reunion.getCompletada());
         reunionFirma.setCreadorNombre(reunion.getCreadorNombre());
         reunionFirma.setCreadorEmail(reunion.getCreadorEmail());
+
+        if (responsableActaId != null)
+        {
+            OrganoReunionMiembro responsable =
+                    organoReunionMiembroDAO.getMiembroById(responsableActaId);
+
+            reunionFirma.setResponsableActa(responsable.getNombre() + " (" + responsable.getCargoNombre() + ")");
+        }
 
         List<Organo> organos = organoService.getOrganosByReunionIdAndUserId(reunion.getId(), connectedUserId);
         List<ReunionComentario> comentarios =
@@ -385,9 +393,9 @@ public class ReunionService
         puntoOrdenDiaFirma.setAcuerdos(puntoOrdenDia.getAcuerdos());
         puntoOrdenDiaFirma.setAcuerdosAlternativos(puntoOrdenDia.getAcuerdosAlternativos());
         puntoOrdenDiaFirma.setDeliberaciones(puntoOrdenDia.getDeliberaciones());
-        puntoOrdenDiaFirma.setDeliberacionesAlternativos(puntoOrdenDia.getDeliberacionesAlternativas());
+        puntoOrdenDiaFirma.setDeliberacionesAlternativas(puntoOrdenDia.getDeliberacionesAlternativas());
         puntoOrdenDiaFirma.setDescripcion(puntoOrdenDia.getDescripcion());
-        puntoOrdenDiaFirma.setDescripcionAlterntiva(puntoOrdenDia.getDescripcionAlternativa());
+        puntoOrdenDiaFirma.setDescripcionAlternativa(puntoOrdenDia.getDescripcionAlternativa());
         puntoOrdenDiaFirma.setOrden(puntoOrdenDia.getOrden());
 
         List<PuntoOrdenDiaDocumento> documentos =
@@ -445,6 +453,7 @@ public class ReunionService
         comentarioFirma.setComentario(comentario.getComentario());
         comentarioFirma.setCreadorNombre(comentario.getCreadorNombre());
         comentarioFirma.setCreadorId(comentario.getCreadorId());
+        comentarioFirma.setFecha(comentario.getFecha());
 
         return comentarioFirma;
     }
@@ -533,7 +542,7 @@ public class ReunionService
             OrganoReunionMiembro responsable =
                     organoReunionMiembroDAO.getMiembroById(reunion.getMiembroResponsableActa().getId());
 
-            reunionTemplate.setResponsableActa(responsable.getNombre() + "(" + responsable.getCargoNombre() + ")");
+            reunionTemplate.setResponsableActa(responsable.getNombre() + " (" + responsable.getCargoNombre() + ")");
         }
 
         List<Organo> organos = organoService.getOrganosByReunionIdAndUserId(reunion.getId(), connectedUserId);
