@@ -17,7 +17,7 @@ public class PuntoOrdenDiaFirma
     private String descripcion;
 
     @JsonProperty(value = "descripcion_alternativa")
-    private String descripcionAlterntiva;
+    private String descripcionAlternativa;
 
     private Long orden;
 
@@ -29,7 +29,7 @@ public class PuntoOrdenDiaFirma
     private String deliberaciones;
 
     @JsonProperty(value = "deliberaciones_alternativas")
-    private String deliberacionesAlternativos;
+    private String deliberacionesAlternativas;
 
     private List<Documento> documentos;
 
@@ -111,14 +111,14 @@ public class PuntoOrdenDiaFirma
         this.tituloAlternativo = tituloAlternativo;
     }
 
-    public String getDescripcionAlterntiva()
+    public String getDescripcionAlternativa()
     {
-        return descripcionAlterntiva;
+        return descripcionAlternativa;
     }
 
-    public void setDescripcionAlterntiva(String descripcionAlterntiva)
+    public void setDescripcionAlternativa(String descripcionAlternativa)
     {
-        this.descripcionAlterntiva = descripcionAlterntiva;
+        this.descripcionAlternativa = descripcionAlternativa;
     }
 
     public String getAcuerdosAlternativos()
@@ -131,13 +131,13 @@ public class PuntoOrdenDiaFirma
         this.acuerdosAlternativos = acuerdosAlternativos;
     }
 
-    public String getDeliberacionesAlternativos()
+    public String getDeliberacionesAlternativas()
     {
-        return deliberacionesAlternativos;
+        return deliberacionesAlternativas;
     }
 
-    public void setDeliberacionesAlternativos(String deliberacionesAlternativos)
+    public void setDeliberacionesAlternativas(String deliberacionesAlternativas)
     {
-        this.deliberacionesAlternativos = deliberacionesAlternativos;
+        this.deliberacionesAlternativas = deliberacionesAlternativas;
     }
 }
