@@ -57,9 +57,11 @@ import es.uji.commons.rest.ParamUtils;
 import es.uji.commons.rest.ResponseMessage;
 import es.uji.commons.rest.UIEntity;
 import es.uji.commons.sso.AccessManager;
+import org.springframework.stereotype.Service;
 
 import static es.uji.apps.goc.dto.QReunionDocumento.reunionDocumento;
 
+@Service
 @Path("reuniones")
 public class ReunionResource extends CoreBaseService
 {
@@ -78,7 +80,7 @@ public class ReunionResource extends CoreBaseService
     @Value("${uji.smtp.defaultSender}")
     private String defaultSender;
 
-    @Value("${goc.logo}")
+    @Value("${goc.logoDocumentos}")
     private String logoUrl;
 
     @GET

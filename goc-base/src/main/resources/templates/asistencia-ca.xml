@@ -1,28 +1,28 @@
 <?xml version="1.0"?>
 <fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:th="http://www.thymeleaf.org">
   <fo:layout-master-set>
-    <fo:simple-page-master master-name="acta" text-align="justify"
-      margin-right="2.5cm" margin-left="2.5cm" margin-bottom="1cm" margin-top="2.5cm"
-      page-width="21cm" page-height="29.7cm">
-      <fo:region-body margin-top="4.5cm" margin-bottom="1cm" />
-      <fo:region-before extent="5.5cm" />
-      <fo:region-after extent="1cm" />
+    <fo:simple-page-master master-name="acta"
+                           margin-right="2.5cm" margin-left="2.5cm" margin-bottom="1.00cm" margin-top="1.00cm"
+                           page-width="21.00cm" page-height="29.70cm">
+      <fo:region-body margin-top="4cm" margin-bottom="2.5cm" />
+      <fo:region-before extent="4.00cm" />
+      <fo:region-after extent="2.00cm" />
     </fo:simple-page-master>
   </fo:layout-master-set>
 
   <fo:page-sequence master-reference="acta">
     <fo:static-content flow-name="xsl-region-before">
-      <fo:block space-after="0.1cm">
-        <fo:table>
+      <fo:block font-size="10pt" space-after="0.1cm">
+        <fo:table border-width="0.06cm" text-align="start">
           <fo:table-column column-width="3cm" />
-          <fo:table-column column-width="8cm" />
+          <fo:table-column column-width="7.7cm" />
           <fo:table-column column-width="7cm" />
 
           <fo:table-body>
             <fo:table-row>
-              <fo:table-cell>
-                <fo:block text-align="center">
-                  <fo:external-graphic th:src="${logo}" width="2cm"/>
+              <fo:table-cell display-align="center">
+                <fo:block font-size="10pt" text-align="center">
+                  <fo:external-graphic th:src="${logo}" content-height="scale-to-fit" height="2.5cm" content-width="2.5cm" scaling="non-uniform"/>
                 </fo:block>
               </fo:table-cell>
 
@@ -33,7 +33,7 @@
               </fo:table-cell>
 
               <fo:table-cell display-align="center" padding="0.4cm">
-                <fo:block font-size="11pt">Certificat d'assistència</fo:block>
+                <fo:block font-size="11pt">Actes de reunions</fo:block>
               </fo:table-cell>
             </fo:table-row>
           </fo:table-body>
