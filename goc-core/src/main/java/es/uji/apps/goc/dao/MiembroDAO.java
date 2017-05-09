@@ -74,6 +74,7 @@ public class MiembroDAO extends BaseDAODatabaseImpl
         {
             Cargo cargo = new Cargo(miembroLocal.getCargo().getId().toString());
             cargo.setNombre(miembroLocal.getCargo().getNombre());
+            cargo.setNombreAlternativo(miembroLocal.getCargo().getNombreAlternativo());
             miembro.setCargo(cargo);
         }
 
