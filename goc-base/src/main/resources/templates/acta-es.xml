@@ -112,7 +112,7 @@
       </fo:block>
 
       <fo:block font-weight="bold" font-size="14pt" space-before="0.5cm" th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}">
-        Desarrollo de la sessión
+        Desarrollo de la sesión
       </fo:block>
 
       <fo:list-block provisional-distance-between-starts="0.5cm" th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}">
