@@ -133,7 +133,7 @@ Ext.define('goc.view.reunion.FormReunionController', {
             }
 
             record.fecha = Ext.Date.parseDate(data.fecha + ' ' + data.hora, 'd/m/Y H:i');
-            record.fechaSegundaConvocatoria = Ext.Date.parseDate(data.fecha + ' ' + data.hora, 'd/m/Y H:i');
+            record.fechaSegundaConvocatoria = Ext.Date.parseDate(data.fecha + ' ' + data.horaSegundaConvocatoria, 'd/m/Y H:i');
 
             store.add(record);
             store.sync({

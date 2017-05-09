@@ -489,7 +489,7 @@ public class ReunionResource extends CoreBaseService
         if (reunionUI.get("fechaSegundaConvocatoria") != null && !reunionUI.get("fechaSegundaConvocatoria").isEmpty())
         {
             LocalDateTime dateTimeSegundaConvocatoria = LocalDateTime.parse(reunionUI.get("fechaSegundaConvocatoria"), formatter);
-            reunion.setFecha(Date.from(dateTimeSegundaConvocatoria.atZone(ZoneId.systemDefault()).toInstant()));
+            reunion.setFechaSegundaConvocatoria(Date.from(dateTimeSegundaConvocatoria.atZone(ZoneId.systemDefault()).toInstant()));
         }
 
         reunion.setDuracion(Long.parseLong(reunionUI.get("duracion")));
