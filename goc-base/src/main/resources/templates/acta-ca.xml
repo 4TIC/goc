@@ -59,7 +59,7 @@
       </fo:block>
 
       <fo:block th:if="${reunion.responsableActa}">
-        Responsable d'acta: <fo:inline th:text="${reunion.responsableActa}"></fo:inline>
+        Responsable d'acta: <fo:inline th:text="${reunion.responsableActa} + ' (' + ${reunion.cargoAlternativoResponsableActa} +')'"></fo:inline>
       </fo:block>
 
       <fo:block th:if="${reunion.ubicacionAlternativa}">

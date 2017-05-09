@@ -72,6 +72,10 @@ public class ReunionFirma implements Serializable
 
     private String responsableActa;
 
+    private String cargoResponsableActa;
+
+    private String cargoAlternativoResponsableActa;
+
     public ReunionFirma() {}
 
     public ReunionFirma(Long id) {
@@ -320,5 +324,25 @@ public class ReunionFirma implements Serializable
     public void setResponsableActa(String responsableActa)
     {
         this.responsableActa = responsableActa;
+    }
+
+    public String getCargoResponsableActa()
+    {
+        return cargoResponsableActa;
+    }
+
+    public void setCargoResponsableActa(String cargoResponsableActa)
+    {
+        this.cargoResponsableActa = cargoResponsableActa;
+    }
+
+    public String getCargoAlternativoResponsableActa()
+    {
+        return cargoAlternativoResponsableActa;
+    }
+
+    public void setCargoAlternativoResponsableActa(String cargoAlternativoResponsableActa)
+    {
+        this.cargoAlternativoResponsableActa = cargoAlternativoResponsableActa;
     }
 }

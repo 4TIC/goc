@@ -57,6 +57,10 @@ public class ReunionTemplate implements Serializable
 
     private String responsableActa;
 
+    private String cargoResponsableActa;
+
+    private String cargoAlternativoResponsableActa;
+
     private List<OrganoTemplate> organos;
 
     private List<Comentario> comentarios;
@@ -338,5 +342,25 @@ public class ReunionTemplate implements Serializable
     public void setTelematicaDescripcionAlternativa(String telematicaDescripcionAlternativa)
     {
         this.telematicaDescripcionAlternativa = telematicaDescripcionAlternativa;
+    }
+
+    public String getCargoResponsableActa()
+    {
+        return cargoResponsableActa;
+    }
+
+    public void setCargoResponsableActa(String cargoResponsableActa)
+    {
+        this.cargoResponsableActa = cargoResponsableActa;
+    }
+
+    public String getCargoAlternativoResponsableActa()
+    {
+        return cargoAlternativoResponsableActa;
+    }
+
+    public void setCargoAlternativoResponsableActa(String cargoAlternativoResponsableActa)
+    {
+        this.cargoAlternativoResponsableActa = cargoAlternativoResponsableActa;
     }
 }

@@ -350,7 +350,9 @@ public class ReunionService
             OrganoReunionMiembro responsable =
                     organoReunionMiembroDAO.getMiembroById(responsableActaId);
 
-            reunionFirma.setResponsableActa(responsable.getNombre() + " (" + responsable.getCargoNombre() + ")");
+            reunionFirma.setResponsableActa(responsable.getNombre());
+            reunionFirma.setCargoResponsableActa(responsable.getCargoNombre());
+            reunionFirma.setCargoAlternativoResponsableActa(responsable.getCargoNombreAlternativo());
         }
 
         List<Organo> organos = organoService.getOrganosByReunionIdAndUserId(reunion.getId(), connectedUserId);
@@ -542,7 +544,9 @@ public class ReunionService
             OrganoReunionMiembro responsable =
                     organoReunionMiembroDAO.getMiembroById(reunion.getMiembroResponsableActa().getId());
 
-            reunionTemplate.setResponsableActa(responsable.getNombre() + " (" + responsable.getCargoNombre() + ")");
+            reunionTemplate.setResponsableActa(responsable.getNombre());
+            reunionTemplate.setCargoResponsableActa(responsable.getCargoNombre());
+            reunionTemplate.setCargoAlternativoResponsableActa(responsable.getCargoNombreAlternativo());
         }
 
         List<Organo> organos = organoService.getOrganosByReunionIdAndUserId(reunion.getId(), connectedUserId);
