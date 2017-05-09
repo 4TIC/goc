@@ -36,7 +36,7 @@ public class ActaResource
     @InjectParam
     private ReunionDAO reunionDAO;
 
-    @Value("${goc.logo}")
+    @Value("${goc.logoDocumentos}")
     private String logoUrl;
 
     @GET
