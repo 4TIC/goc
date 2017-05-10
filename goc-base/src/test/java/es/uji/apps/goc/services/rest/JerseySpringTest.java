@@ -14,6 +14,7 @@ import es.uji.commons.rest.json.UIEntityMessageBodyWriter;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.request.RequestContextListener;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -30,20 +31,21 @@ public class JerseySpringTest extends JerseyTest
 
     public JerseySpringTest()
     {
-        super(new WebAppDescriptor.Builder(PACKAGE_NAME)
-                .contextParam("contextConfigLocation", "classpath:applicationContext.xml")
+        super(new WebAppDescriptor.Builder(PACKAGE_NAME).contextParam("contextConfigLocation",
+                "classpath:applicationContext.xml")
                 .contextParam("webAppRootKey", PACKAGE_NAME)
                 .contextListenerClass(ContextLoaderListener.class)
                 .requestListenerClass(RequestContextListener.class)
                 .servletClass(SpringServlet.class)
                 .clientConfig(createClientConfig())
                 .initParam("com.sun.jersey.config.property.packages",
-                        "es.uji.commons.rest.shared; es.uji.commons.rest.json; com.fasterxml.jackson.jaxrs.json; " + PACKAGE_NAME).build());
+                        "es.uji.commons.rest.shared; es.uji.commons.rest.json; com.fasterxml.jackson.jaxrs.json; " + PACKAGE_NAME)
+                .build());
+
+        initAuthProperties();
 
         this.client().addFilter(new LoggingFilter());
         this.resource = resource();
-
-        initAuthProperties();
     }
 
     private static ClientConfig createClientConfig()
@@ -60,14 +62,19 @@ public class JerseySpringTest extends JerseyTest
     {
         try
         {
+            String home = System.getProperty("goc.home");
+
             Properties config = new Properties();
-            config.load(OrganoExterno.class.getClassLoader().getResourceAsStream("app.properties"));
+
+            FileInputStream in = new FileInputStream(home + "/app.properties");
+            config.load(in);
 
             authToken = config.getProperty("goc.external.authToken");
-            organosUrl = config.getProperty("goc.external.organosEndpoint").replace("http://localhost:9005/goc/rest", "");
-            miembrosUrl = config.getProperty("goc.external.miembrosEndpoint").replace("http://localhost:9005/goc/rest", "");
-            firmasUrl = config.getProperty("goc.external.firmasEndpoint").replace("http://localhost:9005/goc/rest", "");
-            notificacionesUrl = config.getProperty("goc.external.notificacionesEndpoint").replace("http://localhost:9005/goc/rest", "");
+            Integer index = config.getProperty("goc.external.organosEndpoint").indexOf("/rest") + 6;
+            organosUrl = config.getProperty("goc.external.organosEndpoint").substring(index);
+            miembrosUrl = config.getProperty("goc.external.miembrosEndpoint").substring(index);
+            firmasUrl = config.getProperty("goc.external.firmasEndpoint").substring(index);
+            notificacionesUrl = config.getProperty("goc.external.notificacionesEndpoint").substring(index);
         }
         catch (IOException e)
         {
