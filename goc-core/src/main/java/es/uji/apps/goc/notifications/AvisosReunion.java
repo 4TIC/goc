@@ -31,6 +31,9 @@ public class AvisosReunion
     @Value("${goc.publicUrl}")
     private String publicUrl;
 
+    @Value("${uji.smtp.defaultSender}")
+    private String defaultSender;
+
     @Autowired
     public AvisosReunion(ReunionDAO reunionDAO, OrganoReunionMiembroDAO organoReunionMiembroDAO,
             NotificacionesDAO notificacionesDAO)
@@ -53,7 +56,8 @@ public class AvisosReunion
         ReunionFormatter formatter = new ReunionFormatter(reunion);
         mensaje.setCuerpo(formatter.format(publicUrl));
 
-        mensaje.setReplyTo(reunion.getCreadorEmail());
+        mensaje.setFrom(defaultSender);
+        mensaje.setReplyTo(defaultSender);
         mensaje.setDestinos(miembros);
 
         notificacionesDAO.enviaNotificacion(mensaje);
@@ -78,7 +82,8 @@ public class AvisosReunion
 
         ReunionFormatter formatter = new ReunionFormatter(reunion);
         mensaje.setCuerpo(formatter.format(publicUrl));
-        mensaje.setReplyTo(reunion.getCreadorEmail());
+        mensaje.setFrom(defaultSender);
+        mensaje.setReplyTo(defaultSender);
 
         notificacionesDAO.enviaNotificacion(mensaje);
 

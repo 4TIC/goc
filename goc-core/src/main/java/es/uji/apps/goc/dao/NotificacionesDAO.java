@@ -30,7 +30,7 @@ public class NotificacionesDAO
                 .header("X-UJI-AuthToken", authToken)
                 .post(ClientResponse.class, mensaje);
 
-        if (response.getStatus() != 200)
+        if (response.getStatus() != 200 && response.getStatus() != 204)
         {
             throw new NotificacionesException();
         }
