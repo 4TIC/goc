@@ -111,6 +111,7 @@ public class PublicacionService extends CoreBaseService
             @QueryParam("organoId") Long organoId, @QueryParam("descriptorId") Long descriptorId,
             @QueryParam("claveId") Long claveId, @QueryParam("anyo") Integer anyo,
             @QueryParam("fInicio") String fInicio, @QueryParam("fFin") String fFin,
+            @QueryParam("texto") String texto,
             @QueryParam("pagina") @DefaultValue("0") Integer pagina)
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
@@ -146,8 +147,11 @@ public class PublicacionService extends CoreBaseService
 
         acuerdosSearch.setfInicio(getDate(fInicio));
         acuerdosSearch.setfFin(getDate(fFin));
+        acuerdosSearch.setTexto(texto);
         acuerdosSearch.setTipoOrganoId(tipoOrganoId);
         acuerdosSearch.setOrganoId(organoId);
+
+        acuerdosSearch.setIdiomaAlternatico(applang.equals(languageConfig.alternativeLanguage) ? true : false);
 
         reuniones = reunionService.getReunionesPublicas(acuerdosSearch);
         Integer numReuniones = reunionService.getNumReunionesPublicas(acuerdosSearch);
@@ -178,6 +182,7 @@ public class PublicacionService extends CoreBaseService
         template.put("anyo", anyo);
         template.put("fInicio", fInicio);
         template.put("fFin", fFin);
+        template.put("texto", texto);
 
         if (pagina > 0)
         {

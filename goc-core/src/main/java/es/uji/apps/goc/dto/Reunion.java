@@ -21,6 +21,9 @@ public class Reunion implements Serializable
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "reunion")
+    private ReunionBusqueda reunionBusqueda;
+
     private String asunto;
 
     @Column(name = "ASUNTO_ALT")
@@ -89,6 +92,8 @@ public class Reunion implements Serializable
 
     @Column(name = "NOTIFICADA")
     private Boolean notificada;
+
+
 
     @OneToOne
     @JoinColumn(name = "MIEMBRO_RESPONSABLE_ACTA_ID")
@@ -501,5 +506,15 @@ public class Reunion implements Serializable
                 .count();
 
         return (numeroOrganosConMiembros > 0);
+    }
+
+    public ReunionBusqueda getReunionBusqueda()
+    {
+        return reunionBusqueda;
+    }
+
+    public void setReunionBusqueda(ReunionBusqueda reunionBusqueda)
+    {
+        this.reunionBusqueda = reunionBusqueda;
     }
 }

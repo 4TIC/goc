@@ -5,6 +5,7 @@ import com.mysema.query.jpa.impl.JPAUpdateClause;
 import com.mysema.query.types.expr.BooleanExpression;
 import es.uji.apps.goc.dto.*;
 import es.uji.commons.db.BaseDAODatabaseImpl;
+import es.uji.commons.rest.StringUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ import java.util.List;
 public class ReunionDAO extends BaseDAODatabaseImpl
 {
     private QReunion qReunion = QReunion.reunion;
+    private QReunionBusqueda qReunionBusqueda = QReunionBusqueda.reunionBusqueda;
     private QOrganoReunion qOrganoReunion = QOrganoReunion.organoReunion;
     private QPuntoOrdenDia qPuntoOrdenDia = QPuntoOrdenDia.puntoOrdenDia;
     private QOrganoReunionMiembro qOrganoReunionMiembro = QOrganoReunionMiembro.organoReunionMiembro;
@@ -218,18 +220,19 @@ public class ReunionDAO extends BaseDAODatabaseImpl
 
     public List<Reunion> getReunionesPublicas(Integer anyo)
     {
-        return getReunionesPublicas(null, null, null, null, anyo, null, null);
+        return getReunionesPublicas(null, null, null, null, anyo, null, null, null, false);
     }
 
     public List<Reunion> getReunionesPublicas(Long tipoOrganoId, Long organoId, Long descriptorId, Long claveId,
-            Integer anyo, Date fInicio, Date fFin)
+            Integer anyo, Date fInicio, Date fFin, String texto, Boolean idiomaAlternativo)
     {
-        return getReunionesPublicasPaginated(tipoOrganoId, organoId, descriptorId, claveId, anyo, fInicio, fFin, null,
-                null);
+        return getReunionesPublicasPaginated(tipoOrganoId, organoId, descriptorId, claveId, anyo, fInicio, fFin, texto,
+                idiomaAlternativo, null, null);
     }
 
     public List<Reunion> getReunionesPublicasPaginated(Long tipoOrganoId, Long organoId, Long descriptorId,
-            Long claveId, Integer anyo, Date fInicio, Date fFin, Integer startSeach, Integer numResults)
+            Long claveId, Integer anyo, Date fInicio, Date fFin, String texto, Boolean idiomaAlternativo,
+            Integer startSeach, Integer numResults)
     {
         BooleanExpression whereAnyo = null;
         BooleanExpression whereOrgano = null;
@@ -265,6 +268,7 @@ public class ReunionDAO extends BaseDAODatabaseImpl
         JPAQuery query = new JPAQuery(entityManager);
 
         query.from(qReunion)
+                .join(qReunion.reunionBusqueda, qReunionBusqueda)
                 .leftJoin(qReunion.reunionOrganos, qOrganoReunion)
                 .leftJoin(qReunion.reunionPuntosOrdenDia)
                 .fetch();
@@ -294,6 +298,36 @@ public class ReunionDAO extends BaseDAODatabaseImpl
         if (fFin != null)
         {
             query.where(qReunion.fecha.lt(add1Day(fFin)));
+        }
+
+        if (texto != null)
+        {
+            if (idiomaAlternativo)
+            {
+                query.where(qReunionBusqueda.asuntoAlternativoReunion.like("%" + StringUtils.limpiaAcentos(texto) + "%")
+                        .or((qReunionBusqueda.descripcionAlternativaReunion.like(
+                                "%" + StringUtils.limpiaAcentos(texto) + "%")
+                                .or(qReunionBusqueda.tituloAlternativoPunto.like(
+                                        "%" + StringUtils.limpiaAcentos(texto) + "%")
+                                        .or(qReunionBusqueda.descripcionAlternativaPunto.like(
+                                                "%" + StringUtils.limpiaAcentos(texto) + "%")
+                                                .or(qReunionBusqueda.acuerdosAlternativosPunto.like(
+                                                        "%" + StringUtils.limpiaAcentos(texto) + "%")
+                                                        .or(qReunionBusqueda.deliberacionesAlternativasPunto.like(
+                                                                "%" + StringUtils.limpiaAcentos(texto) + "%"))))))));
+            }
+            else
+            {
+                query.where(qReunionBusqueda.asuntoReunion.like("%" + StringUtils.limpiaAcentos(texto) + "%")
+                        .or((qReunionBusqueda.descripcionReunion.like("%" + StringUtils.limpiaAcentos(texto) + "%")
+                                .or(qReunionBusqueda.tituloPunto.like("%" + StringUtils.limpiaAcentos(texto) + "%")
+                                        .or(qReunionBusqueda.descripcionPunto.like(
+                                                "%" + StringUtils.limpiaAcentos(texto) + "%")
+                                                .or(qReunionBusqueda.acuerdosPunto.like(
+                                                        "%" + StringUtils.limpiaAcentos(texto) + "%")
+                                                        .or(qReunionBusqueda.deliberacionesPunto.like(
+                                                                "%" + StringUtils.limpiaAcentos(texto) + "%"))))))));
+            }
         }
 
         if (startSeach != null && numResults != null)

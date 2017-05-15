@@ -10,6 +10,7 @@
     <class>es.uji.apps.goc.model.Organo</class>
     <class>es.uji.apps.goc.model.Miembro</class>
     <class>es.uji.apps.goc.dto.Reunion</class>
+    <class>es.uji.apps.goc.dto.ReunionBusqueda</class>
     <class>es.uji.apps.goc.dto.ReunionDocumento</class>
     <class>es.uji.apps.goc.dto.OrganoReunion</class>
     <class>es.uji.apps.goc.dto.OrganoLocal</class>

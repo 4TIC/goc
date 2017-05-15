@@ -88,14 +88,28 @@
           </tr>
 
           <tr>
+            <td><strong>Texto:</strong></td>
+            <td>
+              <input type="text" name="texto" placeholder="Buscar en el texto" th:value="${texto}"/>
+            </td>
+          </tr>
+
+          <tr>
             <td><strong>Entre:</strong></td>
             <td>
             <input name="fInicio" th:value="${fInicio}" placeholder="dd/mm/aaaa" />
             <strong> y </strong>
             <input name="fFin" th:value="${fFin}" placeholder="dd/mm/aaaa" />
-            <button type="submit">Aplicar</button>
             </td>
           </tr>
+
+          <tr>
+            <td></td>
+            <td>
+              <button type="submit">Aplicar</button>
+            </td>
+          </tr>
+
         </table>
 
         <div>

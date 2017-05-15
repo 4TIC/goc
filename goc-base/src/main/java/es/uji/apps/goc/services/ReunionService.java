@@ -347,8 +347,7 @@ public class ReunionService
 
         if (responsableActaId != null)
         {
-            OrganoReunionMiembro responsable =
-                    organoReunionMiembroDAO.getMiembroById(responsableActaId);
+            OrganoReunionMiembro responsable = organoReunionMiembroDAO.getMiembroById(responsableActaId);
 
             reunionFirma.setResponsableActa(responsable.getNombre());
             reunionFirma.setCargoResponsableActa(responsable.getCargoNombre());
@@ -1035,7 +1034,8 @@ public class ReunionService
         List<Reunion> reunionesPublicas =
                 reunionDAO.getReunionesPublicasPaginated(acuerdosSearch.getTipoOrganoId(), acuerdosSearch.getOrganoId(),
                         acuerdosSearch.getDescriptorId(), acuerdosSearch.getClaveId(), acuerdosSearch.getAnyo(),
-                        acuerdosSearch.getfInicio(), acuerdosSearch.getfFin(), acuerdosSearch.getStartSearch(),
+                        acuerdosSearch.getfInicio(), acuerdosSearch.getfFin(), acuerdosSearch.getTexto(),
+                        acuerdosSearch.getIdiomaAlternatico(), acuerdosSearch.getStartSearch(),
                         acuerdosSearch.getNumResults());
         return filtrarDuplicados(reunionesPublicas);
     }
@@ -1045,7 +1045,8 @@ public class ReunionService
         List<Reunion> reunionesPublicasClave =
                 reunionDAO.getReunionesPublicas(acuerdosSearch.getTipoOrganoId(), acuerdosSearch.getOrganoId(),
                         acuerdosSearch.getDescriptorId(), acuerdosSearch.getClaveId(), acuerdosSearch.getAnyo(),
-                        acuerdosSearch.getfInicio(), acuerdosSearch.getfFin());
+                        acuerdosSearch.getfInicio(), acuerdosSearch.getfFin(), acuerdosSearch.getTexto(),
+                        acuerdosSearch.getIdiomaAlternatico());
         return filtrarDuplicados(reunionesPublicasClave).size();
     }
 

@@ -1,5 +1,7 @@
 package es.uji.apps.goc.model;
 
+import com.mysema.query.types.expr.BooleanExpression;
+
 import java.util.Date;
 
 public class AcuerdosSearch
@@ -13,12 +15,15 @@ public class AcuerdosSearch
     private Long claveId;
     private Date fInicio;
     private Date fFin;
+    private String texto;
+    private Boolean idiomaAlternatico;
 
     public AcuerdosSearch(Integer anyo, Integer startSearch, Integer numResults)
     {
         this.anyo = anyo;
         this.startSearch = startSearch;
         this.numResults = numResults;
+        this.idiomaAlternatico = false;
     }
 
     public Integer getStartSearch()
@@ -109,5 +114,25 @@ public class AcuerdosSearch
     public void setfFin(Date fFin)
     {
         this.fFin = fFin;
+    }
+
+    public String getTexto()
+    {
+        return texto;
+    }
+
+    public void setTexto(String texto)
+    {
+        this.texto = texto;
+    }
+
+    public Boolean getIdiomaAlternatico()
+    {
+        return idiomaAlternatico;
+    }
+
+    public void setIdiomaAlternatico(Boolean idiomaAlternatico)
+    {
+        this.idiomaAlternatico = idiomaAlternatico;
     }
 }
