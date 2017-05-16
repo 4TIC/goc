@@ -3,6 +3,7 @@ package es.uji.apps.goc.services.rest;
 import com.mysema.query.Tuple;
 import com.sun.jersey.api.core.InjectParam;
 
+import es.uji.apps.goc.dto.*;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.net.MalformedURLException;
@@ -29,10 +30,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import es.uji.apps.goc.dto.MiembroTemplate;
-import es.uji.apps.goc.dto.OrganoTemplate;
-import es.uji.apps.goc.dto.Reunion;
-import es.uji.apps.goc.dto.ReunionTemplate;
 import es.uji.apps.goc.exceptions.AsistenteNoEncontradoException;
 import es.uji.apps.goc.exceptions.FirmaReunionException;
 import es.uji.apps.goc.exceptions.MiembrosExternosException;
@@ -86,8 +83,7 @@ public class ReunionResource extends CoreBaseService
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<UIEntity> getReuniones(@QueryParam("organoId") String organoId,
-                                       @QueryParam("tipoOrganoId") Long tipoOrganoId,
-                                       @QueryParam("externo") Boolean externo)
+            @QueryParam("tipoOrganoId") Long tipoOrganoId, @QueryParam("externo") Boolean externo)
             throws OrganosExternosException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
@@ -98,21 +94,21 @@ public class ReunionResource extends CoreBaseService
 
         if (tipoOrganoId != null)
         {
-            listaReuniones = reunionService.getReunionesByTipoOrganoIdAndUserId(tipoOrganoId,
-                    completada, connectedUserId);
+            listaReuniones =
+                    reunionService.getReunionesByTipoOrganoIdAndUserId(tipoOrganoId, completada, connectedUserId);
         }
         else if (organoId != null)
         {
-            listaReuniones = reunionService.getReunionesByOrganoIdAndUserId(organoId, externo,
-                    completada, connectedUserId);
+            listaReuniones =
+                    reunionService.getReunionesByOrganoIdAndUserId(organoId, externo, completada, connectedUserId);
         }
         else
         {
             listaReuniones = reunionService.getReunionesByUserId(completada, connectedUserId);
         }
 
-        List<Tuple> listaNumeroDocumentosPorReunionId = reunionDocumentoService
-                .getNumeroDocumentosPorReunion(connectedUserId);
+        List<Tuple> listaNumeroDocumentosPorReunionId =
+                reunionDocumentoService.getNumeroDocumentosPorReunion(connectedUserId);
 
         return reunionesConNumeroDocumentosToUI(listaReuniones, listaNumeroDocumentosPorReunionId);
     }
@@ -121,8 +117,7 @@ public class ReunionResource extends CoreBaseService
     @Path("completadas")
     @Produces(MediaType.APPLICATION_JSON)
     public List<UIEntity> getReunionesCompletadas(@QueryParam("organoId") String organoId,
-                                                  @QueryParam("tipoOrganoId") Long tipoOrganoId,
-                                                  @QueryParam("externo") Boolean externo)
+            @QueryParam("tipoOrganoId") Long tipoOrganoId, @QueryParam("externo") Boolean externo)
             throws OrganosExternosException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
@@ -132,43 +127,42 @@ public class ReunionResource extends CoreBaseService
 
         if (tipoOrganoId != null)
         {
-            listaReuniones = reunionService.getReunionesByTipoOrganoIdAndUserId(tipoOrganoId,
-                    completada, connectedUserId);
+            listaReuniones =
+                    reunionService.getReunionesByTipoOrganoIdAndUserId(tipoOrganoId, completada, connectedUserId);
         }
         else if (organoId != null)
         {
-            listaReuniones = reunionService.getReunionesByOrganoIdAndUserId(organoId, externo,
-                    completada, connectedUserId);
+            listaReuniones =
+                    reunionService.getReunionesByOrganoIdAndUserId(organoId, externo, completada, connectedUserId);
         }
         else
         {
             listaReuniones = reunionService.getReunionesByUserId(true, connectedUserId);
         }
 
-        List<Tuple> listaNumeroDocumentosPorReunionId = reunionDocumentoService
-                .getNumeroDocumentosPorReunion(connectedUserId);
+        List<Tuple> listaNumeroDocumentosPorReunionId =
+                reunionDocumentoService.getNumeroDocumentosPorReunion(connectedUserId);
 
         return reunionesConNumeroDocumentosToUI(listaReuniones, listaNumeroDocumentosPorReunionId);
     }
 
     private List<UIEntity> reunionesConNumeroDocumentosToUI(List<Reunion> listaReuniones,
-                                                            List<Tuple> listaNumeroDocumentosPorReunionId)
+            List<Tuple> listaNumeroDocumentosPorReunionId)
     {
         List<UIEntity> reunionesUI = new ArrayList<>();
 
         for (Reunion reunion : listaReuniones)
         {
             UIEntity reunionUI = UIEntity.toUI(reunion);
-            reunionUI.put("numeroDocumentos", getNumeroDocumentosByReunionId(reunion.getId(),
-                    listaNumeroDocumentosPorReunionId));
+            reunionUI.put("numeroDocumentos",
+                    getNumeroDocumentosByReunionId(reunion.getId(), listaNumeroDocumentosPorReunionId));
             reunionesUI.add(reunionUI);
         }
 
         return reunionesUI;
     }
 
-    private Long getNumeroDocumentosByReunionId(Long reunionId,
-                                                List<Tuple> listaNumeroDocumentosPorReunionId)
+    private Long getNumeroDocumentosByReunionId(Long reunionId, List<Tuple> listaNumeroDocumentosPorReunionId)
     {
         Long num = 0L;
 
@@ -200,8 +194,7 @@ public class ReunionResource extends CoreBaseService
     }
 
     @Path("{reunionId}/miembros")
-    public ReunionMiembroResource getReunionMiembroResource(
-            @InjectParam ReunionMiembroResource reunionMiembroResource)
+    public ReunionMiembroResource getReunionMiembroResource(@InjectParam ReunionMiembroResource reunionMiembroResource)
     {
         return reunionMiembroResource;
     }
@@ -225,8 +218,7 @@ public class ReunionResource extends CoreBaseService
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public void establecerSuplente(@PathParam("reunionId") Long reunionId, UIEntity suplente)
-            throws AsistenteNoEncontradoException, ReunionYaCompletadaException,
-            ReunionNoAdmiteSuplenciaException
+            throws AsistenteNoEncontradoException, ReunionYaCompletadaException, ReunionNoAdmiteSuplenciaException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
         Long suplenteId = Long.parseLong(suplente.get("suplenteId"));
@@ -236,8 +228,8 @@ public class ReunionResource extends CoreBaseService
 
         reunionService.compruebaReunionNoCompletada(reunionId);
         reunionService.compruebaReunionAdmiteSuplencia(reunionId);
-        organoReunionMiembroService.estableceSuplente(reunionId, connectedUserId, suplenteId,
-                suplenteNombre, suplenteEmail, organoMiembroId);
+        organoReunionMiembroService.estableceSuplente(reunionId, connectedUserId, suplenteId, suplenteNombre,
+                suplenteEmail, organoMiembroId);
     }
 
     @DELETE
@@ -313,8 +305,10 @@ public class ReunionResource extends CoreBaseService
 
         if (reunionUI.get("fechaSegundaConvocatoria") != null && !reunionUI.get("fechaSegundaConvocatoria").isEmpty())
         {
-            LocalDateTime dateTimeSegundaConvocatoria = LocalDateTime.parse(reunionUI.get("fechaSegundaConvocatoria"), formatter);
-            fechaSegundaConvocatoria = Date.from(dateTimeSegundaConvocatoria.atZone(ZoneId.systemDefault()).toInstant());
+            LocalDateTime dateTimeSegundaConvocatoria =
+                    LocalDateTime.parse(reunionUI.get("fechaSegundaConvocatoria"), formatter);
+            fechaSegundaConvocatoria =
+                    Date.from(dateTimeSegundaConvocatoria.atZone(ZoneId.systemDefault()).toInstant());
         }
 
         Long numeroSesion = null;
@@ -331,10 +325,11 @@ public class ReunionResource extends CoreBaseService
         Reunion reunion = reunionUIToModel(reunionUI);
         reunion.setId(reunionId);
 
-        reunion = reunionService.updateReunion(reunionId, asunto, asuntoAlternativo, descripcion, descripcionAlternativa,
-                duracion, fecha, fechaSegundaConvocatoria, ubicacion, ubicacionAlternativa, urlGrabacion, numeroSesion,
-                publica, telematica, telematicaDescripcion, telematicaDescripcionAlternativa, admiteSuplencia,
-                admiteComentarios, connectedUserId);
+        reunion =
+                reunionService.updateReunion(reunionId, asunto, asuntoAlternativo, descripcion, descripcionAlternativa,
+                        duracion, fecha, fechaSegundaConvocatoria, ubicacion, ubicacionAlternativa, urlGrabacion,
+                        numeroSesion, publica, telematica, telematicaDescripcion, telematicaDescripcionAlternativa,
+                        admiteSuplencia, admiteComentarios, connectedUserId);
 
         return UIEntity.toUI(reunion);
     }
@@ -343,8 +338,8 @@ public class ReunionResource extends CoreBaseService
     @Path("{reunionId}/completada")
     @Consumes(MediaType.APPLICATION_JSON)
     public void modificaReunionCompletada(@PathParam("reunionId") Long reunionId, UIEntity data)
-            throws ReunionNoDisponibleException, ReunionYaCompletadaException,
-            FirmaReunionException, OrganosExternosException, PersonasExternasException
+            throws ReunionNoDisponibleException, ReunionYaCompletadaException, FirmaReunionException,
+            OrganosExternosException, PersonasExternasException
     {
         String acuerdos = data.get("acuerdos");
         String acuerdosAlternativos = data.get("acuerdosAlternativos");
@@ -392,10 +387,10 @@ public class ReunionResource extends CoreBaseService
     @PUT
     @Path("{reunionId}/organos")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modificaReunionesOrgano(@PathParam("reunionId") Long reunionId,
-                                            UIEntity reunionOrganosUI) throws ReunionNoDisponibleException, NotificacionesException,
-            MiembrosExternosException, OrganoConvocadoNoPermitidoException,
-            ReunionYaCompletadaException, PersonasExternasException, OrganosExternosException
+    public Response modificaReunionesOrgano(@PathParam("reunionId") Long reunionId, UIEntity reunionOrganosUI)
+            throws ReunionNoDisponibleException, NotificacionesException, MiembrosExternosException,
+            OrganoConvocadoNoPermitidoException, ReunionYaCompletadaException, PersonasExternasException,
+            OrganosExternosException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
@@ -406,8 +401,7 @@ public class ReunionResource extends CoreBaseService
         compruebaPermisosAutorizadoOrganos(organos, connectedUserId);
         reunionService.updateOrganosReunionByReunionId(reunionId, organos, connectedUserId);
 
-        organoReunionMiembroService.updateOrganoReunionMiembrosDesdeOrganosUI(organosUI, reunionId,
-                connectedUserId);
+        organoReunionMiembroService.updateOrganoReunionMiembrosDesdeOrganosUI(organosUI, reunionId, connectedUserId);
 
         return Response.ok().build();
     }
@@ -488,8 +482,10 @@ public class ReunionResource extends CoreBaseService
 
         if (reunionUI.get("fechaSegundaConvocatoria") != null && !reunionUI.get("fechaSegundaConvocatoria").isEmpty())
         {
-            LocalDateTime dateTimeSegundaConvocatoria = LocalDateTime.parse(reunionUI.get("fechaSegundaConvocatoria"), formatter);
-            reunion.setFechaSegundaConvocatoria(Date.from(dateTimeSegundaConvocatoria.atZone(ZoneId.systemDefault()).toInstant()));
+            LocalDateTime dateTimeSegundaConvocatoria =
+                    LocalDateTime.parse(reunionUI.get("fechaSegundaConvocatoria"), formatter);
+            reunion.setFechaSegundaConvocatoria(
+                    Date.from(dateTimeSegundaConvocatoria.atZone(ZoneId.systemDefault()).toInstant()));
         }
 
         reunion.setDuracion(Long.parseLong(reunionUI.get("duracion")));
@@ -501,9 +497,9 @@ public class ReunionResource extends CoreBaseService
     @Path("{reunionId}/asistencia")
     @Produces("application/pdf")
     public Template reunion(@PathParam("reunionId") Long reunionId, @QueryParam("lang") String lang,
-                            @Context HttpServletRequest request) throws OrganosExternosException,
-            MiembrosExternosException, ReunionNoDisponibleException, ReunionNoCompletadaException,
-            AsistenteNoEncontradoException, PersonasExternasException
+            @Context HttpServletRequest request)
+            throws OrganosExternosException, MiembrosExternosException, ReunionNoDisponibleException,
+            ReunionNoCompletadaException, AsistenteNoEncontradoException, PersonasExternasException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
@@ -519,8 +515,7 @@ public class ReunionResource extends CoreBaseService
             throw new ReunionNoCompletadaException();
         }
 
-        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion,
-                connectedUserId);
+        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId);
 
         String nombreAsistente = getNombreAsistente(reunionTemplate, connectedUserId);
 
@@ -543,11 +538,40 @@ public class ReunionResource extends CoreBaseService
         return template;
     }
 
+    @GET
+    @Path("{reunionId}/asistentes")
+    @Produces("application/pdf")
+    public Template listaAsistentes(@PathParam("reunionId") Long reunionId, @QueryParam("lang") String lang,
+            @Context HttpServletRequest request)
+            throws ReunionNoDisponibleException
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+
+        Reunion reunion = reunionService.getReunionConOrganosById(reunionId, connectedUserId);
+
+        if (reunion == null)
+        {
+            throw new ReunionNoDisponibleException();
+        }
+
+        List<OrganoReunionMiembro> organoReunionMiembros =
+                organoReunionMiembroService.getAsistentes(reunionId, connectedUserId);
+
+        String applang = getLangCode(lang);
+
+        Template template = new PDFTemplate("asistentes-" + applang);
+        template.put("logo", logoUrl);
+        template.put("reunion", reunion);
+        template.put("asistentes", organoReunionMiembros);
+
+        return template;
+    }
+
+
     private String getLangCode(String lang)
     {
 
-        if (lang == null || lang.isEmpty()
-                || !(lang.toLowerCase().equals("ca") || lang.toLowerCase().equals("es")))
+        if (lang == null || lang.isEmpty() || !(lang.toLowerCase().equals("ca") || lang.toLowerCase().equals("es")))
         {
             return "ca";
         }

@@ -116,6 +116,6 @@ public class ReunionMiembroService
     public List<OrganoReunionMiembro> getMiembrosReunionByReunionId(Long reunionId, Long connectedUserId)
             throws MiembrosExternosException
     {
-        return organoReunionMiembroDAO.getAsistentesByReunionId(reunionId);
+        return organoReunionMiembroDAO.getMiembrosByReunionId(reunionId);
     }
 }

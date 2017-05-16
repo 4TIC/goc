@@ -31,7 +31,8 @@ public class OrganoReunionMiembroService
     private OrganoReunionDAO organoReunionDAO;
 
     public void updateOrganoReunionMiembrosDesdeOrganosUI(List<UIEntity> organosUI, Long reunionId,
-            Long connectedUserId) throws MiembrosExternosException
+            Long connectedUserId)
+            throws MiembrosExternosException
     {
         if (organosUI != null)
         {
@@ -90,8 +91,8 @@ public class OrganoReunionMiembroService
             Boolean asistencia = new Boolean(miembroUI.get("asistencia"));
             String email = miembroUI.get("email");
 
-            organoReunionMiembroDAO.updateAsistenteReunionByEmail(reunionId, organoId, externo, email,
-                    asistencia, suplenteId, suplenteNombre, suplenteEmail);
+            organoReunionMiembroDAO.updateAsistenteReunionByEmail(reunionId, organoId, externo, email, asistencia,
+                    suplenteId, suplenteNombre, suplenteEmail);
         }
     }
 
@@ -99,8 +100,8 @@ public class OrganoReunionMiembroService
     public void estableceAsistencia(Long reunionId, Long connectedUserId, Boolean asistencia)
             throws AsistenteNoEncontradoException
     {
-        List<OrganoReunionMiembro> asistentes = organoReunionMiembroDAO
-                .getMiembroByAsistenteIdOrSuplenteId(reunionId, connectedUserId);
+        List<OrganoReunionMiembro> asistentes =
+                organoReunionMiembroDAO.getMiembroByAsistenteIdOrSuplenteId(reunionId, connectedUserId);
 
         for (OrganoReunionMiembro asistente : asistentes)
         {
@@ -110,8 +111,8 @@ public class OrganoReunionMiembroService
     }
 
     @Transactional
-    public void estableceSuplente(Long reunionId, Long connectedUserId, Long suplenteId,
-            String suplenteNombre, String suplenteEmail, Long organoMiembroId)
+    public void estableceSuplente(Long reunionId, Long connectedUserId, Long suplenteId, String suplenteNombre,
+            String suplenteEmail, Long organoMiembroId)
     {
         OrganoReunionMiembro miembro = organoReunionMiembroDAO.getMiembroById(organoMiembroId);
 
@@ -129,5 +130,10 @@ public class OrganoReunionMiembroService
         miembro.setSuplenteNombre(null);
         miembro.setSuplenteEmail(null);
         organoReunionMiembroDAO.update(miembro);
+    }
+
+    public List<OrganoReunionMiembro> getAsistentes(Long reunionId, Long connectedUserId)
+    {
+        return organoReunionMiembroDAO.getAsistentesByReunionId(reunionId);
     }
 }

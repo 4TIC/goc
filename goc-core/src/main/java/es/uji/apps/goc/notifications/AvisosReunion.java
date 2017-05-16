@@ -116,7 +116,7 @@ public class AvisosReunion
         else
         {
             listaAsistentesReunion = organoReunionMiembroDAO
-                    .getAsistentesReunionId(reunion.getId());
+                    .getMiembrosByReunionId(reunion.getId());
         }
 
         List<String> miembros = listaAsistentesReunion.stream()
