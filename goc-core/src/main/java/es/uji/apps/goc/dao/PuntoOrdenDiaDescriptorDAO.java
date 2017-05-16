@@ -14,20 +14,19 @@ import es.uji.apps.goc.dto.QPuntoOrdenDiaDescriptor;
 import es.uji.commons.db.BaseDAODatabaseImpl;
 
 @Repository
-public class PuntoOrdenDiaDescriptorDAO extends BaseDAODatabaseImpl{
-
+public class PuntoOrdenDiaDescriptorDAO extends BaseDAODatabaseImpl
+{
     QPuntoOrdenDiaDescriptor qPuntoOrdenDiaDescriptor = QPuntoOrdenDiaDescriptor.puntoOrdenDiaDescriptor;
     QClave qClave = QClave.clave1;
     QPuntoOrdenDia qPuntoOrdenDia = QPuntoOrdenDia.puntoOrdenDia;
 
-    public List<PuntoOrdenDiaDescriptor> getDescriptoresOrdenDia(
-        Long idPuntoOrdenDia
-    ) {
+    public List<PuntoOrdenDiaDescriptor> getDescriptoresOrdenDia(Long idPuntoOrdenDia)
+    {
         JPAQuery query = new JPAQuery(entityManager);
         return query.from(qPuntoOrdenDiaDescriptor)
-            .join(qPuntoOrdenDiaDescriptor.clave, qClave)
-            .join(qPuntoOrdenDiaDescriptor.puntoOrdenDia, qPuntoOrdenDia)
-            .where(qPuntoOrdenDia.id.eq(idPuntoOrdenDia))
-            .list(qPuntoOrdenDiaDescriptor);
+                .join(qPuntoOrdenDiaDescriptor.clave, qClave)
+                .join(qPuntoOrdenDiaDescriptor.puntoOrdenDia, qPuntoOrdenDia)
+                .where(qPuntoOrdenDia.id.eq(idPuntoOrdenDia))
+                .list(qPuntoOrdenDiaDescriptor);
     }
 }

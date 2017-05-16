@@ -70,6 +70,9 @@ public class ReunionService
     private PuntoOrdenDiaAcuerdoDAO puntoOrdenDiaAcuerdoDAO;
 
     @InjectParam
+    private PuntoOrdenDiaDescriptorDAO puntoOrdenDiaDescriptorDAO;
+
+    @InjectParam
     private AvisosReunion avisosReunion;
 
     @Autowired
@@ -780,8 +783,12 @@ public class ReunionService
         List<PuntoOrdenDiaAcuerdo> acuerdos =
                 puntoOrdenDiaAcuerdoDAO.getAcuerdosByPuntoOrdenDiaId(puntoOrdenDia.getId());
 
+        List<PuntoOrdenDiaDescriptor> descriptores =
+                puntoOrdenDiaDescriptorDAO.getDescriptoresOrdenDia(puntoOrdenDia.getId());
+
         puntoOrdenDiaTemplate.setDocumentos(getDocumentosTemplateDesdePuntosOrdenDiaDocumentos(documentos));
         puntoOrdenDiaTemplate.setDocumentosAcuerdos(getAcuerdosTemplateDesdePuntosOrdenDiaAcuerdos(acuerdos));
+        puntoOrdenDiaTemplate.setDescriptores(getDescriptoresTemplateDesdePuntosOrdenDiaAcuerdos(descriptores));
 
         return puntoOrdenDiaTemplate;
     }
@@ -808,6 +815,18 @@ public class ReunionService
         }
 
         return listaDocumento;
+    }
+
+    private List<DescriptorTemplate> getDescriptoresTemplateDesdePuntosOrdenDiaAcuerdos(List<PuntoOrdenDiaDescriptor> descriptores)
+    {
+        List<DescriptorTemplate> listaDesciptores = new ArrayList<>();
+
+        for (PuntoOrdenDiaDescriptor descriptor : descriptores)
+        {
+            listaDesciptores.add(getDescriptorTemplateDesdePuntoOrdenDiaAcuerdo(descriptor));
+        }
+
+        return listaDesciptores;
     }
 
     private Documento getDocumentoTemplateDesdePuntoOrdenDiaDocumento(PuntoOrdenDiaDocumento puntoOrdenDiaDocumento)
@@ -837,6 +856,24 @@ public class ReunionService
         documento.setNombreFichero(puntoOrdenDiaAcuerdo.getNombreFichero());
 
         return documento;
+    }
+
+    private DescriptorTemplate getDescriptorTemplateDesdePuntoOrdenDiaAcuerdo(PuntoOrdenDiaDescriptor descriptor)
+    {
+        DescriptorTemplate descriptorTemplate = new DescriptorTemplate();
+
+        descriptorTemplate.setId(descriptor.getId());
+        descriptorTemplate.setPuntoOrdenDiaId(descriptor.getPuntoOrdenDia().getId());
+        descriptorTemplate.setClaveId(descriptor.getClave().getId());
+        descriptorTemplate.setDescriptorId(descriptor.getClave().getDescriptor().getId());
+        descriptorTemplate.setDescriptorNombre(descriptor.getClave().getDescriptor().getDescriptor());
+        descriptorTemplate.setDescriptorNombreAlternativo(descriptor.getClave().getDescriptor().getDescriptorAlternativo());
+        descriptorTemplate.setDescriptorDescripcion(descriptor.getClave().getDescriptor().getDescripcion());
+        descriptorTemplate.setDescriptorDescripcionAlternativa(descriptor.getClave().getDescriptor().getDescripcionAlternativa());
+        descriptorTemplate.setClaveNombre(descriptor.getClave().getClave());
+        descriptorTemplate.setClaveNombreAlternativo(descriptor.getClave().getClaveAlternativa());
+
+        return descriptorTemplate;
     }
 
     private Map<String, List<Miembro>> getMapOrganosMiembros(List<Organo> organos, Long connectedUserId)

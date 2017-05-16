@@ -21,40 +21,37 @@ import es.uji.apps.goc.services.PuntoOrdenDiaDescriptorService;
 import es.uji.commons.rest.UIEntity;
 
 @Path("reuniones/{idReunion}/puntosOrdenDia/{idPuntoOrdenDia}/descriptores")
-public class ReunionPuntosOrdenDiaDescriptorResource {
+public class ReunionPuntosOrdenDiaDescriptorResource
+{
 
     @InjectParam
     private PuntoOrdenDiaDescriptorService puntoOrdenDiaDescriptorService;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public UIEntity addDescriptoresToPuntoDia(
-        @PathParam("idReunion") String idReunion,
-        @PathParam("idPuntoOrdenDia") String idPuntoOrdenDia,
-        UIEntity descriptorOrdenDiaUI
-    ) {
+    public UIEntity addDescriptoresToPuntoDia(@PathParam("idReunion") String idReunion,
+            @PathParam("idPuntoOrdenDia") String idPuntoOrdenDia, UIEntity descriptorOrdenDiaUI)
+    {
         DescriptorOrdenDia descriptorOrdenDia = descriptorOrdenDiaUI.toModel(DescriptorOrdenDia.class);
         descriptorOrdenDia.setIdPuntoOrdenDia(Long.valueOf(idPuntoOrdenDia));
         PuntoOrdenDiaDescriptor puntoOrdenDiaDescriptor =
-            puntoOrdenDiaDescriptorService.addDescriptorToPuntoOrdenDia(descriptorOrdenDia);
+                puntoOrdenDiaDescriptorService.addDescriptorToPuntoOrdenDia(descriptorOrdenDia);
         return UIEntity.toUI(puntoOrdenDiaDescriptor);
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<UIEntity> getDescriptoriesOrdenDia(
-        @PathParam("idPuntoOrdenDia") String idPuntoOrdendia
-    ) {
+    public List<UIEntity> getDescriptoriesOrdenDia(@PathParam("idPuntoOrdenDia") String idPuntoOrdendia)
+    {
         List<DescriptorOrdenDia> descriptoresOrdenDia =
-            puntoOrdenDiaDescriptorService.getDescriptoresOrdenDia(Long.valueOf(idPuntoOrdendia));
+                puntoOrdenDiaDescriptorService.getDescriptoresOrdenDia(Long.valueOf(idPuntoOrdendia));
         return UIEntity.toUI(descriptoresOrdenDia);
     }
 
     @DELETE
     @Path("{idDescriptorOrdenDia}")
-    public Response deleteDesriptorOrdenDia(
-        @PathParam("idDescriptorOrdenDia") Long idDescriptorOrdenDia
-    ) {
+    public Response deleteDesriptorOrdenDia(@PathParam("idDescriptorOrdenDia") Long idDescriptorOrdenDia)
+    {
         puntoOrdenDiaDescriptorService.deleteDescriptorOrdenDia(idDescriptorOrdenDia);
         return Response.ok().build();
     }
@@ -63,13 +60,12 @@ public class ReunionPuntosOrdenDiaDescriptorResource {
     @Path("{idDescriptorOrdenDia}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public UIEntity updateDescriptorOrdenDia(
-        @PathParam("idDescriptorOrdenDia") Long idDescriptorOrdenDia,
-        UIEntity descriptorOrdenDiaUI
-    ) {
+    public UIEntity updateDescriptorOrdenDia(@PathParam("idDescriptorOrdenDia") Long idDescriptorOrdenDia,
+            UIEntity descriptorOrdenDiaUI)
+    {
         DescriptorOrdenDia descriptorOrdenDia = descriptorOrdenDiaUI.toModel(DescriptorOrdenDia.class);
         DescriptorOrdenDia newDescriptorOrdenDia =
-            puntoOrdenDiaDescriptorService.updateDescriptorOrdenDia(descriptorOrdenDia);
+                puntoOrdenDiaDescriptorService.updateDescriptorOrdenDia(descriptorOrdenDia);
         return UIEntity.toUI(newDescriptorOrdenDia);
     }
 }

@@ -32,6 +32,8 @@ public class PuntoOrdenDiaTemplate
 
     private List<Documento> documentosAcuerdos;
 
+    private List<DescriptorTemplate> descriptores;
+
     public Long getId()
     {
         return id;
@@ -156,5 +158,15 @@ public class PuntoOrdenDiaTemplate
     public void setDocumentosAcuerdos(List<Documento> documentosAcuerdos)
     {
         this.documentosAcuerdos = documentosAcuerdos;
+    }
+
+    public List<DescriptorTemplate> getDescriptores()
+    {
+        return descriptores;
+    }
+
+    public void setDescriptores(List<DescriptorTemplate> descriptores)
+    {
+        this.descriptores = descriptores;
     }
 }

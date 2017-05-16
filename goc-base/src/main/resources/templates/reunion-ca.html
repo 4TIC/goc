@@ -84,6 +84,14 @@
           <ul th:with="acuerdos=${puntoOrdenDia.documentosAcuerdos}">
             <li th:each="acuerdo : ${acuerdos}"><a th:href="'/goc/rest/reuniones/' + ${acuerdo.id} + '/puntosOrdenDia/' + ${puntoOrdenDia.id} + '/acuerdos/' + ${acuerdo.id} + '/descargar'" th:text="${acuerdo.descripcionAlternativa}">Descripcion acuerdo</a></li>
           </ul>
+          <span th:if="${not #lists.isEmpty(puntoOrdenDia.descriptores)}">Descriptors:</span>
+          <ul th:with="descriptores=${puntoOrdenDia.descriptores}">
+            <li th:each="descriptor : ${descriptores}">
+              <span th:text="${descriptor.descriptorNombreAlternativo}">Nombre descriptior</span>
+              :
+              <span th:text="${descriptor.claveNombreAlternativo}">Nombre clave</span>
+            </li>
+          </ul>
           <br />
         </li>
       </ol>
