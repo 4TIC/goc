@@ -19,11 +19,11 @@ public class ReunionFormatter
     {
         StringBuffer content = new StringBuffer();
 
-        content.append("<h2>" + reunion.getAsuntoAlternativo() + "</h2>");
+        content.append("<h2>" + reunion.getAsunto() + "</h2>");
 
-        if (reunion.getDescripcionAlternativa() != null && !reunion.getDescripcionAlternativa().isEmpty())
+        if (reunion.getDescripcion() != null && !reunion.getDescripcion().isEmpty())
         {
-            content.append("<div><strong>Descripció:</strong><span>" + reunion.getDescripcionAlternativa() + "</span></div>");
+            content.append("<div><strong>Descripció:</strong><span>" + reunion.getDescripcion() + "</span></div>");
         }
 
         content.append("<div><strong>Data i hora:</strong> " + formatter.format(reunion.getFecha()) + "</div>");
