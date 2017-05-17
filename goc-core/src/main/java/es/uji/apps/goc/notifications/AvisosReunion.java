@@ -58,7 +58,7 @@ public class AvisosReunion
             asunto += "Rectificada ";
         }
 
-        asunto += "Nueva reunión: Se te ha incluido como miembro en una nueva convocatoria de reunión";
+        asunto += "Nova reunió: Has estat inclòs com a membre en una nova convocatòria d'una reunió";
 
         mensaje.setAsunto(asunto);
         mensaje.setContentType("text/html");
@@ -87,7 +87,7 @@ public class AvisosReunion
 
         Mensaje mensaje = new Mensaje();
         mensaje.setAsunto(
-                "[GOC] Recordatorio reunión: " + reunion.getAsunto() + " (" + df.format(reunion.getFecha()) + ")");
+                "[GOC] Recordatori reunió: " + reunion.getAsunto() + " (" + df.format(reunion.getFecha()) + ")");
         mensaje.setContentType("text/html");
 
         ReunionFormatter formatter = new ReunionFormatter(reunion);

@@ -19,22 +19,22 @@ public class ReunionFormatter
     {
         StringBuffer content = new StringBuffer();
 
-        content.append("<h2>" + reunion.getAsunto() + "</h2>");
+        content.append("<h2>" + reunion.getAsuntoAlternativo() + "</h2>");
 
-        if (reunion.getDescripcion() != null && !reunion.getDescripcion().isEmpty())
+        if (reunion.getDescripcionAlternativa() != null && !reunion.getDescripcionAlternativa().isEmpty())
         {
-            content.append("<div><strong>Descripción:</strong><span>" + reunion.getDescripcion() + "</span></div>");
+            content.append("<div><strong>Descripció:</strong><span>" + reunion.getDescripcionAlternativa() + "</span></div>");
         }
 
-        content.append("<div><strong>Fecha y hora:</strong> " + formatter.format(reunion.getFecha()) + "</div>");
+        content.append("<div><strong>Data i hora:</strong> " + formatter.format(reunion.getFecha()) + "</div>");
 
         if (reunion.getFechaSegundaConvocatoria() != null)
         {
-            content.append("<div><strong>Segunda convocatoria:</strong> " + formatter.format(reunion.getFechaSegundaConvocatoria()) + "</div>");
+            content.append("<div><strong>Segona convocatòria:</strong> " + formatter.format(reunion.getFechaSegundaConvocatoria()) + "</div>");
         }
 
-        content.append("<div><strong>Duración:</strong> " + reunion.getDuracion() + " minutos</div><br/>");
-        content.append("<div>Para más información, consultar el detalle de la reunión en <a href=\"" + publicUrl + "/goc/rest/publicacion/reuniones/" + reunion.getId() + "\">" + publicUrl + "/goc/rest/publicacion/reuniones/" + reunion.getId() + "</div>");
+        content.append("<div><strong>Duració:</strong> " + reunion.getDuracion() + " minuts</div><br/>");
+        content.append("<div>Per a més informació, podeu consultar el detall de la reunió a <a href=\"" + publicUrl + "/goc/rest/publicacion/reuniones/" + reunion.getId() + "\">" + publicUrl + "/goc/rest/publicacion/reuniones/" + reunion.getId() + "</div>");
 
         return content.toString();
     }

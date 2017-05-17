@@ -53,7 +53,7 @@ public class AvisosService
         }
         catch (Exception e)
         {
-            log.error("No se ha podido enviar el aviso de reunión para " + reunion.getId(), e);
+            log.error("No s'ha pogut enviar l'avís de reunió per a " + reunion.getId(), e);
         }
 
         if (notificados)
