@@ -102,4 +102,6 @@ CREATE OR REPLACE VIEW goc_vw_reuniones_busqueda AS
   FROM goc_reuniones r,
     goc_reuniones_puntos_orden_dia p
   WHERE p.reunion_id = r.id
- 
+
+
+alter table goc_reuniOnes add AVISO_PRIMERA_REUNION NUMBER DEFAULT 0 NOT NULL;

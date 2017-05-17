@@ -50,7 +50,17 @@ public class AvisosReunion
         List<String> miembros = getMiembros(reunion, false);
 
         Mensaje mensaje = new Mensaje();
-        mensaje.setAsunto("[GOC] Nueva reunión: Se te ha incluido como miembro en una nueva convocatoria de reunión");
+
+        String asunto = "[GOC] ";
+
+        if (reunion.getAvisoPrimeraReunion())
+        {
+            asunto += "Rectificada ";
+        }
+
+        asunto += "Nueva reunión: Se te ha incluido como miembro en una nueva convocatoria de reunión";
+
+        mensaje.setAsunto(asunto);
         mensaje.setContentType("text/html");
 
         ReunionFormatter formatter = new ReunionFormatter(reunion);
@@ -76,8 +86,8 @@ public class AvisosReunion
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 
         Mensaje mensaje = new Mensaje();
-        mensaje.setAsunto("[GOC] Recordatorio reunión: " + reunion.getAsunto() + " ("
-                + df.format(reunion.getFecha()) + ")");
+        mensaje.setAsunto(
+                "[GOC] Recordatorio reunión: " + reunion.getAsunto() + " (" + df.format(reunion.getFecha()) + ")");
         mensaje.setContentType("text/html");
 
         ReunionFormatter formatter = new ReunionFormatter(reunion);
@@ -90,7 +100,8 @@ public class AvisosReunion
         return true;
     }
 
-    private Reunion getReunion(Long reunionId) throws ReunionNoDisponibleException
+    private Reunion getReunion(Long reunionId)
+            throws ReunionNoDisponibleException
     {
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
 
@@ -110,24 +121,21 @@ public class AvisosReunion
 
         if (confirmados)
         {
-            listaAsistentesReunion = organoReunionMiembroDAO
-                    .getAsistentesConfirmadosByReunionId(reunion.getId());
+            listaAsistentesReunion = organoReunionMiembroDAO.getAsistentesConfirmadosByReunionId(reunion.getId());
         }
         else
         {
-            listaAsistentesReunion = organoReunionMiembroDAO
-                    .getMiembrosByReunionId(reunion.getId());
+            listaAsistentesReunion = organoReunionMiembroDAO.getMiembrosByReunionId(reunion.getId());
         }
 
-        List<String> miembros = listaAsistentesReunion.stream()
-                .map(AvisosReunion::obtenerMailAsistente).collect(toList());
+        List<String> miembros =
+                listaAsistentesReunion.stream().map(AvisosReunion::obtenerMailAsistente).collect(toList());
 
         return miembros;
     }
 
     private static String obtenerMailAsistente(OrganoReunionMiembro asistente)
     {
-        return (asistente.getSuplenteEmail() != null) ? asistente.getSuplenteEmail()
-                : asistente.getEmail();
+        return (asistente.getSuplenteEmail() != null) ? asistente.getSuplenteEmail() : asistente.getEmail();
     }
 }

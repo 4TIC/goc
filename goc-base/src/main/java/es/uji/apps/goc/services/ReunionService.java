@@ -1016,6 +1016,9 @@ public class ReunionService
 
         avisosReunion.enviaAvisoNuevaReunion(reunion);
 
+        reunion.setAvisoPrimeraReunion(true);
+        reunionDAO.update(reunion);
+
         return null;
     }
 

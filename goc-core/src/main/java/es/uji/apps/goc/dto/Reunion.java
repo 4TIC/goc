@@ -93,7 +93,8 @@ public class Reunion implements Serializable
     @Column(name = "NOTIFICADA")
     private Boolean notificada;
 
-
+    @Column(name = "AVISO_PRIMERA_REUNION")
+    private Boolean avisoPrimeraReunion;
 
     @OneToOne
     @JoinColumn(name = "MIEMBRO_RESPONSABLE_ACTA_ID")
@@ -516,5 +517,15 @@ public class Reunion implements Serializable
     public void setReunionBusqueda(ReunionBusqueda reunionBusqueda)
     {
         this.reunionBusqueda = reunionBusqueda;
+    }
+
+    public Boolean getAvisoPrimeraReunion()
+    {
+        return avisoPrimeraReunion;
+    }
+
+    public void setAvisoPrimeraReunion(Boolean avisoPrimeraReunion)
+    {
+        this.avisoPrimeraReunion = avisoPrimeraReunion;
     }
 }
