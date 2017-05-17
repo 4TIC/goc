@@ -21,7 +21,7 @@ public class Reunion implements Serializable
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "reunion")
+    @OneToOne(mappedBy = "reunion")
     private ReunionBusqueda reunionBusqueda;
 
     private String asunto;
