@@ -10,6 +10,7 @@ import es.uji.apps.goc.exceptions.*;
 import es.uji.apps.goc.model.*;
 import es.uji.apps.goc.model.Cargo;
 import es.uji.apps.goc.notifications.AvisosReunion;
+import es.uji.commons.rest.ParamUtils;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,9 @@ public class ReunionService
 
     @Value("${goc.external.authToken}")
     private String authToken;
+
+    @Value("${goc.idSecretario}")
+    private String idSecretario;
 
     @Autowired
     private ReunionDAO reunionDAO;
@@ -92,10 +96,10 @@ public class ReunionService
     {
         if (completada)
         {
-            return reunionDAO.getReunionesCompletadasByUserId(connectedUserId);
+            return reunionDAO.getReunionesCompletadasByUserId(connectedUserId, idSecretario);
         }
 
-        return reunionDAO.getReunionesByUserId(connectedUserId);
+        return reunionDAO.getReunionesByUserId(connectedUserId, idSecretario);
     }
 
     public Reunion addReunion(Reunion reunion, Long connectedUserId)
@@ -108,6 +112,7 @@ public class ReunionService
         reunion.setCreadorEmail(convocante.getEmail());
         reunion.setNotificada(false);
         reunion.setCompletada(false);
+        reunion.setAvisoPrimeraReunion(false);
         reunion.setFechaCreacion(new Date());
 
         return reunionDAO.insert(reunion);
