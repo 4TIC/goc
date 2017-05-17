@@ -45,7 +45,7 @@ Ext.define('goc.view.miembro.Grid', {
                 var cargosStore = viewModel.getStore('cargosStore');
 
                 var record = cargosStore.findRecord('id', value, 0, false, false, true);
-                return record ? record.get('nombre') : '';
+                return record ? record.get(appLang === alternativeLanguage ? 'nombreAlternativo' : 'nombre') : '';
             },
             editor: {
                 xtype: 'combobox',
@@ -55,7 +55,7 @@ Ext.define('goc.view.miembro.Grid', {
                     store: '{cargosStore}'
                 },
                 triggerAction: 'all',
-                displayField: 'nombre',
+                displayField: (appLang === alternativeLanguage ? 'nombreAlternativo' : 'nombre'),
                 valueField: 'id',
                 editable: false,
                 listeners: {
