@@ -1,23 +1,24 @@
 package es.uji.apps.goc.notifications;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
 import es.uji.apps.goc.dao.NotificacionesDAO;
 import es.uji.apps.goc.dao.OrganoReunionMiembroDAO;
 import es.uji.apps.goc.dao.ReunionDAO;
+import es.uji.apps.goc.dto.OrganoReunion;
 import es.uji.apps.goc.dto.OrganoReunionMiembro;
 import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.exceptions.NotificacionesException;
 import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -51,14 +52,22 @@ public class AvisosReunion
 
         Mensaje mensaje = new Mensaje();
 
-        String asunto = "[GOC] ";
+        String asunto = "[GOC]";
 
         if (reunion.getAvisoPrimeraReunion())
         {
-            asunto += "Rectificada ";
+            asunto += " [Rectificada]";
         }
 
-        asunto += "Nova reunió: Has estat inclòs com a membre en una nova convocatòria d'una reunió";
+        asunto += " convocatòria " + getNombreOrganos(reunion);
+
+        if (reunion.getNumeroSesion() != null)
+        {
+            asunto += " n. " + reunion.getNumeroSesion();
+        }
+
+        SimpleDateFormat dataFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        asunto += " " + dataFormatter.format(reunion.getFecha());
 
         mensaje.setAsunto(asunto);
         mensaje.setContentType("text/html");
@@ -71,6 +80,18 @@ public class AvisosReunion
         mensaje.setDestinos(miembros);
 
         notificacionesDAO.enviaNotificacion(mensaje);
+    }
+
+    private String getNombreOrganos(Reunion reunion)
+    {
+        List<String> nombreOrganos = new ArrayList<>();
+
+        for (OrganoReunion organo : reunion.getReunionOrganos())
+        {
+            nombreOrganos.add(organo.getOrganoNombre());
+        }
+
+        return StringUtils.join(nombreOrganos, ", ");
     }
 
     public Boolean enviaAvisoReunionProxima(Reunion reunion)
