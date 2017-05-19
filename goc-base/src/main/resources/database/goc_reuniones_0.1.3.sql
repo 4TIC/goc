@@ -103,4 +103,50 @@ CREATE OR REPLACE VIEW goc_vw_reuniones_busqueda AS
     goc_reuniones_puntos_orden_dia p
   WHERE p.reunion_id = r.id;
 
-alter table goc_reuniOnes add AVISO_PRIMERA_REUNION NUMBER DEFAULT 0 NOT NULL;
+ALTER TABLE goc_reuniOnes
+  ADD AVISO_PRIMERA_REUNION NUMBER DEFAULT 0 NOT NULL;
+
+alter table goc_cargos add firma number default 0 not null;
+alter table goc_organos_reuniones_miembros add cargo_firma number default 0 not null;
+
+CREATE OR REPLACE VIEW goc_vw_reuniones_editores AS
+  SELECT
+    r.id,
+    r.asunto,
+    r.asunto_alt,
+    r.fecha,
+    r.duracion,
+    (SELECT count(*)
+     FROM goc_reuniones_documentos rd
+     WHERE rd.reunion_id = r.id) num_documentos,
+    r.creador_id                 editor_id,
+    r.completada                 completada,
+    o.externo,
+    o.organo_id,
+    o.tipo_organo_id
+  FROM goc_reuniones r,
+    goc_organos_reuniones o,
+    goc_organos_reuniones_miembros orm
+  WHERE r.id = o.reunion_id (+)
+        AND o.id = orm.organo_reunion_id (+)
+  UNION
+  SELECT
+    r.id,
+    r.asunto,
+    r.asunto_alt,
+    r.fecha,
+    r.duracion,
+    (SELECT count(*)
+     FROM goc_reuniones_documentos rd
+     WHERE rd.reunion_id = r.id) num_documentos,
+    orm.miembro_id               editor_id,
+    r.completada,
+    o.externo,
+    o.organo_id,
+    o.tipo_organo_id
+  FROM goc_reuniones r,
+    goc_organos_reuniones o,
+    goc_organos_reuniones_miembros orm
+  WHERE r.id = o.reunion_id
+        AND o.id = orm.organo_reunion_id
+        AND orm.cargo_firma = 1;
