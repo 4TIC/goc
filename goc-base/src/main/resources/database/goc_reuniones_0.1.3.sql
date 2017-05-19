@@ -95,13 +95,12 @@ CREATE OR REPLACE VIEW goc_vw_reuniones_busqueda AS
     quita_acentos_clob(p.descripcion)        descripcion_punto_busq,
     quita_acentos_clob(p.acuerdos)           acuerdos_punto_busq,
     quita_acentos_clob(p.deliberaciones)     deliberaciones_punto_busq,
-    quita_acentos(p.titulo_alt)              titulo_alt_punto_busq_busq,
+    quita_acentos(p.titulo_alt)              titulo_alt_punto_busq,
     quita_acentos_clob(p.descripcion_alt)    descripcion_alt_punto_busq,
     quita_acentos_clob(p.acuerdos_alt)       acuerdos_alt_punto_busq,
     quita_acentos_clob(p.deliberaciones_alt) deliberaciones_alt_punto_busq
   FROM goc_reuniones r,
     goc_reuniones_puntos_orden_dia p
-  WHERE p.reunion_id = r.id
-
+  WHERE p.reunion_id = r.id;
 
 alter table goc_reuniOnes add AVISO_PRIMERA_REUNION NUMBER DEFAULT 0 NOT NULL;
