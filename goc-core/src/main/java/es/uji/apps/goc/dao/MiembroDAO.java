@@ -5,6 +5,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+import es.uji.apps.goc.dto.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,11 +15,6 @@ import java.util.List;
 
 import javax.ws.rs.core.MediaType;
 
-import es.uji.apps.goc.dto.MiembroExterno;
-import es.uji.apps.goc.dto.MiembroLocal;
-import es.uji.apps.goc.dto.OrganoLocal;
-import es.uji.apps.goc.dto.QMiembroLocal;
-import es.uji.apps.goc.dto.QOrganoLocal;
 import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.model.Cargo;
 import es.uji.apps.goc.model.JSONListaMiembrosDeserializer;
@@ -40,14 +36,12 @@ public class MiembroDAO extends BaseDAODatabaseImpl
         JPAQuery query = new JPAQuery(entityManager);
         QMiembroLocal qMiembroLocal = QMiembroLocal.miembroLocal;
 
-        List<MiembroLocal> miembrosLocales = query.from(qMiembroLocal)
-                .list(qMiembroLocal);
+        List<MiembroLocal> miembrosLocales = query.from(qMiembroLocal).list(qMiembroLocal);
 
         return creaListaMiembrosDesdeListaMiembrosLocales(miembrosLocales);
     }
 
-    private List<Miembro> creaListaMiembrosDesdeListaMiembrosLocales(
-            List<MiembroLocal> miembrosLocales)
+    private List<Miembro> creaListaMiembrosDesdeListaMiembrosLocales(List<MiembroLocal> miembrosLocales)
     {
         List<Miembro> listaMiembros = new ArrayList<>();
 
@@ -73,6 +67,7 @@ public class MiembroDAO extends BaseDAODatabaseImpl
         if (miembroLocal.getCargo() != null)
         {
             Cargo cargo = new Cargo(miembroLocal.getCargo().getId().toString());
+            cargo.setFirma(miembroLocal.getCargo().isFirma());
             cargo.setNombre(miembroLocal.getCargo().getNombre());
             cargo.setNombreAlternativo(miembroLocal.getCargo().getNombreAlternativo());
             miembro.setCargo(cargo);
@@ -86,9 +81,8 @@ public class MiembroDAO extends BaseDAODatabaseImpl
         JPAQuery query = new JPAQuery(entityManager);
         QMiembroLocal qMiembroLocal = QMiembroLocal.miembroLocal;
 
-        List<MiembroLocal> miembrosLocales = query.from(qMiembroLocal)
-                .where(qMiembroLocal.organo.id.eq(organoId))
-                .list(qMiembroLocal);
+        List<MiembroLocal> miembrosLocales =
+                query.from(qMiembroLocal).where(qMiembroLocal.organo.id.eq(organoId)).list(qMiembroLocal);
 
         return creaListaMiembrosDesdeListaMiembrosLocales(miembrosLocales);
     }
@@ -118,9 +112,9 @@ public class MiembroDAO extends BaseDAODatabaseImpl
         QOrganoLocal qOrganoLocal = QOrganoLocal.organoLocal;
 
         List<MiembroLocal> miembrosLocales = query.from(qMiembroLocal)
-                .join(qMiembroLocal.organo, qOrganoLocal).fetch()
-                .where(qMiembroLocal.id.eq(miembroId)
-                        .and(qMiembroLocal.organo.creadorId.eq(connectedUserId)))
+                .join(qMiembroLocal.organo, qOrganoLocal)
+                .fetch()
+                .where(qMiembroLocal.id.eq(miembroId).and(qMiembroLocal.organo.creadorId.eq(connectedUserId)))
                 .list(qMiembroLocal);
 
         if (miembrosLocales.size() == 0)
@@ -160,26 +154,25 @@ public class MiembroDAO extends BaseDAODatabaseImpl
     public List<Miembro> getMiembrosExternos(String organoId, Long connectedUserId)
             throws MiembrosExternosException
     {
-        WebResource getMiembrosResource = Client.create().resource(
-                this.miembrosExternosEndpoint.replace("{organoId}", organoId));
+        WebResource getMiembrosResource =
+                Client.create().resource(this.miembrosExternosEndpoint.replace("{organoId}", organoId));
 
         ClientResponse response = getMiembrosResource.type(MediaType.APPLICATION_JSON)
-                .header("X-UJI-AuthToken", authToken).get(ClientResponse.class);
+                .header("X-UJI-AuthToken", authToken)
+                .get(ClientResponse.class);
 
         if (response.getStatus() != 200)
         {
             throw new MiembrosExternosException();
         }
 
-        JSONListaMiembrosDeserializer jsonDeserializer = response
-                .getEntity(JSONListaMiembrosDeserializer.class);
+        JSONListaMiembrosDeserializer jsonDeserializer = response.getEntity(JSONListaMiembrosDeserializer.class);
 
         List<MiembroExterno> listaMiembrosExternos = jsonDeserializer.getMiembros();
         return creaListaMiembroDesdeListaMiembrosExternos(listaMiembrosExternos);
     }
 
-    private List<Miembro> creaListaMiembroDesdeListaMiembrosExternos(
-            List<MiembroExterno> listaMiembrosExternos)
+    private List<Miembro> creaListaMiembroDesdeListaMiembrosExternos(List<MiembroExterno> listaMiembrosExternos)
     {
         List<Miembro> listaMiembros = new ArrayList<>();
 
@@ -194,6 +187,7 @@ public class MiembroDAO extends BaseDAODatabaseImpl
     private Miembro creaMiembroDesdeMiembroExterno(MiembroExterno miembroExterno)
     {
         Cargo cargo = new Cargo(miembroExterno.getCargo().getId().toString());
+        cargo.setFirma(miembroExterno.getCargo().isFirma());
         cargo.setNombre(miembroExterno.getCargo().getNombre());
         cargo.setNombreAlternativo(miembroExterno.getCargo().getNombreAlternativo());
 

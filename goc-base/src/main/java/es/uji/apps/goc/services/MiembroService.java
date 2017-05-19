@@ -59,12 +59,16 @@ public class MiembroService
     {
         miembro = miembroDAO.insertMiembro(miembro, connectedUserId);
 
-        es.uji.apps.goc.dto.Cargo cargo = cargoDAO.get(es.uji.apps.goc.dto.Cargo.class, Long.parseLong(miembro.getCargo().getId())).get(0);
+        es.uji.apps.goc.dto.Cargo cargo =
+                cargoDAO.get(es.uji.apps.goc.dto.Cargo.class, Long.parseLong(miembro.getCargo().getId())).get(0);
+        miembro.getCargo().setFirma(cargo.isFirma());
         miembro.getCargo().setNombre(cargo.getNombre());
         miembro.getCargo().setNombreAlternativo(cargo.getNombreAlternativo());
 
-        List<OrganoReunion> organoReuniones = organoReunionDAO.getOrganosReunionNoCompletadasByOrganoId(Long.parseLong(miembro.getOrgano().getId()));
-        for (OrganoReunion organoReunion : organoReuniones) {
+        List<OrganoReunion> organoReuniones =
+                organoReunionDAO.getOrganosReunionNoCompletadasByOrganoId(Long.parseLong(miembro.getOrgano().getId()));
+        for (OrganoReunion organoReunion : organoReuniones)
+        {
             OrganoReunionMiembro organoReunionMiembro = miembro.toOrganoReunionMiembro(organoReunion);
             organoReunionMiembroDAO.insert(organoReunionMiembro);
         }
@@ -72,8 +76,8 @@ public class MiembroService
         return miembro;
     }
 
-    public Miembro updateMiembro(Long miembroId, String nombre, String email, String cargoId,
-            Long connectedUserId) throws OrganoNoDisponibleException, MiembroNoDisponibleException
+    public Miembro updateMiembro(Long miembroId, String nombre, String email, String cargoId, Long connectedUserId)
+            throws OrganoNoDisponibleException, MiembroNoDisponibleException
     {
         Miembro miembro = miembroDAO.getMiembroByIdAndUserId(miembroId, connectedUserId);
         miembro.setNombre(nombre);

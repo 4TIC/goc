@@ -42,6 +42,9 @@ public class OrganoReunionMiembro implements Serializable
     @Column(name = "CARGO_ID")
     private String cargoId;
 
+    @Column(name = "CARGO_FIRMA")
+    private Boolean cargoFirma;
+
     @Column(name = "CARGO_NOMBRE")
     private String cargoNombre;
 
@@ -236,5 +239,15 @@ public class OrganoReunionMiembro implements Serializable
     public void setCargoNombreAlternativo(String cargoNombreAlternativo)
     {
         this.cargoNombreAlternativo = cargoNombreAlternativo;
+    }
+
+    public Boolean isCargoFirma()
+    {
+        return cargoFirma;
+    }
+
+    public void setCargoFirma(Boolean cargoFirma)
+    {
+        this.cargoFirma = cargoFirma;
     }
 }

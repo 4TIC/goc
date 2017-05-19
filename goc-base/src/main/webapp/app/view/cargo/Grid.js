@@ -1,50 +1,66 @@
-
 var cargoGridColumns = [
     {
-        text: 'ID',
-        dataIndex: 'id',
-        hidden: true
+        text : 'ID',
+        dataIndex : 'id',
+        hidden : true
     },
     {
-        text: getMultiLangLabel(appI18N.cargos.nombre, mainLanguage),
-        dataIndex: 'nombre',
-        flex: 1,
-        editor: {
-            field: {
-                allowBlank: false
+        text : getMultiLangLabel(appI18N.cargos.nombre, mainLanguage),
+        dataIndex : 'nombre',
+        flex : 4,
+        editor : {
+            field : {
+                allowBlank : false
             }
         }
     }
 ];
 
-if (isMultilanguageApplication()) {
+if (isMultilanguageApplication())
+{
     cargoGridColumns.push({
-        text: getMultiLangLabel(appI18N.cargos.nombre, alternativeLanguage),
-        dataIndex: 'nombreAlternativo',
-        flex: 1,
-        editor: {
-            field: {
-                allowBlank: false
+        text : getMultiLangLabel(appI18N.cargos.nombre, alternativeLanguage),
+        dataIndex : 'nombreAlternativo',
+        flex : 4,
+        editor : {
+            field : {
+                allowBlank : false
             }
         }
     });
 }
 
-Ext.define('goc.view.cargo.Grid',{
-    extend: 'Ext.ux.uji.grid.Panel',
+cargoGridColumns.push({
+    text : getMultiLangLabel(appI18N.cargos.firma),
+    dataIndex : 'firma',
+    flex : 1,
+    inputValue : true,
+    align: 'center',
+    editor : {
+        xtype : 'checkboxfield'
+    },
+    renderer : function(v)
+    {
+        if (v) return 'Sí';
+        return 'No';
+    }
+});
 
-    alias: 'widget.cargoGrid',
+Ext.define('goc.view.cargo.Grid', {
+    extend : 'Ext.ux.uji.grid.Panel',
 
-    requires: [
+    alias : 'widget.cargoGrid',
+
+    requires : [
         'goc.store.Cargos'
     ],
 
-    store: {
-        type: 'cargos'
+    store : {
+        type : 'cargos'
     },
 
-    title: appI18N.cargos.titulo,
-    scrollable: true,
+    title : appI18N.cargos.titulo,
+    scrollable : true,
 
-    columns: cargoGridColumns
+    columns : cargoGridColumns
 });

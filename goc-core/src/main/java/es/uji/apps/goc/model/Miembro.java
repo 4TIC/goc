@@ -89,7 +89,8 @@ public class Miembro
         this.personaId = personaId;
     }
 
-    public OrganoReunionMiembro toOrganoReunionMiembro(OrganoReunion organoReunion) {
+    public OrganoReunionMiembro toOrganoReunionMiembro(OrganoReunion organoReunion)
+    {
         OrganoReunionMiembro organoReunionMiembro = new OrganoReunionMiembro();
         organoReunionMiembro.setOrganoReunion(organoReunion);
 
@@ -111,6 +112,7 @@ public class Miembro
         organoReunionMiembro.setCargoId(this.getCargo().getId());
         organoReunionMiembro.setCargoNombre(this.getCargo().getNombre());
         organoReunionMiembro.setCargoNombreAlternativo(this.getCargo().getNombreAlternativo());
+        organoReunionMiembro.setCargoFirma(this.getCargo().isFirma());
 
         return organoReunionMiembro;
     }

@@ -42,37 +42,6 @@ public class OrganoReunionMiembroDAO extends BaseDAODatabaseImpl
         return resultado.get(0);
     }
 
-    public List<OrganoReunionMiembro> getNuevosOrganoReunionMiembroByOrganoId(String organoId)
-    {
-        return null;
-    }
-
-    @Transactional
-    public void updateAsistenciaMiembroByMiembrosIdsAndReunionIdAndOrganoId(List<String> asistentesIds,
-            Boolean asistencia, Long reunionId, String organoId, Boolean externo)
-    {
-        JPAUpdateClause update = new JPAUpdateClause(entityManager, qOrganoReunionMiembro);
-        update.set(qOrganoReunionMiembro.asistencia, asistencia)
-                .where(qOrganoReunionMiembro.miembroId.in(asistentesIds)
-                        .and(qOrganoReunionMiembro.reunionId.eq(reunionId)
-                                .and(qOrganoReunionMiembro.organoId.eq(organoId)
-                                        .and(qOrganoReunionMiembro.organoExterno.eq(externo)))));
-        update.execute();
-
-    }
-
-    public List<OrganoReunionMiembro> getOrganoReunionMiembroByOrganoAndReunionId(String organoId, Boolean externo,
-            Long reunionId)
-    {
-        JPAQuery query = new JPAQuery(entityManager);
-
-        return query.from(qOrganoReunionMiembro)
-                .where(qOrganoReunionMiembro.organoExterno.eq(externo)
-                        .and(qOrganoReunionMiembro.organoId.eq(organoId)
-                                .and(qOrganoReunionMiembro.reunionId.eq(reunionId))))
-                .list(qOrganoReunionMiembro);
-    }
-
     public List<OrganoReunionMiembro> getAsistenteReunionByOrganoAndReunionId(String organoId, Boolean externo,
             Long reunionId)
     {
