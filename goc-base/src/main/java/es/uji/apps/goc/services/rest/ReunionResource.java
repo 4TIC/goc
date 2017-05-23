@@ -1,47 +1,8 @@
 package es.uji.apps.goc.services.rest;
 
-import com.mysema.query.Tuple;
 import com.sun.jersey.api.core.InjectParam;
-
 import es.uji.apps.goc.dto.*;
-import org.springframework.beans.factory.annotation.Value;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
-import es.uji.apps.goc.exceptions.AsistenteNoEncontradoException;
-import es.uji.apps.goc.exceptions.FirmaReunionException;
-import es.uji.apps.goc.exceptions.MiembrosExternosException;
-import es.uji.apps.goc.exceptions.NotificacionesException;
-import es.uji.apps.goc.exceptions.OrganoConvocadoNoPermitidoException;
-import es.uji.apps.goc.exceptions.OrganosExternosException;
-import es.uji.apps.goc.exceptions.PersonasExternasException;
-import es.uji.apps.goc.exceptions.ReunionNoAdmiteSuplenciaException;
-import es.uji.apps.goc.exceptions.ReunionNoCompletadaException;
-import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
-import es.uji.apps.goc.exceptions.ReunionYaCompletadaException;
-import es.uji.apps.goc.exceptions.UrlGrabacionException;
+import es.uji.apps.goc.exceptions.*;
 import es.uji.apps.goc.model.Organo;
 import es.uji.apps.goc.services.OrganoReunionMiembroService;
 import es.uji.apps.goc.services.OrganoService;
@@ -54,9 +15,23 @@ import es.uji.commons.rest.ParamUtils;
 import es.uji.commons.rest.ResponseMessage;
 import es.uji.commons.rest.UIEntity;
 import es.uji.commons.sso.AccessManager;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import static es.uji.apps.goc.dto.QReunionDocumento.reunionDocumento;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service
 @Path("reuniones")
@@ -88,29 +63,7 @@ public class ReunionResource extends CoreBaseService
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
-        List<Reunion> listaReuniones;
-
-        Boolean completada = false;
-
-        if (tipoOrganoId != null)
-        {
-            listaReuniones =
-                    reunionService.getReunionesByTipoOrganoIdAndUserId(tipoOrganoId, completada, connectedUserId);
-        }
-        else if (organoId != null)
-        {
-            listaReuniones =
-                    reunionService.getReunionesByOrganoIdAndUserId(organoId, externo, completada, connectedUserId);
-        }
-        else
-        {
-            listaReuniones = reunionService.getReunionesByUserId(completada, connectedUserId);
-        }
-
-        List<Tuple> listaNumeroDocumentosPorReunionId =
-                reunionDocumentoService.getNumeroDocumentosPorReunion(connectedUserId);
-
-        return reunionesConNumeroDocumentosToUI(listaReuniones, listaNumeroDocumentosPorReunionId);
+        return UIEntity.toUI(reunionService.getReunionesByEditorId(false, organoId, tipoOrganoId, externo, connectedUserId));
     }
 
     @GET
@@ -121,62 +74,8 @@ public class ReunionResource extends CoreBaseService
             throws OrganosExternosException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
-        List<Reunion> listaReuniones;
 
-        Boolean completada = true;
-
-        if (tipoOrganoId != null)
-        {
-            listaReuniones =
-                    reunionService.getReunionesByTipoOrganoIdAndUserId(tipoOrganoId, completada, connectedUserId);
-        }
-        else if (organoId != null)
-        {
-            listaReuniones =
-                    reunionService.getReunionesByOrganoIdAndUserId(organoId, externo, completada, connectedUserId);
-        }
-        else
-        {
-            listaReuniones = reunionService.getReunionesByUserId(true, connectedUserId);
-        }
-
-        List<Tuple> listaNumeroDocumentosPorReunionId =
-                reunionDocumentoService.getNumeroDocumentosPorReunion(connectedUserId);
-
-        return reunionesConNumeroDocumentosToUI(listaReuniones, listaNumeroDocumentosPorReunionId);
-    }
-
-    private List<UIEntity> reunionesConNumeroDocumentosToUI(List<Reunion> listaReuniones,
-            List<Tuple> listaNumeroDocumentosPorReunionId)
-    {
-        List<UIEntity> reunionesUI = new ArrayList<>();
-
-        for (Reunion reunion : listaReuniones)
-        {
-            UIEntity reunionUI = UIEntity.toUI(reunion);
-            reunionUI.put("numeroDocumentos",
-                    getNumeroDocumentosByReunionId(reunion.getId(), listaNumeroDocumentosPorReunionId));
-            reunionesUI.add(reunionUI);
-        }
-
-        return reunionesUI;
-    }
-
-    private Long getNumeroDocumentosByReunionId(Long reunionId, List<Tuple> listaNumeroDocumentosPorReunionId)
-    {
-        Long num = 0L;
-
-        for (Tuple tupla : listaNumeroDocumentosPorReunionId)
-        {
-            Long id = tupla.get(reunionDocumento.reunion.id);
-
-            if (id.equals(reunionId))
-            {
-                return tupla.get(reunionDocumento.reunion.id.count());
-            }
-        }
-
-        return num;
+        return UIEntity.toUI(reunionService.getReunionesByEditorId(true, organoId, tipoOrganoId, externo, connectedUserId));
     }
 
     @Path("{reunionId}/puntosOrdenDia")

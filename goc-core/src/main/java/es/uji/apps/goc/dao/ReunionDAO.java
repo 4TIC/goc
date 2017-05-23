@@ -1,5 +1,6 @@
 package es.uji.apps.goc.dao;
 
+import com.mysema.query.jpa.impl.JPADeleteClause;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.jpa.impl.JPAUpdateClause;
 import com.mysema.query.types.expr.BooleanExpression;
@@ -18,21 +19,45 @@ public class ReunionDAO extends BaseDAODatabaseImpl
 {
     private QReunion qReunion = QReunion.reunion;
     private QReunionBusqueda qReunionBusqueda = QReunionBusqueda.reunionBusqueda;
+    private QReunionEditor qReunionEditor = QReunionEditor.reunionEditor;
     private QOrganoReunion qOrganoReunion = QOrganoReunion.organoReunion;
     private QPuntoOrdenDia qPuntoOrdenDia = QPuntoOrdenDia.puntoOrdenDia;
     private QOrganoReunionMiembro qOrganoReunionMiembro = QOrganoReunionMiembro.organoReunionMiembro;
-    private QOrganoLocal qOrganoLocal = QOrganoLocal.organoLocal;
     private QPuntoOrdenDiaDescriptor qPuntoOrdenDiaDescriptor = QPuntoOrdenDiaDescriptor.puntoOrdenDiaDescriptor;
+    private QPuntoOrdenDiaAcuerdo qPuntoOrdenDiaAcuerdo = QPuntoOrdenDiaAcuerdo.puntoOrdenDiaAcuerdo;
+    private QPuntoOrdenDiaDocumento qPuntoOrdenDiaDocumento = QPuntoOrdenDiaDocumento.puntoOrdenDiaDocumento;
     private QDescriptor qDescriptor = QDescriptor.descriptor1;
     private QClave qClave = QClave.clave1;
+    private QReunionComentario qReunionComentario = QReunionComentario.reunionComentario;
+    private QReunionDocumento qReunionDocumento = QReunionDocumento.reunionDocumento;
 
-    public List<Reunion> getReunionesByUserId(Long connectedUserId)
+    public List<ReunionEditor> getReunionesByEditorId(Long connectedUserId, String organodId, Long tipoOrganoId,
+            Boolean externo, Boolean completada)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        query.from(qReunionEditor).where((qReunionEditor.editorId.eq(connectedUserId)).
+                and(qReunionEditor.completada.eq(completada)));
+
+        if (organodId != null)
+        {
+            query.where(qReunionEditor.organoId.eq(organodId).and(qReunionEditor.externo.eq(externo)));
+        }
+
+        if (tipoOrganoId != null)
+        {
+            query.where(qReunionEditor.tipoOrganoId.eq(tipoOrganoId));
+        }
+
+        return query.orderBy(qReunionEditor.fecha.desc()).list(qReunionEditor);
+    }
+
+    public List<Reunion> getReunionesTodasByListaIds(List<Long> reunionesIds)
     {
         JPAQuery query = new JPAQuery(entityManager);
 
         return query.from(qReunion)
-                .where(qReunion.creadorId.eq(connectedUserId)
-                        .and(qReunion.completada.eq(false).or(qReunion.completada.isNull())))
+                .where(qReunion.id.in(reunionesIds))
                 .orderBy(qReunion.fechaCreacion.desc())
                 .list(qReunion);
     }
@@ -67,78 +92,6 @@ public class ReunionDAO extends BaseDAODatabaseImpl
                 .set(qReunion.acuerdosAlternativos, acuerdosAlternativos)
                 .where(qReunion.id.eq(reunionId));
         update.execute();
-    }
-
-    public List<Reunion> getReunionesByOrganoLocalIdAndUserId(Long organoId, Long connectedUserId)
-    {
-        JPAQuery query = new JPAQuery(entityManager);
-
-        return query.from(qReunion)
-                .join(qReunion.reunionOrganos, qOrganoReunion)
-                .where(qReunion.creadorId.eq(connectedUserId)
-                        .and(qReunion.completada.isNull().or(qReunion.completada.eq(false)))
-                        .and(qOrganoReunion.organoId.eq(organoId.toString()).and(qOrganoReunion.externo.eq(false))))
-                .orderBy(qReunion.fechaCreacion.desc())
-                .list(qReunion);
-    }
-
-    public List<Reunion> getReunionesCompletadasByOrganoLocalIdAndUserId(Long organoId, Long connectedUserId)
-    {
-        JPAQuery query = new JPAQuery(entityManager);
-
-        return query.from(qReunion)
-                .join(qReunion.reunionOrganos, qOrganoReunion)
-                .where(qReunion.creadorId.eq(connectedUserId)
-                        .and(qReunion.completada.eq(true))
-                        .and(qOrganoReunion.organoId.eq(organoId.toString()).and(qOrganoReunion.externo.eq(false))))
-                .orderBy(qReunion.fechaCreacion.desc())
-                .list(qReunion);
-    }
-
-    public List<Reunion> getReunionesByOrganoExternoIdAndUserId(String organoId, Long connectedUserId)
-    {
-        JPAQuery query = new JPAQuery(entityManager);
-
-        return query.from(qReunion)
-                .join(qReunion.reunionOrganos, qOrganoReunion)
-                .where(qReunion.creadorId.eq(connectedUserId)
-                        .and(qReunion.completada.isNull().or(qReunion.completada.eq(false)))
-                        .and(qOrganoReunion.organoId.eq(organoId).and(qOrganoReunion.externo.eq(true))))
-                .orderBy(qReunion.fechaCreacion.desc())
-                .list(qReunion);
-    }
-
-    public List<Reunion> getReunionesCompletadasByOrganoExternoIdAndUserId(String organoId, Long connectedUserId)
-    {
-        JPAQuery query = new JPAQuery(entityManager);
-
-        return query.from(qReunion)
-                .join(qReunion.reunionOrganos, qOrganoReunion)
-                .where(qReunion.creadorId.eq(connectedUserId)
-                        .and(qReunion.completada.eq(true))
-                        .and(qOrganoReunion.organoId.eq(organoId).and(qOrganoReunion.externo.eq(true))))
-                .orderBy(qReunion.fechaCreacion.desc())
-                .list(qReunion);
-    }
-
-    public List<Reunion> getReunionesProximas(Date fechaProxima)
-    {
-        JPAQuery query = new JPAQuery(entityManager);
-
-        return query.from(qReunion).leftJoin(qReunion.reunionOrganos, qOrganoReunion).fetch()
-                // .where(qReunion.completada.eq(false))
-                // .and(qReunion.fecha.after(new Date()).and(qReunion.fecha.before(fechaProxima))))
-                .list(qReunion);
-    }
-
-    public List<Reunion> getReunionesTodasByListaIds(List<Long> reunionesIds)
-    {
-        JPAQuery query = new JPAQuery(entityManager);
-
-        return query.from(qReunion)
-                .where(qReunion.id.in(reunionesIds))
-                .orderBy(qReunion.fechaCreacion.desc())
-                .list(qReunion);
     }
 
     public Reunion getReunionById(Long reunionId)
@@ -187,15 +140,6 @@ public class ReunionDAO extends BaseDAODatabaseImpl
                 .list(qReunion);
     }
 
-    public List<Reunion> getReunionesCompletadasByUserId(Long connectedUserId)
-    {
-        JPAQuery query = new JPAQuery(entityManager);
-
-        return query.from(qReunion)
-                .where(qReunion.creadorId.eq(connectedUserId).and(qReunion.completada.eq(true)))
-                .orderBy(qReunion.fechaCreacion.desc())
-                .list(qReunion);
-    }
 
     public List<Reunion> getReunionesByCreadorId(Long connectedUserId)
     {
@@ -344,5 +288,24 @@ public class ReunionDAO extends BaseDAODatabaseImpl
         c.add(Calendar.DATE, 1);
 
         return c.getTime();
+    }
+
+    @Transactional
+    public void deleteByReunionId(Long reunionId)
+    {
+        JPADeleteClause deleteClause = new JPADeleteClause(entityManager, qOrganoReunionMiembro);
+        deleteClause.where(qOrganoReunionMiembro.reunionId.eq(reunionId)).execute();
+
+        deleteClause = new JPADeleteClause(entityManager, qOrganoReunion);
+        deleteClause.where(qOrganoReunion.reunion.id.eq(reunionId)).execute();
+
+        deleteClause = new JPADeleteClause(entityManager, qReunionDocumento);
+        deleteClause.where(qReunionDocumento.reunion.id.eq(reunionId)).execute();
+
+        deleteClause = new JPADeleteClause(entityManager, qReunionComentario);
+        deleteClause.where(qReunionComentario.reunion.id.eq(reunionId)).execute();
+
+        deleteClause = new JPADeleteClause(entityManager, qReunion);
+        deleteClause.where(qReunion.id.eq(reunionId)).execute();
     }
 }

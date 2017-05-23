@@ -30,10 +30,8 @@ public class PuntoOrdenDiaService
     }
 
     public PuntoOrdenDia updatePuntoOrdenDia(Long puntoOrdenDiaId, String titulo, String tituloAlternativo,
-                                             String descripcion, String descripcionAlternativa, String deliberaciones,
-                                             String deliberacionesAlternativas, String acuerdos,
-                                             String acuerdosAlternativos, Long orden, Boolean publico,
-                                             Long connectedUserId)
+            String descripcion, String descripcionAlternativa, String deliberaciones, String deliberacionesAlternativas,
+            String acuerdos, String acuerdosAlternativos, Long orden, Boolean publico, Long connectedUserId)
             throws PuntoOrdenDiaNoDisponibleException
     {
         PuntoOrdenDia puntoOrdenDia = puntoOrdenDiaDAO.getPuntoOrdenDiaById(puntoOrdenDiaId);
@@ -76,7 +74,8 @@ public class PuntoOrdenDiaService
     public void subePuntoOrdenDia(Long reunionId, Long puntoOrdenDiaId, Long connectedUserId)
     {
         PuntoOrdenDia puntoOrdenDia = puntoOrdenDiaDAO.getPuntoOrdenDiaById(puntoOrdenDiaId);
-        PuntoOrdenDia anteriorPuntoOrdenDia = puntoOrdenDiaDAO.getAnteriorPuntoOrdenDiaByOrden(puntoOrdenDia.getOrden());
+        PuntoOrdenDia anteriorPuntoOrdenDia =
+                puntoOrdenDiaDAO.getAnteriorPuntoOrdenDiaByOrden(puntoOrdenDia.getOrden());
 
         if (anteriorPuntoOrdenDia != null)
         {
@@ -89,8 +88,8 @@ public class PuntoOrdenDiaService
             return;
         }
 
-        List<PuntoOrdenDia> listaPuntosOrdenDia = puntoOrdenDiaDAO
-                .getPuntosOrdenDiaMismoOrden(puntoOrdenDia.getOrden());
+        List<PuntoOrdenDia> listaPuntosOrdenDia =
+                puntoOrdenDiaDAO.getPuntosOrdenDiaMismoOrden(puntoOrdenDia.getOrden());
 
         if (listaPuntosOrdenDia.size() > 1)
         {
@@ -102,8 +101,8 @@ public class PuntoOrdenDiaService
     public void bajaPuntoOrdenDia(Long reunionId, Long puntoOrdenDiaId, Long connectedUserId)
     {
         PuntoOrdenDia puntoOrdenDia = puntoOrdenDiaDAO.getPuntoOrdenDiaById(puntoOrdenDiaId);
-        PuntoOrdenDia siguientePuntoOrdenDia = puntoOrdenDiaDAO
-                .getSiguientePuntoOrdenDiaByOrden(reunionId, puntoOrdenDia.getOrden());
+        PuntoOrdenDia siguientePuntoOrdenDia =
+                puntoOrdenDiaDAO.getSiguientePuntoOrdenDiaByOrden(reunionId, puntoOrdenDia.getOrden());
 
         if (siguientePuntoOrdenDia != null)
         {
@@ -114,13 +113,21 @@ public class PuntoOrdenDiaService
             puntoOrdenDiaDAO.flush();
         }
 
-        List<PuntoOrdenDia> listaPuntosOrdenDia = puntoOrdenDiaDAO
-                .getPuntosOrdenDiaMismoOrden(puntoOrdenDia.getOrden());
+        List<PuntoOrdenDia> listaPuntosOrdenDia =
+                puntoOrdenDiaDAO.getPuntosOrdenDiaMismoOrden(puntoOrdenDia.getOrden());
 
         if (listaPuntosOrdenDia.size() > 1)
         {
             puntoOrdenDiaDAO.actualizaOrden(puntoOrdenDiaId, puntoOrdenDia.getOrden() + 10L);
         }
 
+    }
+
+    public void deleteByReunionId(Long reunionId)
+    {
+        for (PuntoOrdenDia puntoOrdenDia : puntoOrdenDiaDAO.getPuntosByReunionId(reunionId))
+        {
+            puntoOrdenDiaDAO.deleteByPuntoId(puntoOrdenDia.getId());
+        }
     }
 }

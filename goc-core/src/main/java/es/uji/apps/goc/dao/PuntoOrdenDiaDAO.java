@@ -2,20 +2,23 @@ package es.uji.apps.goc.dao;
 
 import java.util.List;
 
+import com.mysema.query.jpa.impl.JPADeleteClause;
+import es.uji.apps.goc.dto.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.jpa.impl.JPAUpdateClause;
 
-import es.uji.apps.goc.dto.PuntoOrdenDia;
-import es.uji.apps.goc.dto.QPuntoOrdenDia;
 import es.uji.commons.db.BaseDAODatabaseImpl;
 
 @Repository
 public class PuntoOrdenDiaDAO extends BaseDAODatabaseImpl
 {
     private QPuntoOrdenDia qPuntoOrdenDia = QPuntoOrdenDia.puntoOrdenDia;
+    private QPuntoOrdenDiaDocumento qPuntoOrdenDiaDocumento = QPuntoOrdenDiaDocumento.puntoOrdenDiaDocumento;
+    private QPuntoOrdenDiaDescriptor qPuntoOrdenDiaDescriptor = QPuntoOrdenDiaDescriptor.puntoOrdenDiaDescriptor;
+    private QPuntoOrdenDiaAcuerdo qPuntoOrdenDiaAcuerdo = QPuntoOrdenDiaAcuerdo.puntoOrdenDiaAcuerdo;
 
     public List<PuntoOrdenDia> getPuntosByReunionId(Long reunionId)
     {
@@ -102,5 +105,20 @@ public class PuntoOrdenDiaDAO extends BaseDAODatabaseImpl
         }
 
         return puntosOrdenDia.get(0);
+    }
+
+    public void deleteByPuntoId(Long id)
+    {
+        JPADeleteClause deleteClause = new JPADeleteClause(entityManager, qPuntoOrdenDiaDocumento);
+        deleteClause.where(qPuntoOrdenDiaDocumento.puntoOrdenDia.id.eq(id)).execute();
+
+        deleteClause = new JPADeleteClause(entityManager, qPuntoOrdenDiaAcuerdo);
+        deleteClause.where(qPuntoOrdenDiaAcuerdo.puntoOrdenDia.id.eq(id)).execute();
+
+        deleteClause = new JPADeleteClause(entityManager, qPuntoOrdenDiaDescriptor);
+        deleteClause.where(qPuntoOrdenDiaDescriptor.puntoOrdenDia.id.eq(id)).execute();
+
+        deleteClause = new JPADeleteClause(entityManager, qPuntoOrdenDia);
+        deleteClause.where(qPuntoOrdenDia.id.eq(id)).execute();
     }
 }
