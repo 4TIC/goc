@@ -24,8 +24,6 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     private QPuntoOrdenDia qPuntoOrdenDia = QPuntoOrdenDia.puntoOrdenDia;
     private QOrganoReunionMiembro qOrganoReunionMiembro = QOrganoReunionMiembro.organoReunionMiembro;
     private QPuntoOrdenDiaDescriptor qPuntoOrdenDiaDescriptor = QPuntoOrdenDiaDescriptor.puntoOrdenDiaDescriptor;
-    private QPuntoOrdenDiaAcuerdo qPuntoOrdenDiaAcuerdo = QPuntoOrdenDiaAcuerdo.puntoOrdenDiaAcuerdo;
-    private QPuntoOrdenDiaDocumento qPuntoOrdenDiaDocumento = QPuntoOrdenDiaDocumento.puntoOrdenDiaDocumento;
     private QDescriptor qDescriptor = QDescriptor.descriptor1;
     private QClave qClave = QClave.clave1;
     private QReunionComentario qReunionComentario = QReunionComentario.reunionComentario;
