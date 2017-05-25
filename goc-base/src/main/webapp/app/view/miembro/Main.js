@@ -29,7 +29,7 @@ Ext.define('goc.view.miembro.Main', {
             fieldLabel: appI18N.miembros.organo,
             triggerAction: 'all',
             queryMode: 'local',
-            displayField: 'nombre',
+            displayField: (appLang === alternativeLanguage ? 'nombreAlternativo' : 'nombre'),
             valueField: 'id',
             editable: false,
             listeners: {
