@@ -187,7 +187,7 @@ public class MiembroDAO extends BaseDAODatabaseImpl
     private Miembro creaMiembroDesdeMiembroExterno(MiembroExterno miembroExterno)
     {
         Cargo cargo = new Cargo(miembroExterno.getCargo().getId().toString());
-        cargo.setFirma(miembroExterno.getCargo().isFirma());
+        cargo.setFirma(false);
         cargo.setNombre(miembroExterno.getCargo().getNombre());
         cargo.setNombreAlternativo(miembroExterno.getCargo().getNombreAlternativo());
 

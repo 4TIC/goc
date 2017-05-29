@@ -32,7 +32,6 @@ public class MiembroExternoDeserializer extends JsonDeserializer<MiembroExterno>
             organoNombreAlternativo = node.get("organo_nombre_alternativo").asText();
 
         Long cargoId = node.get("cargo_id").asLong();
-        Boolean cargoFirma = node.get("cargo_firma").asBoolean();
         String cargoNombre = node.get("cargo_nombre").asText();
         String cargoNombreAlternativo = null;
 
@@ -41,7 +40,6 @@ public class MiembroExternoDeserializer extends JsonDeserializer<MiembroExterno>
 
         CargoExterno cargo = new CargoExterno();
         cargo.setId(cargoId);
-        cargo.setFirma(cargoFirma);
         cargo.setNombre(cargoNombre);
         cargo.setNombreAlternativo(cargoNombreAlternativo);
 

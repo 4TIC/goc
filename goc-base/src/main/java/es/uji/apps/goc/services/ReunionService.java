@@ -858,30 +858,6 @@ public class ReunionService
         return descriptorTemplate;
     }
 
-    private Map<String, List<Miembro>> getMapOrganosMiembros(List<Organo> organos, Long connectedUserId)
-            throws MiembrosExternosException
-    {
-        Map<String, List<Miembro>> mapOrganosMiembros = new HashMap<>();
-
-        for (Organo organo : organos)
-        {
-            List<Miembro> miembros;
-
-            if (organo.isExterno())
-            {
-                miembros = miembroDAO.getMiembrosExternos(organo.getId(), connectedUserId);
-            }
-            else
-            {
-                miembros = miembroDAO.getMiembrosByOrganoId(Long.parseLong(organo.getId()));
-            }
-
-            mapOrganosMiembros.put(organo.getId().toString(), miembros);
-        }
-
-        return mapOrganosMiembros;
-    }
-
     public Reunion getReunionConOrganosById(Long reunionId, Long connectedUserId)
     {
         return reunionDAO.getReunionConOrganosById(reunionId);
