@@ -169,7 +169,8 @@
     "preguntaBorrarAcuerdo": "¿Estás seguro/a de querer borrar el acuerdo?",
     "acciones": "Acciones",
     "hojaFirmas": "Hoja de firmas",
-    "seleccionarParaHojaFirmas": "Debe seleccionar una reunión para sacar la hoja de firmas"
+    "seleccionarParaHojaFirmas": "Debe seleccionar una reunión para sacar la hoja de firmas",
+    "urlInvalida": "La url no és vàlida"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Histórico de reuniones",

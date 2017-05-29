@@ -63,7 +63,8 @@ public class ReunionResource extends CoreBaseService
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
-        return UIEntity.toUI(reunionService.getReunionesByEditorId(false, organoId, tipoOrganoId, externo, connectedUserId));
+        return UIEntity.toUI(
+                reunionService.getReunionesByEditorId(false, organoId, tipoOrganoId, externo, connectedUserId));
     }
 
     @GET
@@ -75,7 +76,8 @@ public class ReunionResource extends CoreBaseService
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
-        return UIEntity.toUI(reunionService.getReunionesByEditorId(true, organoId, tipoOrganoId, externo, connectedUserId));
+        return UIEntity.toUI(
+                reunionService.getReunionesByEditorId(true, organoId, tipoOrganoId, externo, connectedUserId));
     }
 
     @Path("{reunionId}/puntosOrdenDia")
@@ -150,7 +152,7 @@ public class ReunionResource extends CoreBaseService
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public UIEntity addReunion(UIEntity reunionUI)
-            throws NotificacionesException, MiembrosExternosException, PersonasExternasException
+            throws NotificacionesException, MiembrosExternosException, PersonasExternasException, UrlGrabacionException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
@@ -182,18 +184,6 @@ public class ReunionResource extends CoreBaseService
         String telematicaDescripcionAlternativa = reunionUI.get("telematicaDescripcionAlternativa");
         Boolean admiteSuplencia = new Boolean(reunionUI.get("admiteSuplencia"));
         Boolean admiteComentarios = new Boolean(reunionUI.get("admiteComentarios"));
-
-        if (!urlGrabacion.isEmpty())
-        {
-            try
-            {
-                URL url = new URL(urlGrabacion);
-            }
-            catch (MalformedURLException e)
-            {
-                throw new UrlGrabacionException();
-            }
-        }
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
@@ -231,6 +221,70 @@ public class ReunionResource extends CoreBaseService
                         admiteSuplencia, admiteComentarios, connectedUserId);
 
         return UIEntity.toUI(reunion);
+    }
+
+    private Reunion reunionUIToModel(UIEntity reunionUI)
+            throws UrlGrabacionException
+    {
+        Reunion reunion = new Reunion();
+        String urlGrabacion = reunionUI.get("urlGrabacion");
+
+        if (!urlGrabacion.isEmpty())
+        {
+            try
+            {
+                new URL(urlGrabacion);
+            }
+            catch (MalformedURLException e)
+            {
+                throw new UrlGrabacionException();
+            }
+        }
+
+        if (ParamUtils.parseLong(reunionUI.get("id")) != null)
+        {
+            reunion.setId(new Long(reunionUI.get("id")));
+        }
+
+        reunion.setAsunto((reunionUI.get("asunto")));
+        reunion.setAsuntoAlternativo((reunionUI.get("asuntoAlternativo")));
+        reunion.setDescripcion(reunionUI.get("descripcion"));
+        reunion.setDescripcionAlternativa(reunionUI.get("descripcionAlternativa"));
+        reunion.setUbicacion(reunionUI.get("ubicacion"));
+        reunion.setUbicacionAlternativa(reunionUI.get("ubicacionAlternativa"));
+        reunion.setUrlGrabacion(urlGrabacion);
+        reunion.setTelematica(new Boolean(reunionUI.get("telematica")));
+        reunion.setTelematicaDescripcion(reunionUI.get("telematicaDescripcion"));
+        reunion.setTelematicaDescripcionAlternativa(reunionUI.get("telematicaDescripcionAlternativa"));
+
+        if (!reunionUI.get("numeroSesion").isEmpty())
+        {
+            reunion.setNumeroSesion(Long.parseLong(reunionUI.get("numeroSesion")));
+        }
+
+        reunion.setPublica(new Boolean(reunionUI.get("publica")));
+        reunion.setAdmiteSuplencia(new Boolean(reunionUI.get("admiteSuplencia")));
+        reunion.setAdmiteComentarios(new Boolean(reunionUI.get("admiteComentarios")));
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+        if (reunionUI.get("fecha") != null && !reunionUI.get("fecha").isEmpty())
+        {
+            LocalDateTime dateTime = LocalDateTime.parse(reunionUI.get("fecha"), formatter);
+            reunion.setFecha(Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant()));
+        }
+
+        if (reunionUI.get("fechaSegundaConvocatoria") != null && !reunionUI.get("fechaSegundaConvocatoria").isEmpty())
+        {
+            LocalDateTime dateTimeSegundaConvocatoria =
+                    LocalDateTime.parse(reunionUI.get("fechaSegundaConvocatoria"), formatter);
+            reunion.setFechaSegundaConvocatoria(
+                    Date.from(dateTimeSegundaConvocatoria.atZone(ZoneId.systemDefault()).toInstant()));
+        }
+
+        reunion.setDuracion(Long.parseLong(reunionUI.get("duracion")));
+
+        return reunion;
     }
 
     @PUT
@@ -342,55 +396,6 @@ public class ReunionResource extends CoreBaseService
         return Response.ok().build();
     }
 
-    private Reunion reunionUIToModel(UIEntity reunionUI)
-    {
-        Reunion reunion = new Reunion();
-
-        if (ParamUtils.parseLong(reunionUI.get("id")) != null)
-        {
-            reunion.setId(new Long(reunionUI.get("id")));
-        }
-
-        reunion.setAsunto((reunionUI.get("asunto")));
-        reunion.setAsuntoAlternativo((reunionUI.get("asuntoAlternativo")));
-        reunion.setDescripcion(reunionUI.get("descripcion"));
-        reunion.setDescripcionAlternativa(reunionUI.get("descripcionAlternativa"));
-        reunion.setUbicacion(reunionUI.get("ubicacion"));
-        reunion.setUbicacionAlternativa(reunionUI.get("ubicacionAlternativa"));
-        reunion.setUrlGrabacion(reunionUI.get("urlGrabacion"));
-        reunion.setTelematica(new Boolean(reunionUI.get("telematica")));
-        reunion.setTelematicaDescripcion(reunionUI.get("telematicaDescripcion"));
-        reunion.setTelematicaDescripcionAlternativa(reunionUI.get("telematicaDescripcionAlternativa"));
-
-        if (!reunionUI.get("numeroSesion").isEmpty())
-        {
-            reunion.setNumeroSesion(Long.parseLong(reunionUI.get("numeroSesion")));
-        }
-
-        reunion.setPublica(new Boolean(reunionUI.get("publica")));
-        reunion.setAdmiteSuplencia(new Boolean(reunionUI.get("admiteSuplencia")));
-        reunion.setAdmiteComentarios(new Boolean(reunionUI.get("admiteComentarios")));
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-
-        if (reunionUI.get("fecha") != null && !reunionUI.get("fecha").isEmpty())
-        {
-            LocalDateTime dateTime = LocalDateTime.parse(reunionUI.get("fecha"), formatter);
-            reunion.setFecha(Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant()));
-        }
-
-        if (reunionUI.get("fechaSegundaConvocatoria") != null && !reunionUI.get("fechaSegundaConvocatoria").isEmpty())
-        {
-            LocalDateTime dateTimeSegundaConvocatoria =
-                    LocalDateTime.parse(reunionUI.get("fechaSegundaConvocatoria"), formatter);
-            reunion.setFechaSegundaConvocatoria(
-                    Date.from(dateTimeSegundaConvocatoria.atZone(ZoneId.systemDefault()).toInstant()));
-        }
-
-        reunion.setDuracion(Long.parseLong(reunionUI.get("duracion")));
-
-        return reunion;
-    }
 
     @GET
     @Path("{reunionId}/asistencia")

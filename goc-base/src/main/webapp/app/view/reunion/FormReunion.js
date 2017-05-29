@@ -305,6 +305,7 @@ formReunionItems.push({
     fieldLabel : appI18N.reuniones.urlGrabacionShort,
     name : 'urlGrabacion',
     emptyText : appI18N.reuniones.urlGrabacion,
+    vtype: 'url',
     bind :
     {
         value : '{reunion.urlGrabacion}',

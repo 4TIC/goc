@@ -170,7 +170,8 @@
     "preguntaBorrarAcuerdo": "Esteu segur/a de voler esborrar l'acord?",
     "acciones": "Accions",
     "hojaFirmas": "Fulla de firmes",
-    "seleccionarParaHojaFirmas": "Cal sel·leccionar una reunió per a accedir a la fulla de firmes"
+    "seleccionarParaHojaFirmas": "Cal sel·leccionar una reunió per a accedir a la fulla de firmes",
+    "urlInvalida": "La url no és vàlida"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Històric de reunions",
