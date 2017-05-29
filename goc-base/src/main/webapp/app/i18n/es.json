@@ -166,7 +166,10 @@
     "subirAcuerdo": "Subir acuerdo",
     "acuerdosDelPunto": "Acuerdos del punto",
     "seleccionarParaAcuerdosPuntoOrdenDia": "Debe seleccionar un punto del orden del día para acceder a sus acuerdos",
-    "preguntaBorrarAcuerdo": "¿Estás seguro/a de querer borrar el acuerdo?"
+    "preguntaBorrarAcuerdo": "¿Estás seguro/a de querer borrar el acuerdo?",
+    "acciones": "Acciones",
+    "hojaFirmas": "Hoja de firmas",
+    "seleccionarParaHojaFirmas": "Debe seleccionar una reunión para sacar la hoja de firmas"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Histórico de reuniones",

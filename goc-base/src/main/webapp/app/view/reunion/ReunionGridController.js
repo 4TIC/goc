@@ -64,10 +64,8 @@ Ext.define('goc.view.reunion.ReunionGridController', {
 
     onCompleted : function()
     {
-        var view = this.getView().up('panel');
         var grid = this.getView();
         var record = grid.getView().getSelectionModel().getSelection()[0];
-        var viewModel = this.getViewModel();
         var viewport = this.getView().up('viewport');
 
         if (!record)
@@ -116,6 +114,18 @@ Ext.define('goc.view.reunion.ReunionGridController', {
             scope : this
         }
         );
+    },
+
+    onHojaFirmas : function()
+    {
+        var id = this.getView().getSelectedId();
+
+        if (!id)
+        {
+            return Ext.Msg.alert(appI18N.reuniones.hojaFirmas, appI18N.reuniones.seleccionarParaHojaFirmas);
+        }
+
+        window.open('/goc/rest/reuniones/' + id +'/asistentes?lang=' + appLang, '_blank');
     },
 
     organoSelected : function(id, externo)

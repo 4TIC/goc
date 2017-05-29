@@ -119,20 +119,39 @@ Ext.define('goc.view.reunion.ReunionGrid',
             name : 'botonDocumentacion',
             text : appI18N.reuniones.documentacionAdjunta,
             handler : 'onAttachmentEdit'
-        }, ' | ',
-        {
-            xtype : 'button',
-            iconCls : 'fa fa-check',
-            name : 'botonEnviarConvocatoria',
-            text : appI18N.reuniones.enviarConvocatoria,
-            handler : 'onEnviarConvocatoria'
-        }, ' | ',
-        {
-            xtype : 'button',
-            iconCls : 'fa fa-check',
-            name : 'botonCerrar',
-            text : appI18N.reuniones.cerrarActa,
-            handler : 'onCompleted'
+        }, ' | ', {
+            xtype : 'splitbutton',
+            text : appI18N.reuniones.acciones,
+            iconCls : 'fa fa-gears',
+            menu : [
+                {
+                    iconCls : 'fa fa-envelope-o',
+                    name : 'botonEnviarConvocatoria',
+                    text : appI18N.reuniones.enviarConvocatoria,
+                    handler : 'onEnviarConvocatoria',
+                    style : {
+                        fontSize : '1.4em'
+                    }
+                },
+                {
+                    iconCls : 'fa fa-pencil-square-o',
+                    name : 'fullaFirmes',
+                    text : appI18N.reuniones.hojaFirmas,
+                    handler : 'onHojaFirmas',
+                    style : {
+                        fontSize : '1.4em'
+                    }
+                },
+                {
+                    iconCls : 'fa fa-lock',
+                    name : 'botonCerrar',
+                    text : appI18N.reuniones.cerrarActa,
+                    handler : 'onCompleted',
+                    style : {
+                        fontSize : '1.4em'
+                    }
+                }
+            ]
         }, '->',
         {
             xtype : 'comboReunionTipoOrgano',

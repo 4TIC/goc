@@ -167,7 +167,10 @@
     "subirAcuerdo": "Pujar acord",
     "acuerdosDelPunto": "Acords del punt",
     "seleccionarParaAcuerdosPuntoOrdenDia": "Cal sel·leccionar un punt de l'ordre del dia per accedir als seus acords",
-    "preguntaBorrarAcuerdo": "Esteu segur/a de voler esborrar l'acord?"
+    "preguntaBorrarAcuerdo": "Esteu segur/a de voler esborrar l'acord?",
+    "acciones": "Accions",
+    "hojaFirmas": "Fulla de firmes",
+    "seleccionarParaHojaFirmas": "Cal sel·leccionar una reunió per a accedir a la fulla de firmes"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Històric de reunions",
