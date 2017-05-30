@@ -56,7 +56,12 @@
               </fo:table-cell>
 
               <fo:table-cell display-align="center" padding="0.4cm">
-                <fo:block font-size="11pt" th:text="${reunion.asuntoAlternativo}">Assistents</fo:block>
+                <fo:block font-size="11pt" th:each="organo: ${reunion.reunionOrganos}" th:remove="tag">
+                  <fo:block th:text="${organo.organoNombreAlternativo}">òrgan</fo:block>
+                </fo:block>
+                <fo:block>
+                  Assumpte: <fo:inline th:text="${reunion.asuntoAlternativo}">25</fo:inline>
+                </fo:block>
                 <fo:block th:if="${reunion.numeroSesion} != null">
                   Núm. de la sessió: <fo:inline th:text="${reunion.numeroSesion}">25</fo:inline>
                 </fo:block>
