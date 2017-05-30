@@ -81,10 +81,11 @@ ul.lang li a {
 .header {
     height: 120px;
     margin-bottom: 2em;
+    line-height: 100px;
+    vertical-align: middle;
 }
 
 .header img {
-    width: 80px;
     float: left;
     margin-right: 1em;
 }
