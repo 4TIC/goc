@@ -68,6 +68,17 @@ public class ReunionResource extends CoreBaseService
     }
 
     @GET
+    @Path("{reunionId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public UIEntity getReunionById(@PathParam("reunionId") Long reunionId)
+            throws ReunionNoDisponibleException
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+
+        return UIEntity.toUI(reunionService.getReunionByIdAndEditorId(reunionId, connectedUserId));
+    }
+
+    @GET
     @Path("completadas")
     @Produces(MediaType.APPLICATION_JSON)
     public List<UIEntity> getReunionesCompletadas(@QueryParam("organoId") String organoId,

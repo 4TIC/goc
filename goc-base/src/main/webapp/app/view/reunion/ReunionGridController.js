@@ -28,7 +28,18 @@ Ext.define('goc.view.reunion.ReunionGridController', {
             return Ext.Msg.alert(appI18N.common.edicionRegistro, appI18N.common.seleccionarParaEditarRegistro);
         }
 
-        this.createModalReunion(record);
+        var ref = this;
+
+        Ext.Ajax.request({
+            url : '/goc/rest/reuniones/' + record.id,
+            method : 'GET',
+            success : function(data)
+            {
+                record.set(Ext.decode(data.responseText).data);
+
+                ref.createModalReunion(record);
+            }
+        });
     },
 
     onEnviarConvocatoria : function()

@@ -50,6 +50,14 @@ public class ReunionDAO extends BaseDAODatabaseImpl
         return query.orderBy(qReunionEditor.fecha.desc()).list(qReunionEditor);
     }
 
+    public ReunionEditor getReunionByIdAndEditorId(Long reunionId, Long connectedUserId)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        return query.from(qReunionEditor).where((qReunionEditor.editorId.eq(connectedUserId)).
+                and(qReunionEditor.id.eq(reunionId))).uniqueResult(qReunionEditor);
+    }
+
     public List<Reunion> getReunionesTodasByListaIds(List<Long> reunionesIds)
     {
         JPAQuery query = new JPAQuery(entityManager);

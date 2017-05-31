@@ -1030,4 +1030,18 @@ public class ReunionService
         
         return reuniones;
     }
+
+    public Reunion getReunionByIdAndEditorId(Long reunionId, Long connectedUserId)
+            throws ReunionNoDisponibleException
+    {
+        ReunionEditor reunionEditor =
+                reunionDAO.getReunionByIdAndEditorId(reunionId, connectedUserId);
+
+        if (reunionEditor == null)
+        {
+            throw new ReunionNoDisponibleException();
+        }
+
+        return reunionDAO.getReunionById(reunionId);
+    }
 }
