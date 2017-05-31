@@ -25,6 +25,9 @@ public class TipoOrganoLocal implements Serializable
     @OneToMany(mappedBy = "tipoOrgano")
     private Set<OrganoLocal> organos;
 
+    @OneToMany(mappedBy = "tipoOrgano", cascade = CascadeType.ALL)
+    private Set<DescriptorTipoOrgano> descriptoresTiposOrgano;
+
     public Long getId()
     {
         return id;
@@ -83,5 +86,15 @@ public class TipoOrganoLocal implements Serializable
     public void setNombreAlternativo(String nombreAlternativo)
     {
         this.nombreAlternativo = nombreAlternativo;
+    }
+
+    public Set<DescriptorTipoOrgano> getDescriptoresTiposOrgano()
+    {
+        return descriptoresTiposOrgano;
+    }
+
+    public void setDescriptoresTiposOrgano(Set<DescriptorTipoOrgano> descriptoresTiposOrgano)
+    {
+        this.descriptoresTiposOrgano = descriptoresTiposOrgano;
     }
 }

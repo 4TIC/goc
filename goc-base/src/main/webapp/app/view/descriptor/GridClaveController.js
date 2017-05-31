@@ -40,7 +40,7 @@ Ext.define('goc.view.descriptor.GridClaveController', {
 
     onAdd : function()
     {
-        var gridDescriptores = this.getView().up('panel').down('grid[name=descriptoresGrid]');
+        var gridDescriptores = this.getView().up('panel[alias=widget.descriptorMainPanel]').down('grid[name=descriptoresGrid]');
 
         if (!gridDescriptores || !gridDescriptores.getSelectedRow()) return;
 

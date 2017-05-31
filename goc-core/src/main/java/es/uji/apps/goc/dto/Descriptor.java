@@ -1,13 +1,9 @@
 package es.uji.apps.goc.dto;
 
 import java.io.Serializable;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "GOC_DESCRIPTORES")
@@ -28,6 +24,12 @@ public class Descriptor implements Serializable{
     private String descripcionAlternativa;
 
     private Long estado;
+
+    @OneToMany(mappedBy = "descriptor", cascade = CascadeType.ALL)
+    private Set<DescriptorTipoOrgano> descriptoresTiposOrgano;
+
+    @OneToMany(mappedBy = "descriptor", cascade = CascadeType.ALL)
+    private Set<Clave> claves;
 
     public Descriptor() {
     }
@@ -74,5 +76,25 @@ public class Descriptor implements Serializable{
 
     public void setDescripcionAlternativa(String descripcionAlternativa) {
         this.descripcionAlternativa = descripcionAlternativa;
+    }
+
+    public Set<DescriptorTipoOrgano> getDescriptoresTiposOrgano()
+    {
+        return descriptoresTiposOrgano;
+    }
+
+    public void setDescriptoresTiposOrgano(Set<DescriptorTipoOrgano> descriptoresTiposOrgano)
+    {
+        this.descriptoresTiposOrgano = descriptoresTiposOrgano;
+    }
+
+    public Set<Clave> getClaves()
+    {
+        return claves;
+    }
+
+    public void setClaves(Set<Clave> claves)
+    {
+        this.claves = claves;
     }
 }

@@ -25,6 +25,7 @@ Ext.define('goc.view.descriptor.GridController', {
         if (!record.phantom)
         {
             grid.up('panel').down('grid[name=claveGrid]').fireEvent('descriptorSelected', record);
+            grid.up('panel').down('grid[name=descriptorTipoOrganoGrid]').fireEvent('descriptorSelected', record);
         }
 
     },
@@ -34,21 +35,34 @@ Ext.define('goc.view.descriptor.GridController', {
         this.callParent(arguments);
 
         var claveGrid = this.getView().up('panel').down('grid[name=claveGrid]');
+        var tipoOrganoGrid = this.getView().up('panel').down('grid[name=descriptorTipoOrganoGrid]');
 
         if (claveGrid)
         {
             claveGrid.setDisabled(false);
+        }
+
+        if (tipoOrganoGrid)
+        {
+            tipoOrganoGrid.setDisabled(false);
         }
     },
 
     onAdd : function()
     {
         var claveGrid = this.getView().up('panel').down('grid[name=claveGrid]');
+        var tipoOrganoGrid = this.getView().up('panel').down('grid[name=descriptorTipoOrganoGrid]');
 
         if (claveGrid)
         {
             claveGrid.clearStore();
             claveGrid.setDisabled(true);
+        }
+
+        if (tipoOrganoGrid)
+        {
+            tipoOrganoGrid.clearStore();
+            tipoOrganoGrid.setDisabled(true);
         }
 
         this.callParent();

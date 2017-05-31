@@ -1,20 +1,26 @@
 Ext.define('goc.view.descriptor.ViewModel', {
-    extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.descriptorViewModel',
+    extend : 'Ext.app.ViewModel',
+    alias : 'viewmodel.descriptorViewModel',
 
-    requires: [
+    requires : [
         'goc.store.Descriptores',
-        'goc.store.Claves'/*,
-        'goc.store.TipoOrganos',
-        'goc.store.OrganoAutorizados'*/
+        'goc.store.Claves',
+        'goc.store.DescriptoresTiposOrgano',
+        'goc.store.TipoOrganos'
     ],
 
-    stores: {
-        descriptoresStore: {
-            type: 'descriptores'
+    stores : {
+        descriptoresStore : {
+            type : 'descriptores'
         },
-        clavesStore: {
-            type: 'claves'
+        clavesStore : {
+            type : 'claves'
+        },
+        descriptoresTiposOrganoStore : {
+            type : 'descriptoresTiposOrgano'
+        },
+        tipoOrganosStore : {
+            type : 'tipoOrganos'
         }
     }
 });

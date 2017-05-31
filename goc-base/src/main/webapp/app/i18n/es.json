@@ -50,7 +50,9 @@
   "tipoOrganos": {
     "titulo": "Tipos de Órganos",
     "nombre": "Nombre",
-    "codigo": "Código"
+    "codigo": "Código",
+    "restringirATipoOrganos": "Restringir a estos tipos de órgano" ,
+    "seleccionaUnTipoDeOrgano": "Selecciona un tipo de órgano"
   },
   "miembros": {
     "titulo": "Miembros",
@@ -179,7 +181,8 @@
   "cargos": {
     "firma": "Firma",
     "titulo": "Cargos",
-    "nombre": "Nombre"
+    "nombre": "Nombre",
+    "seleccionaUnCargo": "Selecciona un cargo"
   },
   "acta": {
     "comentarios": "Comentarios",

@@ -1,51 +1,46 @@
 Ext.define('goc.view.descriptor.Main', {
-    extend: 'Ext.panel.Panel',
+    extend : 'Ext.panel.Panel',
 
-    alias: 'widget.descriptorMainPanel',
-    controller: 'descriptorMainController',
+    alias : 'widget.descriptorMainPanel',
+    controller : 'descriptorMainController',
 
-    viewModel: {
-        type: 'descriptorViewModel'
+    viewModel : {
+        type : 'descriptorViewModel'
     },
 
-    requires: ['goc.view.descriptor.MainController', 'goc.view.descriptor.ViewModel', 'goc.view.descriptor.Grid', 'goc.view.descriptor.GridClave'],
+    requires : [
+        'goc.view.descriptor.MainController', 'goc.view.descriptor.ViewModel', 'goc.view.descriptor.Grid',
+        'goc.view.descriptor.GridClave', 'goc.view.descriptor.GridTipoOrgano'
+    ],
 
-    title: appI18N.descriptores.titulo,
-    padding: 10,
-    autoHeight: true,
-    layout: {
-        type: 'vbox',
+    title : appI18N.descriptores.titulo,
+    padding : 10,
+    autoHeight : true,
+    layout : {
+        type : 'vbox',
         align : 'stretch',
-        pack  : 'start'
+        pack : 'start'
     },
-    items: [
-       /* {
-            xtype: 'combobox',
-            emptyText: appI18N.miembros.seleccionaOrgano,
-            bind: {
-                store: '{organosStore}'
-            },
-            allowBlank: false,
-            fieldLabel: appI18N.miembros.organo,
-            triggerAction: 'all',
-            queryMode: 'local',
-            displayField: 'nombre',
-            valueField: 'id',
-            editable: false,
-            listeners: {
-                select: 'onOrganoSelected'
-            }
-        },*/
+    items : [
         {
-            xtype: 'descriptorGrid',
-            flex: 1
+            xtype : 'descriptorGrid',
+            flex : 1
         },
         {
-            xtype: 'claveGrid',
-            flex: 1
-        }
+            xtype : 'tabpanel',
+            flex : 1,
+            items : [
+                {
+                    xtype : 'claveGrid'
+                },
+                {
+                    xtype : 'descriptorTipoOrganoGrid'
+                }
+            ]
+        },
+
     ],
-    listeners: {
-        render: 'onLoad'
+    listeners : {
+        render : 'onLoad'
     }
 });

@@ -50,7 +50,7 @@ Ext.define('goc.view.miembro.Grid', {
             editor: {
                 xtype: 'combobox',
                 allowBlank: false,
-                emptyText: 'Sel·lecciona un càrrec',
+                emptyText: appI18N.cargos.seleccionaUnCargo,
                 bind: {
                     store: '{cargosStore}'
                 },

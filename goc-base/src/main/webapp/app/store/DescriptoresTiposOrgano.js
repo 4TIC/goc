@@ -1,11 +1,11 @@
-Ext.define('goc.store.TipoOrganos', {
+Ext.define('goc.store.DescriptoresTiposOrgano', {
     extend: 'Ext.data.Store',
-    alias: 'store.tipoOrganos',
-    model: 'goc.model.TipoOrgano',
+    alias: 'store.descriptoresTiposOrgano',
+    model: 'goc.model.DescriptorTipoOrgano',
 
     proxy: {
         type: 'rest',
-        url: '/goc/rest/tipoOrganos',
+        url: '',
         reader: {
             type: 'json',
             rootProperty: 'data'
@@ -16,5 +16,5 @@ Ext.define('goc.store.TipoOrganos', {
         }
     },
 
-    autoLoad: true
+    autoLoad: false
 });

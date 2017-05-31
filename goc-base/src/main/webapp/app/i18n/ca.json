@@ -51,7 +51,9 @@
   "tipoOrganos": {
     "titulo": "Tipus d'Òrgans",
     "nombre": "Nom",
-    "codigo": "Codi"
+    "codigo": "Codi",
+    "restringirATipoOrganos": "Restringir a aquests tipus d'òrgans",
+    "seleccionaUnTipoDeOrgano": "Sel·lecciona un tipus d'òrgan"
   },
   "miembros": {
     "titulo": "Membres",
@@ -180,7 +182,8 @@
   "cargos": {
     "firma": "Signatura",
     "titulo": "Càrrecs",
-    "nombre": "Nom"
+    "nombre": "Nom",
+    "seleccionaUnCargo": "Sel·lecciona un càrrec"
   },
   "acta": {
     "comentarios": "Comentaris",
