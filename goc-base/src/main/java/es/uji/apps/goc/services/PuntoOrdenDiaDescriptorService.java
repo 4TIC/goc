@@ -19,12 +19,6 @@ public class PuntoOrdenDiaDescriptorService
     @Autowired
     PuntoOrdenDiaDescriptorDAO puntoOrdenDiaDescriptorDAO;
 
-    public PuntoOrdenDiaDescriptor addDescriptorToPuntoOrdenDia(DescriptorOrdenDia descriptorOrdenDia)
-    {
-        PuntoOrdenDiaDescriptor puntoOrdenDiaDescriptor = createPuntoOrdenDiaDescriptorFromUI(descriptorOrdenDia);
-        return puntoOrdenDiaDescriptorDAO.insert(puntoOrdenDiaDescriptor);
-    }
-
     public List<DescriptorOrdenDia> getDescriptoresOrdenDia(Long idPuntoOrdenDia)
     {
         List<PuntoOrdenDiaDescriptor> puntoOrdenDiaDescriptors =
@@ -38,6 +32,12 @@ public class PuntoOrdenDiaDescriptorService
     public void deleteDescriptorOrdenDia(Long idDescriptorOrdenDia)
     {
         puntoOrdenDiaDescriptorDAO.delete(PuntoOrdenDiaDescriptor.class, idDescriptorOrdenDia);
+    }
+
+    public PuntoOrdenDiaDescriptor addDescriptorToPuntoOrdenDia(DescriptorOrdenDia descriptorOrdenDia)
+    {
+        PuntoOrdenDiaDescriptor puntoOrdenDiaDescriptor = createPuntoOrdenDiaDescriptorFromUI(descriptorOrdenDia);
+        return puntoOrdenDiaDescriptorDAO.insert(puntoOrdenDiaDescriptor);
     }
 
     public DescriptorOrdenDia updateDescriptorOrdenDia(DescriptorOrdenDia descriptorOrdenDia)

@@ -49,7 +49,7 @@ public class PuntoOrdenDia implements Serializable
     @OneToMany(mappedBy = "puntoOrdenDia", cascade = CascadeType.REMOVE)
     private Set<PuntoOrdenDiaAcuerdo> puntoOrdenDiaAcuerdos;
 
-    @OneToMany(mappedBy = "puntoOrdenDia", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "puntoOrdenDia", cascade = CascadeType.ALL)
     private Set<PuntoOrdenDiaDescriptor> puntoOrdenDiaDescriptores;
 
     public PuntoOrdenDia() {}

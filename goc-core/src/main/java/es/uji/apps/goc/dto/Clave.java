@@ -1,13 +1,7 @@
 package es.uji.apps.goc.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "GOC_CLAVES")
@@ -27,6 +21,9 @@ public class Clave {
     @ManyToOne
     @JoinColumn(name = "ID_DESCRIPTOR")
     private Descriptor descriptor;
+
+    @OneToMany(mappedBy = "clave", cascade = CascadeType.ALL)
+    private Set<PuntoOrdenDiaDescriptor> puntoOrdenDiaDescriptores;
 
     public Clave() {
     }
@@ -73,5 +70,15 @@ public class Clave {
 
     public void setDescriptor(Descriptor descriptor) {
         this.descriptor = descriptor;
+    }
+
+    public Set<PuntoOrdenDiaDescriptor> getPuntoOrdenDiaDescriptores()
+    {
+        return puntoOrdenDiaDescriptores;
+    }
+
+    public void setPuntoOrdenDiaDescriptores(Set<PuntoOrdenDiaDescriptor> puntoOrdenDiaDescriptores)
+    {
+        this.puntoOrdenDiaDescriptores = puntoOrdenDiaDescriptores;
     }
 }
