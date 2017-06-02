@@ -54,9 +54,9 @@ public class DescriptorService
         return descriptorTipoOrganoDAO.getByDescriptorId(idDescriptor);
     }
 
-    public void addDescriptorTipoOrgano(DescriptorTipoOrgano descriptorTipoOrgano)
+    public DescriptorTipoOrgano addDescriptorTipoOrgano(DescriptorTipoOrgano descriptorTipoOrgano)
     {
-        descriptorTipoOrganoDAO.insert(descriptorTipoOrgano);
+        return descriptorTipoOrganoDAO.insert(descriptorTipoOrgano);
     }
 
     public void deleteDescriptorTipoOrgano(Long idDescriptorTipoOrgano)

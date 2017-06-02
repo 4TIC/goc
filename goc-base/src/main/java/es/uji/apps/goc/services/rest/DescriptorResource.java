@@ -89,9 +89,7 @@ public class DescriptorResource
         descriptorTipoOrgano.setDescriptor(descriptor);
         descriptorTipoOrgano.setTipoOrgano(tipoOrgano);
 
-        descriptorService.addDescriptorTipoOrgano(descriptorTipoOrgano);
-
-        return entity;
+        return UIEntity.toUI(descriptorService.addDescriptorTipoOrgano(descriptorTipoOrgano));
     }
 
     @PUT
