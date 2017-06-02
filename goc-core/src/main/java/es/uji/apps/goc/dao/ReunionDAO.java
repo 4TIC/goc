@@ -314,4 +314,13 @@ public class ReunionDAO extends BaseDAODatabaseImpl
         deleteClause = new JPADeleteClause(entityManager, qReunion);
         deleteClause.where(qReunion.id.eq(reunionId)).execute();
     }
+
+    public List<OrganoReunion> getOrganosReunionByReunionId(Long reunionId)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        return query.from(qOrganoReunion)
+                .where(qOrganoReunion.reunion.id.eq(reunionId))
+                .list(qOrganoReunion);
+    }
 }

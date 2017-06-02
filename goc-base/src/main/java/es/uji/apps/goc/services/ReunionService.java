@@ -18,7 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.ws.rs.core.MediaType;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static es.uji.apps.goc.dto.QReunion.reunion;
@@ -1043,5 +1045,10 @@ public class ReunionService
         }
 
         return reunionDAO.getReunionById(reunionId);
+    }
+
+    public List<OrganoReunion> getOrganosReunionByReunionId(Long reunionId)
+    {
+        return reunionDAO.getOrganosReunionByReunionId(reunionId);
     }
 }

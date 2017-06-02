@@ -4,10 +4,7 @@ import com.sun.jersey.api.core.InjectParam;
 import es.uji.apps.goc.dto.*;
 import es.uji.apps.goc.exceptions.*;
 import es.uji.apps.goc.model.Organo;
-import es.uji.apps.goc.services.OrganoReunionMiembroService;
-import es.uji.apps.goc.services.OrganoService;
-import es.uji.apps.goc.services.ReunionDocumentoService;
-import es.uji.apps.goc.services.ReunionService;
+import es.uji.apps.goc.services.*;
 import es.uji.apps.goc.templates.PDFTemplate;
 import es.uji.apps.goc.templates.Template;
 import es.uji.commons.rest.CoreBaseService;
@@ -39,6 +36,9 @@ public class ReunionResource extends CoreBaseService
 {
     @InjectParam
     private ReunionService reunionService;
+
+    @InjectParam
+    private DescriptorService descriptorService;
 
     @InjectParam
     private ReunionDocumentoService reunionDocumentoService;
@@ -533,5 +533,16 @@ public class ReunionResource extends CoreBaseService
         }
 
         return null;
+    }
+
+    @GET
+    @Path("{reunionId}/descriptores")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UIEntity> listaDescriptores(@PathParam("reunionId") Long reunionId)
+            throws ReunionNoDisponibleException, OrganosExternosException
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+
+        return UIEntity.toUI(descriptorService.getDescriptoresByReunionId(reunionId, connectedUserId));
     }
 }

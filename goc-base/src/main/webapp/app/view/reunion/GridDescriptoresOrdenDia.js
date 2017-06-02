@@ -14,9 +14,6 @@ var descriptorGridColumns = [
             allowBlank: false,
             editable: false,
             listeners: {
-                expand: function() {
-                    this.getStore().reload();
-                },
                 change: 'onChangeDescriptor'
             }
         }

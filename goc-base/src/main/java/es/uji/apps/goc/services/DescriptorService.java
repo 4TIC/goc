@@ -1,15 +1,16 @@
 package es.uji.apps.goc.services;
 
+import es.uji.apps.goc.dao.DescriptorDAO;
 import es.uji.apps.goc.dao.DescriptorTipoOrganoDAO;
+import es.uji.apps.goc.dto.Descriptor;
 import es.uji.apps.goc.dto.DescriptorTipoOrgano;
+import es.uji.apps.goc.dto.OrganoReunion;
+import es.uji.apps.goc.exceptions.OrganosExternosException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import es.uji.apps.goc.dao.DescriptorDAO;
-import es.uji.apps.goc.dto.Descriptor;
-import sun.security.krb5.internal.crypto.Des;
 
 @Service
 public class DescriptorService
@@ -19,6 +20,9 @@ public class DescriptorService
 
     @Autowired
     private DescriptorTipoOrganoDAO descriptorTipoOrganoDAO;
+
+    @Autowired
+    private ReunionService reunionService;
 
     public Descriptor addDescriptor(Descriptor descriptor)
     {
@@ -35,11 +39,13 @@ public class DescriptorService
         descriptorDAO.delete(Descriptor.class, descriptorId);
     }
 
-    public List<Descriptor> getDescriptores() {
+    public List<Descriptor> getDescriptores()
+    {
         return descriptorDAO.getDescriptores();
     }
 
-    public Descriptor getDescriptor(String idDescriptor) {
+    public Descriptor getDescriptor(String idDescriptor)
+    {
         return descriptorDAO.getDescriptor(idDescriptor);
     }
 
@@ -61,5 +67,41 @@ public class DescriptorService
     public DescriptorTipoOrgano updateDescriptorTipoOrgano(DescriptorTipoOrgano descriptorTipoOrgano)
     {
         return descriptorTipoOrganoDAO.update(descriptorTipoOrgano);
+    }
+
+    public List<Descriptor> getDescriptoresByReunionId(Long reunionId, Long connectedUserId)
+            throws OrganosExternosException
+    {
+        List<OrganoReunion> organosReunion = reunionService.getOrganosReunionByReunionId(reunionId);
+        List<Descriptor> descriptores = new ArrayList<>();
+
+        if (organosReunion == null || organosReunion.isEmpty()) return descriptorDAO.getDescriptores();
+
+        for (OrganoReunion organoReunion : organosReunion)
+        {
+            List<Descriptor> descriptoresPorTipoOrgano = descriptorDAO.getDescriptoresByTipoOrganoId(organoReunion.getTipoOrganoId());
+
+            if (descriptoresPorTipoOrgano == null || descriptoresPorTipoOrgano.isEmpty()) return descriptorDAO.getDescriptores();
+
+            descriptores.addAll(descriptoresPorTipoOrgano);
+        }
+
+        return filtrarDuplicadosDescriptores(descriptores);
+    }
+
+    private List<Descriptor> filtrarDuplicadosDescriptores(List<Descriptor> descriptoresTotal)
+    {
+        List<Descriptor> descriptores = new ArrayList<>();
+        List<Long> ids = new ArrayList<>();
+        for (Descriptor descriptor : descriptoresTotal)
+        {
+            if (!ids.contains(descriptor.getId()))
+            {
+                ids.add(descriptor.getId());
+                descriptores.add(descriptor);
+            }
+        }
+
+        return descriptores;
     }
 }

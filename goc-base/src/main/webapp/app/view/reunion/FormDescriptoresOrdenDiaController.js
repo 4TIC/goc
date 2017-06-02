@@ -11,9 +11,13 @@ Ext.define('goc.view.reunion.FormDescriptoresOrdenDiaController', {
             grid            = Ext.ComponentQuery.query('grid[name=gridDescriptoresOrdenDia]')[0];
         store = vm.getStore('descriptoresOrdenDiaStore'),
         storeDescriptores = vm.getStore('descriptoresStore');
+
         var rutaEspecifica = this.ruta.replace(':idReunion', idReunion);
         rutaEspecifica = rutaEspecifica.replace(':idOrdenDia', idPuntoOrdenDia);
         store.proxy.url = rutaEspecifica;
+
+        storeDescriptores.proxy.url = '/goc/rest/reuniones/' + idReunion + '/descriptores';
+        
         storeDescriptores.load({
             callback : function()
             {
