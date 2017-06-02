@@ -2,9 +2,6 @@ Ext.define('goc.view.descriptor.GridClaveController', {
     extend : 'Ext.ux.uji.grid.PanelController',
     alias : 'controller.gridClaveController',
     descriptor : null,
-    onLoad : function()
-    {
-    },
 
     claveSelected : function(controller, record)
     {
@@ -23,19 +20,12 @@ Ext.define('goc.view.descriptor.GridClaveController', {
     {
         this.getView().setDisabled(false);
         this.descriptor = record;
-        var vm = this.getViewModel();
-        
-        vm.getStore('clavesStore').load({
+
+        this.getView().getStore().load({
             params : {
                 idDescriptor : this.descriptor.get('id')
             }
         });
-    },
-
-    initFilters : function()
-    {
-        var store = this.getStore('clavesStore');
-        store.clearFilter();
     },
 
     onAdd : function()
@@ -44,10 +34,12 @@ Ext.define('goc.view.descriptor.GridClaveController', {
 
         if (!gridDescriptores || !gridDescriptores.getSelectedRow()) return;
 
-        this.initFilters();
-
         var grid = this.getView();
-        var rec = Ext.create(grid.getStore().model.entityName, { id : null, idDescriptor: gridDescriptores.getSelectedRow().get('id') });
+
+        var rec = Ext.create(grid.getStore().model.entityName, {
+            id : null,
+            idDescriptor : gridDescriptores.getSelectedRow().get('id')
+        });
         grid.getStore().insert(0, rec);
         var editor = grid.plugins[0];
         editor.cancelEdit();

@@ -10,24 +10,24 @@ Ext.define('goc.view.descriptor.GridController', {
     descriptorSelected : function(controller, record)
     {
         var grid = this.getView();
-        var toolbar = grid.down("toolbar");
-        toolbar.items.each(function(button)
-        {
-            if (button.name !== 'add')
-            {
-                button.setDisabled(false);
-            }
-        });
+        var record = grid.getSelectedRow();
+        var claveGrid = grid.up('panel').down('grid[name=claveGrid]');
+        var descriptorTipoOrganoGrid = grid.up('panel').down('grid[name=descriptorTipoOrganoGrid]');
 
-        var selection = grid.getView().getSelectionModel().getSelection();
-        
-        var record = selection[selection.length - 1];
-        if (!record.phantom)
+        if (!record)
         {
-            grid.up('panel').down('grid[name=claveGrid]').fireEvent('descriptorSelected', record);
-            grid.up('panel').down('grid[name=descriptorTipoOrganoGrid]').fireEvent('descriptorSelected', record);
+            claveGrid.clearStore();
+            claveGrid.disable();
+            descriptorTipoOrganoGrid.clearStore();
+            descriptorTipoOrganoGrid.disable();
+            return;
         }
 
+        if (!record.phantom)
+        {
+            claveGrid.fireEvent('descriptorSelected', record);
+            descriptorTipoOrganoGrid.fireEvent('descriptorSelected', record);
+        }
     },
 
     onEditComplete : function(editor, context)

@@ -61,8 +61,8 @@ Ext.define('goc.view.descriptor.Grid', {
     reference: 'descriptorGrid',
     multiSelect: false,
     bind: {
-        store: '{descriptoresStore}'/*,
-        selection: '{selectedDescriptor}'*/
+        store: '{descriptoresStore}',
+        selection: '{selectedDescriptor}'
     },
     name: 'descriptoresGrid',
     title: appI18N ? appI18N.descriptores.titulo : 'Descriptors',
@@ -95,6 +95,6 @@ Ext.define('goc.view.descriptor.Grid', {
 
     listeners: {
         render: 'onLoad',
-        select: 'descriptorSelected'
+        selectionChange: 'descriptorSelected'
     }
 });
