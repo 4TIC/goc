@@ -157,6 +157,7 @@ Ext.define('Ext.ux.uji.grid.Panel',
 
         store.suspendAutoSync();
         store.removeAll();
+        store.clearData();
         store.resumeAutoSync();
     },
 
