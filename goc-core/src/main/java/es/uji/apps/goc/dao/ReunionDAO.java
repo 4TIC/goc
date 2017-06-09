@@ -28,6 +28,7 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     private QClave qClave = QClave.clave1;
     private QReunionComentario qReunionComentario = QReunionComentario.reunionComentario;
     private QReunionDocumento qReunionDocumento = QReunionDocumento.reunionDocumento;
+    private QReunionInvitado qReunionInvitado = QReunionInvitado.reunionInvitado;
 
     public List<ReunionEditor> getReunionesByEditorId(Long connectedUserId, String organodId, Long tipoOrganoId,
             Boolean externo, Boolean completada)
@@ -310,6 +311,9 @@ public class ReunionDAO extends BaseDAODatabaseImpl
 
         deleteClause = new JPADeleteClause(entityManager, qReunionComentario);
         deleteClause.where(qReunionComentario.reunion.id.eq(reunionId)).execute();
+
+        deleteClause = new JPADeleteClause(entityManager, qReunionInvitado);
+        deleteClause.where(qReunionInvitado.reunion.id.eq(reunionId)).execute();
 
         deleteClause = new JPADeleteClause(entityManager, qReunion);
         deleteClause.where(qReunion.id.eq(reunionId)).execute();

@@ -14,7 +14,7 @@ Ext.define('goc.view.reunion.Main',
         'goc.view.reunion.FormReunionMiembros', 'goc.view.common.ComboTipoOrgano', 'goc.view.common.ComboOrgano',
         'goc.view.reunion.GridDescriptoresOrdenDia', 'goc.store.DescriptoresOrdenDia', 'goc.store.Descriptores',
         'goc.store.Claves',
-        'goc.view.reunion.FormDescriptoresOrdenDia'
+        'goc.view.reunion.FormDescriptoresOrdenDia','goc.view.reunion.InvitadoGrid', 'goc.store.ReunionInvitados'
     ],
     title : appI18N.reuniones.tituloPrincipal,
     layout : 'fit',

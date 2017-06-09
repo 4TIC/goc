@@ -80,6 +80,9 @@ public class ReunionService
     @InjectParam
     private PuntoOrdenDiaService puntoOrdenDiaService;
 
+    @InjectParam
+    private ReunionInvitadoDAO reunionInvitadoDAO;
+
     @Autowired
     private TipoOrganoDAO tipoOrganoDAO;
 
@@ -93,9 +96,11 @@ public class ReunionService
     private ClaveDAO claveDAO;
 
 
-    public List<ReunionEditor> getReunionesByEditorId(Boolean completada, String organoId, Long tipoOrganoId, Boolean externo, Long connectedUserId)
+    public List<ReunionEditor> getReunionesByEditorId(Boolean completada, String organoId, Long tipoOrganoId,
+            Boolean externo, Long connectedUserId)
     {
-        return filtrarDuplicadosReunionEditores(reunionDAO.getReunionesByEditorId(connectedUserId, organoId, tipoOrganoId, externo, completada));
+        return filtrarDuplicadosReunionEditores(
+                reunionDAO.getReunionesByEditorId(connectedUserId, organoId, tipoOrganoId, externo, completada));
     }
 
     public Reunion addReunion(Reunion reunion, Long connectedUserId)
@@ -162,6 +167,26 @@ public class ReunionService
 
         puntoOrdenDiaService.deleteByReunionId(reunionId);
         reunionDAO.deleteByReunionId(reunionId);
+    }
+
+
+    @Transactional
+    public void updateInvitadosByReunionId(Long reunionId, List<ReunionInvitado> reunionInvitados, Long connectedUserId)
+            throws ReunionNoDisponibleException
+    {
+        Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
+
+        if (reunion == null)
+        {
+            throw new ReunionNoDisponibleException();
+        }
+
+        reunionInvitadoDAO.deleteByReunionId(reunionId);
+
+        for (ReunionInvitado reunionInvitado : reunionInvitados)
+        {
+            reunionInvitadoDAO.insert(reunionInvitado);
+        }
     }
 
     @Transactional
@@ -1029,15 +1054,14 @@ public class ReunionService
                 reuniones.add(reunion);
             }
         }
-        
+
         return reuniones;
     }
 
     public Reunion getReunionByIdAndEditorId(Long reunionId, Long connectedUserId)
             throws ReunionNoDisponibleException
     {
-        ReunionEditor reunionEditor =
-                reunionDAO.getReunionByIdAndEditorId(reunionId, connectedUserId);
+        ReunionEditor reunionEditor = reunionDAO.getReunionByIdAndEditorId(reunionId, connectedUserId);
 
         if (reunionEditor == null)
         {

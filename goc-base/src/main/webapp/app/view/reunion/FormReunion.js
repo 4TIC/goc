@@ -1,13 +1,13 @@
 Ext.define("Ext.locale.es.view.MultiSelectorSearch", {
-    override: 'Ext.view.MultiSelectorSearch' ,
-    searchText: appI18N.reuniones.multiSearchBusqueda
+    override : 'Ext.view.MultiSelectorSearch',
+    searchText : appI18N.reuniones.multiSearchBusqueda
 });
 
 Ext.define("Ext.locale.es.view.MultiSelector", {
-    override: 'Ext.view.MultiSelector',
-    emptyText: appI18N.reuniones.multiSearchNadaSeleccionado,
-    removeRowTip: appI18N.reuniones.multiSearchEliminarOrgano,
-    addToolText: appI18N.reuniones.multiSearchBuscarOrgano
+    override : 'Ext.view.MultiSelector',
+    emptyText : appI18N.reuniones.multiSearchNadaSeleccionado,
+    removeRowTip : appI18N.reuniones.multiSearchEliminarOrgano,
+    addToolText : appI18N.reuniones.multiSearchBuscarOrgano
 });
 
 var formReunionItems = [
@@ -21,22 +21,21 @@ var formReunionItems = [
         fieldLabel : getMultiLangLabel(appI18N.reuniones.asunto, mainLanguage),
         name : 'asunto',
         emptyText : appI18N.reuniones.asunto,
-        bind :
-        {
+        bind : {
             value : '{reunion.asunto}',
             disabled : '{reunion.completada}'
         }
     }
 ];
 
-if (isMultilanguageApplication()) {
+if (isMultilanguageApplication())
+{
     formReunionItems.push({
         allowBlank : false,
         fieldLabel : getMultiLangLabel(appI18N.reuniones.asunto, alternativeLanguage),
         name : 'asuntoAlternativo',
         emptyText : appI18N.reuniones.asunto,
-        bind :
-        {
+        bind : {
             value : '{reunion.asuntoAlternativo}',
             disabled : '{reunion.completada}'
         }
@@ -48,7 +47,6 @@ formReunionItems.push({
     fieldLabel : appI18N.reuniones.fecha + "&nbsp;<span style='color:red'>*</span>",
     layout : 'hbox',
     items : [
-
         {
             allowBlank : false,
             xtype : 'datefield',
@@ -56,8 +54,7 @@ formReunionItems.push({
             emptyText : appI18N.reuniones.fecha,
             format : 'd/m/Y',
             altFormats : 'd/m/Y H:i:s',
-            bind :
-            {
+            bind : {
                 value : '{reunion.fecha}',
                 disabled : '{reunion.completada}'
             },
@@ -79,8 +76,7 @@ formReunionItems.push({
             emptyText : appI18N.reuniones.horaInicio,
             format : 'H:i',
             altFormats : 'd/m/Y H:i:s',
-            bind :
-            {
+            bind : {
                 value : '{reunion.hora}',
                 disabled : '{reunion.completada}'
             },
@@ -92,41 +88,40 @@ formReunionItems.push({
             width : 120,
             emptyText : appI18N.reuniones.duracion,
             store : Ext.create('Ext.data.Store',
-                {
-                    fields : [ 'id', 'value' ],
-                    data : [
-                        {
-                            value : 30,
-                            texto : '0,5 ' + appI18N.reuniones.horas
-                        },
-                        {
-                            value : 60,
-                            texto : '1 ' + appI18N.reuniones.hora
-                        },
-                        {
-                            value : 90,
-                            texto : '1,5 ' + appI18N.reuniones.horas
-                        },
-                        {
-                            value : 120,
-                            texto : '2 ' + appI18N.reuniones.horas
-                        },
-                        {
-                            value : 150,
-                            texto : '2,5 ' + appI18N.reuniones.horas
-                        },
-                        {
-                            value : 180,
-                            texto : '3 ' + appI18N.reuniones.horas
-                        }
-                    ]
-                }),
+            {
+                fields : ['id', 'value'],
+                data : [
+                    {
+                        value : 30,
+                        texto : '0,5 ' + appI18N.reuniones.horas
+                    },
+                    {
+                        value : 60,
+                        texto : '1 ' + appI18N.reuniones.hora
+                    },
+                    {
+                        value : 90,
+                        texto : '1,5 ' + appI18N.reuniones.horas
+                    },
+                    {
+                        value : 120,
+                        texto : '2 ' + appI18N.reuniones.horas
+                    },
+                    {
+                        value : 150,
+                        texto : '2,5 ' + appI18N.reuniones.horas
+                    },
+                    {
+                        value : 180,
+                        texto : '3 ' + appI18N.reuniones.horas
+                    }
+                ]
+            }),
             triggerAction : 'all',
             queryMode : 'local',
             displayField : 'texto',
             valueField : 'value',
-            bind :
-            {
+            bind : {
                 value : '{reunion.duracion}',
                 disabled : '{reunion.completada}'
             }
@@ -147,8 +142,7 @@ formReunionItems.push({
             emptyText : appI18N.reuniones.horaInicioSegundaConvocatoria,
             format : 'H:i',
             altFormats : 'd/m/Y H:i:s',
-            bind :
-            {
+            bind : {
                 value : '{reunion.horaSegundaConvocatoria}',
                 disabled : '{reunion.completada}'
             },
@@ -166,8 +160,7 @@ formReunionItems.push({
             fieldLabel : appI18N.reuniones.numeroSesion,
             name : 'numeroSesion',
             xtype : 'numberfield',
-            bind :
-            {
+            bind : {
                 value : '{reunion.numeroSesion}',
                 disabled : '{reunion.completada}'
             },
@@ -180,13 +173,12 @@ formReunionItems.push({
         {
             boxLabel : appI18N.reuniones.admiteSuplencia,
             name : 'admiteSuplencia',
-            bind :
-            {
+            bind : {
                 value : '{reunion.admiteSuplencia}',
                 disabled : '{reunion.completada}'
             },
             xtype : 'checkbox',
-            checked: true,
+            checked : true,
             inputValue : '1'
         },
         {
@@ -196,13 +188,12 @@ formReunionItems.push({
         {
             boxLabel : appI18N.reuniones.admiteComentarios,
             name : 'admiteComentarios',
-            bind :
-            {
+            bind : {
                 value : '{reunion.admiteComentarios}',
                 disabled : '{reunion.completada}'
             },
             xtype : 'checkbox',
-            checked: true,
+            checked : true,
             inputValue : '1'
         }
     ]
@@ -214,21 +205,20 @@ formReunionItems.push({
     layout : 'hbox',
     items : [
         {
-            boxLabel: appI18N.reuniones.reunionPublica,
-            name: 'publica',
-            bind: {
-                value: '{reunion.publica}',
-                disabled: '{reunion.completada}'
+            boxLabel : appI18N.reuniones.reunionPublica,
+            name : 'publica',
+            bind : {
+                value : '{reunion.publica}',
+                disabled : '{reunion.completada}'
             },
-            xtype: 'checkbox',
-            inputValue: '1'
+            xtype : 'checkbox',
+            inputValue : '1'
         },
         {
             boxLabel : appI18N.reuniones.reunionTelematica,
             name : 'telematica',
             padding : '0 0 0 10',
-            bind :
-            {
+            bind : {
                 value : '{reunion.telematica}',
                 disabled : '{reunion.completada}'
             },
@@ -247,30 +237,29 @@ formReunionItems.push({
     xtype : 'textareafield',
     padding : '0 0 0 10',
     name : 'telematicaDescripcion',
-    columns: 40,
+    columns : 40,
     labelAlign : 'top',
     flex : 1,
-    hidden: true,
+    hidden : true,
     emptyText : getMultiLangLabel(appI18N.reuniones.descripcionTelematica, mainLanguage),
-    bind :
-    {
+    bind : {
         value : '{reunion.telematicaDescripcion}',
         disabled : '{reunion.completada}'
     }
 });
 
-if (isMultilanguageApplication()) {
+if (isMultilanguageApplication())
+{
     formReunionItems.push({
         xtype : 'textareafield',
         padding : '0 0 0 10',
         name : 'telematicaDescripcionAlternativa',
-        columns: 40,
+        columns : 40,
         labelAlign : 'top',
         flex : 1,
-        hidden: true,
+        hidden : true,
         emptyText : getMultiLangLabel(appI18N.reuniones.descripcionTelematica, alternativeLanguage),
-        bind :
-        {
+        bind : {
             value : '{reunion.telematicaDescripcionAlternativa}',
             disabled : '{reunion.completada}'
         }
@@ -281,20 +270,19 @@ formReunionItems.push({
     fieldLabel : getMultiLangLabel(appI18N.reuniones.lugar, mainLanguage),
     name : 'ubicacion',
     emptyText : appI18N.reuniones.ubicacionReunion,
-    bind :
-    {
+    bind : {
         value : '{reunion.ubicacion}',
         disabled : '{reunion.completada}'
     }
 });
 
-if (isMultilanguageApplication()) {
+if (isMultilanguageApplication())
+{
     formReunionItems.push({
         fieldLabel : getMultiLangLabel(appI18N.reuniones.lugar, alternativeLanguage),
         name : 'ubicacionAlternativa',
         emptyText : appI18N.reuniones.ubicacionReunion,
-        bind :
-        {
+        bind : {
             value : '{reunion.ubicacionAlternativa}',
             disabled : '{reunion.completada}'
         }
@@ -305,9 +293,8 @@ formReunionItems.push({
     fieldLabel : appI18N.reuniones.urlGrabacionShort,
     name : 'urlGrabacion',
     emptyText : appI18N.reuniones.urlGrabacion,
-    vtype: 'url',
-    bind :
-    {
+    vtype : 'url',
+    bind : {
         value : '{reunion.urlGrabacion}',
         disabled : '{reunion.completada}'
     }
@@ -320,14 +307,14 @@ formReunionItems.push({
     labelAlign : 'top',
     flex : 1,
     emptyText : appI18N.reuniones.descripcion,
-    bind :
-    {
+    bind : {
         value : '{reunion.descripcion}',
         disabled : '{reunion.completada}'
     }
 });
 
-if (isMultilanguageApplication()) {
+if (isMultilanguageApplication())
+{
     formReunionItems.push({
         xtype : 'textareafield',
         name : 'descripcionAlternativa',
@@ -335,8 +322,7 @@ if (isMultilanguageApplication()) {
         labelAlign : 'top',
         flex : 1,
         emptyText : appI18N.reuniones.descripcion,
-        bind :
-        {
+        bind : {
             value : '{reunion.descripcionAlternativa}',
             disabled : '{reunion.completada}'
         }
@@ -346,19 +332,16 @@ if (isMultilanguageApplication()) {
 formReunionItems.push({
     xtype : 'multiselector',
     title : appI18N.reuniones.organosAsistentes,
-    bind :
-    {
+    bind : {
         store : '{organosStore}'
     },
 
     fieldName : 'nombre',
-    viewConfig :
-    {
+    viewConfig : {
         deferEmptyText : false,
         emptyText : appI18N.reuniones.asistentesVacio
     },
-    columns :
-    {
+    columns : {
         items : [
             {
                 text : appI18N.common.nombre,
@@ -379,14 +362,14 @@ formReunionItems.push({
                             var reunionId = grid.up('form[name=reunion]').down('hidden[name=id]').getValue();
                             grid.up('formReunion').fireEvent('detalleAsistentesReunion', organo, reunionId);
                         }
-                    } ]
+                    }
+                ]
             },
             {
                 xtype : 'actioncolumn',
                 align : 'right',
                 width : 25,
-                bind :
-                {
+                bind : {
                     disabled : '{reunion.completada}'
                 },
                 items : [
@@ -402,27 +385,24 @@ formReunionItems.push({
                             var rec = grid.getStore().getAt(index);
                             grid.up('formReunion').fireEvent('borrarAsistenteReunion', rec);
                         }
-                    } ]
-            } ]
+                    }
+                ]
+            }
+        ]
     },
 
-    search :
-    {
-        width: 500,
+    search : {
+        width : 500,
         field : 'nombre',
-        bind :
-        {
+        bind : {
             disabled : '{reunion.completada}'
         },
-        store :
-        {
-            fields : [ 'id', 'nombre' ],
-            proxy :
-            {
+        store : {
+            fields : ['id', 'nombre'],
+            proxy : {
                 type : 'rest',
                 url : '/goc/rest/organos/convocables',
-                reader :
-                {
+                reader : {
                     type : 'json',
                     rootProperty : 'data'
                 }
@@ -443,12 +423,12 @@ formReunionItems.push({
                 else
                 {
                     me.searchFilter = filter = new Ext.util.Filter(
-                        {
-                            id : 'search',
-                            property : me.field,
-                            value : text,
-                            anyMatch : true
-                        });
+                    {
+                        id : 'search',
+                        property : me.field,
+                        value : text,
+                        anyMatch : true
+                    });
                 }
 
                 filters.add(filter);
@@ -463,6 +443,12 @@ formReunionItems.push({
     }
 });
 
+
+formReunionItems.push({
+    xtype : 'invitadoGrid',
+    padding : '10 0 0 0'
+});
+
 Ext.define('goc.view.reunion.FormReunion',
 {
     extend : 'Ext.window.Window',
@@ -473,70 +459,68 @@ Ext.define('goc.view.reunion.FormReunion',
     maxHeight : 1000,
     modal : true,
     bodyPadding : 10,
-    autoScroll: true,
+    autoScroll : true,
 
-    viewConfig: 'fit',
+    viewConfig : 'fit',
 
-    layout :
-    {
+    layout : {
         type : 'vbox',
         align : 'stretch'
     },
 
-    requires : [ 'goc.view.reunion.FormReunionController' ],
+    requires : ['goc.view.reunion.FormReunionController'],
     controller : 'formReunionController',
 
-    bbar : [ '->',
-    {
-        xtype : 'button',
-        text : appI18N.reuniones.guardar,
-        bind :
+    bbar : [
+        '->',
         {
-            disabled : '{reunion.completada}'
+            xtype : 'button',
+            text : appI18N.reuniones.guardar,
+            bind : {
+                disabled : '{reunion.completada}'
+            },
+            handler : 'onSaveRecord'
         },
-        handler : 'onSaveRecord'
-    },
-    {
-        xtype : 'panel',
-        html : '<a style="text-decoration: none; color: #222;" href="#">' + appI18N.common.cancelar + '</a>',
-        listeners :
         {
-            render : function(component)
-            {
-                component.getEl().on('click', 'onClose');
+            xtype : 'panel',
+            html : '<a style="text-decoration: none; color: #222;" href="#">' + appI18N.common.cancelar + '</a>',
+            listeners : {
+                render : function(component)
+                {
+                    component.getEl().on('click', 'onClose');
+                }
             }
         }
-    } ],
+    ],
 
-    bind :
-    {
+    bind : {
         title : '{title}'
     },
 
     items : [
-    {
-        xtype : 'form',
-        name : 'reunion',
-        border : 0,
-        layout : 'anchor',
-        items : [
         {
-            xtype : 'fieldset',
-            title : appI18N.reuniones.informacionBasica,
-            defaultType : 'textfield',
-            defaults :
-            {
-                anchor : '100%'
-            },
+            xtype : 'form',
+            name : 'reunion',
+            border : 0,
+            layout : 'anchor',
+            items : [
+                {
+                    xtype : 'fieldset',
+                    title : appI18N.reuniones.informacionBasica,
+                    defaultType : 'textfield',
+                    defaults : {
+                        anchor : '100%'
+                    },
 
-            items : formReunionItems
-        } ]
-    } ],
+                    items : formReunionItems
+                }
+            ]
+        }
+    ],
 
-    listeners :
-    {
+    listeners : {
         borrarAsistenteReunion : 'onBorrarAsistenteReunion',
         detalleAsistentesReunion : 'onDetalleAsistentesReunion',
-        afterLayout: 'afterRenderFormReunion'
+        afterLayout : 'afterRenderFormReunion'
     }
 });

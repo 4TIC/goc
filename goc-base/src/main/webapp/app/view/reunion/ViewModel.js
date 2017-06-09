@@ -35,6 +35,9 @@ Ext.define('goc.view.reunion.ViewModel', {
         organosStore: {
             type: 'organos',
             autoLoad: true
+        },
+        reunionInvitadosStore: {
+            type: 'organos'
         }
     }
 });

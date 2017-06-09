@@ -112,6 +112,9 @@ public class Reunion implements Serializable
     @OneToMany(mappedBy = "reunion", cascade = CascadeType.REMOVE)
     private Set<ReunionComentario> comentarios;
 
+    @OneToMany(mappedBy = "reunion", cascade = CascadeType.REMOVE)
+    private Set<ReunionInvitado> reunionInvitados;
+
     public Long getId()
     {
         return id;
@@ -527,5 +530,15 @@ public class Reunion implements Serializable
     public void setAvisoPrimeraReunion(Boolean avisoPrimeraReunion)
     {
         this.avisoPrimeraReunion = avisoPrimeraReunion;
+    }
+
+    public Set<ReunionInvitado> getReunionInvitados()
+    {
+        return reunionInvitados;
+    }
+
+    public void setReunionInvitados(Set<ReunionInvitado> reunionInvitados)
+    {
+        this.reunionInvitados = reunionInvitados;
     }
 }

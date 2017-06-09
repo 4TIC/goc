@@ -21,7 +21,7 @@ Ext.define('goc.view.organo.AutorizadoGrid',
         hidden : true
     },
     {
-        text : 'Nom',
+        text : appI18N.autorizados.nombre,
         dataIndex : 'personaNombre',
         flex : 1
     } ],

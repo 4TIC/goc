@@ -27,5 +27,6 @@
     <class>es.uji.apps.goc.dto.PuntoOrdenDiaDescriptor</class>
     <class>es.uji.apps.goc.dto.ReunionEditor</class>
     <class>es.uji.apps.goc.dto.DescriptorTipoOrgano</class>
+    <class>es.uji.apps.goc.dto.ReunionInvitado</class>
   </persistence-unit>
 </persistence>

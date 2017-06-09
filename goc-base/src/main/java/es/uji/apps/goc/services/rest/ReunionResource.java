@@ -41,6 +41,9 @@ public class ReunionResource extends CoreBaseService
     private DescriptorService descriptorService;
 
     @InjectParam
+    private InvitadosService invitadosService;
+
+    @InjectParam
     private ReunionDocumentoService reunionDocumentoService;
 
     @InjectParam
@@ -544,5 +547,55 @@ public class ReunionResource extends CoreBaseService
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
         return UIEntity.toUI(descriptorService.getDescriptoresByReunionId(reunionId, connectedUserId));
+    }
+
+    @GET
+    @Path("{reunionId}/invitados")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UIEntity> listaInvitados(@PathParam("reunionId") Long reunionId)
+            throws ReunionNoDisponibleException, OrganosExternosException
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+
+        return UIEntity.toUI(invitadosService.getInvitadosByReunionId(reunionId, connectedUserId));
+    }
+
+    @PUT
+    @Path("{reunionId}/invitados")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response modificaInvitados(@PathParam("reunionId") Long reunionId, UIEntity reunionInvitadosUI)
+            throws ReunionYaCompletadaException, ReunionNoDisponibleException
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+
+        List<ReunionInvitado> reunionInvitados = creaInvitadosDesdeInvitadosUI(reunionId, reunionInvitadosUI);
+
+        reunionService.compruebaReunionNoCompletada(reunionId);
+        reunionService.updateInvitadosByReunionId(reunionId, reunionInvitados, connectedUserId);
+
+        return Response.ok().build();
+    }
+
+    private List<ReunionInvitado> creaInvitadosDesdeInvitadosUI(Long reunionId, UIEntity reunionInvitadosUI)
+    {
+        List<ReunionInvitado> invitados = new ArrayList<>();
+        Reunion reunion = new Reunion(reunionId);
+
+        List<UIEntity> invitadosUI = reunionInvitadosUI.getRelations().get("invitados");
+
+        if (invitadosUI == null) return new ArrayList<>();
+
+        for (UIEntity invitadoUI : invitadosUI)
+        {
+            ReunionInvitado reunionInvitado = new ReunionInvitado();
+
+            reunionInvitado.setReunion(reunion);
+            reunionInvitado.setPersonaId(invitadoUI.getLong("personaId"));
+            reunionInvitado.setPersonaNombre(invitadoUI.get("personaNombre"));
+
+            invitados.add(reunionInvitado);
+        }
+
+        return invitados;
     }
 }

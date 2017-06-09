@@ -51,7 +51,7 @@
     "titulo": "Tipos de Órganos",
     "nombre": "Nombre",
     "codigo": "Código",
-    "restringirATipoOrganos": "Restringir a estos tipos de órgano" ,
+    "restringirATipoOrganos": "Restringir a estos tipos de órgano",
     "seleccionaUnTipoDeOrgano": "Selecciona un tipo de órgano"
   },
   "miembros": {
@@ -116,7 +116,7 @@
     "hora": "hora",
     "numeroSesion": "Número de sesión",
     "admiteSuplencia": "Admite suplencias",
-    "admiteComentarios" : "Admite comentarios",
+    "admiteComentarios": "Admite comentarios",
     "reunionPublica": "Reunión pública",
     "reunionTelematica": "Reunión telemática",
     "telematica": "Telemática",
@@ -172,7 +172,11 @@
     "acciones": "Acciones",
     "hojaFirmas": "Hoja de firmas",
     "seleccionarParaHojaFirmas": "Debe seleccionar una reunión para sacar la hoja de firmas",
-    "urlInvalida": "La url no és vàlida"
+    "urlInvalida": "La url no és vàlida",
+    "invitados": "Invitados",
+    "sinInvitadosSeleccionados": "No ha seleccionado ningún invitado",
+    "buscarInvitados": "Buscar invitados para añadir",
+    "seleccionaInvitado": "Selecciona el invitado"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Histórico de reuniones",
@@ -199,5 +203,11 @@
     "titulo": "Claves",
     "nombre": "Nombre",
     "claveSingular": "Clave"
+  },
+  "autorizados": {
+    "nombre": "Nombre"
+  },
+  "invitados": {
+    "nombre": "Nombre"
   }
 }

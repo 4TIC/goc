@@ -3,49 +3,51 @@ Ext.define('Ext.ux.uji.grid.Panel',
     extend : 'Ext.grid.Panel',
     alias : 'widget.ujigridpanel',
 
-    requires : [ 'Ext.grid.plugin.RowEditing', 'Ext.ux.uji.grid.PanelController' ],
+    requires : ['Ext.grid.plugin.RowEditing', 'Ext.ux.uji.grid.PanelController'],
     controller : 'gridPanelController',
 
     plugins : [
-    {
-        ptype : 'rowediting',
-        clicksToEdit : 2
-    } ],
+        {
+            ptype : 'rowediting',
+            clicksToEdit : 2
+        }
+    ],
 
     tbar : [
-    {
-        xtype : 'button',
-        name: 'add',
-        iconCls : 'fa fa-plus',
-        text : appI18N ? appI18N.common.anadir : 'Afegir',
-        handler : 'onAdd'
-    },
-    {
-        xtype : 'button',
-        name: 'edit',
-        iconCls : 'fa fa-edit',
-        text : appI18N ? appI18N.common.editar : 'Editar',
-        handler : 'onEdit'
-    },
-    {
-        xtype : 'button',
-        name: 'remove',
-        iconCls : 'fa fa-remove',
-        text : appI18N ? appI18N.common.borrar : 'Esborrar',
-        handler : 'onDelete'
-    } ],
+        {
+            xtype : 'button',
+            name : 'add',
+            iconCls : 'fa fa-plus',
+            text : appI18N ? appI18N.common.anadir : 'Afegir',
+            handler : 'onAdd'
+        },
+        {
+            xtype : 'button',
+            name : 'edit',
+            iconCls : 'fa fa-edit',
+            text : appI18N ? appI18N.common.editar : 'Editar',
+            handler : 'onEdit'
+        },
+        {
+            xtype : 'button',
+            name : 'remove',
+            iconCls : 'fa fa-remove',
+            text : appI18N ? appI18N.common.borrar : 'Esborrar',
+            handler : 'onDelete'
+        }
+    ],
 
     bbar : [
-    {
-        xtype : 'button',
-        text : appI18N ? appI18N.common.recargar : 'Recarregar',
-        action : 'reload',
-        iconCls : 'fa fa-refresh',
-        handler : 'onReload'
-    } ],
+        {
+            xtype : 'button',
+            text : appI18N ? appI18N.common.recargar : 'Recarregar',
+            action : 'reload',
+            iconCls : 'fa fa-refresh',
+            handler : 'onReload'
+        }
+    ],
 
-    config :
-    {
+    config : {
         allowEdit : true,
         showSearchField : false,
         showAddButton : true,
@@ -61,7 +63,7 @@ Ext.define('Ext.ux.uji.grid.Panel',
             if (records.length > 0)
             {
                 Ext.Msg.confirm(appI18N ? appI18N.common.borrar : 'Esborrar',
-                    appI18N ? appI18N.common.confirmarBorrado : 'Esteu segur/a de voler esborrar el registre ?', function(btn, text)
+                appI18N ? appI18N.common.confirmarBorrado : 'Esteu segur/a de voler esborrar el registre ?', function(btn, text)
                 {
                     if (btn == 'yes')
                     {
@@ -75,8 +77,7 @@ Ext.define('Ext.ux.uji.grid.Panel',
         }
     },
 
-    listeners :
-    {
+    listeners : {
         render : 'onLoad',
         edit : 'onEditComplete',
         canceledit : 'onCancelEdit'
@@ -87,17 +88,32 @@ Ext.define('Ext.ux.uji.grid.Panel',
         var ref = this;
         this.callParent(arguments);
 
+        var tbar = this.getDockedItems('toolbar[dock="top"]')[0];
         var bbar = this.getDockedItems('toolbar[dock="bottom"]')[0];
+
+        if (!this.allowEdit)
+        {
+            var rowediting = this.getPlugins().filter(function(plugin)
+            {
+                return plugin.ptype === 'rowediting'
+            })[0];
+
+            if (rowediting)
+            {
+                this.removePlugin(rowediting);
+            }
+        }
 
         if (this.showSearchField)
         {
             tbar.insert(0, [
-            {
-                xtype : 'searchfield',
-                emptyText : 'Recerca...',
-                store : this.store,
-                width : 180
-            }, ' ', '-' ]);
+                {
+                    xtype : 'searchfield',
+                    emptyText : 'Recerca...',
+                    store : this.store,
+                    width : 180
+                }, ' ', '-'
+            ]);
         }
 
         if (!this.showTopToolbar)
@@ -122,7 +138,7 @@ Ext.define('Ext.ux.uji.grid.Panel',
 
         if (selection.length > 0)
         {
-            return selection[selection.length-1].get("id");
+            return selection[selection.length - 1].get("id");
         }
     },
 
@@ -132,7 +148,7 @@ Ext.define('Ext.ux.uji.grid.Panel',
 
         if (selection.length > 0)
         {
-            return selection[selection.length-1];
+            return selection[selection.length - 1];
         }
     },
 

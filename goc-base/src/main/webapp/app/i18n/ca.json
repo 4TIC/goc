@@ -46,7 +46,6 @@
     "inhabilitarOrgano": "Esteu segur/a de voler inhabilitar l'òrgan?",
     "borrarAutorizacion": "Esborrar autorització",
     "seleccionarParaBorrarAutorizacion": "Cal sel·leccionar una persona per a esborrar l'autorització"
-
   },
   "tipoOrganos": {
     "titulo": "Tipus d'Òrgans",
@@ -117,7 +116,7 @@
     "hora": "hora",
     "numeroSesion": "Número de sessió",
     "admiteSuplencia": "Admet suplències",
-    "admiteComentarios" : "Admet comentaris",
+    "admiteComentarios": "Admet comentaris",
     "reunionPublica": "Reunió pública",
     "reunionTelematica": "Reunió telemàtica",
     "telematica": "Telemàtica",
@@ -173,7 +172,11 @@
     "acciones": "Accions",
     "hojaFirmas": "Fulla de firmes",
     "seleccionarParaHojaFirmas": "Cal sel·leccionar una reunió per a accedir a la fulla de firmes",
-    "urlInvalida": "La url no és vàlida"
+    "urlInvalida": "La url no és vàlida",
+    "invitados": "Convidats",
+    "sinInvitadosSeleccionados": "Cap convidat seleccionat",
+    "buscarInvitados" : "Cercar convidats per afegir",
+    "seleccionaInvitado": "Sel·lecciona el convidat"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Històric de reunions",
@@ -200,5 +203,11 @@
     "titulo": "Claus",
     "nombre": "Nom",
     "claveSingular": "Clau"
+  },
+  "autorizados": {
+    "nombre": "Nom"
+  },
+  "invitados": {
+    "nombre": "Nom"
   }
 }

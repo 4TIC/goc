@@ -136,7 +136,7 @@ Ext.define('goc.view.reunion.ReunionGridController', {
             return Ext.Msg.alert(appI18N.reuniones.hojaFirmas, appI18N.reuniones.seleccionarParaHojaFirmas);
         }
 
-        window.open('/goc/rest/reuniones/' + id +'/asistentes?lang=' + appLang, '_blank');
+        window.open('/goc/rest/reuniones/' + id + '/asistentes?lang=' + appLang, '_blank');
     },
 
     organoSelected : function(id, externo)
@@ -240,7 +240,7 @@ Ext.define('goc.view.reunion.ReunionGridController', {
         this.modal.show();
     },
 
-    getReunionModalDefinition : function(reunion, reunionesStore, organosStore)
+    getReunionModalDefinition : function(reunion, reunionesStore, organosStore, invitadosStore)
     {
         return {
             xtype : 'formReunion',
@@ -254,6 +254,7 @@ Ext.define('goc.view.reunion.ReunionGridController', {
                     },
                     store : reunionesStore,
                     organosStore : organosStore,
+                    reunionInvitadosStore: invitadosStore,
                     organosMiembros : {},
                     miembrosStores : {}
                 }
@@ -263,30 +264,38 @@ Ext.define('goc.view.reunion.ReunionGridController', {
 
     createModalReunion : function(record)
     {
-        var view = this.getView().up('panel');
         var viewModel = this.getViewModel();
         var store = viewModel.getStore('reunionesStore');
         var organosStore = Ext.create('goc.store.Organos');
+        var invitadosStore = Ext.create('goc.store.ReunionInvitados');
         var viewport = this.getView().up('viewport');
+        var ref = this;
 
         if (record)
         {
             organosStore.load({
                 params : {
                     reunionId : record ? record.get('id') : null
-                },
-                callback : function(records)
-                {
-                    var modalDefinition = this.getReunionModalDefinition(record, store, organosStore);
-                    this.modal = viewport.add(modalDefinition);
-                    this.modal.down('textfield[name=urlGrabacion]').setVisible(true);
-                    this.modal.show();
-                },
-                scope : this
+                }
+            });
+
+            invitadosStore.proxy.url = '/goc/rest/reuniones/' + record.get('id') + '/invitados'
+
+            organosStore.on("load", function()
+            {
+                invitadosStore.load();
+            });
+
+            invitadosStore.on("load", function()
+            {
+                var modalDefinition = ref.getReunionModalDefinition(record, store, organosStore, invitadosStore);
+                ref.modal = viewport.add(modalDefinition);
+                ref.modal.down('textfield[name=urlGrabacion]').setVisible(true);
+                ref.modal.show();
             });
         } else
         {
-            var modalDefinition = this.getReunionModalDefinition(record, store, organosStore);
+            var modalDefinition = this.getReunionModalDefinition(record, store, organosStore, invitadosStore);
             this.modal = viewport.add(modalDefinition);
             this.modal.show();
         }
