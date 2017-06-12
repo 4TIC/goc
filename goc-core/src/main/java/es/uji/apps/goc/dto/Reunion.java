@@ -456,14 +456,14 @@ public class Reunion implements Serializable
 
     public boolean esMiembro(final Long userId)
     {
-        if (userId == null || reunionOrganos == null || reunionOrganos.isEmpty())
-            return false;
+        if (userId == null || reunionOrganos == null || reunionOrganos.isEmpty()) return false;
 
         List<OrganoReunionMiembro> miembros = new ArrayList<>();
 
         getReunionOrganos().stream().forEach(organoReunion ->
         {
-            List<OrganoReunionMiembro> pertenecientes = organoReunion.getMiembros().stream()
+            List<OrganoReunionMiembro> pertenecientes = organoReunion.getMiembros()
+                    .stream()
                     .filter(miembro -> String.valueOf(userId).equals(miembro.getMiembroId()))
                     .collect(toList());
 
@@ -483,15 +483,26 @@ public class Reunion implements Serializable
         return !esCreador(userId);
     }
 
-    public void tieneAcceso(Long userId) throws InvalidAccessException
+    public boolean noEsInvitado(Long connectedUserId)
     {
-        if (isPublica())
-            return;
+        return !esInvitado(connectedUserId);
+    }
 
-        if (userId == null)
-            throw new InvalidAccessException("Acceso restringido a usuarios autenticados");
+    public boolean esInvitado(final Long userId)
+    {
+        if (userId == null || reunionOrganos == null || reunionOrganos.isEmpty()) return false;
 
-        if (noEsCreador(userId) && noEsMiembro(userId))
+        return getReunionInvitados().stream().anyMatch(invitado -> userId.equals(invitado.getPersonaId()));
+    }
+
+    public void tieneAcceso(Long userId)
+            throws InvalidAccessException
+    {
+        if (isPublica()) return;
+
+        if (userId == null) throw new InvalidAccessException("Acceso restringido a usuarios autenticados");
+
+        if (noEsCreador(userId) && noEsMiembro(userId) && noEsInvitado(userId))
             throw new InvalidAccessException("No se tiene acceso a esta reunion");
     }
 
@@ -502,12 +513,10 @@ public class Reunion implements Serializable
 
     private boolean contieneMiembros()
     {
-        if (reunionOrganos == null || reunionOrganos.isEmpty())
-            return false;
+        if (reunionOrganos == null || reunionOrganos.isEmpty()) return false;
 
-        long numeroOrganosConMiembros = reunionOrganos.stream()
-                .filter(organo -> organo.getMiembros().size() > 0)
-                .count();
+        long numeroOrganosConMiembros =
+                reunionOrganos.stream().filter(organo -> organo.getMiembros().size() > 0).count();
 
         return (numeroOrganosConMiembros > 0);
     }

@@ -74,19 +74,7 @@ public class PublicacionService extends CoreBaseService
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
-        List<ReunionTemplate> reunionesAsistente =
-                reunionService.getReunionesByAsistenteIdOrSuplenteId(connectedUserId);
-
-        List<Long> reunionesIds = reunionesAsistente.stream().map(r -> r.getId()).collect(toList());
-
-        List<ReunionTemplate> reunionesConvocante = reunionService.getReunionesByCreadorId(connectedUserId)
-                .stream()
-                .filter(r -> !reunionesIds.contains(r.getId()))
-                .collect(toList());
-
-        List<ReunionTemplate> reuniones = Stream.concat(reunionesAsistente.stream(), reunionesConvocante.stream())
-                .sorted((r1, r2) -> r2.getFecha().compareTo(r1.getFecha()))
-                .collect(toList());
+        List<ReunionTemplate> reuniones = reunionService.getReunionesAccesiblesByPersonaId(connectedUserId);
 
         String applang = getLangCode(lang);
         Template template = new HTMLTemplate("reuniones-" + applang);

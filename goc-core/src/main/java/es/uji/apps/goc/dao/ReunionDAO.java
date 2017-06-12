@@ -147,14 +147,20 @@ public class ReunionDAO extends BaseDAODatabaseImpl
                 .list(qReunion);
     }
 
-
-    public List<Reunion> getReunionesByCreadorId(Long connectedUserId)
+    public List<Reunion> getReunionesAccesiblesByPersonaId(Long connectedUserId)
     {
         JPAQuery query = new JPAQuery(entityManager);
 
         return query.from(qReunion)
-                .where(qReunion.creadorId.eq(connectedUserId))
-                .orderBy(qReunion.fechaCreacion.desc())
+                .leftJoin(qReunion.reunionOrganos, qOrganoReunion)
+                .leftJoin(qOrganoReunion.miembros, qOrganoReunionMiembro)
+                .leftJoin(qReunion.reunionInvitados, qReunionInvitado)
+                .where(qReunion.creadorId.eq(connectedUserId)
+                        .or((qOrganoReunionMiembro.asistencia.eq(true)
+                                .and(qOrganoReunionMiembro.suplenteId.eq(connectedUserId)
+                                        .or(qOrganoReunionMiembro.miembroId.eq(connectedUserId.toString())))))
+                        .or(qReunionInvitado.personaId.eq(connectedUserId)))
+                .orderBy(qReunion.fecha.desc())
                 .list(qReunion);
     }
 
@@ -323,8 +329,6 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     {
         JPAQuery query = new JPAQuery(entityManager);
 
-        return query.from(qOrganoReunion)
-                .where(qOrganoReunion.reunion.id.eq(reunionId))
-                .list(qOrganoReunion);
+        return query.from(qOrganoReunion).where(qOrganoReunion.reunion.id.eq(reunionId)).list(qOrganoReunion);
     }
 }

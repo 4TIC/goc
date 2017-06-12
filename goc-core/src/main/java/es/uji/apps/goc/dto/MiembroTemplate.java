@@ -15,6 +15,7 @@ public class MiembroTemplate
     private String miembroId;
 
     private Boolean asistenciaConfirmada;
+    private Boolean asistencia;
 
     private Cargo cargo;
 
@@ -100,5 +101,15 @@ public class MiembroTemplate
     public void setMiembroId(String miembroId)
     {
         this.miembroId = miembroId;
+    }
+
+    public Boolean getAsistencia()
+    {
+        return asistencia;
+    }
+
+    public void setAsistencia(Boolean asistencia)
+    {
+        this.asistencia = asistencia;
     }
 }

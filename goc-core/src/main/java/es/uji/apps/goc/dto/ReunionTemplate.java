@@ -51,6 +51,8 @@ public class ReunionTemplate implements Serializable
 
     private String creadorEmail;
 
+    private Long creadorId;
+
     private String urlGrabacion;
 
     private Boolean comoAsistente;
@@ -69,9 +71,12 @@ public class ReunionTemplate implements Serializable
 
     private List<Documento> documentos;
 
-    public ReunionTemplate() {}
+    public ReunionTemplate()
+    {
+    }
 
-    public ReunionTemplate(Long id) {
+    public ReunionTemplate(Long id)
+    {
         this.id = id;
     }
 
@@ -155,27 +160,33 @@ public class ReunionTemplate implements Serializable
         this.puntosOrdenDia = puntosOrdenDia;
     }
 
-    public List<OrganoTemplate> getOrganos() {
+    public List<OrganoTemplate> getOrganos()
+    {
         return organos;
     }
 
-    public void setOrganos(List<OrganoTemplate> organos) {
+    public void setOrganos(List<OrganoTemplate> organos)
+    {
         this.organos = organos;
     }
 
-    public List<Documento> getDocumentos() {
+    public List<Documento> getDocumentos()
+    {
         return documentos;
     }
 
-    public void setDocumentos(List<Documento> documentos) {
+    public void setDocumentos(List<Documento> documentos)
+    {
         this.documentos = documentos;
     }
 
-    public String getDescripcion() {
+    public String getDescripcion()
+    {
         return descripcion;
     }
 
-    public void setDescripcion(String descripcion) {
+    public void setDescripcion(String descripcion)
+    {
         this.descripcion = descripcion;
     }
 
@@ -189,11 +200,13 @@ public class ReunionTemplate implements Serializable
         this.comentarios = comentarios;
     }
 
-    public String getUrlGrabacion() {
+    public String getUrlGrabacion()
+    {
         return urlGrabacion;
     }
 
-    public void setUrlGrabacion(String urlGrabacion) {
+    public void setUrlGrabacion(String urlGrabacion)
+    {
         this.urlGrabacion = urlGrabacion;
     }
 
@@ -258,19 +271,23 @@ public class ReunionTemplate implements Serializable
         this.completada = completada;
     }
 
-    public Boolean isAdmiteSuplencia() {
+    public Boolean isAdmiteSuplencia()
+    {
         return admiteSuplencia;
     }
 
-    public void setAdmiteSuplencia(Boolean admiteSuplencia) {
+    public void setAdmiteSuplencia(Boolean admiteSuplencia)
+    {
         this.admiteSuplencia = admiteSuplencia;
     }
 
-    public Boolean isComoAsistente() {
+    public Boolean isComoAsistente()
+    {
         return comoAsistente;
     }
 
-    public void setComoAsistente(Boolean comoAsistente) {
+    public void setComoAsistente(Boolean comoAsistente)
+    {
         this.comoAsistente = comoAsistente;
     }
 
@@ -362,5 +379,29 @@ public class ReunionTemplate implements Serializable
     public void setCargoAlternativoResponsableActa(String cargoAlternativoResponsableActa)
     {
         this.cargoAlternativoResponsableActa = cargoAlternativoResponsableActa;
+    }
+
+    public Long getCreadorId()
+    {
+        return creadorId;
+    }
+
+    public void setCreadorId(Long creadorId)
+    {
+        this.creadorId = creadorId;
+    }
+
+    public boolean esMiembro(Long userId)
+    {
+        for (OrganoTemplate organoTemplate : getOrganos())
+        {
+            for (MiembroTemplate miembroTemplate : organoTemplate.getAsistentes())
+            {
+                if (((userId.toString().equals(miembroTemplate.getMiembroId().toString())) || userId.equals(
+                        miembroTemplate.getSuplenteId())) && miembroTemplate.getAsistencia()) return true;
+            }
+        }
+
+        return false;
     }
 }

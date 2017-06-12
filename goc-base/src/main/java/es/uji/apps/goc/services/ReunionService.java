@@ -544,6 +544,7 @@ public class ReunionService
         reunionTemplate.setCompletada(reunion.getCompletada());
         reunionTemplate.setCreadorNombre(reunion.getCreadorNombre());
         reunionTemplate.setCreadorEmail(reunion.getCreadorEmail());
+        reunionTemplate.setCreadorId(reunion.getCreadorId());
 
         if (reunion.getMiembroResponsableActa() != null)
         {
@@ -718,6 +719,7 @@ public class ReunionService
         miembroTemplate.setSuplente(organoReunionMiembro.getSuplenteNombre());
         miembroTemplate.setSuplenteId(organoReunionMiembro.getSuplenteId());
         miembroTemplate.setAsistenciaConfirmada(organoReunionMiembro.getAsistenciaConfirmada());
+        miembroTemplate.setAsistencia(organoReunionMiembro.getAsistencia());
 
         Cargo cargo = new Cargo();
         cargo.setId(organoReunionMiembro.getCargoId());
@@ -888,33 +890,15 @@ public class ReunionService
         return reunionDAO.getReunionConOrganosById(reunionId);
     }
 
-    public List<ReunionTemplate> getReunionesByAsistenteIdOrSuplenteId(Long connectedUserId)
-            throws OrganosExternosException, PersonasExternasException
+    public List<ReunionTemplate> getReunionesAccesiblesByPersonaId(Long connectedUserId)
     {
-        List<OrganoReunionMiembro> listaOrganosReunionMiembro =
-                organoReunionMiembroDAO.getReunionesByAsistenteIdOrSuplenteId(connectedUserId);
+        List<Reunion> reunionesAccesibles = reunionDAO.getReunionesAccesiblesByPersonaId(connectedUserId);
 
-        List<Long> reunionesIds = listaOrganosReunionMiembro.stream()
-                .map(organoReunionMiembro -> organoReunionMiembro.getReunionId())
-                .collect(Collectors.toList());
+        reunionesAccesibles = filtrarDuplicadosReuniones(reunionesAccesibles);
 
-        List<Reunion> reunionesAsistentes = reunionDAO.getReunionesTodasByListaIds(reunionesIds);
-
-        return reunionesAsistentes.stream().map(r -> getReunionTemplateDesdeReunion(r, connectedUserId)).map(r ->
+        return reunionesAccesibles.stream().map(r -> getReunionTemplateDesdeReunion(r, connectedUserId)).map(r ->
         {
-            r.setComoAsistente(true);
-            return r;
-        }).collect(Collectors.toList());
-    }
-
-    public List<ReunionTemplate> getReunionesByCreadorId(Long connectedUserId)
-            throws OrganosExternosException, PersonasExternasException
-    {
-        List<Reunion> reunionesConvocante = reunionDAO.getReunionesByCreadorId(connectedUserId);
-
-        return reunionesConvocante.stream().map(r -> getReunionTemplateDesdeReunion(r, connectedUserId)).map(r ->
-        {
-            r.setComoAsistente(false);
+            r.setComoAsistente(r.esMiembro(connectedUserId));
             return r;
         }).collect(Collectors.toList());
     }
