@@ -1,0 +1,66 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="GOC_P_ORDEN_DIA_DESCRIPTORES" directorySegmentName="seg_0" id="35F2BE4E-3D13-7BFB-3D5C-F1741543DE0E">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<schemaObject>851AFA7E-0C67-E024-A963-48DB8EF55127</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>AF97CA58-0D81-5B33-6071-BEFEDDACDC8C</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="ID_CLAVE" id="6D3DC145-444D-3B33-9624-51C734F4F42F">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID" id="83EFD679-CC63-EAB9-8144-81CF8F292C0B">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID_P_ORDEN_DIA" id="FAE0E73D-1373-E691-096B-55B6F029C984">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="PK_ORD_DES" id="C53C2541-2499-7416-8B51-B75EF5FD747D">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<schemaObject>851AFA7E-0C67-E024-A963-48DB8EF55127</schemaObject>
+<segment>00A8D95D-5A5B-2BD1-4455-6A0114FC507D</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+</IndexProxy>
+</indexProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_ORD_CLA" id="6D67D700-953A-F7E6-FB3D-148E047E5977">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ForeignKey>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_ORD_ORD" id="C458CE64-6F2D-608D-4FDB-D2152C13188C">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PK_ORD_DES" id="490D6EEA-D481-B1E1-E473-83DF8B96715F">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<segment>00A8D95D-5A5B-2BD1-4455-6A0114FC507D</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+<existingIndex>C53C2541-2499-7416-8B51-B75EF5FD747D</existingIndex>
+<indexSegment>00A8D95D-5A5B-2BD1-4455-6A0114FC507D</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

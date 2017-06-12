@@ -17,6 +17,11 @@
 <createdTime>2016-07-04 13:04:25 UTC</createdTime>
 <ownerDesignName>goc</ownerDesignName>
 </ColumnProxy>
+<ColumnProxy name="PERSONA_ID" id="AE7D296E-AEEB-A995-5723-1BDA7D344DAC">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
 <ColumnProxy name="EMAIL" id="C44894A5-ABE9-3496-C202-A7EF7CF9CFA4">
 <createdBy>borillo</createdBy>
 <createdTime>2016-07-04 13:04:25 UTC</createdTime>

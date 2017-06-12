@@ -1,0 +1,126 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="9D2A8F11-6C2F-B05E-113F-4DF95AE2B16F" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_DESCRIPTORES_TIPOS_ORGANO">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_DESCRIPTORES_TIPOS_ORGANO</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>66FA7B89-6867-4CB2-C862-08D9287E1A66</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="80FA8C6C-AA1D-1144-2A40-B76A3A6149D8">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_DESCRIPTORES_TIPOS_ORGANO</sourceObjSchema>
+<sourceObjName>ID</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>B1D1F49E-0A29-D094-9FF4-717B6B222C11</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DESCRIPTOR_ID" id="6F9F8CEB-8DAF-9672-99AD-F50EB5F07C83">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_DESCRIPTORES_TIPOS_ORGANO</sourceObjSchema>
+<sourceObjName>DESCRIPTOR_ID</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>D697F03C-EE43-6E51-C51A-97124A965AFC</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="1BA12E46-40FB-5098-6C32-B0A4673F5CBF" referredColumn="C4A44E96-27B8-8939-ED10-FAC4679DB234"/>
+</associations>
+</Column>
+<Column name="TIPO_ORGANO_ID" id="347DAF7D-D9C7-8742-FEE1-E3B98818AD57">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_DESCRIPTORES_TIPOS_ORGANO</sourceObjSchema>
+<sourceObjName>TIPO_ORGANO_ID</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>3C2B2B97-DB6C-718A-9D8A-45F992F8490D</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="AF1D4916-9A2F-5846-EBF9-86FDD1EF159F" referredColumn="AE173D2C-98AF-F9CD-E64A-DCF171B412C5"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="3502AB21-C686-21E4-C03C-9B3462F2D880" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_DESCRIPTORES_TIPOS_ORGANO_PK">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>SYS_C00242734</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>F6AE149C-BCE9-AC01-A18B-5F04E9148D92</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="80FA8C6C-AA1D-1144-2A40-B76A3A6149D8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C7E5D4A3-AD28-AEA5-4857-506887B9C2DA" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="UJI_DESCRIPTORES_TIP_ORG_DE_I">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>UJI_DESCRIPTORES_TIP_ORG_DE_I</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>4B997483-4D0E-BAE3-476F-7D5D881C13D5</importedID>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6F9F8CEB-8DAF-9672-99AD-F50EB5F07C83"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="55A17124-2746-7A37-B47B-3629AFCE4AE9" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="UJI_DESCRIPTORES_TIP_ORG_TO_I">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>UJI_DESCRIPTORES_TIP_ORG_TO_I</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>C0638F47-3FF5-0F9E-7025-46EE7401C283</importedID>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="347DAF7D-D9C7-8742-FEE1-E3B98818AD57"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="0706E8E6-8B32-86D3-7EF2-6048555C02D0" name="GOC_DESCRIPTORES_TIPOS_ORG_DE">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6F9F8CEB-8DAF-9672-99AD-F50EB5F07C83"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="AC36ED15-E4C2-264A-D15D-EBABC60AB0F6" name="GOC_DESCRIPTORES_TIPOS_ORG_TO">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="347DAF7D-D9C7-8742-FEE1-E3B98818AD57"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -22,6 +22,11 @@
 <createdTime>2016-07-04 13:04:25 UTC</createdTime>
 <ownerDesignName>goc</ownerDesignName>
 </ColumnProxy>
+<ColumnProxy name="NOMBRE_ALT" id="895FB01F-1FFF-8502-275E-8E8D28D39A53">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
 </columnProxies>
 <primaryKeys>
 <PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="GOC_CARGOS_PK" id="DEA06DDA-ABBF-9F4D-0D9B-595479BA213C">

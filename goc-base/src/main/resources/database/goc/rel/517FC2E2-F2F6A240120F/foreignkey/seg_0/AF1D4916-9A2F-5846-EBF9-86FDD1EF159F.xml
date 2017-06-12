@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="AF1D4916-9A2F-5846-EBF9-86FDD1EF159F" containerWithKeyObject="9D2A8F11-6C2F-B05E-113F-4DF95AE2B16F" localFKIndex="AC36ED15-E4C2-264A-D15D-EBABC60AB0F6" name="GOC_DESCRIPTORES_TIPOS_ORG_TO">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_DESCRIPTORES_TIPOS_ORG_TO</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>AD513A7A-0304-91A7-850C-211FC1595C4A</importedID>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>F69E23D2-06F0-D716-2FB9-A49E403EEF3E</referredTableID>
+<keyObject>C4D0A0E0-0DCB-BAF4-9EDB-F4C8C4D2E27C</keyObject>
+<referredKeyID>C4D0A0E0-0DCB-BAF4-9EDB-F4C8C4D2E27C</referredKeyID>
+<mandatory>true</mandatory>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

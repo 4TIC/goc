@@ -86,6 +86,38 @@
 <ownDataTypeParameters>7,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="INACTIVO" id="1C4685EC-0887-0041-20AF-DA0B5A6C1763">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_ORGANOS</sourceObjSchema>
+<sourceObjName>INACTIVO</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>7C6CD71C-A273-9B75-9BEC-DE7B062F59FA</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<defaultValue>0</defaultValue>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRE_ALT" id="F20C1B3E-0363-FD78-0288-BA4966A54D0D">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_ORGANOS</sourceObjSchema>
+<sourceObjName>NOMBRE_ALT</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>5267F2F8-17C3-15F8-3966-DEB41ED65CED</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>400 BYTE</dataTypeSize>
+<ownDataTypeParameters>400 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="7F1E0C82-E842-F667-E654-F35DA9D8B03B" name="ORGANOS_PK">

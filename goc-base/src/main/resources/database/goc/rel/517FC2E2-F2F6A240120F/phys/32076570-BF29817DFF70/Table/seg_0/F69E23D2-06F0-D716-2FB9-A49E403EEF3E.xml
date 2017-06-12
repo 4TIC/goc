@@ -27,6 +27,11 @@
 <createdTime>2016-07-04 13:04:25 UTC</createdTime>
 <ownerDesignName>goc</ownerDesignName>
 </ColumnProxy>
+<ColumnProxy name="NOMBRE_ALT" id="D685FAE3-A890-6D19-0A82-69BC46566AFA">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
 </columnProxies>
 <indexProxies>
 <IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="TIPOS_ORGANO_PK" id="A826358C-5E79-CB29-86C6-BC882860ECAD">

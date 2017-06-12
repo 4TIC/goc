@@ -90,6 +90,20 @@
 <colAssociation fkAssociation="42B82A9A-C0F4-EFD8-AE3C-6AFA66FC7536" referredColumn="56D2EFA3-3E43-9D7E-34C9-891B32CCF5CD"/>
 </associations>
 </Column>
+<Column name="PERSONA_ID" id="AE7D296E-AEEB-A995-5723-1BDA7D344DAC">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_MIEMBROS</sourceObjSchema>
+<sourceObjName>PERSONA_ID</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>596FE75E-77CC-8BF8-ADB2-AB4A2B1834C7</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="D406C290-780F-15EB-1B7C-3AC2E8951AC1" name="MIEMBROS_PK">

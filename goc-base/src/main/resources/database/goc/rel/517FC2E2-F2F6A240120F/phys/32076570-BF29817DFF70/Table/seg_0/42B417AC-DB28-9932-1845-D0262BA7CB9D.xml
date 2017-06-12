@@ -22,6 +22,11 @@
 <createdTime>2016-07-04 13:04:25 UTC</createdTime>
 <ownerDesignName>goc</ownerDesignName>
 </ColumnProxy>
+<ColumnProxy name="DESCRIPCION_ALT" id="6085A846-9491-439E-B5AA-84A8AC8DEA41">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
 <ColumnProxy name="CREADOR_ID" id="7E6E1B45-853F-4C8F-62D8-9F9CCE662A64">
 <createdBy>borillo</createdBy>
 <createdTime>2016-07-04 13:04:25 UTC</createdTime>
@@ -36,7 +41,6 @@
 <createdBy>borillo</createdBy>
 <createdTime>2016-07-04 13:04:25 UTC</createdTime>
 <ownerDesignName>goc</ownerDesignName>
-<defaultValue>SYSDATE</defaultValue>
 </ColumnProxy>
 <ColumnProxy name="MIME_TYPE" id="C211FED3-0B4E-BEED-D5AC-09A2EE00A607">
 <createdBy>borillo</createdBy>
@@ -65,6 +69,16 @@
 <LobStorage class="oracle.dbtools.crest.model.design.storage.oracle.v11g.LobStorageOraclev11g" name="SYS_LOB0000359372C00007$$" id="7C4ECE31-8215-7E49-56C6-64F64F7BE7C2">
 <createdBy>borillo</createdBy>
 <createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<cache>NOCACHE</cache>
+<chunk>8192</chunk>
+<column>DATOS</column>
+<logging>YES</logging>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+</LobStorage>
+<LobStorage class="oracle.dbtools.crest.model.design.storage.oracle.v11g.LobStorageOraclev11g" name="SYS_LOB0000372932C00007$$" id="EA0CB2D2-9571-AED6-BABA-98158F0AEE08">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
 <ownerDesignName>goc</ownerDesignName>
 <cache>NOCACHE</cache>
 <chunk>8192</chunk>

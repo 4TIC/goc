@@ -1,0 +1,146 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableView class="oracle.dbtools.crest.model.design.relational.TableView" directorySegmentName="seg_0" id="AA1128C3-536D-52F9-1E07-B9F2B33003DB" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_VW_REUNIONES_EDITORES">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_VW_REUNIONES_EDITORES</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>80A3C1F6-624F-62DD-76F5-35B172515E34</importedID>
+<userDefined>true</userDefined>
+<userDefinedSQL>CREATE OR REPLACE VIEW GOC_VW_REUNIONES_EDITORES&lt;br/&gt;AS &lt;br/&gt;SELECT r.id,&lt;br/&gt;          r.asunto,&lt;br/&gt;          r.asunto_alt,&lt;br/&gt;          r.fecha,&lt;br/&gt;          r.duracion,&lt;br/&gt;          (SELECT COUNT (*)&lt;br/&gt;             FROM goc_reuniones_documentos rd&lt;br/&gt;            WHERE rd.reunion_id = r.id)&lt;br/&gt;             num_documentos,&lt;br/&gt;          r.creador_id editor_id,&lt;br/&gt;          r.completada completada,&lt;br/&gt;          o.externo,&lt;br/&gt;          o.organo_id,&lt;br/&gt;          o.tipo_organo_id&lt;br/&gt;     FROM goc_reuniones                  r,&lt;br/&gt;          goc_organos_reuniones          o,&lt;br/&gt;          goc_organos_reuniones_miembros orm&lt;br/&gt;    WHERE r.id = o.reunion_id(+) AND o.id = orm.organo_reunion_id(+)</userDefinedSQL>
+<viewElements>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="ID" id="BCE554ED-CB69-6856-273B-215E7C2216C2">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>ID</alias>
+<dataType>NUMBER</dataType>
+<headerAlias>ID</headerAlias>
+<reference>false</reference>
+<viewID>AA1128C3-536D-52F9-1E07-B9F2B33003DB</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="ASUNTO" id="CAB82956-BCAD-3B5B-274A-BB6636DCDA6E">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>ASUNTO</alias>
+<dataType>VARCHAR2 (500)</dataType>
+<headerAlias>ASUNTO</headerAlias>
+<reference>false</reference>
+<viewID>AA1128C3-536D-52F9-1E07-B9F2B33003DB</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="ASUNTO_ALT" id="5448A004-186B-DEDE-E97E-5D9E035B08BE">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>ASUNTO_ALT</alias>
+<dataType>VARCHAR2 (500)</dataType>
+<headerAlias>ASUNTO_ALT</headerAlias>
+<reference>false</reference>
+<viewID>AA1128C3-536D-52F9-1E07-B9F2B33003DB</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="FECHA" id="D0A92EAA-5A06-EC71-78BB-04370BE511F4">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>FECHA</alias>
+<dataType>DATE (7)</dataType>
+<headerAlias>FECHA</headerAlias>
+<reference>false</reference>
+<viewID>AA1128C3-536D-52F9-1E07-B9F2B33003DB</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="DURACION" id="89495283-225B-FE1C-C86B-0C146E2A4458">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>DURACION</alias>
+<dataType>NUMBER</dataType>
+<headerAlias>DURACION</headerAlias>
+<reference>false</reference>
+<viewID>AA1128C3-536D-52F9-1E07-B9F2B33003DB</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="NUM_DOCUMENTOS" id="BED12AEE-56BC-3901-BF01-CCC26C88F027">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>NUM_DOCUMENTOS</alias>
+<dataType>NUMBER</dataType>
+<headerAlias>NUM_DOCUMENTOS</headerAlias>
+<reference>false</reference>
+<viewID>AA1128C3-536D-52F9-1E07-B9F2B33003DB</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="EDITOR_ID" id="F2270590-149D-B258-E730-59AEE586D827">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>EDITOR_ID</alias>
+<dataType>NUMBER</dataType>
+<headerAlias>EDITOR_ID</headerAlias>
+<reference>false</reference>
+<viewID>AA1128C3-536D-52F9-1E07-B9F2B33003DB</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="COMPLETADA" id="98FA06FD-E11F-0BBA-383B-BE6F74ABE3FF">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>COMPLETADA</alias>
+<dataType>NUMBER</dataType>
+<headerAlias>COMPLETADA</headerAlias>
+<reference>false</reference>
+<viewID>AA1128C3-536D-52F9-1E07-B9F2B33003DB</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="EXTERNO" id="B97CCB2A-D712-D77D-4570-B72F67F2475F">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>EXTERNO</alias>
+<dataType>NUMBER</dataType>
+<headerAlias>EXTERNO</headerAlias>
+<reference>false</reference>
+<viewID>AA1128C3-536D-52F9-1E07-B9F2B33003DB</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="ORGANO_ID" id="D5E77690-278A-1173-A362-B17E94054278">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>ORGANO_ID</alias>
+<dataType>VARCHAR2 (100)</dataType>
+<headerAlias>ORGANO_ID</headerAlias>
+<reference>false</reference>
+<viewID>AA1128C3-536D-52F9-1E07-B9F2B33003DB</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="TIPO_ORGANO_ID" id="B155D0EA-03DA-1AE6-EA03-AA97DCC49A63">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>TIPO_ORGANO_ID</alias>
+<dataType>NUMBER</dataType>
+<headerAlias>TIPO_ORGANO_ID</headerAlias>
+<reference>false</reference>
+<viewID>AA1128C3-536D-52F9-1E07-B9F2B33003DB</viewID>
+</viewElement>
+</viewElements>
+</TableView>

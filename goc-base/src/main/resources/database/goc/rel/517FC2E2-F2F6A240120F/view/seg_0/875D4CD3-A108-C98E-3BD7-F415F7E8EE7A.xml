@@ -1,0 +1,314 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableView class="oracle.dbtools.crest.model.design.relational.TableView" directorySegmentName="seg_0" id="875D4CD3-A108-C98E-3BD7-F415F7E8EE7A" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_VW_REUNIONES_BUSQUEDA">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_VW_REUNIONES_BUSQUEDA</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>4E023637-5489-13FF-3978-E9924155DFD4</importedID>
+<userDefined>true</userDefined>
+<userDefinedSQL>CREATE OR REPLACE VIEW GOC_VW_REUNIONES_BUSQUEDA&lt;br/&gt;AS &lt;br/&gt;select r.id id,&lt;br/&gt;       r.asunto asunto_reunion, &lt;br/&gt;       r.descripcion descripcion_reunion, &lt;br/&gt;       r.asunto_alt asunto_alt_reunion, &lt;br/&gt;       r.descripcion_alt descripcion_alt_reunion,&lt;br/&gt;       p.titulo titulo_punto, &lt;br/&gt;       p.descripcion descripcion_punto, &lt;br/&gt;       p.acuerdos acuerdos_punto, &lt;br/&gt;       p.deliberaciones deliberaciones_punto,&lt;br/&gt;       p.titulo_alt titulo_alt_punto, &lt;br/&gt;       p.descripcion_alt descripcion_alt_punto, &lt;br/&gt;       p.acuerdos_alt acuerdos_alt_punto, &lt;br/&gt;       p.deliberaciones_alt deliberaciones_alt_punto,&lt;br/&gt;       quita_acentos(r.asunto) asunto_reunion_busq, &lt;br/&gt;       quita_acentos_clob(r.descripcion) descripcion_reunion_busq, &lt;br/&gt;       quita_acentos(r.asunto_alt) asunto_alt_reunion_busq, &lt;br/&gt;       quita_acentos_clob(r.descripcion_alt) descripcion_alt_reunion_busq,&lt;br/&gt;       quita_acentos(p.titulo) titulo_punto_busq, &lt;br/&gt;       quita_acentos_clob(p.descripcion) descripcion_punto_busq, &lt;br/&gt;       quita_acentos_clob(p.acuerdos) acuerdos_punto_busq, &lt;br/&gt;       quita_acentos_clob(p.deliberaciones) deliberaciones_punto_busq,&lt;br/&gt;       quita_acentos(p.titulo_alt) titulo_alt_punto_busq, &lt;br/&gt;       quita_acentos_clob(p.descripcion_alt) descripcion_alt_punto_busq, &lt;br/&gt;       quita_acentos_clob(p.acuerdos_alt) acuerdos_alt_punto_busq, &lt;br/&gt;       quita_acentos_clob(p.deliberaciones_alt) deliberaciones_alt_punto_busq&lt;br/&gt;  from goc_reuniones r,&lt;br/&gt;       goc_reuniones_puntos_orden_dia p&lt;br/&gt; where p.reunion_id(+) = r.id</userDefinedSQL>
+<viewElements>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="ID" id="5651A196-FA7B-11DD-1C7F-55ABA4420175">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>ID</alias>
+<dataType>NUMBER</dataType>
+<headerAlias>ID</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="ASUNTO_REUNION" id="CCAA1E91-73C9-2E87-19FB-054B52E701D6">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>ASUNTO_REUNION</alias>
+<dataType>VARCHAR2 (500)</dataType>
+<headerAlias>ASUNTO_REUNION</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="DESCRIPCION_REUNION" id="20625CA4-8A5F-7B8E-B04B-4676CD8BABD1">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>DESCRIPCION_REUNION</alias>
+<dataType>CLOB (4000)</dataType>
+<headerAlias>DESCRIPCION_REUNION</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="ASUNTO_ALT_REUNION" id="5F711A32-D25D-8B11-B410-C91A2716BC6A">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>ASUNTO_ALT_REUNION</alias>
+<dataType>VARCHAR2 (500)</dataType>
+<headerAlias>ASUNTO_ALT_REUNION</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="DESCRIPCION_ALT_REUNION" id="416AE14A-03F0-BE62-DA00-1375816F97ED">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>DESCRIPCION_ALT_REUNION</alias>
+<dataType>CLOB (4000)</dataType>
+<headerAlias>DESCRIPCION_ALT_REUNION</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="TITULO_PUNTO" id="CC65DFD0-BB89-6C4B-D722-E53CD0BFDEB0">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>TITULO_PUNTO</alias>
+<dataType>VARCHAR2 (4000)</dataType>
+<headerAlias>TITULO_PUNTO</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="DESCRIPCION_PUNTO" id="752467E6-2C33-2361-B41B-779EB8D1F511">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>DESCRIPCION_PUNTO</alias>
+<dataType>CLOB (4000)</dataType>
+<headerAlias>DESCRIPCION_PUNTO</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="ACUERDOS_PUNTO" id="754BD982-D2FB-01F0-BC11-56CD6370C147">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>ACUERDOS_PUNTO</alias>
+<dataType>CLOB (4000)</dataType>
+<headerAlias>ACUERDOS_PUNTO</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="DELIBERACIONES_PUNTO" id="961BA5D3-8220-FE82-A23B-D8AFFA10A6C6">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>DELIBERACIONES_PUNTO</alias>
+<dataType>CLOB (4000)</dataType>
+<headerAlias>DELIBERACIONES_PUNTO</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="TITULO_ALT_PUNTO" id="C128DF3D-5439-C3DB-F814-235B597E2C13">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>TITULO_ALT_PUNTO</alias>
+<dataType>VARCHAR2 (4000)</dataType>
+<headerAlias>TITULO_ALT_PUNTO</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="DESCRIPCION_ALT_PUNTO" id="8EA5BB78-7F3B-7283-87D0-4A64826FFF91">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>DESCRIPCION_ALT_PUNTO</alias>
+<dataType>CLOB (4000)</dataType>
+<headerAlias>DESCRIPCION_ALT_PUNTO</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="ACUERDOS_ALT_PUNTO" id="3C6B369B-E7CD-9191-721E-87C28EA404CB">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>ACUERDOS_ALT_PUNTO</alias>
+<dataType>CLOB (4000)</dataType>
+<headerAlias>ACUERDOS_ALT_PUNTO</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="DELIBERACIONES_ALT_PUNTO" id="FC1F702E-3D47-3DB8-C274-B71F4754F5DF">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>DELIBERACIONES_ALT_PUNTO</alias>
+<dataType>CLOB (4000)</dataType>
+<headerAlias>DELIBERACIONES_ALT_PUNTO</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="ASUNTO_REUNION_BUSQ" id="0DD6CB77-5A4D-418A-BAC5-1879881B0B89">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>ASUNTO_REUNION_BUSQ</alias>
+<dataType>VARCHAR2 (4000)</dataType>
+<headerAlias>ASUNTO_REUNION_BUSQ</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="DESCRIPCION_REUNION_BUSQ" id="136CDFCD-B93F-A0C1-B06F-FD570FCEDAFB">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>DESCRIPCION_REUNION_BUSQ</alias>
+<dataType>CLOB (4000)</dataType>
+<headerAlias>DESCRIPCION_REUNION_BUSQ</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="ASUNTO_ALT_REUNION_BUSQ" id="7F3F7E67-B2F6-D98A-8100-37DDBDD8B384">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>ASUNTO_ALT_REUNION_BUSQ</alias>
+<dataType>VARCHAR2 (4000)</dataType>
+<headerAlias>ASUNTO_ALT_REUNION_BUSQ</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="DESCRIPCION_ALT_REUNION_BUSQ" id="9C07CE8C-5CE4-E71A-8058-D8BD2E9C852E">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>DESCRIPCION_ALT_REUNION_BUSQ</alias>
+<dataType>CLOB (4000)</dataType>
+<headerAlias>DESCRIPCION_ALT_REUNION_BUSQ</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="TITULO_PUNTO_BUSQ" id="6EEA06BD-057D-4E45-1A53-00127DAA4097">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>TITULO_PUNTO_BUSQ</alias>
+<dataType>VARCHAR2 (4000)</dataType>
+<headerAlias>TITULO_PUNTO_BUSQ</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="DESCRIPCION_PUNTO_BUSQ" id="884973D2-CF84-7048-DEA4-F8D675D71871">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>DESCRIPCION_PUNTO_BUSQ</alias>
+<dataType>CLOB (4000)</dataType>
+<headerAlias>DESCRIPCION_PUNTO_BUSQ</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="ACUERDOS_PUNTO_BUSQ" id="599F7A71-C93F-225B-B702-C2D30F095EBB">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>ACUERDOS_PUNTO_BUSQ</alias>
+<dataType>CLOB (4000)</dataType>
+<headerAlias>ACUERDOS_PUNTO_BUSQ</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="DELIBERACIONES_PUNTO_BUSQ" id="DAA2C128-15DD-A25D-0ECC-C1EA6681F20A">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>DELIBERACIONES_PUNTO_BUSQ</alias>
+<dataType>CLOB (4000)</dataType>
+<headerAlias>DELIBERACIONES_PUNTO_BUSQ</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="TITULO_ALT_PUNTO_BUSQ" id="2E8C2361-00F1-3AAB-C55C-7967C043BFA9">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>TITULO_ALT_PUNTO_BUSQ</alias>
+<dataType>VARCHAR2 (4000)</dataType>
+<headerAlias>TITULO_ALT_PUNTO_BUSQ</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="DESCRIPCION_ALT_PUNTO_BUSQ" id="F4D7D233-137B-EB28-D5DA-66030242B6B9">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>DESCRIPCION_ALT_PUNTO_BUSQ</alias>
+<dataType>CLOB (4000)</dataType>
+<headerAlias>DESCRIPCION_ALT_PUNTO_BUSQ</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="ACUERDOS_ALT_PUNTO_BUSQ" id="45DE2003-EF0A-2527-09D6-9AC5D0E59D22">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>ACUERDOS_ALT_PUNTO_BUSQ</alias>
+<dataType>CLOB (4000)</dataType>
+<headerAlias>ACUERDOS_ALT_PUNTO_BUSQ</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="DELIBERACIONES_ALT_PUNTO_BUSQ" id="34B3062C-4A6F-4F05-03CD-C12B5D5B628C">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>DELIBERACIONES_ALT_PUNTO_BUSQ</alias>
+<dataType>CLOB (4000)</dataType>
+<headerAlias>DELIBERACIONES_ALT_PUNTO_BUSQ</headerAlias>
+<reference>false</reference>
+<viewID>875D4CD3-A108-C98E-3BD7-F415F7E8EE7A</viewID>
+</viewElement>
+</viewElements>
+</TableView>

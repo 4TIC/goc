@@ -1,0 +1,179 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="1BACD900-848A-7301-00AE-DD7A26F96D00" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_P_ORDEN_DIA_DOCUMENTOS">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_P_ORDEN_DIA_DOCUMENTOS</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>15AB83FF-2344-19E8-5C37-B80E26D20CC7</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="2C0321CF-F3CA-9CD4-2BE1-58160CC08008">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_P_ORDEN_DIA_DOCUMENTOS</sourceObjSchema>
+<sourceObjName>ID</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>F13A6A3F-2F2D-4D5D-1407-35C946209D58</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PUNTO_ID" id="6DC454EC-7B2D-696D-6126-DADEC952BCA9">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_P_ORDEN_DIA_DOCUMENTOS</sourceObjSchema>
+<sourceObjName>PUNTO_ID</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>0E28BCF6-15DB-3075-F560-80D3758659BB</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="CD8D589A-3B56-A8A5-C019-69054A3BA13C" referredColumn="D1960D63-F3A8-1D8B-51ED-3CCDC6D69A20"/>
+</associations>
+</Column>
+<Column name="DESCRIPCION" id="1134D11A-F707-B95E-E1D9-B6127C92402F">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_P_ORDEN_DIA_DOCUMENTOS</sourceObjSchema>
+<sourceObjName>DESCRIPCION</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>AE78B52A-06E3-4FED-B57E-72DAC4D9805D</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>2048 BYTE</dataTypeSize>
+<ownDataTypeParameters>2048 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MIME_TYPE" id="D32E6B47-FEAF-E2E4-5907-28759723B6AB">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_P_ORDEN_DIA_DOCUMENTOS</sourceObjSchema>
+<sourceObjName>MIME_TYPE</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>C6FFEF5C-26F0-9480-989E-A0F07EBD41E6</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>512 BYTE</dataTypeSize>
+<ownDataTypeParameters>512 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRE_FICHERO" id="7E765F30-FDDD-DB23-9543-BA817162B3CA">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_P_ORDEN_DIA_DOCUMENTOS</sourceObjSchema>
+<sourceObjName>NOMBRE_FICHERO</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>2ABD98B2-84A6-5DD3-3AFA-F3481ACFA846</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>512 BYTE</dataTypeSize>
+<ownDataTypeParameters>512 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FECHA_ADICION" id="21DFFDF2-D812-F44D-52F9-1430E6D2951B">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_P_ORDEN_DIA_DOCUMENTOS</sourceObjSchema>
+<sourceObjName>FECHA_ADICION</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>FDF82244-D680-20B8-7FDF-69DE64ADA57E</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<defaultValue>SYSDATE</defaultValue>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DATOS" id="3FA114AD-076B-3354-FA00-F865C6E7EEB5">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_P_ORDEN_DIA_DOCUMENTOS</sourceObjSchema>
+<sourceObjName>DATOS</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>5E2597FD-016C-07AD-44DB-5EDD86FC185D</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT029</logicalDatatype>
+<dataTypeSize>4000</dataTypeSize>
+<ownDataTypeParameters>4000,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CREADOR_ID" id="4BC9E8F9-58CB-CEB7-7BC7-34AFAA4565B0">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_P_ORDEN_DIA_DOCUMENTOS</sourceObjSchema>
+<sourceObjName>CREADOR_ID</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>6E9ED395-6820-4250-4B84-B8FD747E4A89</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DESCRIPCION_ALT" id="7721BC03-5FD4-6B45-5317-D2C260EFDB4B">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_P_ORDEN_DIA_DOCUMENTOS</sourceObjSchema>
+<sourceObjName>DESCRIPCION_ALT</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>D7C3D401-CB9E-8089-B607-BBE01B986A5D</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>2048 BYTE</dataTypeSize>
+<ownDataTypeParameters>2048 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="D8AF3755-5B5E-FADA-B525-1DE03FC5AB61" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_P_ORDEN_DIA_DOCUMENTOS_PK">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>SYS_C00230777</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>CD5A2212-C1DF-524A-F788-7C8943D04DDE</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2C0321CF-F3CA-9CD4-2BE1-58160CC08008"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="E4CCB25B-9BB6-F8A0-FD21-9E07114C9E46" name="FK_ORDENDIA_DOCUMENTOS_REUNION">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6DC454EC-7B2D-696D-6126-DADEC952BCA9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

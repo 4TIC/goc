@@ -1,0 +1,141 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="7C551B86-4BDE-A8DE-762E-8FEA8A6FBE88" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_DESCRIPTORES">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_DESCRIPTORES</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>07D08E52-853B-73D0-0DB1-DEDDCC3F31AB</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="C4A44E96-27B8-8939-ED10-FAC4679DB234">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_DESCRIPTORES</sourceObjSchema>
+<sourceObjName>ID</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>9EEA88F9-706E-CD16-93F7-BFA2D8C4AA02</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DESCRIPTOR" id="190FE1A1-558B-512C-A7A7-56C1DCA71FF9">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_DESCRIPTORES</sourceObjSchema>
+<sourceObjName>DESCRIPTOR</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>6389D664-12D7-9B75-FC82-A93E974A6D5A</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DESCRIPTOR_ALT" id="415C0B72-AD5A-69B3-4F09-6227194D3618">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_DESCRIPTORES</sourceObjSchema>
+<sourceObjName>DESCRIPTOR_ALT</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>99DD26CC-3072-B22C-B8AF-886FFF79A58A</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DESCRIPCION" id="88E63EF0-CB9D-AB77-DD58-1242EC5D48D9">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_DESCRIPTORES</sourceObjSchema>
+<sourceObjName>DESCRIPCION</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>134524F6-1E94-1D45-A7B3-1731BF1E95BA</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200 BYTE</dataTypeSize>
+<ownDataTypeParameters>200 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DESCRIPCION_ALT" id="C8B7351D-4DD2-C879-349A-86FF1507E55B">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_DESCRIPTORES</sourceObjSchema>
+<sourceObjName>DESCRIPCION_ALT</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>16EA4FE0-2BD9-F435-F79D-1D503DD01D70</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200 BYTE</dataTypeSize>
+<ownDataTypeParameters>200 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ESTADO" id="C1FEE0C3-2C0E-E0AC-809A-3D8C2F56716E">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_DESCRIPTORES</sourceObjSchema>
+<sourceObjName>ESTADO</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>259A00EB-334D-5B87-B895-2CA62A759436</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,1,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="3B01EA48-B68D-AFA7-FF98-4B2EEC941257" name="PK_DESCRIPTOR">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>PK_DESCRIPTOR</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>D8B1F8FF-0802-D136-087C-42C2E3EBEBE0</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C4A44E96-27B8-8939-ED10-FAC4679DB234"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7E7BA960-634D-92E3-C57B-4EE862FC717F" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="PK_DESCRIPTOR">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>PK_DESCRIPTOR</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>0566CE43-8896-F83B-798D-86CAF1DC1E11</importedID>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C4A44E96-27B8-8939-ED10-FAC4679DB234"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

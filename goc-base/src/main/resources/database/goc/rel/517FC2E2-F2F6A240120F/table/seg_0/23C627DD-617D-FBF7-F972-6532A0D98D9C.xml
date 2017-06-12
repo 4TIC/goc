@@ -1,0 +1,134 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="23C627DD-617D-FBF7-F972-6532A0D98D9C" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_REUNIONES_COMENTARIOS">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_REUNIONES_COMENTARIOS</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>08BAF29A-DB75-C707-981A-E2C4ED1B7652</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="39C43234-E4FF-2F34-A34B-2C9E73FDE0A7">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_REUNIONES_COMENTARIOS</sourceObjSchema>
+<sourceObjName>ID</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>8107F3F3-26F7-708A-98CA-C5B581F6DF3C</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="COMENTARIO" id="9779FE97-21A1-05A8-CE53-2A184CAC7C40">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_REUNIONES_COMENTARIOS</sourceObjSchema>
+<sourceObjName>COMENTARIO</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>DB76ECF9-F477-C742-6130-B6AE3D5A7B9B</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT028</logicalDatatype>
+<dataTypeSize>4000</dataTypeSize>
+<ownDataTypeParameters>4000,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="REUNION_ID" id="3138641A-EC9B-A8CD-CF4F-77FEAD1471A4">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_REUNIONES_COMENTARIOS</sourceObjSchema>
+<sourceObjName>REUNION_ID</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>EE0879E2-B666-C92C-D50D-34C13E08757C</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6A6DDCF2-6971-4686-408C-CEE6D3A8046A" referredColumn="70A5F1A6-7E2A-4353-0032-ACFD918D611E"/>
+</associations>
+</Column>
+<Column name="CREADOR_ID" id="8FA445A6-4594-63D8-FC53-C3B9757D080D">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_REUNIONES_COMENTARIOS</sourceObjSchema>
+<sourceObjName>CREADOR_ID</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>9BE26E02-A3A2-C9C1-D0BB-959A83C9DA47</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CREADOR_NOMBRE" id="3ACC1D60-E7EF-2AFA-C500-EA5C1A246658">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_REUNIONES_COMENTARIOS</sourceObjSchema>
+<sourceObjName>CREADOR_NOMBRE</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>9C74B9F1-4D11-312B-812D-E5BE069F2BCB</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1000 BYTE</dataTypeSize>
+<ownDataTypeParameters>1000 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FECHA" id="D0683D66-D72D-08D7-1D06-248021DC2FB1">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_REUNIONES_COMENTARIOS</sourceObjSchema>
+<sourceObjName>FECHA</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>7476AD02-C3E9-5AFA-FDC8-B6AE92870237</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<defaultValue>SYSDATE</defaultValue>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="0670CE4C-9786-80B4-B32A-F212DE268106" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_REUNIONES_COMENTARIOS_PK">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>SYS_C00230794</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>626F4E98-FF5D-4C60-8DEB-3680DF03A5E5</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="39C43234-E4FF-2F34-A34B-2C9E73FDE0A7"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="82785C8A-B660-ED29-6F92-FB532CD2FE7C" name="FK_COMENTARIOS_REUNIONES">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3138641A-EC9B-A8CD-CF4F-77FEAD1471A4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

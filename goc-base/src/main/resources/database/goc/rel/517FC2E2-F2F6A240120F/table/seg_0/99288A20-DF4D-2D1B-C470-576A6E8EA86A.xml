@@ -25,24 +25,6 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="ORGANO_ID" id="DDF3E507-C149-5974-07DD-1C8198BABA25">
-<sourceConnName>uji_reuniones@d11</sourceConnName>
-<sourceObjSchema>GOC_ORGANOS_REUNIONES</sourceObjSchema>
-<sourceObjName>ORGANO_ID</sourceObjName>
-<createdBy>borillo</createdBy>
-<createdTime>2016-07-04 13:04:25 UTC</createdTime>
-<ownerDesignName>goc</ownerDesignName>
-<importedID>344B61CC-676B-ADE9-470D-18FD3BDCDA17</importedID>
-<nullsAllowed>true</nullsAllowed>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT019</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-<autoIncrementCycle>false</autoIncrementCycle>
-<associations>
-<colAssociation fkAssociation="29D2EBE9-E284-17F9-7A93-7497F3A2C094" referredColumn="5DAF4901-D0F7-34EF-15B2-452AAE9DEF19"/>
-</associations>
-</Column>
 <Column name="REUNION_ID" id="DB00195B-8B4A-A6FA-F1BA-2E7D776A629B">
 <sourceConnName>uji_reuniones@d11</sourceConnName>
 <sourceObjSchema>GOC_ORGANOS_REUNIONES</sourceObjSchema>
@@ -59,6 +41,86 @@
 <associations>
 <colAssociation fkAssociation="16BD796E-A4C8-96BC-B37B-674910CE8044" referredColumn="70A5F1A6-7E2A-4353-0032-ACFD918D611E"/>
 </associations>
+</Column>
+<Column name="ORGANO_NOMBRE" id="70869DFC-3DC7-B52B-28ED-119692D02252">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_ORGANOS_REUNIONES</sourceObjSchema>
+<sourceObjName>ORGANO_NOMBRE</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>CBFC90B2-539F-151F-D16F-A4953A64A54B</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>400 BYTE</dataTypeSize>
+<ownDataTypeParameters>400 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TIPO_ORGANO_ID" id="F0BE31EA-7246-4121-8D6A-12C5226D4604">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_ORGANOS_REUNIONES</sourceObjSchema>
+<sourceObjName>TIPO_ORGANO_ID</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>39360118-EFF5-DC92-3CA0-E2C7348643C6</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="EXTERNO" id="A2B4AA57-F974-C062-9EDB-0D12E80E7C7B">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_ORGANOS_REUNIONES</sourceObjSchema>
+<sourceObjName>EXTERNO</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>8D8A3E18-28E4-6BF3-4E01-80DA3BD051E3</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ORGANO_ID" id="DDF3E507-C149-5974-07DD-1C8198BABA25">
+<sourceConnName>uji_reuniones@d11</sourceConnName>
+<sourceObjSchema>GOC_ORGANOS_REUNIONES</sourceObjSchema>
+<sourceObjName>ORGANO_ID</sourceObjName>
+<createdBy>borillo</createdBy>
+<createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>344B61CC-676B-ADE9-470D-18FD3BDCDA17</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="29D2EBE9-E284-17F9-7A93-7497F3A2C094" referredColumn="5DAF4901-D0F7-34EF-15B2-452AAE9DEF19"/>
+</associations>
+</Column>
+<Column name="ORGANO_NOMBRE_ALT" id="E118CF2F-51AA-EE15-9079-0F95074C7EEC">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_ORGANOS_REUNIONES</sourceObjSchema>
+<sourceObjName>ORGANO_NOMBRE_ALT</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>D345C5F0-FB69-4FB2-4D70-FD582C33AD02</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>400 BYTE</dataTypeSize>
+<ownDataTypeParameters>400 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 <Column name="ORGANO_EXTERNO_ID" id="1BA556B2-FDB6-F9D1-84F0-3CB8CE27F043">
 <sourceConnName>uji_reuniones@d11</sourceConnName>

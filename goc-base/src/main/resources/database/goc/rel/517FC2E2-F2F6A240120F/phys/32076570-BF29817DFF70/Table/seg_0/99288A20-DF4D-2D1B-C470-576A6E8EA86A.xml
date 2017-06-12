@@ -17,6 +17,16 @@
 <createdTime>2016-07-04 13:04:25 UTC</createdTime>
 <ownerDesignName>goc</ownerDesignName>
 </ColumnProxy>
+<ColumnProxy name="ORGANO_NOMBRE" id="70869DFC-3DC7-B52B-28ED-119692D02252">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="EXTERNO" id="A2B4AA57-F974-C062-9EDB-0D12E80E7C7B">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
 <ColumnProxy name="ID" id="D3CD5B9C-AEB3-53CB-0430-627354FD3020">
 <createdBy>borillo</createdBy>
 <createdTime>2016-07-04 13:04:25 UTC</createdTime>
@@ -30,6 +40,16 @@
 <ColumnProxy name="ORGANO_ID" id="DDF3E507-C149-5974-07DD-1C8198BABA25">
 <createdBy>borillo</createdBy>
 <createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ORGANO_NOMBRE_ALT" id="E118CF2F-51AA-EE15-9079-0F95074C7EEC">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="TIPO_ORGANO_ID" id="F0BE31EA-7246-4121-8D6A-12C5226D4604">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
 <ownerDesignName>goc</ownerDesignName>
 </ColumnProxy>
 </columnProxies>

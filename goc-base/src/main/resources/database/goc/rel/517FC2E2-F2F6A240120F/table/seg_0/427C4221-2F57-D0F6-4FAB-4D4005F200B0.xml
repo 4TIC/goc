@@ -41,6 +41,22 @@
 <ownDataTypeParameters>400 BYTE,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="NOMBRE_ALT" id="895FB01F-1FFF-8502-275E-8E8D28D39A53">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_CARGOS</sourceObjSchema>
+<sourceObjName>NOMBRE_ALT</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>377F899C-5F0E-F043-52FF-EA6CED5280F6</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>400 BYTE</dataTypeSize>
+<ownDataTypeParameters>400 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="DEA06DDA-ABBF-9F4D-0D9B-595479BA213C" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_CARGOS_PK">

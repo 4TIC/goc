@@ -1,0 +1,150 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="C3AF1375-147B-54E2-1B95-7EC9F6C28B87" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_VW_MIEMBROS">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_VW_MIEMBROS</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>DD6242B6-30F8-384A-8CA2-478944F6BE92</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="D448F3A4-DED8-76F2-C488-36641E749F84">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_VW_MIEMBROS</sourceObjSchema>
+<sourceObjName>ID</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>FB9CEE66-63B5-07D9-84B1-ECCE751FE1C6</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRE" id="DAE26256-2249-9605-8EE7-22C221F2429E">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_VW_MIEMBROS</sourceObjSchema>
+<sourceObjName>NOMBRE</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>310164C7-4004-3EA2-91D5-EB8FB575AD7E</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500 BYTE</dataTypeSize>
+<ownDataTypeParameters>500 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="EMAIL" id="2D33A34C-7E39-823B-2F7E-C66BE907438C">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_VW_MIEMBROS</sourceObjSchema>
+<sourceObjName>EMAIL</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>B9186B37-3D11-1BAF-7A40-4E393118DFF4</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200 BYTE</dataTypeSize>
+<ownDataTypeParameters>200 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ORGANO_ID" id="8A00D5A1-73A5-273D-E014-3AF0DA8275A0">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_VW_MIEMBROS</sourceObjSchema>
+<sourceObjName>ORGANO_ID</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>87ABA18D-9329-EF12-299B-2B95DFE148CB</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ORGANO_NOMBRE" id="F8610B62-AF42-E69D-E5FA-D5BAA74E59F4">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_VW_MIEMBROS</sourceObjSchema>
+<sourceObjName>ORGANO_NOMBRE</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>611D6474-54C5-A1C4-6EAA-2CDC2F24098E</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ORGANO_NOMBRE_ALTERNATIVO" id="9B86329A-BAA7-0E74-C133-951E7D0054EE">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_VW_MIEMBROS</sourceObjSchema>
+<sourceObjName>ORGANO_NOMBRE_ALTERNATIVO</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>807CF23B-9983-A0FE-2488-BE4CFCEE949A</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>400 BYTE</dataTypeSize>
+<ownDataTypeParameters>400 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CARGO_ID" id="C6553A15-518E-E4FC-EE8F-293DC10384CA">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_VW_MIEMBROS</sourceObjSchema>
+<sourceObjName>CARGO_ID</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>AE0C04CB-064C-058C-3E4B-7241A08FA1B9</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CARGO_NOMBRE" id="8139B914-EAEA-614B-FAD1-EFCD89381C36">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_VW_MIEMBROS</sourceObjSchema>
+<sourceObjName>CARGO_NOMBRE</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>641715F8-3A9F-250B-07CC-019FD64DF25A</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>400 BYTE</dataTypeSize>
+<ownDataTypeParameters>400 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CARGO_NOMBRE_ALTERNATIVO" id="B4586ACC-696D-3E29-51C5-A9C05E58E483">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_VW_MIEMBROS</sourceObjSchema>
+<sourceObjName>CARGO_NOMBRE_ALTERNATIVO</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>865613CC-5CEB-1591-3940-265CD42EC96E</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>400 BYTE</dataTypeSize>
+<ownDataTypeParameters>400 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+</Table>

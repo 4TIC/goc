@@ -1,0 +1,91 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="138D14B9-473E-87B1-8478-F3810849D06E" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_VW_PERSONAS">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_VW_PERSONAS</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>C1F1A02D-E488-5ADF-429B-F9F8DB4A12A5</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="D8E5ED1F-AC4C-8E2E-3B05-D7C0E0E9ECC3">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_VW_PERSONAS</sourceObjSchema>
+<sourceObjName>ID</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>3629CD5C-76A8-96A6-8CFC-34E34A881C85</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRE" id="1A50BF50-F342-85F3-CCAC-AE17AD635BCF">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_VW_PERSONAS</sourceObjSchema>
+<sourceObjName>NOMBRE</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>298FDFA3-1C13-B7E7-E8BC-1242DD0A0733</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500 BYTE</dataTypeSize>
+<ownDataTypeParameters>500 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRE_BUSQUEDA" id="675AE4E4-7D6A-BDA7-4EB3-89B211F4583A">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_VW_PERSONAS</sourceObjSchema>
+<sourceObjName>NOMBRE_BUSQUEDA</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>911E9101-E2B1-9723-CE4A-5603D73ED27C</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500 BYTE</dataTypeSize>
+<ownDataTypeParameters>500 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="EMAIL" id="748B2782-A15F-593D-E4D8-25CDEED4C76E">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_VW_PERSONAS</sourceObjSchema>
+<sourceObjName>EMAIL</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>26AA7964-C847-69DA-A6DB-D5DF41B9AB44</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200 BYTE</dataTypeSize>
+<ownDataTypeParameters>200 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CUENTA" id="23443FF2-0B05-D151-7F1A-26E0E3C9D319">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_VW_PERSONAS</sourceObjSchema>
+<sourceObjName>CUENTA</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>FAF25C66-6B3A-1F42-8043-0DECAD22E7FE</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+</Table>

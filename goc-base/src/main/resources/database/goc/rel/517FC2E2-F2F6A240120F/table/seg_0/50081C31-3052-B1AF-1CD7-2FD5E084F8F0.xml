@@ -1,0 +1,137 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="50081C31-3052-B1AF-1CD7-2FD5E084F8F0" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_CLAVES">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_CLAVES</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>FCC9CB14-9B36-A91A-9810-57634B4CF15A</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="81C3922E-E351-6830-98D4-866CE0E850A1">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_CLAVES</sourceObjSchema>
+<sourceObjName>ID</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>619CB945-EF0B-7510-C99C-1861A3FACDA3</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CLAVE" id="BB41F139-E29F-B368-15FF-0B3B8AE2A588">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_CLAVES</sourceObjSchema>
+<sourceObjName>CLAVE</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>5FA717E1-9789-19D0-CCD9-15C849EEFBCF</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CLAVE_ALT" id="031D3A63-1CB7-8397-C109-2113C786271B">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_CLAVES</sourceObjSchema>
+<sourceObjName>CLAVE_ALT</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>FEF341C3-1D40-6B42-712F-5BEB7C63560D</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ESTADO" id="354A9603-3649-BCCD-233E-C258BDA448F1">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_CLAVES</sourceObjSchema>
+<sourceObjName>ESTADO</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>E3523825-441D-7052-76A4-B6C4BE88047E</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,1,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ID_DESCRIPTOR" id="07A8BE3E-E304-93FD-3A70-DB3D812CAD5F">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_CLAVES</sourceObjSchema>
+<sourceObjName>ID_DESCRIPTOR</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>ACA3C5E1-7634-EA26-A4FD-F52596EFC636</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D296D3F4-5D20-8BEC-94BC-419EDEBDD9CF" referredColumn="C4A44E96-27B8-8939-ED10-FAC4679DB234"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="A3A5DBB1-8F95-CD39-3288-46AFCAD0E5C6" name="PK_CLAVE">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>PK_CLAVE</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>C202F44D-645A-4F16-0496-DE51BC1C21E5</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="81C3922E-E351-6830-98D4-866CE0E850A1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D65D399C-B4FE-DB34-0BCD-A46802E67CDC" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="PK_CLAVE">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>PK_CLAVE</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>E20CE60A-D8EC-4D0C-330A-997CDCF1EE4B</importedID>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="81C3922E-E351-6830-98D4-866CE0E850A1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="14E54569-7D3F-6D7E-7E61-09B804234BAD" name="FK_CLAVE_DESC">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="07A8BE3E-E304-93FD-3A70-DB3D812CAD5F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
