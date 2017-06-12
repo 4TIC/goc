@@ -57,11 +57,6 @@ public class OrganoService
         return organos;
     }
 
-    public List<Organo> getOrganosLocales(Long connectedUserId)
-    {
-        return organoDAO.getOrganosByUserId(connectedUserId);
-    }
-
     public List<Organo> getOrganosPorAutorizadoId(Long connectedUserId)
             throws OrganosExternosException
     {
@@ -114,34 +109,6 @@ public class OrganoService
         organo.setInactivo(inactivo);
 
         return organoDAO.updateOrgano(organo);
-    }
-
-    public void deshabilitaOrganoById(Long organoId, Long connectedUserId)
-            throws OrganoNoDisponibleException
-    {
-        Organo organo = organoDAO.getOrganoByIdAndUserId(organoId, connectedUserId);
-
-        if (organo == null)
-        {
-            throw new OrganoNoDisponibleException();
-        }
-
-        organo.setInactivo(true);
-        organoDAO.updateOrgano(organo);
-    }
-
-    public void habilitaOrganoById(Long organoId, Long connectedUserId)
-            throws OrganoNoDisponibleException
-    {
-        Organo organo = organoDAO.getOrganoByIdAndUserId(organoId, connectedUserId);
-
-        if (organo == null)
-        {
-            throw new OrganoNoDisponibleException();
-        }
-
-        organo.setInactivo(false);
-        organoDAO.updateOrgano(organo);
     }
 
     public List<Organo> getOrganosExternos() throws OrganosExternosException

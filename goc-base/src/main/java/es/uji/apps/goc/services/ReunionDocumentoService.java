@@ -78,8 +78,4 @@ public class ReunionDocumentoService
 
         return null;
     }
-
-    public List<Tuple> getNumeroDocumentosPorReunion(Long connectedUserId) {
-        return reunionDocumentoDAO.getNumeroDocumentosPorReunion();
-    }
 }
