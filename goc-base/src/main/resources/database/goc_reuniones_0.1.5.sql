@@ -50,3 +50,6 @@ AS
     goc_organos_reuniones o,
     goc_organos_reuniones_miembros orm
   WHERE r.id = o.reunion_id (+) AND o.id = orm.organo_reunion_id (+);
+
+alter table goc_cargos drop column firma;
+alter table goc_organos_reuniones_miembros drop column cargo_firma;

@@ -61,7 +61,6 @@ public class MiembroService
 
         es.uji.apps.goc.dto.Cargo cargo =
                 cargoDAO.get(es.uji.apps.goc.dto.Cargo.class, Long.parseLong(miembro.getCargo().getId())).get(0);
-        miembro.getCargo().setFirma(cargo.isFirma());
         miembro.getCargo().setNombre(cargo.getNombre());
         miembro.getCargo().setNombreAlternativo(cargo.getNombreAlternativo());
 

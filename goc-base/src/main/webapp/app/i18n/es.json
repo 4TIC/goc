@@ -183,7 +183,6 @@
     "tituloGridReunionesCompletadas": "Histórico de reuniones completadas"
   },
   "cargos": {
-    "firma": "Firma",
     "titulo": "Cargos",
     "nombre": "Nombre",
     "seleccionaUnCargo": "Selecciona un cargo"

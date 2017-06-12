@@ -14,8 +14,6 @@ public class Cargo implements Serializable
 
     private String nombre;
 
-    private Boolean firma;
-
     @Column(name = "NOMBRE_ALT")
     private String nombreAlternativo;
 
@@ -69,15 +67,5 @@ public class Cargo implements Serializable
     public void setNombreAlternativo(String nombreAlternativo)
     {
         this.nombreAlternativo = nombreAlternativo;
-    }
-
-    public Boolean isFirma()
-    {
-        return firma;
-    }
-
-    public void setFirma(Boolean firma)
-    {
-        this.firma = firma;
     }
 }

@@ -37,7 +37,6 @@ public class ExternalService
         organo.setNombreAlternativo("Órgan Intern " + organoId);
 
         Cargo c1 = new Cargo("1");
-        c1.setFirma(false);
         c1.setNombre("Presidente");
         c1.setNombreAlternativo("President");
 
@@ -46,7 +45,6 @@ public class ExternalService
         listaMiembros.add(m1);
 
         Cargo c2 = new Cargo("2");
-        c2.setFirma(false);
         c2.setNombre("Vocal");
         c2.setNombreAlternativo("Vocal");
 

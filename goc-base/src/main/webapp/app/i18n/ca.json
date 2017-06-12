@@ -183,7 +183,6 @@
     "tituloGridReunionesCompletadas": "Històric de reunions completades"
   },
   "cargos": {
-    "firma": "Signatura",
     "titulo": "Càrrecs",
     "nombre": "Nom",
     "seleccionaUnCargo": "Sel·lecciona un càrrec"

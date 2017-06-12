@@ -10,8 +10,6 @@ public class Cargo
 
     private String nombreAlternativo;
 
-    private Boolean firma;
-
     private Set<Miembro> miembros;
 
     public Cargo() {}
@@ -55,15 +53,5 @@ public class Cargo
     public void setNombreAlternativo(String nombreAlternativo)
     {
         this.nombreAlternativo = nombreAlternativo;
-    }
-
-    public Boolean isFirma()
-    {
-        return firma;
-    }
-
-    public void setFirma(Boolean firma)
-    {
-        this.firma = firma;
     }
 }

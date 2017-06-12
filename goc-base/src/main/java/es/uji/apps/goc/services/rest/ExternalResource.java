@@ -123,7 +123,6 @@ public class ExternalResource extends CoreBaseService
             miembroUI.put("organo_nombre", miembro.getOrgano().getNombre());
             miembroUI.put("organo_nombre_alternativo", miembro.getOrgano().getNombreAlternativo());
             miembroUI.put("cargo_id", miembro.getCargo().getId());
-            miembroUI.put("cargo_firma", miembro.getCargo().isFirma());
             miembroUI.put("cargo_nombre", miembro.getCargo().getNombre());
             miembroUI.put("cargo_nombre_alternativo", miembro.getCargo().getNombreAlternativo());
 

@@ -30,22 +30,6 @@ if (isMultilanguageApplication())
     });
 }
 
-cargoGridColumns.push({
-    text : getMultiLangLabel(appI18N.cargos.firma),
-    dataIndex : 'firma',
-    flex : 1,
-    inputValue : true,
-    align: 'center',
-    editor : {
-        xtype : 'checkboxfield'
-    },
-    renderer : function(v)
-    {
-        if (v) return 'Sí';
-        return 'No';
-    }
-});
-
 Ext.define('goc.view.cargo.Grid', {
     extend : 'Ext.ux.uji.grid.Panel',
 
