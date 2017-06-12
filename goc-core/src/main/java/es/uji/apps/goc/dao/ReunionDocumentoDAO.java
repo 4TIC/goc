@@ -41,12 +41,4 @@ public class ReunionDocumentoDAO extends BaseDAODatabaseImpl
 
         return resultado.get(0);
     }
-
-    public List<Tuple> getNumeroDocumentosPorReunion()
-    {
-        JPAQuery query = new JPAQuery(entityManager);
-
-        return query.from(qReunionDocumento).groupBy(qReunionDocumento.reunion.id)
-                .list(qReunionDocumento.reunion.id, qReunionDocumento.reunion.id.count());
-    }
 }
