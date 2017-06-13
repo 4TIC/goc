@@ -475,12 +475,15 @@ public class ReunionResource extends CoreBaseService
         List<OrganoReunionMiembro> organoReunionMiembros =
                 organoReunionMiembroService.getAsistentes(reunionId, connectedUserId);
 
+        List<ReunionInvitado> invitados = invitadosService.getInvitadosByReunionId(reunionId, connectedUserId);
+
         String applang = getLangCode(lang);
 
         Template template = new PDFTemplate("asistentes-" + applang);
         template.put("logo", logoUrl);
         template.put("reunion", reunion);
         template.put("asistentes", organoReunionMiembros);
+        template.put("invitados", invitados);
 
         return template;
     }
