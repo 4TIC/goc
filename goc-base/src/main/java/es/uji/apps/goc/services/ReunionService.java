@@ -622,6 +622,7 @@ public class ReunionService
 
         invitadoTemplate.setId(invitado.getPersonaId());
         invitadoTemplate.setNombre(invitado.getPersonaNombre());
+        invitadoTemplate.setEmail(invitado.getPersonaEmail());
 
         return invitadoTemplate;
     }

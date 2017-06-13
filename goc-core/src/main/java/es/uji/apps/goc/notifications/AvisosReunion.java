@@ -3,9 +3,11 @@ package es.uji.apps.goc.notifications;
 import es.uji.apps.goc.dao.NotificacionesDAO;
 import es.uji.apps.goc.dao.OrganoReunionMiembroDAO;
 import es.uji.apps.goc.dao.ReunionDAO;
+import es.uji.apps.goc.dao.ReunionInvitadoDAO;
 import es.uji.apps.goc.dto.OrganoReunion;
 import es.uji.apps.goc.dto.OrganoReunionMiembro;
 import es.uji.apps.goc.dto.Reunion;
+import es.uji.apps.goc.dto.ReunionInvitado;
 import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.exceptions.NotificacionesException;
 import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
@@ -25,9 +27,9 @@ import static java.util.stream.Collectors.toList;
 @Component
 public class AvisosReunion
 {
-    private ReunionDAO reunionDAO;
     private OrganoReunionMiembroDAO organoReunionMiembroDAO;
     private NotificacionesDAO notificacionesDAO;
+    private ReunionInvitadoDAO reunionInvitadoDAO;
 
     @Value("${goc.publicUrl}")
     private String publicUrl;
@@ -36,10 +38,10 @@ public class AvisosReunion
     private String defaultSender;
 
     @Autowired
-    public AvisosReunion(ReunionDAO reunionDAO, OrganoReunionMiembroDAO organoReunionMiembroDAO,
+    public AvisosReunion(ReunionInvitadoDAO reunionInvitadoDAO, OrganoReunionMiembroDAO organoReunionMiembroDAO,
             NotificacionesDAO notificacionesDAO)
     {
-        this.reunionDAO = reunionDAO;
+        this.reunionInvitadoDAO = reunionInvitadoDAO;
         this.organoReunionMiembroDAO = organoReunionMiembroDAO;
         this.notificacionesDAO = notificacionesDAO;
     }
@@ -49,8 +51,6 @@ public class AvisosReunion
             throws ReunionNoDisponibleException, MiembrosExternosException, NotificacionesException
     {
         List<String> miembros = getMiembros(reunion, false);
-
-        Mensaje mensaje = new Mensaje();
 
         String asunto = "[GOC]";
 
@@ -69,17 +69,7 @@ public class AvisosReunion
         SimpleDateFormat dataFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         asunto += " " + dataFormatter.format(reunion.getFecha());
 
-        mensaje.setAsunto(asunto);
-        mensaje.setContentType("text/html");
-
-        ReunionFormatter formatter = new ReunionFormatter(reunion);
-        mensaje.setCuerpo(formatter.format(publicUrl));
-
-        mensaje.setFrom(defaultSender);
-        mensaje.setReplyTo(defaultSender);
-        mensaje.setDestinos(miembros);
-
-        notificacionesDAO.enviaNotificacion(mensaje);
+        buildAndSendMessage(reunion, miembros, asunto);
     }
 
     private String getNombreOrganos(Reunion reunion)
@@ -106,39 +96,33 @@ public class AvisosReunion
 
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 
-        Mensaje mensaje = new Mensaje();
-        mensaje.setAsunto(
+        buildAndSendMessage(reunion, miembros,
                 "[GOC] Recordatori reunió: " + reunion.getAsunto() + " (" + df.format(reunion.getFecha()) + ")");
+
+        return true;
+    }
+
+    private void buildAndSendMessage(Reunion reunion, List<String> miembros, String asunto)
+            throws NotificacionesException
+    {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setAsunto(asunto);
         mensaje.setContentType("text/html");
 
         ReunionFormatter formatter = new ReunionFormatter(reunion);
         mensaje.setCuerpo(formatter.format(publicUrl));
         mensaje.setFrom(defaultSender);
         mensaje.setReplyTo(defaultSender);
+        mensaje.setDestinos(miembros);
 
         notificacionesDAO.enviaNotificacion(mensaje);
-
-        return true;
-    }
-
-    private Reunion getReunion(Long reunionId)
-            throws ReunionNoDisponibleException
-    {
-        Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
-
-        if (reunion == null)
-        {
-            throw new ReunionNoDisponibleException();
-        }
-
-        return reunion;
     }
 
     private List<String> getMiembros(Reunion reunion, Boolean confirmados)
             throws ReunionNoDisponibleException, MiembrosExternosException
     {
 
-        List<OrganoReunionMiembro> listaAsistentesReunion = new ArrayList<>();
+        List<OrganoReunionMiembro> listaAsistentesReunion;
 
         if (confirmados)
         {
@@ -149,10 +133,17 @@ public class AvisosReunion
             listaAsistentesReunion = organoReunionMiembroDAO.getMiembrosByReunionId(reunion.getId());
         }
 
-        List<String> miembros =
+        List<ReunionInvitado> invitados = reunionInvitadoDAO.getInvitadosByReunionId(reunion.getId());
+
+        List<String> emailMiembros =
                 listaAsistentesReunion.stream().map(AvisosReunion::obtenerMailAsistente).collect(toList());
 
-        return miembros;
+        List<String> emailInvitados =
+                invitados.stream().map(invitado -> invitado.getPersonaEmail()).collect(toList());
+
+        emailMiembros.addAll(emailInvitados);
+
+        return emailMiembros.stream().distinct().collect(toList());
     }
 
     private static String obtenerMailAsistente(OrganoReunionMiembro asistente)

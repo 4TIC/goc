@@ -574,6 +574,7 @@ public class ReunionResource extends CoreBaseService
             reunionInvitado.setReunion(reunion);
             reunionInvitado.setPersonaId(invitadoUI.getLong("personaId"));
             reunionInvitado.setPersonaNombre(invitadoUI.get("personaNombre"));
+            reunionInvitado.setPersonaEmail(invitadoUI.get("personaEmail"));
 
             invitados.add(reunionInvitado);
         }

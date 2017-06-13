@@ -6,6 +6,8 @@ public class InvitadoTemplate
 
     private String nombre;
 
+    private String email;
+
     public Long getId()
     {
         return id;
@@ -24,5 +26,15 @@ public class InvitadoTemplate
     public void setNombre(String nombre)
     {
         this.nombre = nombre;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
     }
 }

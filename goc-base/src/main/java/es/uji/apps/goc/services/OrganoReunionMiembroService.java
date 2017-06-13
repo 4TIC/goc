@@ -38,9 +38,6 @@ public class OrganoReunionMiembroService
         {
             for (UIEntity organoUI : organosUI)
             {
-                String organoId = organoUI.get("id");
-                Boolean externo = new Boolean(organoUI.get("externo"));
-
                 updateOrganoReunionMiembrosDesdeOrganoUI(organoUI, reunionId);
             }
         }

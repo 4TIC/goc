@@ -53,3 +53,5 @@ AS
 
 alter table goc_cargos drop column firma;
 alter table goc_organos_reuniones_miembros drop column cargo_firma;
+
+alter table goc_reuniones_invitados add (persona_email varchar2(1000) not null)
