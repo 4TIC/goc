@@ -71,6 +71,8 @@ public class ReunionTemplate implements Serializable
 
     private List<Documento> documentos;
 
+    private List<InvitadoTemplate> invitados;
+
     public ReunionTemplate()
     {
     }
@@ -391,17 +393,50 @@ public class ReunionTemplate implements Serializable
         this.creadorId = creadorId;
     }
 
-    public boolean esMiembro(Long userId)
+    public boolean esAsistente(Long userId)
     {
-        for (OrganoTemplate organoTemplate : getOrganos())
+        if (getNombreAsistente(userId) != null) return true;
+
+        return false;
+    }
+
+    public String getNombreAsistente(Long connectedUserId)
+    {
+        for (OrganoTemplate organo : getOrganos())
         {
-            for (MiembroTemplate miembroTemplate : organoTemplate.getAsistentes())
+            for (MiembroTemplate asistente : organo.getAsistentes())
             {
-                if (((userId.toString().equals(miembroTemplate.getMiembroId().toString())) || userId.equals(
-                        miembroTemplate.getSuplenteId())) && miembroTemplate.getAsistencia()) return true;
+                if (asistente.getMiembroId().equals(connectedUserId.toString()) && asistente.getAsistencia())
+                {
+                    return asistente.getNombre();
+                }
+
+                if (asistente.getSuplenteId() != null && asistente.getSuplenteId()
+                        .equals(connectedUserId) && asistente.getAsistencia())
+                {
+                    return asistente.getSuplente();
+                }
             }
         }
 
-        return false;
+        for (InvitadoTemplate invitado : getInvitados())
+        {
+            if (invitado.getId().equals(connectedUserId))
+            {
+                return invitado.getNombre();
+            }
+        }
+
+        return null;
+    }
+
+    public List<InvitadoTemplate> getInvitados()
+    {
+        return invitados;
+    }
+
+    public void setInvitados(List<InvitadoTemplate> invitados)
+    {
+        this.invitados = invitados;
     }
 }

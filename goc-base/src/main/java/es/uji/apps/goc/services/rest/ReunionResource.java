@@ -435,7 +435,7 @@ public class ReunionResource extends CoreBaseService
 
         ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId);
 
-        String nombreAsistente = getNombreAsistente(reunionTemplate, connectedUserId);
+        String nombreAsistente = reunionTemplate.getNombreAsistente(connectedUserId);
 
         if (nombreAsistente == null)
         {
@@ -515,27 +515,6 @@ public class ReunionResource extends CoreBaseService
         Long minutosSobrantes = minutos % 60;
 
         return String.format("%d:%02d", horas, minutosSobrantes);
-    }
-
-    private String getNombreAsistente(ReunionTemplate reunion, Long connectedUserId)
-    {
-        for (OrganoTemplate organo : reunion.getOrganos())
-        {
-            for (MiembroTemplate asistente : organo.getAsistentes())
-            {
-                if (asistente.getMiembroId().equals(connectedUserId.toString()))
-                {
-                    return asistente.getNombre();
-                }
-
-                if (asistente.getSuplenteId() != null && asistente.getSuplenteId().equals(connectedUserId))
-                {
-                    return asistente.getSuplente();
-                }
-            }
-        }
-
-        return null;
     }
 
     @GET

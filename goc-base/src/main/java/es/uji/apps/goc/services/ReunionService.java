@@ -23,8 +23,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static es.uji.apps.goc.dto.QReunion.reunion;
-
 @Service
 @Component
 public class ReunionService
@@ -574,6 +572,11 @@ public class ReunionService
                 getPuntosOrdenDiaTemplateDesdePuntosOrdenDia(puntosOrdenDia);
         reunionTemplate.setPuntosOrdenDia(listaPuntosOrdenDiaTemplate);
 
+        List<ReunionInvitado> invitados = reunionInvitadoDAO.getInvitadosByReunionId(reunion.getId());
+        List<InvitadoTemplate> invitadosTemplate =
+                getInvitadosTemplateDesdeReunionInvitados(invitados);
+        reunionTemplate.setInvitados(invitadosTemplate);
+
         return reunionTemplate;
     }
 
@@ -583,13 +586,13 @@ public class ReunionService
 
         for (ReunionComentario comentario : comentarios)
         {
-            listaComentariosTemplate.add(getComentarioTemplateDessdeComentario(comentario, reunion));
+            listaComentariosTemplate.add(getComentarioTemplateDessdeComentario(comentario));
         }
 
         return listaComentariosTemplate;
     }
 
-    private Comentario getComentarioTemplateDessdeComentario(ReunionComentario comentario, QReunion reunion)
+    private Comentario getComentarioTemplateDessdeComentario(ReunionComentario comentario)
     {
         Comentario comentarioTemplate = new Comentario();
         comentarioTemplate.setId(comentario.getId());
@@ -599,6 +602,28 @@ public class ReunionService
         comentarioTemplate.setCreadorId(comentario.getCreadorId());
 
         return comentarioTemplate;
+    }
+
+    private List<InvitadoTemplate> getInvitadosTemplateDesdeReunionInvitados(List<ReunionInvitado> invitados)
+    {
+        List<InvitadoTemplate> listaInvitadosTemplate = new ArrayList<>();
+
+        for (ReunionInvitado invitado : invitados)
+        {
+            listaInvitadosTemplate.add(getInvitadoTemplateDessdeInvitado(invitado));
+        }
+
+        return listaInvitadosTemplate;
+    }
+
+    private InvitadoTemplate getInvitadoTemplateDessdeInvitado(ReunionInvitado invitado)
+    {
+        InvitadoTemplate invitadoTemplate = new InvitadoTemplate();
+
+        invitadoTemplate.setId(invitado.getPersonaId());
+        invitadoTemplate.setNombre(invitado.getPersonaNombre());
+
+        return invitadoTemplate;
     }
 
     private List<OrganoTemplate> getOrganosTemplateDesdeOrganos(List<Organo> organos, Reunion reunion)
@@ -898,7 +923,7 @@ public class ReunionService
 
         return reunionesAccesibles.stream().map(r -> getReunionTemplateDesdeReunion(r, connectedUserId)).map(r ->
         {
-            r.setComoAsistente(r.esMiembro(connectedUserId));
+            r.setComoAsistente(r.esAsistente(connectedUserId));
             return r;
         }).collect(Collectors.toList());
     }
