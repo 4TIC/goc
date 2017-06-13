@@ -249,6 +249,6 @@ public class OrganoService
 
     public Organo getOrganoById(Long organoId, Long connectedUserId)
     {
-        return organoDAO.getOrganoByIdAndUserId(organoId, connectedUserId);
+        return organoDAO.getOrganoById(organoId);
     }
 }

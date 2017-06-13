@@ -34,7 +34,8 @@ public class OrganoDAO extends BaseDAODatabaseImpl
 
         List<OrganoLocal> organos = query.from(qOrganoLocal)
                 .where(qOrganoLocal.creadorId.eq(connectedUserId))
-                .orderBy(qOrganoLocal.fechaCreacion.desc()).list(qOrganoLocal);
+                .orderBy(qOrganoLocal.fechaCreacion.desc())
+                .list(qOrganoLocal);
 
         return organosLocalesToOrganos(organos);
     }
@@ -47,7 +48,8 @@ public class OrganoDAO extends BaseDAODatabaseImpl
                 .where(qOrganoAutorizado.organoExterno.eq(false)
                         .and(qOrganoAutorizado.organoId.eq(qOrganoLocal.id.stringValue()))
                         .and(qOrganoAutorizado.personaId.eq(connectedUserId)))
-                .orderBy(qOrganoLocal.fechaCreacion.desc()).list(qOrganoLocal);
+                .orderBy(qOrganoLocal.fechaCreacion.desc())
+                .list(qOrganoLocal);
 
         return organosLocalesToOrganos(organos);
     }
@@ -82,13 +84,27 @@ public class OrganoDAO extends BaseDAODatabaseImpl
         return organo;
     }
 
+    public Organo getOrganoById(Long organoId)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        List<OrganoLocal> organos = query.from(qOrganoLocal).where(qOrganoLocal.id.eq(organoId)).list(qOrganoLocal);
+
+        if (organos.size() == 0)
+        {
+            return null;
+        }
+
+        return organoLocalToOrgano(organos.get(0));
+    }
+
     public Organo getOrganoByIdAndUserId(Long organoId, Long connectedUserId)
     {
         JPAQuery query = new JPAQuery(entityManager);
 
         List<OrganoLocal> organos = query.from(qOrganoLocal)
                 .where(qOrganoLocal.id.eq(organoId).and(qOrganoLocal.creadorId.eq(connectedUserId)))
-                .orderBy(qOrganoLocal.fechaCreacion.desc()).list(qOrganoLocal);
+                .list(qOrganoLocal);
 
         if (organos.size() == 0)
         {
@@ -144,7 +160,8 @@ public class OrganoDAO extends BaseDAODatabaseImpl
     public List<OrganoLocal> getOrganosConReunionesPublicas(Long tipoOrganoId, Integer anyo)
     {
         BooleanExpression beWhere = null;
-        if(anyo != null){
+        if (anyo != null)
+        {
             beWhere = qReunion.fecha.year().eq(anyo);
         }
         JPAQuery query = new JPAQuery(entityManager);
