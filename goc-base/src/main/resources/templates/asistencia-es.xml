@@ -28,7 +28,7 @@
 
               <fo:table-cell display-align="center" border-right="solid" border-width="0.2cm" padding="0.4cm">
                 <fo:block font-size="12pt" font-weight="bold" text-align="end">
-                  Universitat Jaume I
+                  <fo:inline th:text="${nombreInstitucion}">25</fo:inline>
                 </fo:block>
               </fo:table-cell>
 

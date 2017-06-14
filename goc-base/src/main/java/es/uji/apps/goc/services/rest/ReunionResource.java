@@ -58,6 +58,9 @@ public class ReunionResource extends CoreBaseService
     @Value("${goc.logoDocumentos}")
     private String logoUrl;
 
+    @Value("${goc.nombreInstitucion}")
+    private String nombreInstitucion;
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<UIEntity> getReuniones(@QueryParam("organoId") String organoId,
@@ -446,6 +449,7 @@ public class ReunionResource extends CoreBaseService
 
         Template template = new PDFTemplate("asistencia-" + applang);
         template.put("logo", logoUrl);
+        template.put("nombreInstitucion", nombreInstitucion);
         template.put("nombreAsistente", nombreAsistente);
         template.put("tituloReunion", reunionTemplate.getAsunto());
         template.put("fechaReunion", getFechaReunion(reunionTemplate.getFecha()));
@@ -481,6 +485,7 @@ public class ReunionResource extends CoreBaseService
 
         Template template = new PDFTemplate("asistentes-" + applang);
         template.put("logo", logoUrl);
+        template.put("nombreInstitucion", nombreInstitucion);
         template.put("reunion", reunion);
         template.put("asistentes", organoReunionMiembros);
         template.put("invitados", invitados);

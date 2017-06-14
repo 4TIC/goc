@@ -39,6 +39,9 @@ public class ActaResource
     @Value("${goc.logoDocumentos}")
     private String logoUrl;
 
+    @Value("${goc.nombreInstitucion}")
+    private String nombreInstitucion;
+
     @GET
     @Path("{reunionId}")
     @Produces("application/pdf")
@@ -69,6 +72,7 @@ public class ActaResource
 
         Template template = new PDFTemplate("acta-" + applang);
         template.put("logo", logoUrl);
+        template.put("nombreInstitucion", nombreInstitucion);
         template.put("reunion", reunionTemplate);
         template.put("convocante", convocante);
         template.put("applang", applang);

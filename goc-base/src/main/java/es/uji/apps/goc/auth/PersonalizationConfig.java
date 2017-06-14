@@ -12,6 +12,9 @@ public class PersonalizationConfig
     @Value("${goc.logoDocumentos}")
     public String logoDocumentos;
 
+    @Value("${goc.nombreInstitucion}")
+    public String nombreInstitucion;
+
     @Value("${goc.customCSS:}")
     public String customCSS;
 
