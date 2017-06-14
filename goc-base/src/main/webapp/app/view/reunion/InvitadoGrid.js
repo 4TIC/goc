@@ -10,7 +10,7 @@ Ext.define('goc.view.reunion.InvitadoGrid',
     scrollable : true,
     showTopToolbar : false,
     showBottomToolbar : false,
-    allowEdit: false,
+    allowEdit : false,
     bind : {
         store : '{reunionInvitadosStore}'
     },
@@ -43,8 +43,17 @@ Ext.define('goc.view.reunion.InvitadoGrid',
                     },
                     handler : function(grid, index)
                     {
-                        var rec = grid.getStore().getAt(index);
-                        this.up('grid').fireEvent('borrarInvitadoReunion', rec);
+                        var ref = this;
+
+                        Ext.Msg.confirm(appI18N ? appI18N.common.borrar : 'Esborrar',
+                        appI18N ? appI18N.common.confirmarBorrado : 'Esteu segur/a de voler esborrar el registre ?', function(btn, text)
+                        {
+                            if (btn == 'yes')
+                            {
+                                var rec = grid.getStore().getAt(index);
+                                ref.up('grid').fireEvent('borrarInvitadoReunion', rec);
+                            }
+                        });
                     }
                 }
             ]

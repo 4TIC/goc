@@ -382,8 +382,15 @@ formReunionItems.push({
                         },
                         handler : function(grid, index)
                         {
-                            var rec = grid.getStore().getAt(index);
-                            grid.up('formReunion').fireEvent('borrarAsistenteReunion', rec);
+                            Ext.Msg.confirm(appI18N ? appI18N.common.borrar : 'Esborrar',
+                            appI18N ? appI18N.common.confirmarBorrado : 'Esteu segur/a de voler esborrar el registre ?', function(btn, text)
+                            {
+                                if (btn == 'yes')
+                                {
+                                    var rec = grid.getStore().getAt(index);
+                                    grid.up('formReunion').fireEvent('borrarAsistenteReunion', rec);
+                                }
+                            });
                         }
                     }
                 ]
