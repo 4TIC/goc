@@ -464,7 +464,7 @@ public class Reunion implements Serializable
         {
             List<OrganoReunionMiembro> pertenecientes = organoReunion.getMiembros()
                     .stream()
-                    .filter(miembro -> String.valueOf(userId).equals(miembro.getMiembroId()))
+                    .filter(miembro -> (String.valueOf(userId).equals(miembro.getMiembroId()) || userId.equals(miembro.getSuplenteId())))
                     .collect(toList());
 
             miembros.addAll(pertenecientes);

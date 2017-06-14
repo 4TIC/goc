@@ -98,8 +98,7 @@ public class PublicacionService extends CoreBaseService
     public Template acuerdos(@QueryParam("lang") String lang, @QueryParam("tipoOrganoId") Long tipoOrganoId,
             @QueryParam("organoId") Long organoId, @QueryParam("descriptorId") Long descriptorId,
             @QueryParam("claveId") Long claveId, @QueryParam("anyo") Integer anyo,
-            @QueryParam("fInicio") String fInicio, @QueryParam("fFin") String fFin,
-            @QueryParam("texto") String texto,
+            @QueryParam("fInicio") String fInicio, @QueryParam("fFin") String fFin, @QueryParam("texto") String texto,
             @QueryParam("pagina") @DefaultValue("0") Integer pagina)
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
@@ -227,9 +226,10 @@ public class PublicacionService extends CoreBaseService
         for (OrganoReunion organoReunion : reunionOrganos)
         {
             Set<OrganoReunionMiembro> miembros = organoReunion.getMiembros();
+
             for (OrganoReunionMiembro miembro : miembros)
             {
-                if (miembro.getMiembroId().equals(connectedUserId))
+                if (miembro.getMiembroId().toString().equals(connectedUserId.toString()) || connectedUserId.equals(miembro.getSuplenteId()))
                 {
                     permitirComentarios = true;
                 }
