@@ -6,14 +6,11 @@ import java.util.List;
 
 import javax.ws.rs.core.MediaType;
 
+import es.uji.apps.goc.dto.*;
 import org.junit.Test;
 
 import com.sun.jersey.api.client.ClientResponse;
 
-import es.uji.apps.goc.dto.MiembroFirma;
-import es.uji.apps.goc.dto.OrganoFirma;
-import es.uji.apps.goc.dto.PuntoOrdenDiaFirma;
-import es.uji.apps.goc.dto.ReunionFirma;
 import es.uji.apps.goc.model.Cargo;
 
 import static es.uji.commons.testing.hamcrest.ClientNoContentResponseMatcher.noContentClientResponse;
@@ -119,6 +116,14 @@ public class ExternalFirmasTest extends JerseySpringTest
         o1.setAsistentes(asistentes2);
 
         reunionFirma.setOrganos(organos);
+
+        List<InvitadoFirma> invitadoFirmas = new ArrayList<>();
+        InvitadoFirma invitado = new InvitadoFirma();
+        invitado.setId(1L);
+        invitado.setNombre("Invitado 1");
+        invitado.setEmail("invitado@gmail.com");
+
+        reunionFirma.setInvitados(invitadoFirmas);
 
         return reunionFirma;
     }

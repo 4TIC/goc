@@ -222,6 +222,7 @@ public class PublicacionService extends CoreBaseService
 
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
         Set<OrganoReunion> reunionOrganos = reunion.getReunionOrganos();
+
         boolean permitirComentarios = false;
         for (OrganoReunion organoReunion : reunionOrganos)
         {

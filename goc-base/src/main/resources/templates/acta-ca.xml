@@ -91,6 +91,14 @@
         </fo:block>
       </fo:block>
 
+      <fo:block font-weight="bold" font-size="14pt" space-before="0.5cm" th:if="${not #lists.isEmpty(reunion.invitados)}" space-after="0.2cm">
+        Convidats
+      </fo:block>
+
+      <fo:block th:each="invitado : ${reunion.invitados}">
+        <fo:block th:text="${invitado.nombre} + ' (' + ${invitado.email} + ') '"></fo:block>
+      </fo:block>
+
       <fo:block font-weight="bold" font-size="14pt" space-before="0.5cm" th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}">
         Ordre del dia
       </fo:block>

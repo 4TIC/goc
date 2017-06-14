@@ -400,7 +400,35 @@ public class ReunionService
         List<PuntoOrdenDiaFirma> listaPuntosOrdenDiaFirma = getPuntosOrdenDiaFirmaDesdePuntosOrdenDia(puntosOrdenDia);
         reunionFirma.setPuntosOrdenDia(listaPuntosOrdenDiaFirma);
 
+        List<ReunionInvitado> invitados = reunionInvitadoDAO.getInvitadosByReunionId(reunion.getId());
+        List<InvitadoFirma> invitadosFirma =
+                getInvitadosFirmaDesdeReunionInvitados(invitados);
+        reunionFirma.setInvitados(invitadosFirma);
+
         return reunionFirma;
+    }
+
+    private List<InvitadoFirma> getInvitadosFirmaDesdeReunionInvitados(List<ReunionInvitado> invitados)
+    {
+        List<InvitadoFirma> listaInvitadosFirma = new ArrayList<>();
+
+        for (ReunionInvitado invitado : invitados)
+        {
+            listaInvitadosFirma.add(getInvitadoFirmaDessdeInvitado(invitado));
+        }
+
+        return listaInvitadosFirma;
+    }
+
+    private InvitadoFirma getInvitadoFirmaDessdeInvitado(ReunionInvitado invitado)
+    {
+        InvitadoFirma invitadoFirma = new InvitadoFirma();
+
+        invitadoFirma.setId(invitado.getPersonaId());
+        invitadoFirma.setNombre(invitado.getPersonaNombre());
+        invitadoFirma.setEmail(invitado.getPersonaEmail());
+
+        return invitadoFirma;
     }
 
     private List<PuntoOrdenDiaFirma> getPuntosOrdenDiaFirmaDesdePuntosOrdenDia(List<PuntoOrdenDia> puntosOrdenDia)

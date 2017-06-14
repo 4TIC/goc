@@ -67,6 +67,8 @@ public class ReunionFirma implements Serializable
 
     private List<Documento> documentos;
 
+    private List<InvitadoFirma> invitados;
+
     @JsonProperty("puntos_orden_dia")
     private List<PuntoOrdenDiaFirma> puntosOrdenDia;
 
@@ -344,5 +346,15 @@ public class ReunionFirma implements Serializable
     public void setCargoAlternativoResponsableActa(String cargoAlternativoResponsableActa)
     {
         this.cargoAlternativoResponsableActa = cargoAlternativoResponsableActa;
+    }
+
+    public List<InvitadoFirma> getInvitados()
+    {
+        return invitados;
+    }
+
+    public void setInvitados(List<InvitadoFirma> invitados)
+    {
+        this.invitados = invitados;
     }
 }

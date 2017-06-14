@@ -65,6 +65,12 @@
           </ul>
         </li>
       </ul>
+      <h2 th:if="${not #lists.isEmpty(reunion.invitados)}">Convidats</h2>
+      <ul th:if="${not #lists.isEmpty(reunion.invitados)}">
+        <li th:each="invitado : ${reunion.invitados}">
+          <span th:text="${invitado.nombre} + ' (' + ${invitado.email} + ')'">Invitado</span>
+        </li>
+      </ul>
       <h2 th:if="${not #lists.isEmpty(reunion.documentos)}">Documentació</h2>
       <ul th:if="${not #lists.isEmpty(reunion.documentos)}">
         <li th:each="documento : ${reunion.documentos}"><a th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/documentos/' + ${documento.id} + '/descargar'" th:text="${documento.descripcionAlternativa}">Descripcion documento</a></li>
