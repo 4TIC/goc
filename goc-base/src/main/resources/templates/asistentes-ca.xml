@@ -77,7 +77,7 @@
 
     <fo:flow flow-name="xsl-region-body">
       <fo:block padding-top="0.80cm" font-size="12pt" font-weight="bold">Llista de membres</fo:block>
-      <fo:table border-width="0.06cm" text-align="start">
+      <fo:table border-width="0.06cm" text-align="start" keep-with-previous.within-page="always">
         <fo:table-column column-width="7.50cm"/>
         <fo:table-column column-width="3.50cm"/>
         <fo:table-column column-width="5.50cm"/>
@@ -93,12 +93,12 @@
               <fo:block padding-top="0.10cm" font-family="sans-serif" font-size="10pt" color="black" font-weight="normal" font-style="normal" text-align="start" space-after="0.00cm" space-before="0.00cm">Firma / control assistència</fo:block>
             </fo:table-cell>
           </fo:table-row>
-          <fo:table-row th:each="asistente: ${asistentes}" height="1.4cm" keep-together="always">
+          <fo:table-row th:each="asistente: ${asistentes}" height="1.4cm" keep-together.within-column="always">
             <fo:table-cell border="solid" border-width="0.01cm" padding="0.10cm" number-rows-spanned="1" number-columns-spanned="1" display-align="center">
-              <fo:block th:text="${asistente.nombre}" font-family="sans-serif" font-size="12pt" color="black" font-weight="normal" font-style="normal" text-align="start" space-after="0.00cm" space-before="0.00cm">Alcañiz Garcia, Marina</fo:block>
+              <fo:block th:text="${asistente.nombre}" font-family="sans-serif" font-size="10pt" color="black" font-weight="normal" font-style="normal" text-align="start" space-after="0.00cm" space-before="0.00cm">Alcañiz Garcia, Marina</fo:block>
             </fo:table-cell>
             <fo:table-cell border="solid" border-width="0.01cm" padding="0.10cm" number-rows-spanned="1" number-columns-spanned="1" display-align="center">
-              <fo:block th:text="${asistente.cargoNombreAlternativo}" font-family="sans-serif" font-size="12pt" color="black" font-weight="normal" font-style="normal" text-align="start" space-after="0.00cm" space-before="0.00cm">35605505X</fo:block>
+              <fo:block th:text="${asistente.cargoNombreAlternativo}" font-family="sans-serif" font-size="10pt" color="black" font-weight="normal" font-style="normal" text-align="start" space-after="0.00cm" space-before="0.00cm">35605505X</fo:block>
             </fo:table-cell>
             <fo:table-cell border="solid" border-width="0.01cm" padding="0.10cm" number-rows-spanned="1" number-columns-spanned="1" display-align="center">
               <fo:block font-family="sans-serif" font-size="10pt" color="black" font-weight="normal" font-style="normal" text-align="start" space-after="0.00cm" space-before="0.00cm"></fo:block>
@@ -109,7 +109,7 @@
 
       <fo:block th:if="${not #lists.isEmpty(invitados)}" th:remove="tag">
         <fo:block padding-top="0.80cm" font-size="12pt" font-weight="bold">Llista de convidats</fo:block>
-        <fo:table border-width="0.06cm" text-align="start">
+        <fo:table border-width="0.06cm" text-align="start" keep-with-previous.within-page="always">
           <fo:table-column column-width="11cm"/>
           <fo:table-column column-width="5.50cm"/>
           <fo:table-body>
@@ -121,9 +121,9 @@
                 <fo:block padding-top="0.10cm" font-family="sans-serif" font-size="10pt" color="black" font-weight="normal" font-style="normal" text-align="start" space-after="0.00cm" space-before="0.00cm">Firma / control assistència</fo:block>
               </fo:table-cell>
             </fo:table-row>
-            <fo:table-row th:each="invitado: ${invitados}" height="1.4cm" keep-together="always">
+            <fo:table-row th:each="invitado: ${invitados}" height="1.4cm" keep-together.within-column="always">
               <fo:table-cell border="solid" border-width="0.01cm" padding="0.10cm" number-rows-spanned="1" number-columns-spanned="1" display-align="center">
-                <fo:block th:text="${invitado.personaNombre}" font-family="sans-serif" font-size="12pt" color="black" font-weight="normal" font-style="normal" text-align="start" space-after="0.00cm" space-before="0.00cm">Alcañiz Garcia, Marina</fo:block>
+                <fo:block th:text="${invitado.personaNombre}" font-family="sans-serif" font-size="10pt" color="black" font-weight="normal" font-style="normal" text-align="start" space-after="0.00cm" space-before="0.00cm">Alcañiz Garcia, Marina</fo:block>
               </fo:table-cell>
               <fo:table-cell border="solid" border-width="0.01cm" padding="0.10cm" number-rows-spanned="1" number-columns-spanned="1" display-align="center">
                 <fo:block font-family="sans-serif" font-size="10pt" color="black" font-weight="normal" font-style="normal" text-align="start" space-after="0.00cm" space-before="0.00cm"></fo:block>
