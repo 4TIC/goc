@@ -45,7 +45,7 @@
       <fo:block>
         Per la present, certifique que <fo:inline th:text="${nombreAsistente}"></fo:inline> ha assistit
         el dia <fo:inline th:text="${fechaReunion}"></fo:inline> a les <fo:inline th:text="${horaReunion}"></fo:inline>
-        a la reunió <fo:inline th:text="${nombreReunion}"></fo:inline> convocada per <fo:inline th:text="${nombreConvocante}"></fo:inline>.
+        a la reunió <fo:inline th:text="${tituloReunion}"></fo:inline> convocada per <fo:inline th:text="${nombreConvocante}"></fo:inline>.
       </fo:block>
     </fo:flow>
   </fo:page-sequence>

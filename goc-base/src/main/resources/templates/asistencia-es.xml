@@ -45,7 +45,7 @@
       <fo:block>
         Por la presente, certifico que <fo:inline th:text="${nombreAsistente}"></fo:inline> ha asistido
         el día <fo:inline th:text="${fechaReunion}"></fo:inline> a las <fo:inline th:text="${horaReunion}"></fo:inline>
-        a la reunión <fo:inline th:text="${nombreReunion}"></fo:inline> convocada por <fo:inline th:text="${nombreConvocante}"></fo:inline>.
+        a la reunión <fo:inline th:text="${tituloReunion}"></fo:inline> convocada por <fo:inline th:text="${nombreConvocante}"></fo:inline>.
       </fo:block>
     </fo:flow>
   </fo:page-sequence>
