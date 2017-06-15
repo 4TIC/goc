@@ -436,7 +436,7 @@ public class ReunionResource extends CoreBaseService
             throw new ReunionNoCompletadaException();
         }
 
-        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId);
+        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, false);
 
         String nombreAsistente = reunionTemplate.getNombreAsistente(connectedUserId);
 
@@ -476,7 +476,7 @@ public class ReunionResource extends CoreBaseService
             throw new ReunionNoDisponibleException();
         }
 
-        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId);
+        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, false);
 
         String applang = getLangCode(lang);
 

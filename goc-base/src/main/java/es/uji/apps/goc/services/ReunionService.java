@@ -401,8 +401,7 @@ public class ReunionService
         reunionFirma.setPuntosOrdenDia(listaPuntosOrdenDiaFirma);
 
         List<ReunionInvitado> invitados = reunionInvitadoDAO.getInvitadosByReunionId(reunion.getId());
-        List<InvitadoFirma> invitadosFirma =
-                getInvitadosFirmaDesdeReunionInvitados(invitados);
+        List<InvitadoFirma> invitadosFirma = getInvitadosFirmaDesdeReunionInvitados(invitados);
         reunionFirma.setInvitados(invitadosFirma);
 
         return reunionFirma;
@@ -544,7 +543,7 @@ public class ReunionService
         return documentoFirma;
     }
 
-    public ReunionTemplate getReunionTemplateDesdeReunion(Reunion reunion, Long connectedUserId)
+    public ReunionTemplate getReunionTemplateDesdeReunion(Reunion reunion, Long connectedUserId, Boolean withNoAsistentes)
     {
         ReunionTemplate reunionTemplate = new ReunionTemplate();
 
@@ -586,7 +585,7 @@ public class ReunionService
         List<ReunionComentario> comentarios =
                 reunionComentarioService.getComentariosByReunionId(reunion.getId(), connectedUserId);
 
-        List<OrganoTemplate> listaOrganosTemplate = getOrganosTemplateDesdeOrganos(organos, reunion);
+        List<OrganoTemplate> listaOrganosTemplate = getOrganosTemplateDesdeOrganos(organos, reunion, withNoAsistentes);
         reunionTemplate.setOrganos(listaOrganosTemplate);
 
         List<ReunionDocumento> reunionDocumentos = reunionDocumentoDAO.getDocumentosByReunionId(reunion.getId());
@@ -601,8 +600,7 @@ public class ReunionService
         reunionTemplate.setPuntosOrdenDia(listaPuntosOrdenDiaTemplate);
 
         List<ReunionInvitado> invitados = reunionInvitadoDAO.getInvitadosByReunionId(reunion.getId());
-        List<InvitadoTemplate> invitadosTemplate =
-                getInvitadosTemplateDesdeReunionInvitados(invitados);
+        List<InvitadoTemplate> invitadosTemplate = getInvitadosTemplateDesdeReunionInvitados(invitados);
         reunionTemplate.setInvitados(invitadosTemplate);
 
         return reunionTemplate;
@@ -655,19 +653,19 @@ public class ReunionService
         return invitadoTemplate;
     }
 
-    private List<OrganoTemplate> getOrganosTemplateDesdeOrganos(List<Organo> organos, Reunion reunion)
+    private List<OrganoTemplate> getOrganosTemplateDesdeOrganos(List<Organo> organos, Reunion reunion, Boolean withNoAsistentes)
     {
         List<OrganoTemplate> listaOrganoTemplate = new ArrayList<>();
 
         for (Organo organo : organos)
         {
-            listaOrganoTemplate.add(getOrganoTemplateDesdeOrgano(organo, reunion));
+            listaOrganoTemplate.add(getOrganoTemplateDesdeOrgano(organo, reunion, withNoAsistentes));
         }
 
         return listaOrganoTemplate;
     }
 
-    private OrganoTemplate getOrganoTemplateDesdeOrgano(Organo organo, Reunion reunion)
+    private OrganoTemplate getOrganoTemplateDesdeOrgano(Organo organo, Reunion reunion, Boolean withNoAsistentes)
     {
         OrganoTemplate organoTemplate = new OrganoTemplate();
         organoTemplate.setId(organo.getId());
@@ -678,9 +676,20 @@ public class ReunionService
         organoTemplate.setTipoNombreAlternativo(organo.getTipoOrgano().getNombreAlternativo());
         organoTemplate.setTipoOrganoId(organo.getTipoOrgano().getId());
 
-        List<OrganoReunionMiembro> listaAsistentes =
-                organoReunionMiembroDAO.getAsistenteReunionByOrganoAndReunionId(organo.getId(), organo.isExterno(),
-                        reunion.getId());
+        List<OrganoReunionMiembro> listaAsistentes;
+
+        if (withNoAsistentes)
+        {
+            listaAsistentes =
+                    organoReunionMiembroDAO.getMiembroReunionByOrganoAndReunionId(organo.getId(), organo.isExterno(),
+                            reunion.getId());
+        }
+        else
+        {
+            listaAsistentes =
+                    organoReunionMiembroDAO.getAsistenteReunionByOrganoAndReunionId(organo.getId(), organo.isExterno(),
+                            reunion.getId());
+        }
 
         organoTemplate.setAsistentes(getAsistentesDesdeListaOrganoReunionMiembro(listaAsistentes));
         return organoTemplate;
@@ -950,7 +959,7 @@ public class ReunionService
 
         reunionesAccesibles = filtrarDuplicadosReuniones(reunionesAccesibles);
 
-        return reunionesAccesibles.stream().map(r -> getReunionTemplateDesdeReunion(r, connectedUserId)).map(r ->
+        return reunionesAccesibles.stream().map(r -> getReunionTemplateDesdeReunion(r, connectedUserId, false)).map(r ->
         {
             r.setComoAsistente(r.esAsistente(connectedUserId));
             return r;

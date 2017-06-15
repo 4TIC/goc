@@ -47,7 +47,7 @@ public class ActaResource
     @Produces("application/pdf")
     @Transactional
     public Template reunion(@PathParam("reunionId") Long reunionId, @QueryParam("lang") String lang,
-                            @Context HttpServletRequest request)
+            @Context HttpServletRequest request)
             throws OrganosExternosException, MiembrosExternosException, ReunionNoDisponibleException,
             PersonasExternasException, InvalidAccessException
     {
@@ -62,11 +62,10 @@ public class ActaResource
 
         reunion.tieneAcceso(connectedUserId);
 
-        Persona convocante = personaService
-                .getPersonaFromDirectoryByPersonaId(reunion.getCreadorId());
+        Persona convocante = personaService.getPersonaFromDirectoryByPersonaId(reunion.getCreadorId());
 
-        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion,
-                connectedUserId);
+        ReunionTemplate reunionTemplate =
+                reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, false);
 
         String applang = getLangCode(lang);
 
@@ -82,8 +81,8 @@ public class ActaResource
 
     private String getLangCode(String lang)
     {
-        if (lang == null || lang.isEmpty() ||
-                !(lang.toLowerCase().equals(languageConfig.mainLanguage) || lang.toLowerCase().equals(languageConfig.alternativeLanguage)))
+        if (lang == null || lang.isEmpty() || !(lang.toLowerCase()
+                .equals(languageConfig.mainLanguage) || lang.toLowerCase().equals(languageConfig.alternativeLanguage)))
         {
             return languageConfig.mainLanguage;
         }

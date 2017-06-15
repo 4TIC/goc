@@ -204,7 +204,7 @@ public class PublicacionService extends CoreBaseService
     {
         List<ReunionTemplate> reunionesTemplate;
         reunionesTemplate = reuniones.stream()
-                .map(r -> reunionService.getReunionTemplateDesdeReunion(r, connectedUserId))
+                .map(r -> reunionService.getReunionTemplateDesdeReunion(r, connectedUserId, false))
                 .collect(Collectors.toList());
         return reunionesTemplate;
     }
@@ -220,6 +220,37 @@ public class PublicacionService extends CoreBaseService
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
+        boolean permitirComentarios = isPermitirComentarios(connectedUserId, reunion);
+
+        if (reunion == null)
+        {
+            throw new ReunionNoDisponibleException();
+        }
+
+        reunion.tieneAcceso(connectedUserId);
+
+        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, true);
+
+        String applang = getLangCode(lang);
+
+        Template template = new HTMLTemplate("reunion-" + applang);
+        template.put("logo", logoUrl);
+        template.put("charset", charset);
+        template.put("reunion", reunionTemplate);
+        template.put("applang", applang);
+        template.put("mainLanguage", languageConfig.mainLanguage);
+        template.put("alternativeLanguage", languageConfig.alternativeLanguage);
+        template.put("mainLanguageDescription", languageConfig.mainLanguageDescription);
+        template.put("alternativeLanguageDescription", languageConfig.alternativeLanguageDescription);
+        template.put("customCSS", (personalizationConfig.customCSS != null) ? personalizationConfig.customCSS : "");
+        template.put("connectedUserId", connectedUserId);
+        template.put("permitirComentarios", permitirComentarios);
+
+        return template;
+    }
+
+    private boolean isPermitirComentarios(Long connectedUserId, Reunion reunion)
+    {
         Set<OrganoReunion> reunionOrganos = reunion.getReunionOrganos();
 
         boolean permitirComentarios = false;
@@ -240,32 +271,8 @@ public class PublicacionService extends CoreBaseService
         {
             permitirComentarios = true;
         }
-
-        if (reunion == null)
-        {
-            throw new ReunionNoDisponibleException();
-        }
-
-        reunion.tieneAcceso(connectedUserId);
-
-        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId);
-
-        String applang = getLangCode(lang);
-
-        Template template = new HTMLTemplate("reunion-" + applang);
-        template.put("logo", logoUrl);
-        template.put("charset", charset);
-        template.put("reunion", reunionTemplate);
-        template.put("applang", applang);
-        template.put("mainLanguage", languageConfig.mainLanguage);
-        template.put("alternativeLanguage", languageConfig.alternativeLanguage);
-        template.put("mainLanguageDescription", languageConfig.mainLanguageDescription);
-        template.put("alternativeLanguageDescription", languageConfig.alternativeLanguageDescription);
-        template.put("customCSS", (personalizationConfig.customCSS != null) ? personalizationConfig.customCSS : "");
-        template.put("connectedUserId", connectedUserId);
-        template.put("permitirComentarios", permitirComentarios);
-
-        return template;
+        
+        return permitirComentarios;
     }
 
     private String getLangCode(String lang)

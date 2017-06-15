@@ -103,6 +103,7 @@ public class OrganoReunionMiembroService
         for (OrganoReunionMiembro asistente : asistentes)
         {
             asistente.setAsistenciaConfirmada(asistencia);
+            asistente.setAsistencia(asistencia);
             organoReunionMiembroDAO.update(asistente);
         }
     }
