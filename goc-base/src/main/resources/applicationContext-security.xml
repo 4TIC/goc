@@ -24,7 +24,7 @@
   <security:http pattern="/img/**" security="none"/>
   <security:http pattern="/css/**" security="none"/>
 
-  <security:http pattern="/rest/publicacion/acuerdos/**" security="none"/>
+  <security:http pattern="/rest/publicacion/acuerdos**" security="none"/>
 
   <!-- Token based resources -->
 
