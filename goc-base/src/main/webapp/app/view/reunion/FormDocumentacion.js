@@ -34,17 +34,9 @@ gridColumns.push({
             tooltip : appI18N.common.borrar,
             handler : function(grid, index)
             {
-
-                Ext.Msg.confirm(appI18N ? appI18N.common.borrar : 'Esborrar',
-                appI18N ? appI18N.common.confirmarBorrado : 'Esteu segur/a de voler esborrar el registre ?', function(btn, text)
-                {
-                    if (btn == 'yes')
-                    {
-                        var rec = grid.getStore().getAt(index);
-                        var documentoId = rec.get('id');
-                        grid.up('formDocumentacion').fireEvent('borraDocumento', documentoId);
-                    }
-                });
+                var rec = grid.getStore().getAt(index);
+                var documentoId = rec.get('id');
+                grid.up('formDocumentacion').fireEvent('borraDocumento', documentoId);
             }
         }
     ]
