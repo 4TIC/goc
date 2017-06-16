@@ -45,7 +45,7 @@
             <fo:table-row>
               <fo:table-cell display-align="center">
                 <fo:block font-size="10pt" text-align="center">
-                  <fo:external-graphic th:src="${logo}" content-height="scale-to-fit" height="2.5cm" content-width="2.5cm" scaling="non-uniform"/>
+                  <fo:external-graphic th:src="${logo}" content-height="2.5cm"/>
                 </fo:block>
               </fo:table-cell>
 
@@ -56,9 +56,6 @@
               </fo:table-cell>
 
               <fo:table-cell display-align="center" padding="0.4cm">
-                <!--<fo:block font-size="11pt" th:each="organo: ${reunion.reunionOrganos}" th:remove="tag">
-                  <fo:block th:text="${organo.organoNombre}">òrgan</fo:block>
-                </fo:block>-->
                 <fo:block font-size="11pt">
                   Asunto: <fo:inline th:text="${reunion.asunto}">25</fo:inline>
                 </fo:block>
