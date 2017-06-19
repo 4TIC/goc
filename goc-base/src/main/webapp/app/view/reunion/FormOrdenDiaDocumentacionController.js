@@ -90,6 +90,8 @@ Ext.define('goc.view.reunion.FormOrdenDiaDocumentacionController',
                 success : function()
                 {
                     viewModel.get('store').reload();
+
+                    view.down('form').reset();
                 }
             });
         }

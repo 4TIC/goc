@@ -89,6 +89,8 @@ Ext.define('goc.view.reunion.FormDocumentacionController',
                     viewModel.get('store').load({
                         url : '/goc/rest/reuniones/' + reunionId + '/documentos'
                     });
+
+                    view.down('form').reset();
                 }
             });
         }
