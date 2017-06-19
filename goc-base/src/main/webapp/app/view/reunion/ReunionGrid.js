@@ -60,6 +60,7 @@ reunionesGridColumns.push({
     dataIndex : 'numeroDocumentos',
     text : appI18N.reuniones.documentos,
     align : 'center',
+    reference: 'documentos',
     renderer : function(value)
     {
         if (value > 0)

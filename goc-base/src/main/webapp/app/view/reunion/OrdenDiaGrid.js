@@ -82,6 +82,7 @@ gridColumns.push({
     dataIndex : 'numeroDocumentos',
     text : appI18N.reuniones.documentos,
     align : 'center',
+    reference: 'documentos',
     renderer : function(value)
     {
         if (value > 0)
@@ -96,6 +97,7 @@ gridColumns.push({
     dataIndex : 'numeroAcuerdos',
     text : appI18N.reuniones.acuerdos,
     align : 'center',
+    reference: 'acuerdos',
     renderer : function(value)
     {
         if (value > 0)

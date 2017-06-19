@@ -15,7 +15,9 @@ Ext.define('goc.view.reunion.ReunionGridController', {
 
     onEdit : function(grid, td, cellindex)
     {
-        if (cellindex === 4)
+        var cell = grid.getHeaderCt().getHeaderAtIndex(cellindex);
+
+        if (cell.getReference() === 'documentos')
         {
             return this.onAttachmentEdit();
         }
@@ -213,11 +215,8 @@ Ext.define('goc.view.reunion.ReunionGridController', {
 
     onAttachmentEdit : function()
     {
-        console.log(this);
-        var view = this.getView().up('panel');
         var grid = this.getView();
         var record = grid.getView().getSelectionModel().getSelection()[0];
-        var viewModel = this.getViewModel();
         var store = Ext.create('goc.store.ReunionDocumentos');
         var viewport = this.getView().up('viewport');
 
@@ -254,7 +253,7 @@ Ext.define('goc.view.reunion.ReunionGridController', {
                     },
                     store : reunionesStore,
                     organosStore : organosStore,
-                    reunionInvitadosStore: invitadosStore,
+                    reunionInvitadosStore : invitadosStore,
                     organosMiembros : {},
                     miembrosStores : {}
                 }

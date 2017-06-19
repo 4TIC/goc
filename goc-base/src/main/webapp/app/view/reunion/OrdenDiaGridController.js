@@ -1,20 +1,22 @@
 Ext.define('goc.view.reunion.OrdenDiaGridController', {
-    extend: 'Ext.ux.uji.grid.PanelController',
-    alias: 'controller.ordenDiaGridController',
-    reunionId: null,
-    onRefresh: function (reunionId) {
+    extend : 'Ext.ux.uji.grid.PanelController',
+    alias : 'controller.ordenDiaGridController',
+    reunionId : null,
+    onRefresh : function(reunionId)
+    {
         this.reunionId = reunionId;
 
         var viewModel = this.getViewModel();
         this.getView().setDisabled(false);
         viewModel.getStore('puntosOrdenDiaStore').load({
-            url: '/goc/rest/reuniones/' + reunionId + '/puntosOrdenDia'
+            url : '/goc/rest/reuniones/' + reunionId + '/puntosOrdenDia'
         });
 
         this.actualizaEstadoBotones();
     },
 
-    actualizaEstadoBotones: function() {
+    actualizaEstadoBotones : function()
+    {
         var reunionGrid = Ext.ComponentQuery.query("reunionGrid")[0];
         var record = reunionGrid.getView().getSelectionModel().getSelection()[0];
 
@@ -25,16 +27,19 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
         botonAdd.setDisabled(record.get('completada'));
     },
 
-    onDelete: function() {
+    onDelete : function()
+    {
         var grid = this.getView();
         var records = grid.getView().getSelectionModel().getSelection();
         var reunionId = this.reunionId;
 
-        if (records.length === 0) {
+        if (records.length === 0)
+        {
             return Ext.Msg.alert(appI18N.common.borradoRegistro, appI18N.reuniones.seleccionarParaBorrarPuntoOrdenDia);
         }
 
-        if (records.length === 1 && records[0].phantom === true) {
+        if (records.length === 1 && records[0].phantom === true)
+        {
             return grid.getStore().remove(records);
         }
 
@@ -53,77 +58,94 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
         }
     },
 
-    bajaPuntoOrdenDia: function(puntoOrdenDiaId) {
+    bajaPuntoOrdenDia : function(puntoOrdenDiaId)
+    {
         var grid = this.getView();
         Ext.Ajax.request({
-            url: '/goc/rest/reuniones/' + this.reunionId + '/puntosOrdenDia/' + puntoOrdenDiaId + '/bajar',
-            method: 'PUT',
-            success: function () {
+            url : '/goc/rest/reuniones/' + this.reunionId + '/puntosOrdenDia/' + puntoOrdenDiaId + '/bajar',
+            method : 'PUT',
+            success : function()
+            {
                 grid.getStore().reload();
             }
         });
     },
 
-    subePuntoOrdenDia: function(puntoOrdenDiaId) {
+    subePuntoOrdenDia : function(puntoOrdenDiaId)
+    {
         var grid = this.getView();
         Ext.Ajax.request({
-            url: '/goc/rest/reuniones/' + this.reunionId + '/puntosOrdenDia/' + puntoOrdenDiaId + '/subir',
-            method: 'PUT',
-            success: function () {
+            url : '/goc/rest/reuniones/' + this.reunionId + '/puntosOrdenDia/' + puntoOrdenDiaId + '/subir',
+            method : 'PUT',
+            success : function()
+            {
                 grid.getStore().reload();
             }
         });
     },
 
-    onAdd: function () {
+    onAdd : function()
+    {
         this.createModalPuntoOrdenDia(null);
     },
 
-    onEdit: function (grid, td, cellindex) {
-        if (cellindex === 5) {
+    onEdit : function(grid, td, cellindex)
+    {
+        var cell = grid.getHeaderCt().getHeaderAtIndex(cellindex);
+
+        if (cell.getReference() === 'documentos')
+        {
             return this.onAttachmentEdit();
         }
+
+        if (cell.getReference() === 'acuerdos')
+        {
+            return this.onAttachmentAcuerdosEdit();
+        }
+
         var grid = this.getView();
         var record = grid.getView().getSelectionModel().getSelection()[0];
 
-        if (!record) {
+        if (!record)
+        {
             return Ext.Msg.alert(appI18N.common.edicionRegistro, appI18N.reuniones.seleccionarParaEditarPuntoOrdenDia);
         }
 
         this.createModalPuntoOrdenDia(record);
     },
 
-    onAttachmentEdit: function () {
-        var view = this.getView().up('panel');
+    onAttachmentEdit : function()
+    {
         var grid = this.getView();
         var record = grid.getView().getSelectionModel().getSelection()[0];
-        var viewModel = this.getViewModel();
         var store = Ext.create('goc.store.PuntosOrdenDiaDocumentos');
         var viewport = this.getView().up('viewport');
 
         var reunionGrid = Ext.ComponentQuery.query("reunionGrid")[0];
         var reunion = reunionGrid.getView().getSelectionModel().getSelection()[0];
 
-        if (!record) {
+        if (!record)
+        {
             return Ext.Msg.alert(appI18N.reuniones.documentacion, appI18N.reuniones.seleccionarParaDocumentacionPuntoOrdenDia);
         }
 
         this.modal = viewport.add({
-            xtype: 'formOrdenDiaDocumentacion',
-            viewModel: {
-                data: {
-                    title: appI18N.reuniones.documentacionDelPunto + ': ' + record.get('titulo'),
-                    puntoOrdenDiaId: record.get('id'),
-                    reunionId: this.reunionId,
-                    reunionCompletada: reunion.get('completada'),
-                    store: store
+            xtype : 'formOrdenDiaDocumentacion',
+            viewModel : {
+                data : {
+                    title : appI18N.reuniones.documentacionDelPunto + ': ' + record.get('titulo'),
+                    puntoOrdenDiaId : record.get('id'),
+                    reunionId : this.reunionId,
+                    reunionCompletada : reunion.get('completada'),
+                    store : store
                 }
             }
         });
         this.modal.show();
     },
 
-    onAttachmentAcuerdosEdit: function () {
+    onAttachmentAcuerdosEdit : function()
+    {
         var grid = this.getView();
         var record = grid.getView().getSelectionModel().getSelection()[0];
         var store = Ext.create('goc.store.PuntosOrdenDiaAcuerdos');
@@ -132,19 +154,20 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
         var reunionGrid = Ext.ComponentQuery.query("reunionGrid")[0];
         var reunion = reunionGrid.getView().getSelectionModel().getSelection()[0];
 
-        if (!record) {
+        if (!record)
+        {
             return Ext.Msg.alert(appI18N.reuniones.acuerdos, appI18N.reuniones.seleccionarParaAcuerdosPuntoOrdenDia);
         }
 
         this.modal = viewport.add({
-            xtype: 'formOrdenDiaAcuerdos',
-            viewModel: {
-                data: {
-                    title: appI18N.reuniones.acuerdosDelPunto + ': ' + record.get('titulo'),
-                    puntoOrdenDiaId: record.get('id'),
-                    reunionId: this.reunionId,
-                    reunionCompletada: reunion.get('completada'),
-                    store: store
+            xtype : 'formOrdenDiaAcuerdos',
+            viewModel : {
+                data : {
+                    title : appI18N.reuniones.acuerdosDelPunto + ': ' + record.get('titulo'),
+                    puntoOrdenDiaId : record.get('id'),
+                    reunionId : this.reunionId,
+                    reunionCompletada : reunion.get('completada'),
+                    store : store
                 }
             }
         });
@@ -152,7 +175,8 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
         this.modal.show();
     },
 
-    onAttachmentEditDescriptores: function () {
+    onAttachmentEditDescriptores : function()
+    {
         var view = this.getView().up('panel');
         var grid = this.getView();
         var record = grid.getView().getSelectionModel().getSelection()[0];
@@ -161,28 +185,29 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
         var reunionGrid = Ext.ComponentQuery.query("reunionGrid")[0];
         var reunion = reunionGrid.getView().getSelectionModel().getSelection()[0];
 
-        if (!record) {
+        if (!record)
+        {
             return Ext.Msg.alert(appI18N.reuniones.descriptoresYclaves, appI18N.reuniones.seleccionarParaDocumentacionPuntoOrdenDia);
         }
 
         this.modal = view.add({
-            xtype: 'formDescriptoresOrdenDia',
-            viewModel: {
-                data: {
-                    title: appI18N.reuniones.descriptoresYclaves + ': ' + record.get('titulo'),
-                    puntoOrdenDiaId: record.get('id'),
-                    reunionId: this.reunionId,
-                    reunionCompletada: reunion.get('completada')
+            xtype : 'formDescriptoresOrdenDia',
+            viewModel : {
+                data : {
+                    title : appI18N.reuniones.descriptoresYclaves + ': ' + record.get('titulo'),
+                    puntoOrdenDiaId : record.get('id'),
+                    reunionId : this.reunionId,
+                    reunionCompletada : reunion.get('completada')
                 },
-                stores: {
-                    descriptoresOrdenDiaStore: {
-                        type: 'descriptoresOrdenDia'
+                stores : {
+                    descriptoresOrdenDiaStore : {
+                        type : 'descriptoresOrdenDia'
                     },
-                    descriptoresStore: {
-                        type: 'descriptores'
+                    descriptoresStore : {
+                        type : 'descriptores'
                     },
-                    clavesStore: {
-                        type: 'claves'
+                    clavesStore : {
+                        type : 'claves'
                     }
                 }
             }
@@ -191,43 +216,45 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
         this.modal.show();
     },
 
-    getPuntoOrdenDiaModalDefinition: function (puntoOrdenDia, store) {
+    getPuntoOrdenDiaModalDefinition : function(puntoOrdenDia, store)
+    {
         store.getProxy().url = '/goc/rest/reuniones/' + this.reunionId + '/puntosOrdenDia';
 
         var reunionGrid = Ext.ComponentQuery.query("reunionGrid")[0];
         var reunion = reunionGrid.getView().getSelectionModel().getSelection()[0];
 
         return {
-            xtype: 'formOrdenDia',
-            viewModel: {
-                data: {
-                    title: puntoOrdenDia ? appI18N.reuniones.edicion + ': ' + puntoOrdenDia.get('titulo') : appI18N.reuniones.nuevoPunto,
-                    id: puntoOrdenDia ? puntoOrdenDia.get('id') : undefined,
-                    reunionId: this.reunionId,
-                    puntoOrdenDia: puntoOrdenDia || {
-                        type: 'goc.model.PuntoOrdenDia',
-                        reunionId: this.reunionId,
-                        create: true
+            xtype : 'formOrdenDia',
+            viewModel : {
+                data : {
+                    title : puntoOrdenDia ? appI18N.reuniones.edicion + ': ' + puntoOrdenDia.get('titulo') : appI18N.reuniones.nuevoPunto,
+                    id : puntoOrdenDia ? puntoOrdenDia.get('id') : undefined,
+                    reunionId : this.reunionId,
+                    puntoOrdenDia : puntoOrdenDia || {
+                        type : 'goc.model.PuntoOrdenDia',
+                        reunionId : this.reunionId,
+                        create : true
                     },
-                    reunionCompletada: reunion.get('completada'),
-                    store: store
+                    reunionCompletada : reunion.get('completada'),
+                    store : store
                 },
-                stores: {
-                    descriptoresOrdenDiaStore: {
-                        type: 'descriptoresOrdenDia'
+                stores : {
+                    descriptoresOrdenDiaStore : {
+                        type : 'descriptoresOrdenDia'
                     },
-                    descriptoresStore: {
-                        type: 'descriptores'
+                    descriptoresStore : {
+                        type : 'descriptores'
                     },
-                    clavesStore: {
-                        type: 'claves'
+                    clavesStore : {
+                        type : 'claves'
                     }
                 }
             }
         };
     },
 
-    createModalPuntoOrdenDia: function (record) {
+    createModalPuntoOrdenDia : function(record)
+    {
         var view = this.getView().up('panel');
         var viewModel = this.getViewModel();
         var store = viewModel.getStore('puntosOrdenDiaStore');
