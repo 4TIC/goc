@@ -8,11 +8,10 @@ import java.io.Serializable;
 public class ReunionBusqueda implements Serializable
 {
     @Id
-    private Long id;
+    private String id;
 
-    @JoinColumn(name = "ID")
-    @OneToOne
-    @MapsId
+    @JoinColumn(name = "REUNION_ID")
+    @ManyToOne
     private Reunion reunion;
 
     @Column(name = "ASUNTO_REUNION_BUSQ")
@@ -51,12 +50,12 @@ public class ReunionBusqueda implements Serializable
     @Column(name = "DELIBERACIONES_ALT_PUNTO_BUSQ")
     private String deliberacionesAlternativasPunto;
 
-    public Long getId()
+    public String getId()
     {
         return id;
     }
 
-    public void setId(Long id)
+    public void setId(String id)
     {
         this.id = id;
     }

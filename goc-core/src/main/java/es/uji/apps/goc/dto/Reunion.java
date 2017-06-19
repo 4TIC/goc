@@ -21,8 +21,8 @@ public class Reunion implements Serializable
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne(mappedBy = "reunion")
-    private ReunionBusqueda reunionBusqueda;
+    @OneToMany(mappedBy = "reunion")
+    private Set<ReunionBusqueda> reunionBusqueda;
 
     private String asunto;
 
@@ -521,16 +521,6 @@ public class Reunion implements Serializable
         return (numeroOrganosConMiembros > 0);
     }
 
-    public ReunionBusqueda getReunionBusqueda()
-    {
-        return reunionBusqueda;
-    }
-
-    public void setReunionBusqueda(ReunionBusqueda reunionBusqueda)
-    {
-        this.reunionBusqueda = reunionBusqueda;
-    }
-
     public Boolean getAvisoPrimeraReunion()
     {
         return avisoPrimeraReunion;
@@ -549,5 +539,15 @@ public class Reunion implements Serializable
     public void setReunionInvitados(Set<ReunionInvitado> reunionInvitados)
     {
         this.reunionInvitados = reunionInvitados;
+    }
+
+    public Set<ReunionBusqueda> getReunionBusqueda()
+    {
+        return reunionBusqueda;
+    }
+
+    public void setReunionBusqueda(Set<ReunionBusqueda> reunionBusqueda)
+    {
+        this.reunionBusqueda = reunionBusqueda;
     }
 }
