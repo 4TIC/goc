@@ -398,8 +398,9 @@ formReunionItems.push({
         ]
     },
 
+
     search : {
-        width : 500,
+        width : '100%',
         field : 'nombre',
         bind : {
             disabled : '{reunion.completada}'
@@ -449,7 +450,6 @@ formReunionItems.push({
         }
     }
 });
-
 
 formReunionItems.push({
     xtype : 'invitadoGrid',
@@ -529,6 +529,6 @@ Ext.define('goc.view.reunion.FormReunion',
         borrarAsistenteReunion : 'onBorrarAsistenteReunion',
         detalleAsistentesReunion : 'onDetalleAsistentesReunion',
         afterLayout : 'afterRenderFormReunion',
-        close: 'onClose'
+        close : 'onClose'
     }
 });
