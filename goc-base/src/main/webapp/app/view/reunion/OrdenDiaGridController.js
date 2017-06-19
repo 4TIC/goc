@@ -255,7 +255,6 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
 
     createModalPuntoOrdenDia : function(record)
     {
-        var view = this.getView().up('panel');
         var viewModel = this.getViewModel();
         var store = viewModel.getStore('puntosOrdenDiaStore');
         var viewport = this.getView().up('viewport');

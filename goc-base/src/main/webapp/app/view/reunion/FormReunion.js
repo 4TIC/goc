@@ -528,6 +528,7 @@ Ext.define('goc.view.reunion.FormReunion',
     listeners : {
         borrarAsistenteReunion : 'onBorrarAsistenteReunion',
         detalleAsistentesReunion : 'onDetalleAsistentesReunion',
-        afterLayout : 'afterRenderFormReunion'
+        afterLayout : 'afterRenderFormReunion',
+        close: 'onClose'
     }
 });
