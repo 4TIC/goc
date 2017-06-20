@@ -226,6 +226,22 @@ div.reunion > div > div {
     padding-left: 1.6em;
 }
 
+
+/*Para forzar un scrollbar horizontal en el componente multiselector-search de extjs, debido a un bug que no permite redimensionar la ventana*/
+div[id^="multiselector-search"][id$="body"] {
+    overflow-x: auto;
+}
+
+div[id^="multiselector-search"][id$="body"] div[id^="tableview"]{
+    overflow-x: auto !important;
+}
+
+div[id^="multiselector-search"][id$="body"] div[id^="tableview"] td[role^="gridcell"]{
+    width: 1000px !important;
+}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
 @media only screen and (max-device-width: 480px) {
     .list li {
         border-bottom: 1px solid #CCCCCC;

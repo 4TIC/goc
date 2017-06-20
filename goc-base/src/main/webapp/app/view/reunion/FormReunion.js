@@ -398,9 +398,8 @@ formReunionItems.push({
         ]
     },
 
-
     search : {
-        width : '100%',
+        width : 500,
         field : 'nombre',
         bind : {
             disabled : '{reunion.completada}'
