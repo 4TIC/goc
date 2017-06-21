@@ -119,7 +119,7 @@ public class ReunionDocumentosResource extends CoreBaseService
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_HTML)
     public UIEntity subirDocumento(FormDataMultiPart multiPart)
             throws IOException, ReunionYaCompletadaException
     {

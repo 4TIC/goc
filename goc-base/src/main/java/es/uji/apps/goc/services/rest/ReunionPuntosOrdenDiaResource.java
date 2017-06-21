@@ -378,7 +378,7 @@ public class ReunionPuntosOrdenDiaResource extends CoreBaseService
     @POST
     @Path("{puntoOrdenDiaId}/documentos")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_HTML)
     public UIEntity subirDocumentoPuntoOrdenDia(@PathParam("puntoOrdenDiaId") Long puntoOrdenDiaId,
             FormDataMultiPart multiPart)
             throws IOException, ReunionYaCompletadaException
@@ -395,7 +395,7 @@ public class ReunionPuntosOrdenDiaResource extends CoreBaseService
     @POST
     @Path("{puntoOrdenDiaId}/acuerdos")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_HTML)
     public UIEntity subirAcuerdoPuntoOrdenDia(@PathParam("puntoOrdenDiaId") Long puntoOrdenDiaId,
             FormDataMultiPart multiPart)
             throws IOException, ReunionYaCompletadaException
