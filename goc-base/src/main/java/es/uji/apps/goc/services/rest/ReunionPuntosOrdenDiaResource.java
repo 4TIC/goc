@@ -58,8 +58,7 @@ public class ReunionPuntosOrdenDiaResource extends CoreBaseService
         List<Tuple> listaNumeroAcuerdosPorPuntoOrdenDiaId =
                 puntoOrdenDiaDocumentoService.getNumeroAcuerdosPorReunion(connectedUserId);
 
-        return puntosOrdenDiaConNumeroDocumentosToUI(listaPuntosOrdenDia, listaNumeroDocumentosPorPuntoOrdenDiaId,
-                listaNumeroAcuerdosPorPuntoOrdenDiaId);
+        return puntosOrdenDiaConNumeroDocumentosToUI(listaPuntosOrdenDia, listaNumeroDocumentosPorPuntoOrdenDiaId, listaNumeroAcuerdosPorPuntoOrdenDiaId);
     }
 
     private List<UIEntity> puntosOrdenDiaConNumeroDocumentosToUI(List<PuntoOrdenDia> listaPuntosOrdenDia,
@@ -72,8 +71,8 @@ public class ReunionPuntosOrdenDiaResource extends CoreBaseService
             UIEntity puntoOrdenDiaUI = UIEntity.toUI(puntoOrdenDia);
             puntoOrdenDiaUI.put("numeroDocumentos", getNumeroDocumentosByPuntoOrdenDiaId(puntoOrdenDia.getId(),
                     listaNumeroDocumentosPorPuntoOrdenDiaId));
-            puntoOrdenDiaUI.put("numeroAcuerdos",
-                    getNumeroAcuerdosByPuntoOrdenDiaId(puntoOrdenDia.getId(), listaNumeroAcuerdosPorPuntoOrdenDiaId));
+            puntoOrdenDiaUI.put("numeroAcuerdos", getNumeroAcuerdosByPuntoOrdenDiaId(puntoOrdenDia.getId(),
+                    listaNumeroAcuerdosPorPuntoOrdenDiaId));
             puntosOrdenDiaUI.add(puntoOrdenDiaUI);
         }
 
@@ -379,32 +378,35 @@ public class ReunionPuntosOrdenDiaResource extends CoreBaseService
     @POST
     @Path("{puntoOrdenDiaId}/documentos")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
-    public Response subirDocumentoPuntoOrdenDia(@PathParam("puntoOrdenDiaId") Long puntoOrdenDiaId,
+    @Produces(MediaType.APPLICATION_JSON)
+    public UIEntity subirDocumentoPuntoOrdenDia(@PathParam("puntoOrdenDiaId") Long puntoOrdenDiaId,
             FormDataMultiPart multiPart)
             throws IOException, ReunionYaCompletadaException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
         DocumentoUI documento = extractDocumentoFromMultipart(multiPart);
 
-        puntoOrdenDiaDocumentoService.addDocumento(puntoOrdenDiaId, documento, connectedUserId);
+        PuntoOrdenDiaDocumento puntoOrdenDiaDocumento =
+                puntoOrdenDiaDocumentoService.addDocumento(puntoOrdenDiaId, documento, connectedUserId);
 
-        return Response.ok().entity("{\"success\":true}").build();
+        return UIEntity.toUI(puntoOrdenDiaDocumento);
     }
 
     @POST
     @Path("{puntoOrdenDiaId}/acuerdos")
-    @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
-    public Response subirAcuerdoPuntoOrdenDia(@PathParam("puntoOrdenDiaId") Long puntoOrdenDiaId,
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    public UIEntity subirAcuerdoPuntoOrdenDia(@PathParam("puntoOrdenDiaId") Long puntoOrdenDiaId,
             FormDataMultiPart multiPart)
             throws IOException, ReunionYaCompletadaException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
         DocumentoUI documento = extractDocumentoFromMultipart(multiPart);
 
-        puntoOrdenDiaDocumentoService.addAcuerdo(puntoOrdenDiaId, documento, connectedUserId);
+        PuntoOrdenDiaAcuerdo puntoOrdenDiaAcuerdo =
+                puntoOrdenDiaDocumentoService.addAcuerdo(puntoOrdenDiaId, documento, connectedUserId);
 
-        return Response.ok().entity("{\"success\":true}").build();
+        return UIEntity.toUI(puntoOrdenDiaAcuerdo);
     }
 
     private DocumentoUI extractDocumentoFromMultipart(FormDataMultiPart multiPart)

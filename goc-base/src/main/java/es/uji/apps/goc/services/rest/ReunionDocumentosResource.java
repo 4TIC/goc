@@ -119,8 +119,8 @@ public class ReunionDocumentosResource extends CoreBaseService
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces({MediaType.TEXT_PLAIN,MediaType.APPLICATION_JSON})
-    public Response subirDocumento(FormDataMultiPart multiPart)
+    @Produces(MediaType.APPLICATION_JSON)
+    public UIEntity subirDocumento(FormDataMultiPart multiPart)
             throws IOException, ReunionYaCompletadaException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
@@ -164,9 +164,9 @@ public class ReunionDocumentosResource extends CoreBaseService
         }
 
         reunionService.compruebaReunionNoCompletada(reunionId);
-        reunionDocumentoService.addDocumento(reunionId,
-                fileName, descripcion, descripcionAlternativa, mimeType, data, connectedUserId);
 
-        return Response.ok().entity("{\"success\":true}").build();
+        ReunionDocumento reunionDocumento = reunionDocumentoService.addDocumento(reunionId,
+                fileName, descripcion, descripcionAlternativa, mimeType, data, connectedUserId);
+        return UIEntity.toUI(reunionDocumento);
     }
 }
