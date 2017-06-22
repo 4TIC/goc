@@ -73,15 +73,14 @@ public class DescriptorService
             throws OrganosExternosException
     {
         List<OrganoReunion> organosReunion = reunionService.getOrganosReunionByReunionId(reunionId);
-        List<Descriptor> descriptores = new ArrayList<>();
+        List<Descriptor> descriptores = descriptorDAO.getDescriptoresNoRestringidos();
 
-        if (organosReunion == null || organosReunion.isEmpty()) return descriptorDAO.getDescriptores();
+        if (organosReunion == null || organosReunion.isEmpty()) return descriptores;
 
         for (OrganoReunion organoReunion : organosReunion)
         {
-            List<Descriptor> descriptoresPorTipoOrgano = descriptorDAO.getDescriptoresByTipoOrganoId(organoReunion.getTipoOrganoId());
-
-            if (descriptoresPorTipoOrgano == null || descriptoresPorTipoOrgano.isEmpty()) return descriptorDAO.getDescriptores();
+            List<Descriptor> descriptoresPorTipoOrgano =
+                    descriptorDAO.getDescriptoresByTipoOrganoId(organoReunion.getTipoOrganoId());
 
             descriptores.addAll(descriptoresPorTipoOrgano);
         }

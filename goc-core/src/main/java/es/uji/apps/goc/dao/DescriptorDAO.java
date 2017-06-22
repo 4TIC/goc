@@ -60,4 +60,11 @@ public class DescriptorDAO extends BaseDAODatabaseImpl
                 .where(qTipoOrgano.id.eq(tipoOrganoId))
                 .list(qDescriptor);
     }
+
+    public List<Descriptor> getDescriptoresNoRestringidos()
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        return query.from(qDescriptor).where(qDescriptor.descriptoresTiposOrgano.isEmpty()).list(qDescriptor);
+    }
 }
