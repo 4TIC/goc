@@ -24,7 +24,7 @@ Ext.define('Ext.ux.uji.grid.PanelController', {
         var selection = grid.getView().getSelectionModel().getSelection()[0];
         if (!selection)
         {
-            return Ext.Msg.alert(appI18N.common.edicionRegistro || "Edició de registre", appI18N.common.seleccionarParaEditarRegistro || "Cal sel·leccionar un registre per a poder fer l'edició");
+            return Ext.Msg.alert(appI18N.common.edicionRegistro || "Edició de registre", appI18N.common.seleccionarParaEditarRegistro || "Cal seleccionar un registre per a poder fer l'edició");
         }
 
         var editor = grid.plugins[0];
@@ -39,7 +39,7 @@ Ext.define('Ext.ux.uji.grid.PanelController', {
 
         if (records.length === 0)
         {
-            return Ext.Msg.alert(appI18N.common.borradoRegistro || "Esborrar registre", appI18N.common.seleccionarParaBorrarRegistro || "Cal sel·leccionar un registre per a poder esborrar-lo");
+            return Ext.Msg.alert(appI18N.common.borradoRegistro || "Esborrar registre", appI18N.common.seleccionarParaBorrarRegistro || "Cal seleccionar un registre per a poder esborrar-lo");
         }
 
         if (records.length === 1 && records[0].phantom === true)
