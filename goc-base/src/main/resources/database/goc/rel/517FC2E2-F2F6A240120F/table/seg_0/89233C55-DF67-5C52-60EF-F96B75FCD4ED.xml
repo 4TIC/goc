@@ -1,0 +1,67 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="89233C55-DF67-5C52-60EF-F96B75FCD4ED" name="UJI_REUNIONES.GOC_ORGANOS_INVITADOS">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-23 12:27:54 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<ordsAlias>table_22</ordsAlias>
+<abbreviation>GOI</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="EA9ED26C-305F-C6D1-1AFF-B97F3231CCC5">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-23 12:29:09 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PERSONA_ID" id="81F024C4-C583-7C82-2917-13156C0EB147">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-23 12:30:21 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PERSONA_NOMBRE" id="4BAB760D-3BC7-86E1-AAAB-81EA68156540">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-23 12:30:21 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1000</dataTypeSize>
+<ownDataTypeParameters>1000,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ORAGNO_ID" id="393EC805-1BA3-1618-6C36-477184A116DA">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-23 12:30:21 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="FFCC649E-2BB1-94A2-1671-214AB73BE2F3" name="UJI_REUNIONES.GOC_ORGANOS_INVITADOS_PK">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-23 12:29:09 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="EA9ED26C-305F-C6D1-1AFF-B97F3231CCC5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
