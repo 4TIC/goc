@@ -115,3 +115,12 @@ AS
                                                 deliberaciones_alt_punto_busq
   FROM goc_reuniones r, goc_reuniones_puntos_orden_dia p
   WHERE p.reunion_id(+) = r.id;
+
+
+CREATE TABLE UJI_REUNIONES.GOC_ORGANOS_INVITADOS
+(
+  ID              NUMBER                        NOT NULL primary key,
+  PERSONA_ID      NUMBER                        NOT NULL,
+  PERSONA_NOMBRE  VARCHAR2(1000 BYTE)           NOT NULL,
+  ORGANO_ID       VARCHAR2(100 BYTE)            NOT NULL
+)
