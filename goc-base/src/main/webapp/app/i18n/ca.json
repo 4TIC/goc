@@ -40,12 +40,15 @@
     "seleccionaEstadoOrganos": "Selecciona l'estat",
     "seleccionaSuplente": "Selecciona el suplent",
     "seleccionaAutorizado": "Selecciona l'autoritzat",
+    "seleccionaInvitado": "Selecciona el convidat",
     "seleccionaTipoOrgano": "Selecciona el tipus d'òrgan",
     "sinAutorizadosDisponibles": "Encara no n'hi han autoritzats per aquest òrgan",
+    "sinInvitadosDisponibles": "Encara no n'hi han convidats per aquest òrgan",
     "borrarAutorizacion": "Esteu segur/a de voler treure l'autorització a aquesta persona?",
     "inhabilitarOrgano": "Esteu segur/a de voler inhabilitar l'òrgan?",
     "borrarAutorizacion": "Esborrar autorització",
-    "seleccionarParaBorrarAutorizacion": "Cal seleccionar una persona per a esborrar l'autorització"
+    "seleccionarParaBorrarAutorizacion": "Cal seleccionar una persona per a esborrar l'autorització",
+    "invitados": "Convidats"
   },
   "tipoOrganos": {
     "titulo": "Tipus d'Òrgans",

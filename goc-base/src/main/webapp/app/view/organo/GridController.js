@@ -30,11 +30,14 @@ Ext.define('goc.view.organo.GridController', {
 
         var recordModel = grid.getSelectedRow();
         var gridAutorizados = grid.up('panel').down('grid[name=autorizadoGrid]');
+        var gridInvitados = grid.up('panel').down('grid[name=organoInvitadoGrid]');
 
         if (!recordModel)
         {
             gridAutorizados.clearStore();
             gridAutorizados.disable();
+            gridInvitados.clearStore();
+            gridInvitados.disable();
 
             toolbar.items.each(function(button)
             {
@@ -59,6 +62,7 @@ Ext.define('goc.view.organo.GridController', {
 
         var record = selection[selection.length-1];
         gridAutorizados.fireEvent('organoSelected', record);
+        gridInvitados.fireEvent('organoSelected', record);
     },
 
     initFilters : function()

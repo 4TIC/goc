@@ -40,12 +40,15 @@
     "seleccionaEstadoOrganos": "Selecciona estado órganos",
     "seleccionaSuplente": "Selecciona el suplente",
     "seleccionaAutorizado": "Selecciona el autorizado",
+    "seleccionaInvitado": "Selecciona el invitado",
     "seleccionaTipoOrgano": "Selecciona el tipo de órgano",
     "sinAutorizadosDisponibles": "Todavía no hay autorizados para este órgano",
+    "sinInvitadosDisponibles": "Todavía no hay invitados para este órgano",
     "borrarAutorizacion": "¿Estás seguro de querer quitar la autorización a esta persona?",
     "inhabilitarOrgano": "¿Estás seguro de querer inhabilitar el órgano?",
     "borrarAutorizacion": "Quitar autorización",
-    "seleccionarParaBorrarAutorizacion": "Debe seleccionar una persona para quitar la autorización"
+    "seleccionarParaBorrarAutorizacion": "Debe seleccionar una persona para quitar la autorización",
+    "invitados": "invitados"
   },
   "tipoOrganos": {
     "titulo": "Tipos de Órganos",

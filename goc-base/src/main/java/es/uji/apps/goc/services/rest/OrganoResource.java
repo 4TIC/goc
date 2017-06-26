@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response;
 import com.sun.jersey.api.core.InjectParam;
 
 import es.uji.apps.goc.dto.OrganoAutorizado;
+import es.uji.apps.goc.dto.OrganoInvitado;
 import es.uji.apps.goc.exceptions.OrganoNoDisponibleException;
 import es.uji.apps.goc.exceptions.OrganosExternosException;
 import es.uji.apps.goc.exceptions.RolesPersonaExternaException;
@@ -213,7 +214,6 @@ public class OrganoResource extends CoreBaseService
     @Produces(MediaType.APPLICATION_JSON)
     public List<UIEntity> getAutorizados(@QueryParam("organoId") String organoId,
             @QueryParam("externo") Boolean externo)
-            throws OrganosExternosException
     {
         return UIEntity.toUI(organoService.getAutorizados(organoId, externo));
     }
@@ -222,7 +222,7 @@ public class OrganoResource extends CoreBaseService
     @Path("autorizados")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public UIEntity addCargo(UIEntity autorizado)
+    public UIEntity addAutorizado(UIEntity autorizado)
     {
         OrganoAutorizado newOrganoAutorizado = organoService.addAutorizado(autorizado.toModel(OrganoAutorizado.class));
 
@@ -231,11 +231,38 @@ public class OrganoResource extends CoreBaseService
 
     @DELETE
     @Path("autorizados/{organoAutorizadoId}")
-    public Response borraCargo(@PathParam("organoAutorizadoId") Long organoAutorizadoId)
+    public Response borraAutorizado(@PathParam("organoAutorizadoId") Long organoAutorizadoId)
     {
         organoService.removeAutorizado(organoAutorizadoId);
 
         return Response.ok().build();
     }
 
+    @GET
+    @Path("invitados")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UIEntity> getInvitados(@QueryParam("organoId") String organoId)
+    {
+        return UIEntity.toUI(organoService.getInvitados(organoId));
+    }
+
+    @POST
+    @Path("invitados")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public UIEntity addInvitado(UIEntity autorizado)
+    {
+        OrganoInvitado newOrganoInvitado = organoService.addInvitado(autorizado.toModel(OrganoInvitado.class));
+
+        return UIEntity.toUI(newOrganoInvitado);
+    }
+
+    @DELETE
+    @Path("invitados/{organoInvitadoId}")
+    public Response borraInvitado(@PathParam("organoInvitadoId") Long organoInvitadoId)
+    {
+        organoService.removeInvitado(organoInvitadoId);
+
+        return Response.ok().build();
+    }
 }

@@ -22,6 +22,7 @@
     <class>es.uji.apps.goc.dto.PuntoOrdenDiaAcuerdo</class>
     <class>es.uji.apps.goc.dto.ReunionComentario</class>
     <class>es.uji.apps.goc.dto.OrganoAutorizado</class>
+    <class>es.uji.apps.goc.dto.OrganoInvitado</class>
     <class>es.uji.apps.goc.dto.Descriptor</class>
     <class>es.uji.apps.goc.dto.Clave</class>
     <class>es.uji.apps.goc.dto.PuntoOrdenDiaDescriptor</class>

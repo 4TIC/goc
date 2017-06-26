@@ -1,17 +1,17 @@
-Ext.define('goc.view.organo.AutorizadoGrid',
+Ext.define('goc.view.organo.OrganoInvitadoGrid',
 {
     extend : 'Ext.ux.uji.grid.Panel',
-    alias : 'widget.autorizadoGrid',
+    alias : 'widget.organoInvitadoGrid',
     plugins : [],
     disabled : true,
-    requires : ['goc.view.organo.AutorizadoGridController'],
-    controller : 'autorizadoGridController',
-    name : 'autorizadoGrid',
-    title : appI18N.organos.autorizados,
+    requires : ['goc.view.organo.OrganoInvitadoGridController'],
+    controller : 'organoInvitadoGridController',
+    name : 'organoInvitadoGrid',
+    title : appI18N.organos.invitados,
     multiSelect : true,
     scrollable : true,
     bind : {
-        store : '{organoAutorizadosStore}'
+        store : '{organoInvitadosStore}'
     },
     columns : [
         {
@@ -21,19 +21,18 @@ Ext.define('goc.view.organo.AutorizadoGrid',
             hidden : true
         },
         {
-            text : appI18N.autorizados.nombre,
+            text : appI18N.invitados.nombre,
             dataIndex : 'personaNombre',
             flex : 1
         }
     ],
     viewConfig : {
-        emptyText : appI18N.organos.sinAutorizadosDisponibles
+        emptyText : appI18N.organos.sinInvitadosDisponibles
     },
     listeners : {
         organoSelected : 'organoSelected',
         onDelete : 'onDelete'
     },
-
     tbar : [
         {
             xtype : 'button',

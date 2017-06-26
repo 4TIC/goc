@@ -1,15 +1,18 @@
-Ext.define('goc.view.organo.AutorizadoGridController',
+Ext.define('goc.view.organo.OrganoInvitadoGridController',
 {
     extend : 'Ext.ux.uji.grid.PanelController',
-    alias : 'controller.autorizadoGridController',
+    alias : 'controller.organoInvitadoGridController',
+
+    onLoad : function()
+    {
+    },
 
     organoSelected : function(organo)
     {
-        this.getViewModel().getStore('organoAutorizadosStore').load(
+        this.getViewModel().getStore('organoInvitadosStore').load(
         {
             params : {
-                organoId : organo.get('id'),
-                externo : organo.get('externo')
+                organoId : organo.get('id')
             }
         });
 
@@ -33,32 +36,30 @@ Ext.define('goc.view.organo.AutorizadoGridController',
         var window = Ext.create('goc.view.common.LookupWindowPersonas',
         {
             appPrefix : 'goc',
-            title : appI18N.organos.seleccionaAutorizado
+            title : appI18N.organos.seleccionaInvitado
         });
 
         window.show();
 
-        var store = vm.getStore('organoAutorizadosStore');
-        var self = this;
+        var store = vm.getStore('organoInvitadosStore');
         window.on('LookoupWindowClickSeleccion', function(res)
         {
-            var autorizado = Ext.create('goc.model.OrganoAutorizado',
+            var invitado = Ext.create('goc.model.OrganoInvitado',
             {
                 personaId : res.get('id'),
                 personaNombre : res.get('nombre'),
-                organoId : record.get('id'),
-                organoExterno : record.get('externo')
+                organoId : record.get('id')
             });
 
-            var existeAutorizado = store.find('personaId', autorizado.get('personaId'));
-            if (existeAutorizado === -1)
+            var existeInvitado = store.find('personaId', invitado.get('personaId'));
+            if (existeInvitado === -1)
             {
-                store.add(autorizado);
+                store.add(invitado);
                 store.getModel().getField('id').persist = false
                 store.sync();
             }
         });
-    },
+    }/*,
 
     onDelete : function(grid, td, cellindex)
     {
@@ -82,5 +83,5 @@ Ext.define('goc.view.organo.AutorizadoGridController',
                 store.sync();
             }
         });
-    }
+    }*/
 });

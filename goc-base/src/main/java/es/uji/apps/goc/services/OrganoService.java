@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import javax.ws.rs.core.MediaType;
 
+import es.uji.apps.goc.dao.OrganoInvitadoDAO;
+import es.uji.apps.goc.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -19,10 +21,6 @@ import com.sun.jersey.api.client.WebResource;
 import es.uji.apps.goc.dao.OrganoAutorizadoDAO;
 import es.uji.apps.goc.dao.OrganoDAO;
 import es.uji.apps.goc.dao.ReunionDAO;
-import es.uji.apps.goc.dto.OrganoAutorizado;
-import es.uji.apps.goc.dto.OrganoExterno;
-import es.uji.apps.goc.dto.OrganoReunion;
-import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.exceptions.OrganoNoDisponibleException;
 import es.uji.apps.goc.exceptions.OrganosExternosException;
 import es.uji.apps.goc.model.JSONListaOrganosExternosDeserializer;
@@ -42,13 +40,17 @@ public class OrganoService
     @Autowired
     private OrganoAutorizadoDAO organoAutorizadoDAO;
 
+    @Autowired
+    private OrganoInvitadoDAO organoInvitadoDAO;
+
     @Value("${goc.external.authToken}")
     private String authToken;
 
     @Value("${goc.external.organosEndpoint}")
     private String organosExternosEndpoint;
 
-    public List<Organo> getOrganos(Long connectedUserId) throws OrganosExternosException
+    public List<Organo> getOrganos(Long connectedUserId)
+            throws OrganosExternosException
     {
         List<Organo> organos = new ArrayList<>();
         organos.addAll(getOrganosExternos());
@@ -69,9 +71,7 @@ public class OrganoService
                 .collect(Collectors.toList()));
 
         List<Organo> organosLocales = organoDAO.getOrganosByAutorizadoId(connectedUserId);
-        organos.addAll(organosLocales.stream()
-                .filter(o -> !o.isInactivo())
-                .collect(Collectors.toList()));
+        organos.addAll(organosLocales.stream().filter(o -> !o.isInactivo()).collect(Collectors.toList()));
 
         return organos;
     }
@@ -92,7 +92,8 @@ public class OrganoService
     }
 
     public Organo updateOrgano(Long organoId, String nombre, String nombreAlternativo, Long tipoOrganoId,
-                               Boolean inactivo, Long connectedUserId) throws OrganoNoDisponibleException
+            Boolean inactivo, Long connectedUserId)
+            throws OrganoNoDisponibleException
     {
         Organo organo = organoDAO.getOrganoByIdAndUserId(organoId, connectedUserId);
 
@@ -111,19 +112,21 @@ public class OrganoService
         return organoDAO.updateOrgano(organo);
     }
 
-    public List<Organo> getOrganosExternos() throws OrganosExternosException
+    public List<Organo> getOrganosExternos()
+            throws OrganosExternosException
     {
         WebResource getOrganosResource = Client.create().resource(this.organosExternosEndpoint);
 
         ClientResponse response = getOrganosResource.type(MediaType.APPLICATION_JSON)
-                .header("X-UJI-AuthToken", authToken).get(ClientResponse.class);
+                .header("X-UJI-AuthToken", authToken)
+                .get(ClientResponse.class);
         if (response.getStatus() != 200)
         {
             throw new OrganosExternosException();
         }
 
-        JSONListaOrganosExternosDeserializer jsonDeserializer = response
-                .getEntity(JSONListaOrganosExternosDeserializer.class);
+        JSONListaOrganosExternosDeserializer jsonDeserializer =
+                response.getEntity(JSONListaOrganosExternosDeserializer.class);
 
         List<OrganoExterno> listaOrganosExternos = jsonDeserializer.getOrganos();
         return organosExternosDTOToOrgano(listaOrganosExternos);
@@ -199,14 +202,16 @@ public class OrganoService
 
     public OrganoAutorizado addAutorizado(OrganoAutorizado organoAutorizado)
     {
-        List<OrganoAutorizado> listaAutorizados = organoAutorizadoDAO.getAutorizadosByOrgano(
-                organoAutorizado.getOrganoId(), organoAutorizado.isOrganoExterno());
+        List<OrganoAutorizado> listaAutorizados =
+                organoAutorizadoDAO.getAutorizadosByOrgano(organoAutorizado.getOrganoId(),
+                        organoAutorizado.isOrganoExterno());
 
         List<OrganoAutorizado> existeAutorizado = listaAutorizados.stream()
                 .filter(oa -> oa.getPersonaId().equals(organoAutorizado.getPersonaId()))
                 .collect(Collectors.toList());
 
-        if (existeAutorizado.size() == 1) {
+        if (existeAutorizado.size() == 1)
+        {
             return existeAutorizado.get(0);
         }
 
@@ -219,19 +224,47 @@ public class OrganoService
         organoAutorizadoDAO.delete(OrganoAutorizado.class, organoAutorizadoId);
     }
 
+    public List<OrganoInvitado> getInvitados(String organoId)
+    {
+        return organoInvitadoDAO.getInvitadosByOrgano(organoId);
+    }
+
+    public OrganoInvitado addInvitado(OrganoInvitado organoInvitado)
+    {
+        List<OrganoInvitado> listaInvitados = organoInvitadoDAO.getInvitadosByOrgano(organoInvitado.getOrganoId());
+
+        List<OrganoInvitado> existeInvitado = listaInvitados.stream()
+                .filter(oa -> oa.getPersonaId().equals(organoInvitado.getPersonaId()))
+                .collect(Collectors.toList());
+
+        if (existeInvitado.size() == 1)
+        {
+            return existeInvitado.get(0);
+        }
+
+        return organoInvitadoDAO.insert(organoInvitado);
+    }
+
+    @Transactional
+    public void removeInvitado(Long organoInvitadoId)
+    {
+        organoInvitadoDAO.delete(OrganoInvitado.class, organoInvitadoId);
+    }
+
     public boolean usuarioConPermisosParaConvocarOrganos(List<Organo> organos, Long connectedUserId)
     {
         Boolean permisosAdecuados = true;
-        List<OrganoAutorizado> listaPermisosOrganoAutorizado = organoAutorizadoDAO
-                .getAutorizadosByUserId(connectedUserId);
+        List<OrganoAutorizado> listaPermisosOrganoAutorizado =
+                organoAutorizadoDAO.getAutorizadosByUserId(connectedUserId);
 
         for (Organo organo : organos)
         {
             Boolean encontrado = false;
             for (OrganoAutorizado organoAutorizado : listaPermisosOrganoAutorizado)
             {
-                if (organoAutorizado.getOrganoId().equals(organo.getId().toString())
-                        && organoAutorizado.isOrganoExterno().equals(organo.isExterno()))
+                if (organoAutorizado.getOrganoId()
+                        .equals(organo.getId().toString()) && organoAutorizado.isOrganoExterno()
+                        .equals(organo.isExterno()))
                 {
                     encontrado = true;
                     break;
