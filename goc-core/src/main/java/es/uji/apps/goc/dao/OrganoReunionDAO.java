@@ -48,21 +48,6 @@ public class OrganoReunionDAO extends BaseDAODatabaseImpl
         return resultado.get(0);
     }
 
-    public List<OrganoReunion> getOrganoReunionByOrganoExternoId(String organoExternoId)
-    {
-        JPAQuery query = new JPAQuery(entityManager);
-        return query.from(qOrganoReunion).where(
-                qOrganoReunion.organoId.eq(organoExternoId).and(qOrganoReunion.externo.eq(true)))
-                .list(qOrganoReunion);
-    }
-
-    public List<OrganoReunion> getOrganoReunionByOrganoLocalId(Long organoLocalId)
-    {
-        JPAQuery query = new JPAQuery(entityManager);
-        return query.from(qOrganoReunion).where(qOrganoReunion.organoId.eq(organoLocalId.toString())
-                .and(qOrganoReunion.externo.eq(false))).list(qOrganoReunion);
-    }
-
     public List<OrganoReunion> getOrganosReunionNoCompletadasByOrganoId(Long organoLocalId)
     {
         JPAQuery query = new JPAQuery(entityManager);
