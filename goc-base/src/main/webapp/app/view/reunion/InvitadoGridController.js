@@ -20,7 +20,7 @@ Ext.define('goc.view.reunion.InvitadoGridController', {
             var invitado = Ext.create('goc.model.ReunionInvitado',
             {
                 personaId : res.get('id'),
-                personaNombre : res.get('nombre') ,
+                personaNombre : res.get('nombre'),
                 personaEmail : res.get('email')
             });
 

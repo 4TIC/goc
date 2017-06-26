@@ -48,6 +48,7 @@ Ext.define('goc.view.organo.OrganoInvitadoGridController',
             {
                 personaId : res.get('id'),
                 personaNombre : res.get('nombre'),
+                personaEmail : res.get('email'),
                 organoId : record.get('id')
             });
 

@@ -71,6 +71,17 @@
 <ownDataTypeParameters>1000 BYTE,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="PERSONA_EMAIL" id="3B379021-F128-3970-6751-AC1908EA5D77">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-06-26 12:47:54 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1000</dataTypeSize>
+<ownDataTypeParameters>1000,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="E7560CFF-FBEE-B845-4EFE-E7B84BF0FEFE" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_REUNIONES_INVITADOS_PK">
