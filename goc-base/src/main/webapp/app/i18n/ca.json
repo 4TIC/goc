@@ -46,8 +46,10 @@
     "sinInvitadosDisponibles": "Encara no n'hi han convidats per aquest òrgan",
     "borrarAutorizacion": "Esteu segur/a de voler treure l'autorització a aquesta persona?",
     "inhabilitarOrgano": "Esteu segur/a de voler inhabilitar l'òrgan?",
-    "borrarAutorizacion": "Esborrar autorització",
+    "borrarAutorizacion": "Esborrar autorització?",
+    "borrarInvitado": "Esborrar convidat?",
     "seleccionarParaBorrarAutorizacion": "Cal seleccionar una persona per a esborrar l'autorització",
+    "seleccionarParaBorrarInvitados": "Cal seleccionar una persona per a esborrar el convidat",
     "invitados": "Convidats"
   },
   "tipoOrganos": {

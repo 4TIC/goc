@@ -46,8 +46,10 @@
     "sinInvitadosDisponibles": "Todavía no hay invitados para este órgano",
     "borrarAutorizacion": "¿Estás seguro de querer quitar la autorización a esta persona?",
     "inhabilitarOrgano": "¿Estás seguro de querer inhabilitar el órgano?",
-    "borrarAutorizacion": "Quitar autorización",
+    "borrarAutorizacion": "¿Quitar autorización?",
+    "borrarInvitado": "¿Quitar invitado?",
     "seleccionarParaBorrarAutorizacion": "Debe seleccionar una persona para quitar la autorización",
+    "seleccionarParaBorrarInvitado": "Debe seleccionar una persona para quitar el invitado",
     "invitados": "invitados"
   },
   "tipoOrganos": {

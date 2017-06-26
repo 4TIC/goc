@@ -59,7 +59,7 @@ Ext.define('goc.view.organo.OrganoInvitadoGridController',
                 store.sync();
             }
         });
-    }/*,
+    },
 
     onDelete : function(grid, td, cellindex)
     {
@@ -68,14 +68,14 @@ Ext.define('goc.view.organo.OrganoInvitadoGridController',
 
         if (!record)
         {
-            return Ext.Msg.alert(appI18N.organos.borrarAutorizacion, appI18N.organos.seleccionarParaBorrarAutorizacion);
+            return Ext.Msg.alert(appI18N.organos.borrarAutorizacion, appI18N.organos.seleccionarParaBorrarInvitado);
         }
         ;
 
         var vm = this.getViewModel();
-        var store = vm.getStore('organoAutorizadosStore');
+        var store = vm.getStore('organoInvitadosStore');
 
-        Ext.Msg.confirm(appI18N.common.borrar, appI18N.organos.borrarAutorizacion, function(result)
+        Ext.Msg.confirm(appI18N.common.borrar, appI18N.organos.borrarInvitado, function(result)
         {
             if (result === 'yes')
             {
@@ -83,5 +83,5 @@ Ext.define('goc.view.organo.OrganoInvitadoGridController',
                 store.sync();
             }
         });
-    }*/
+    }
 });
