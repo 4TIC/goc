@@ -169,8 +169,7 @@ public class ReunionDAO extends BaseDAODatabaseImpl
 
         ReunionPermiso acceso = query.from(qReunionPermiso)
                 .where(qReunionPermiso.personaId.eq(connectedUserId)
-                        .and(qReunionPermiso.id.eq(reunionId))
-                        .and(qReunionPermiso.asistente.isTrue()))
+                        .and(qReunionPermiso.id.eq(reunionId)))
                 .uniqueResult(qReunionPermiso);
 
         return (acceso != null);
