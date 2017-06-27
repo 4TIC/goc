@@ -400,18 +400,18 @@ public class ReunionService
         List<PuntoOrdenDiaFirma> listaPuntosOrdenDiaFirma = getPuntosOrdenDiaFirmaDesdePuntosOrdenDia(puntosOrdenDia);
         reunionFirma.setPuntosOrdenDia(listaPuntosOrdenDiaFirma);
 
-        List<ReunionInvitado> invitados = reunionInvitadoDAO.getInvitadosByReunionId(reunion.getId());
+        List<Persona> invitados = reunionDAO.getInvitadosByReunionId(reunion.getId());
         List<InvitadoFirma> invitadosFirma = getInvitadosFirmaDesdeReunionInvitados(invitados);
         reunionFirma.setInvitados(invitadosFirma);
 
         return reunionFirma;
     }
 
-    private List<InvitadoFirma> getInvitadosFirmaDesdeReunionInvitados(List<ReunionInvitado> invitados)
+    private List<InvitadoFirma> getInvitadosFirmaDesdeReunionInvitados(List<Persona> invitados)
     {
         List<InvitadoFirma> listaInvitadosFirma = new ArrayList<>();
 
-        for (ReunionInvitado invitado : invitados)
+        for (Persona invitado : invitados)
         {
             listaInvitadosFirma.add(getInvitadoFirmaDessdeInvitado(invitado));
         }
@@ -419,13 +419,13 @@ public class ReunionService
         return listaInvitadosFirma;
     }
 
-    private InvitadoFirma getInvitadoFirmaDessdeInvitado(ReunionInvitado invitado)
+    private InvitadoFirma getInvitadoFirmaDessdeInvitado(Persona invitado)
     {
         InvitadoFirma invitadoFirma = new InvitadoFirma();
 
-        invitadoFirma.setId(invitado.getPersonaId());
-        invitadoFirma.setNombre(invitado.getPersonaNombre());
-        invitadoFirma.setEmail(invitado.getPersonaEmail());
+        invitadoFirma.setId(invitado.getId());
+        invitadoFirma.setNombre(invitado.getNombre());
+        invitadoFirma.setEmail(invitado.getEmail());
 
         return invitadoFirma;
     }
@@ -543,7 +543,8 @@ public class ReunionService
         return documentoFirma;
     }
 
-    public ReunionTemplate getReunionTemplateDesdeReunion(Reunion reunion, Long connectedUserId, Boolean withNoAsistentes)
+    public ReunionTemplate getReunionTemplateDesdeReunion(Reunion reunion, Long connectedUserId,
+            Boolean withNoAsistentes)
     {
         ReunionTemplate reunionTemplate = new ReunionTemplate();
 
@@ -599,7 +600,7 @@ public class ReunionService
                 getPuntosOrdenDiaTemplateDesdePuntosOrdenDia(puntosOrdenDia);
         reunionTemplate.setPuntosOrdenDia(listaPuntosOrdenDiaTemplate);
 
-        List<ReunionInvitado> invitados = reunionInvitadoDAO.getInvitadosByReunionId(reunion.getId());
+        List<Persona> invitados = reunionDAO.getInvitadosByReunionId(reunion.getId());
         List<InvitadoTemplate> invitadosTemplate = getInvitadosTemplateDesdeReunionInvitados(invitados);
         reunionTemplate.setInvitados(invitadosTemplate);
 
@@ -630,11 +631,11 @@ public class ReunionService
         return comentarioTemplate;
     }
 
-    private List<InvitadoTemplate> getInvitadosTemplateDesdeReunionInvitados(List<ReunionInvitado> invitados)
+    private List<InvitadoTemplate> getInvitadosTemplateDesdeReunionInvitados(List<Persona> invitados)
     {
         List<InvitadoTemplate> listaInvitadosTemplate = new ArrayList<>();
 
-        for (ReunionInvitado invitado : invitados)
+        for (Persona invitado : invitados)
         {
             listaInvitadosTemplate.add(getInvitadoTemplateDessdeInvitado(invitado));
         }
@@ -642,18 +643,19 @@ public class ReunionService
         return listaInvitadosTemplate;
     }
 
-    private InvitadoTemplate getInvitadoTemplateDessdeInvitado(ReunionInvitado invitado)
+    private InvitadoTemplate getInvitadoTemplateDessdeInvitado(Persona invitado)
     {
         InvitadoTemplate invitadoTemplate = new InvitadoTemplate();
 
-        invitadoTemplate.setId(invitado.getPersonaId());
-        invitadoTemplate.setNombre(invitado.getPersonaNombre());
-        invitadoTemplate.setEmail(invitado.getPersonaEmail());
+        invitadoTemplate.setId(invitado.getId());
+        invitadoTemplate.setNombre(invitado.getNombre());
+        invitadoTemplate.setEmail(invitado.getEmail());
 
         return invitadoTemplate;
     }
 
-    private List<OrganoTemplate> getOrganosTemplateDesdeOrganos(List<Organo> organos, Reunion reunion, Boolean withNoAsistentes)
+    private List<OrganoTemplate> getOrganosTemplateDesdeOrganos(List<Organo> organos, Reunion reunion,
+            Boolean withNoAsistentes)
     {
         List<OrganoTemplate> listaOrganoTemplate = new ArrayList<>();
 
@@ -1119,5 +1121,10 @@ public class ReunionService
     public List<OrganoReunion> getOrganosReunionByReunionId(Long reunionId)
     {
         return reunionDAO.getOrganosReunionByReunionId(reunionId);
+    }
+
+    public List<ReunionInvitado> getInvitadosReunionByReunionId(Long reunionId)
+    {
+        return reunionInvitadoDAO.getInvitadosByReunionId(reunionId);
     }
 }

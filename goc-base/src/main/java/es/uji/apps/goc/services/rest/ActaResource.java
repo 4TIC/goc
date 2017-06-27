@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import java.util.List;
 
 @Service
 @Path("actas")
@@ -54,13 +55,14 @@ public class ActaResource
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
+        List<Persona> invitados = reunionDAO.getInvitadosByReunionId(reunionId);
 
         if (reunion == null)
         {
             throw new ReunionNoDisponibleException();
         }
 
-        reunion.tieneAcceso(connectedUserId);
+        reunion.tieneAcceso(invitados, connectedUserId);
 
         Persona convocante = personaService.getPersonaFromDirectoryByPersonaId(reunion.getCreadorId());
 

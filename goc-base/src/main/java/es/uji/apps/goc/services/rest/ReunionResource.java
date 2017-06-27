@@ -41,9 +41,6 @@ public class ReunionResource extends CoreBaseService
     private DescriptorService descriptorService;
 
     @InjectParam
-    private InvitadosService invitadosService;
-
-    @InjectParam
     private ReunionDocumentoService reunionDocumentoService;
 
     @InjectParam
@@ -537,9 +534,7 @@ public class ReunionResource extends CoreBaseService
     public List<UIEntity> listaInvitados(@PathParam("reunionId") Long reunionId)
             throws ReunionNoDisponibleException, OrganosExternosException
     {
-        Long connectedUserId = AccessManager.getConnectedUserId(request);
-
-        return UIEntity.toUI(invitadosService.getInvitadosByReunionId(reunionId, connectedUserId));
+        return UIEntity.toUI(reunionService.getInvitadosReunionByReunionId(reunionId));
     }
 
     @PUT

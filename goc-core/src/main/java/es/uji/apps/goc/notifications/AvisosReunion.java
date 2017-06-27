@@ -11,6 +11,7 @@ import es.uji.apps.goc.dto.ReunionInvitado;
 import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.exceptions.NotificacionesException;
 import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
+import es.uji.apps.goc.model.Persona;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -29,7 +30,7 @@ public class AvisosReunion
 {
     private OrganoReunionMiembroDAO organoReunionMiembroDAO;
     private NotificacionesDAO notificacionesDAO;
-    private ReunionInvitadoDAO reunionInvitadoDAO;
+    private ReunionDAO reunionDAO;
 
     @Value("${goc.publicUrl}")
     private String publicUrl;
@@ -38,10 +39,10 @@ public class AvisosReunion
     private String defaultSender;
 
     @Autowired
-    public AvisosReunion(ReunionInvitadoDAO reunionInvitadoDAO, OrganoReunionMiembroDAO organoReunionMiembroDAO,
+    public AvisosReunion(ReunionDAO reunionDAO, OrganoReunionMiembroDAO organoReunionMiembroDAO,
             NotificacionesDAO notificacionesDAO)
     {
-        this.reunionInvitadoDAO = reunionInvitadoDAO;
+        this.reunionDAO = reunionDAO;
         this.organoReunionMiembroDAO = organoReunionMiembroDAO;
         this.notificacionesDAO = notificacionesDAO;
     }
@@ -121,7 +122,6 @@ public class AvisosReunion
     private List<String> getMiembros(Reunion reunion, Boolean confirmados)
             throws ReunionNoDisponibleException, MiembrosExternosException
     {
-
         List<OrganoReunionMiembro> listaAsistentesReunion;
 
         if (confirmados)
@@ -133,13 +133,13 @@ public class AvisosReunion
             listaAsistentesReunion = organoReunionMiembroDAO.getMiembrosByReunionId(reunion.getId());
         }
 
-        List<ReunionInvitado> invitados = reunionInvitadoDAO.getInvitadosByReunionId(reunion.getId());
+        List<Persona> invitados = reunionDAO.getInvitadosByReunionId(reunion.getId());
 
         List<String> emailMiembros =
                 listaAsistentesReunion.stream().map(AvisosReunion::obtenerMailAsistente).collect(toList());
 
         List<String> emailInvitados =
-                invitados.stream().map(invitado -> invitado.getPersonaEmail()).collect(toList());
+                invitados.stream().map(invitado -> invitado.getEmail()).collect(toList());
 
         emailMiembros.addAll(emailInvitados);
 

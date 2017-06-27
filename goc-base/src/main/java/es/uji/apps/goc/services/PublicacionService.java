@@ -3,6 +3,7 @@ package es.uji.apps.goc.services;
 import com.sun.jersey.api.core.InjectParam;
 
 import es.uji.apps.goc.model.AcuerdosSearch;
+import es.uji.apps.goc.model.Persona;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -220,6 +221,7 @@ public class PublicacionService extends CoreBaseService
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
+        List<Persona> invitados = reunionDAO.getInvitadosByReunionId(reunionId);
         boolean permitirComentarios = isPermitirComentarios(connectedUserId, reunion);
 
         if (reunion == null)
@@ -227,7 +229,7 @@ public class PublicacionService extends CoreBaseService
             throw new ReunionNoDisponibleException();
         }
 
-        reunion.tieneAcceso(connectedUserId);
+        reunion.tieneAcceso(invitados, connectedUserId);
 
         ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, true);
 

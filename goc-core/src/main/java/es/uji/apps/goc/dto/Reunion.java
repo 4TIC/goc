@@ -1,6 +1,7 @@
 package es.uji.apps.goc.dto;
 
 import es.uji.apps.goc.exceptions.InvalidAccessException;
+import es.uji.apps.goc.model.Persona;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -464,7 +465,8 @@ public class Reunion implements Serializable
         {
             List<OrganoReunionMiembro> pertenecientes = organoReunion.getMiembros()
                     .stream()
-                    .filter(miembro -> (String.valueOf(userId).equals(miembro.getMiembroId()) || userId.equals(miembro.getSuplenteId())))
+                    .filter(miembro -> (String.valueOf(userId).equals(miembro.getMiembroId()) || userId.equals(
+                            miembro.getSuplenteId())))
                     .collect(toList());
 
             miembros.addAll(pertenecientes);
@@ -483,26 +485,26 @@ public class Reunion implements Serializable
         return !esCreador(userId);
     }
 
-    public boolean noEsInvitado(Long connectedUserId)
+    public boolean noEsInvitado(List<Persona> invitados, Long connectedUserId)
     {
-        return !esInvitado(connectedUserId);
+        return !esInvitado(invitados, connectedUserId);
     }
 
-    public boolean esInvitado(final Long userId)
+    public boolean esInvitado(List<Persona> invitados, Long userId)
     {
         if (userId == null || reunionOrganos == null || reunionOrganos.isEmpty()) return false;
 
-        return getReunionInvitados().stream().anyMatch(invitado -> userId.equals(invitado.getPersonaId()));
+        return invitados.stream().anyMatch(invitado -> userId.equals(invitado.getId()));
     }
 
-    public void tieneAcceso(Long userId)
+    public void tieneAcceso(List<Persona> invitados, Long userId)
             throws InvalidAccessException
     {
         if (isPublica()) return;
 
         if (userId == null) throw new InvalidAccessException("Acceso restringido a usuarios autenticados");
 
-        if (noEsCreador(userId) && noEsMiembro(userId) && noEsInvitado(userId))
+        if (noEsCreador(userId) && noEsMiembro(userId) && noEsInvitado(invitados, userId))
             throw new InvalidAccessException("No se tiene acceso a esta reunion");
     }
 

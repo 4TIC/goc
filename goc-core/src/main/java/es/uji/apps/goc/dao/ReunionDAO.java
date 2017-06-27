@@ -5,14 +5,17 @@ import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.jpa.impl.JPAUpdateClause;
 import com.mysema.query.types.expr.BooleanExpression;
 import es.uji.apps.goc.dto.*;
+import es.uji.apps.goc.model.Persona;
 import es.uji.commons.db.BaseDAODatabaseImpl;
 import es.uji.commons.rest.StringUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class ReunionDAO extends BaseDAODatabaseImpl
@@ -29,6 +32,7 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     private QReunionComentario qReunionComentario = QReunionComentario.reunionComentario;
     private QReunionDocumento qReunionDocumento = QReunionDocumento.reunionDocumento;
     private QReunionInvitado qReunionInvitado = QReunionInvitado.reunionInvitado;
+    private QOrganoInvitado qOrganoInvitado = QOrganoInvitado.organoInvitado;
 
     public List<ReunionEditor> getReunionesByEditorId(Long connectedUserId, String organodId, Long tipoOrganoId,
             Boolean externo, Boolean completada)
@@ -320,5 +324,74 @@ public class ReunionDAO extends BaseDAODatabaseImpl
         JPAQuery query = new JPAQuery(entityManager);
 
         return query.from(qOrganoReunion).where(qOrganoReunion.reunion.id.eq(reunionId)).list(qOrganoReunion);
+    }
+
+    public List<Persona> getInvitadosByReunionId(Long reunionId)
+    {
+        JPAQuery queryReunionesInvitados = new JPAQuery(entityManager);
+        JPAQuery queryOrganos = new JPAQuery(entityManager);
+        JPAQuery queryOrganosInvitados = new JPAQuery(entityManager);
+
+        List<Persona> personas = new ArrayList<>();
+
+        List<ReunionInvitado> invitadosPorReunion =
+                queryReunionesInvitados.from(qReunionInvitado).where(qReunionInvitado.reunion.id.eq(reunionId)).list(qReunionInvitado);
+
+        List<String> organosId = queryOrganos.from(qOrganoReunion)
+                .where(qOrganoReunion.reunion.id.eq(reunionId))
+                .list(qOrganoReunion.organoId);
+
+        List<OrganoInvitado> invitadosPorOrgano = queryOrganosInvitados.from(qOrganoInvitado)
+                .where(qOrganoInvitado.organoId.in(organosId))
+                .distinct()
+                .list(qOrganoInvitado);
+
+        addToPersonasListFromReunionInvitados(personas, invitadosPorReunion);
+        addToPersonasListFromOrganoInvitados(personas, invitadosPorOrgano);
+
+        return personas;
+    }
+
+    public void addToPersonasListFromReunionInvitados(List<Persona> personas, List<ReunionInvitado> invitados)
+    {
+        personas.addAll(invitados.stream()
+                .filter(i -> !personaContainsId(personas, i.getPersonaId()))
+                .map(i -> toPersona(i))
+                .collect(Collectors.toList()));
+    }
+
+    public Persona toPersona(ReunionInvitado reunionInvitado)
+    {
+        Persona persona = new Persona();
+
+        persona.setId(reunionInvitado.getPersonaId());
+        persona.setEmail(reunionInvitado.getPersonaEmail());
+        persona.setNombre(reunionInvitado.getPersonaNombre());
+
+        return persona;
+    }
+
+    public void addToPersonasListFromOrganoInvitados(List<Persona> personas, List<OrganoInvitado> invitados)
+    {
+        personas.addAll(invitados.stream()
+                .filter(i -> !personaContainsId(personas, i.getPersonaId()))
+                .map(i -> toPersona(i))
+                .collect(Collectors.toList()));
+    }
+
+    public Persona toPersona(OrganoInvitado organoInvitado)
+    {
+        Persona persona = new Persona();
+
+        persona.setId(organoInvitado.getPersonaId());
+        persona.setEmail(organoInvitado.getPersonaEmail());
+        persona.setNombre(organoInvitado.getPersonaNombre());
+
+        return persona;
+    }
+
+    public boolean personaContainsId(List<Persona> personas, Long id)
+    {
+        return personas.stream().anyMatch(p -> id.equals(p.getId()));
     }
 }
