@@ -29,5 +29,6 @@
     <class>es.uji.apps.goc.dto.ReunionEditor</class>
     <class>es.uji.apps.goc.dto.DescriptorTipoOrgano</class>
     <class>es.uji.apps.goc.dto.ReunionInvitado</class>
+    <class>es.uji.apps.goc.dto.ReunionPermiso</class>
   </persistence-unit>
 </persistence>

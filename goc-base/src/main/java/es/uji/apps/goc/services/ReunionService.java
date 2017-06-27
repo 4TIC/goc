@@ -955,17 +955,9 @@ public class ReunionService
         return reunionDAO.getReunionConOrganosById(reunionId);
     }
 
-    public List<ReunionTemplate> getReunionesAccesiblesByPersonaId(Long connectedUserId)
+    public List<ReunionPermiso> getReunionesAccesiblesByPersonaId(Long connectedUserId)
     {
-        List<Reunion> reunionesAccesibles = reunionDAO.getReunionesAccesiblesByPersonaId(connectedUserId);
-
-        reunionesAccesibles = filtrarDuplicadosReuniones(reunionesAccesibles);
-
-        return reunionesAccesibles.stream().map(r -> getReunionTemplateDesdeReunion(r, connectedUserId, false)).map(r ->
-        {
-            r.setComoAsistente(r.esAsistente(connectedUserId));
-            return r;
-        }).collect(Collectors.toList());
+        return reunionDAO.getReunionesAccesiblesByPersonaId(connectedUserId);
     }
 
     public void compruebaReunionNoCompletada(Long reunionId)
@@ -1126,5 +1118,10 @@ public class ReunionService
     public List<ReunionInvitado> getInvitadosReunionByReunionId(Long reunionId)
     {
         return reunionInvitadoDAO.getInvitadosByReunionId(reunionId);
+    }
+
+    public String getNombreAsistente(Long reunionId, Long connectedUserId)
+    {
+        return reunionDAO.getNombreAsistente(reunionId, connectedUserId);
     }
 }

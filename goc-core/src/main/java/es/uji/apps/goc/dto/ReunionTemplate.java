@@ -393,43 +393,6 @@ public class ReunionTemplate implements Serializable
         this.creadorId = creadorId;
     }
 
-    public boolean esAsistente(Long userId)
-    {
-        if (getNombreAsistente(userId) != null) return true;
-
-        return false;
-    }
-
-    public String getNombreAsistente(Long connectedUserId)
-    {
-        for (OrganoTemplate organo : getOrganos())
-        {
-            for (MiembroTemplate asistente : organo.getAsistentes())
-            {
-                if (asistente.getMiembroId().equals(connectedUserId.toString()) && asistente.getAsistencia())
-                {
-                    return asistente.getNombre();
-                }
-
-                if (asistente.getSuplenteId() != null && asistente.getSuplenteId()
-                        .equals(connectedUserId) && asistente.getAsistencia())
-                {
-                    return asistente.getSuplente();
-                }
-            }
-        }
-
-        for (InvitadoTemplate invitado : getInvitados())
-        {
-            if (invitado.getId().equals(connectedUserId))
-            {
-                return invitado.getNombre();
-            }
-        }
-
-        return null;
-    }
-
     public List<InvitadoTemplate> getInvitados()
     {
         return invitados;

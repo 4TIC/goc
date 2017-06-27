@@ -33,6 +33,7 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     private QReunionDocumento qReunionDocumento = QReunionDocumento.reunionDocumento;
     private QReunionInvitado qReunionInvitado = QReunionInvitado.reunionInvitado;
     private QOrganoInvitado qOrganoInvitado = QOrganoInvitado.organoInvitado;
+    private QReunionPermiso qReunionPermiso = QReunionPermiso.reunionPermiso;
 
     public List<ReunionEditor> getReunionesByEditorId(Long connectedUserId, String organodId, Long tipoOrganoId,
             Boolean externo, Boolean completada)
@@ -141,21 +142,25 @@ public class ReunionDAO extends BaseDAODatabaseImpl
                 .list(qReunion);
     }
 
-    public List<Reunion> getReunionesAccesiblesByPersonaId(Long connectedUserId)
+    public List<ReunionPermiso> getReunionesAccesiblesByPersonaId(Long connectedUserId)
     {
         JPAQuery query = new JPAQuery(entityManager);
 
-        return query.from(qReunion)
-                .leftJoin(qReunion.reunionOrganos, qOrganoReunion)
-                .leftJoin(qOrganoReunion.miembros, qOrganoReunionMiembro)
-                .leftJoin(qReunion.reunionInvitados, qReunionInvitado)
-                .where(qReunion.creadorId.eq(connectedUserId)
-                        .or((qOrganoReunionMiembro.asistencia.eq(true)
-                                .and(qOrganoReunionMiembro.suplenteId.eq(connectedUserId)
-                                        .or(qOrganoReunionMiembro.miembroId.eq(connectedUserId.toString())))))
-                        .or(qReunionInvitado.personaId.eq(connectedUserId)))
-                .orderBy(qReunion.fecha.desc())
-                .list(qReunion);
+        return query.from(qReunionPermiso)
+                .where(qReunionPermiso.personaId.eq(connectedUserId))
+                .orderBy(qReunionPermiso.fecha.desc())
+                .list(qReunionPermiso);
+    }
+
+    public String getNombreAsistente(Long reunionId, Long connectedUserId)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        return query.from(qReunionPermiso)
+                .where(qReunionPermiso.personaId.eq(connectedUserId)
+                        .and(qReunionPermiso.id.eq(reunionId))
+                        .and(qReunionPermiso.asistente.isTrue()))
+                .uniqueResult(qReunionPermiso.personaNombre);
     }
 
     public List<Integer> getAnyosConReunionesPublicas()
@@ -334,8 +339,9 @@ public class ReunionDAO extends BaseDAODatabaseImpl
 
         List<Persona> personas = new ArrayList<>();
 
-        List<ReunionInvitado> invitadosPorReunion =
-                queryReunionesInvitados.from(qReunionInvitado).where(qReunionInvitado.reunion.id.eq(reunionId)).list(qReunionInvitado);
+        List<ReunionInvitado> invitadosPorReunion = queryReunionesInvitados.from(qReunionInvitado)
+                .where(qReunionInvitado.reunion.id.eq(reunionId))
+                .list(qReunionInvitado);
 
         List<String> organosId = queryOrganos.from(qOrganoReunion)
                 .where(qOrganoReunion.reunion.id.eq(reunionId))

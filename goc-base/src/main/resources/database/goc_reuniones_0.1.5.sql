@@ -51,10 +51,13 @@ AS
     goc_organos_reuniones_miembros orm
   WHERE r.id = o.reunion_id (+) AND o.id = orm.organo_reunion_id (+);
 
-alter table goc_cargos drop column firma;
-alter table goc_organos_reuniones_miembros drop column cargo_firma;
+ALTER TABLE goc_cargos
+  DROP COLUMN firma;
+ALTER TABLE goc_organos_reuniones_miembros
+  DROP COLUMN cargo_firma;
 
-alter table goc_reuniones_invitados add (persona_email varchar2(1000) not null)
+ALTER TABLE goc_reuniones_invitados
+  ADD (persona_email VARCHAR2(1000) NOT NULL)
 
 CREATE OR REPLACE FORCE VIEW UJI_REUNIONES.GOC_VW_REUNIONES_BUSQUEDA
 (
@@ -86,43 +89,129 @@ CREATE OR REPLACE FORCE VIEW UJI_REUNIONES.GOC_VW_REUNIONES_BUSQUEDA
     DELIBERACIONES_ALT_PUNTO_BUSQ
 )
 AS
-  SELECT r.id ||'-'|| p.id                      id,
-         r.id                                   reunion_id,
-         r.asunto                               asunto_reunion,
-         r.descripcion                          descripcion_reunion,
-         r.asunto_alt                           asunto_alt_reunion,
-         r.descripcion_alt                      descripcion_alt_reunion,
-         p.titulo                               titulo_punto,
-         p.descripcion                          descripcion_punto,
-         p.acuerdos                             acuerdos_punto,
-         p.deliberaciones                       deliberaciones_punto,
-         p.titulo_alt                           titulo_alt_punto,
-         p.descripcion_alt                      descripcion_alt_punto,
-         p.acuerdos_alt                         acuerdos_alt_punto,
-         p.deliberaciones_alt                   deliberaciones_alt_punto,
-         quita_acentos (r.asunto)               asunto_reunion_busq,
-         quita_acentos_clob (r.descripcion)     descripcion_reunion_busq,
-         quita_acentos (r.asunto_alt)           asunto_alt_reunion_busq,
-         quita_acentos_clob (r.descripcion_alt) descripcion_alt_reunion_busq,
-         quita_acentos (p.titulo)               titulo_punto_busq,
-         quita_acentos_clob (p.descripcion)     descripcion_punto_busq,
-         quita_acentos_clob (p.acuerdos)        acuerdos_punto_busq,
-         quita_acentos_clob (p.deliberaciones)  deliberaciones_punto_busq,
-         quita_acentos (p.titulo_alt)           titulo_alt_punto_busq,
-         quita_acentos_clob (p.descripcion_alt) descripcion_alt_punto_busq,
-         quita_acentos_clob (p.acuerdos_alt)    acuerdos_alt_punto_busq,
-         quita_acentos_clob (p.deliberaciones_alt)
-                                                deliberaciones_alt_punto_busq
+  SELECT
+    r.id || '-' || p.id                   id,
+    r.id                                  reunion_id,
+    r.asunto                              asunto_reunion,
+    r.descripcion                         descripcion_reunion,
+    r.asunto_alt                          asunto_alt_reunion,
+    r.descripcion_alt                     descripcion_alt_reunion,
+    p.titulo                              titulo_punto,
+    p.descripcion                         descripcion_punto,
+    p.acuerdos                            acuerdos_punto,
+    p.deliberaciones                      deliberaciones_punto,
+    p.titulo_alt                          titulo_alt_punto,
+    p.descripcion_alt                     descripcion_alt_punto,
+    p.acuerdos_alt                        acuerdos_alt_punto,
+    p.deliberaciones_alt                  deliberaciones_alt_punto,
+    quita_acentos(r.asunto)               asunto_reunion_busq,
+    quita_acentos_clob(r.descripcion)     descripcion_reunion_busq,
+    quita_acentos(r.asunto_alt)           asunto_alt_reunion_busq,
+    quita_acentos_clob(r.descripcion_alt) descripcion_alt_reunion_busq,
+    quita_acentos(p.titulo)               titulo_punto_busq,
+    quita_acentos_clob(p.descripcion)     descripcion_punto_busq,
+    quita_acentos_clob(p.acuerdos)        acuerdos_punto_busq,
+    quita_acentos_clob(p.deliberaciones)  deliberaciones_punto_busq,
+    quita_acentos(p.titulo_alt)           titulo_alt_punto_busq,
+    quita_acentos_clob(p.descripcion_alt) descripcion_alt_punto_busq,
+    quita_acentos_clob(p.acuerdos_alt)    acuerdos_alt_punto_busq,
+    quita_acentos_clob(p.deliberaciones_alt)
+                                          deliberaciones_alt_punto_busq
   FROM goc_reuniones r, goc_reuniones_puntos_orden_dia p
-  WHERE p.reunion_id(+) = r.id;
+  WHERE p.reunion_id (+) = r.id;
 
 
 CREATE TABLE UJI_REUNIONES.GOC_ORGANOS_INVITADOS
 (
-  ID              NUMBER                        NOT NULL primary key,
-  PERSONA_ID      NUMBER                        NOT NULL,
-  PERSONA_NOMBRE  VARCHAR2(1000 BYTE)           NOT NULL,
-  PERSONA_EMAIL   VARCHAR2(1000 BYTE)           NOT NULL,
-  ORGANO_ID       VARCHAR2(100 BYTE)            NOT NULL
-)
+  ID             NUMBER              NOT NULL PRIMARY KEY,
+  PERSONA_ID     NUMBER              NOT NULL,
+  PERSONA_NOMBRE VARCHAR2(1000 BYTE) NOT NULL,
+  PERSONA_EMAIL  VARCHAR2(1000 BYTE) NOT NULL,
+  ORGANO_ID      VARCHAR2(100 BYTE)  NOT NULL
+);
 
+CREATE OR REPLACE VIEW goc_vw_reuniones_permisos AS
+  SELECT
+    id,
+    completada,
+    fecha,
+    asunto,
+    asunto_alt,
+    persona_id,
+    persona_nombre,
+    sum(asistente) asistente
+  FROM (
+    SELECT
+      r.id,
+      r.completada,
+      r.fecha,
+      r.asunto,
+      r.asunto_alt,
+      r.creador_id     persona_id,
+      r.creador_nombre persona_nombre,
+      0                asistente
+    FROM goc_reuniones r
+    UNION
+    SELECT
+      r.id,
+      r.completada,
+      r.fecha,
+      r.asunto,
+      r.asunto_alt,
+      ri.persona_id     persona_id,
+      ri.persona_nombre persona_nombre,
+      1                 asistente
+    FROM goc_reuniones r,
+      goc_reuniones_invitados ri
+    WHERE ri.reunion_id = r.id
+    UNION
+    SELECT
+      r.id,
+      r.completada,
+      r.fecha,
+      r.asunto,
+      r.asunto_alt,
+      oi.persona_id     persona_id,
+      oi.persona_nombre persona_nombre,
+      1                 asistente
+    FROM goc_reuniones r,
+      goc_organos_reuniones orr,
+      goc_organos_invitados oi
+    WHERE r.id = orr.reunion_id
+          AND oi.organo_id = orr.organo_id
+    UNION
+    SELECT
+      r.id,
+      r.completada,
+      r.fecha,
+      r.asunto,
+      r.asunto_alt,
+      orrm.suplente_id     persona_id,
+      orrm.suplente_nombre persona_nombre,
+      1                    asistente
+    FROM goc_reuniones r,
+      goc_organos_reuniones orr,
+      goc_organos_reuniones_miembros orrm
+    WHERE r.id = orr.reunion_id
+          AND orr.id = orrm.organo_reunion_id
+          AND orrm.asistencia = 1
+          AND suplente_id IS NOT NULL
+    UNION
+    SELECT
+      r.id,
+      r.completada,
+      r.fecha,
+      r.asunto,
+      r.asunto_alt,
+      orrm.miembro_id persona_id,
+      orrm.nombre     persona_nombre,
+      1               asistente
+    FROM goc_reuniones r,
+      goc_organos_reuniones orr,
+      goc_organos_reuniones_miembros orrm
+    WHERE r.id = orr.reunion_id
+          AND orr.id = orrm.organo_reunion_id
+          AND orrm.asistencia = 1
+          AND suplente_id IS NULL
+  )
+  GROUP BY id, completada, fecha, asunto, asunto_alt, persona_id, persona_nombre

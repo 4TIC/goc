@@ -434,8 +434,7 @@ public class ReunionResource extends CoreBaseService
         }
 
         ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, false);
-
-        String nombreAsistente = reunionTemplate.getNombreAsistente(connectedUserId);
+        String nombreAsistente = reunionService.getNombreAsistente(reunionId, connectedUserId);
 
         if (nombreAsistente == null)
         {

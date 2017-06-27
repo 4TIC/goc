@@ -2,6 +2,7 @@ package es.uji.apps.goc.services;
 
 import com.sun.jersey.api.core.InjectParam;
 
+import es.uji.apps.goc.dto.*;
 import es.uji.apps.goc.model.AcuerdosSearch;
 import es.uji.apps.goc.model.Persona;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,14 +24,6 @@ import javax.ws.rs.core.MediaType;
 import es.uji.apps.goc.auth.LanguageConfig;
 import es.uji.apps.goc.auth.PersonalizationConfig;
 import es.uji.apps.goc.dao.ReunionDAO;
-import es.uji.apps.goc.dto.Clave;
-import es.uji.apps.goc.dto.Descriptor;
-import es.uji.apps.goc.dto.OrganoLocal;
-import es.uji.apps.goc.dto.OrganoReunion;
-import es.uji.apps.goc.dto.OrganoReunionMiembro;
-import es.uji.apps.goc.dto.Reunion;
-import es.uji.apps.goc.dto.ReunionTemplate;
-import es.uji.apps.goc.dto.TipoOrganoLocal;
 import es.uji.apps.goc.exceptions.InvalidAccessException;
 import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.exceptions.OrganosExternosException;
@@ -75,7 +68,7 @@ public class PublicacionService extends CoreBaseService
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
 
-        List<ReunionTemplate> reuniones = reunionService.getReunionesAccesiblesByPersonaId(connectedUserId);
+        List<ReunionPermiso> reuniones = reunionService.getReunionesAccesiblesByPersonaId(connectedUserId);
 
         String applang = getLangCode(lang);
         Template template = new HTMLTemplate("reuniones-" + applang);
