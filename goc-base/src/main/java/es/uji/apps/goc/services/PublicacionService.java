@@ -212,17 +212,19 @@ public class PublicacionService extends CoreBaseService
             PersonasExternasException, InvalidAccessException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
-
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
-        List<Persona> invitados = reunionDAO.getInvitadosByReunionId(reunionId);
-        boolean permitirComentarios = isPermitirComentarios(connectedUserId, reunion);
 
         if (reunion == null)
         {
             throw new ReunionNoDisponibleException();
         }
 
-        reunion.tieneAcceso(invitados, connectedUserId);
+        if (!reunionDAO.tieneAcceso(reunionId, connectedUserId))
+        {
+            throw new InvalidAccessException("No se tiene acceso a esta reunión");
+        }
+
+        boolean permitirComentarios = reunion.isPermitirComentarios(connectedUserId);
 
         ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, true);
 
@@ -242,32 +244,6 @@ public class PublicacionService extends CoreBaseService
         template.put("permitirComentarios", permitirComentarios);
 
         return template;
-    }
-
-    private boolean isPermitirComentarios(Long connectedUserId, Reunion reunion)
-    {
-        Set<OrganoReunion> reunionOrganos = reunion.getReunionOrganos();
-
-        boolean permitirComentarios = false;
-        for (OrganoReunion organoReunion : reunionOrganos)
-        {
-            Set<OrganoReunionMiembro> miembros = organoReunion.getMiembros();
-
-            for (OrganoReunionMiembro miembro : miembros)
-            {
-                if (miembro.getMiembroId().toString().equals(connectedUserId.toString()) || connectedUserId.equals(miembro.getSuplenteId()))
-                {
-                    permitirComentarios = true;
-                }
-            }
-        }
-
-        if (reunion.getCreadorId().equals(connectedUserId))
-        {
-            permitirComentarios = true;
-        }
-        
-        return permitirComentarios;
     }
 
     private String getLangCode(String lang)

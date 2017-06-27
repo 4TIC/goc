@@ -203,15 +203,15 @@ CREATE OR REPLACE VIEW goc_vw_reuniones_permisos AS
       r.fecha,
       r.asunto,
       r.asunto_alt,
-      orrm.miembro_id persona_id,
-      orrm.nombre     persona_nombre,
-      1               asistente
+      orrm.miembro_id                 persona_id,
+      orrm.nombre                     persona_nombre,
+      decode(suplente_id, NULL, 1, 0) asistente
     FROM goc_reuniones r,
       goc_organos_reuniones orr,
       goc_organos_reuniones_miembros orrm
     WHERE r.id = orr.reunion_id
           AND orr.id = orrm.organo_reunion_id
           AND orrm.asistencia = 1
-          AND suplente_id IS NULL
   )
   GROUP BY id, completada, fecha, asunto, asunto_alt, persona_id, persona_nombre
+

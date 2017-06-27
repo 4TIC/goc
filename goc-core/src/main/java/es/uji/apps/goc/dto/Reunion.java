@@ -450,64 +450,6 @@ public class Reunion implements Serializable
         this.acuerdosAlternativos = acuerdosAlternativos;
     }
 
-    public boolean noEsMiembro(Long connectedUserId)
-    {
-        return !esMiembro(connectedUserId);
-    }
-
-    public boolean esMiembro(final Long userId)
-    {
-        if (userId == null || reunionOrganos == null || reunionOrganos.isEmpty()) return false;
-
-        List<OrganoReunionMiembro> miembros = new ArrayList<>();
-
-        getReunionOrganos().stream().forEach(organoReunion ->
-        {
-            List<OrganoReunionMiembro> pertenecientes = organoReunion.getMiembros()
-                    .stream()
-                    .filter(miembro -> (String.valueOf(userId).equals(miembro.getMiembroId()) || userId.equals(
-                            miembro.getSuplenteId())))
-                    .collect(toList());
-
-            miembros.addAll(pertenecientes);
-        });
-
-        return (miembros != null && !miembros.isEmpty());
-    }
-
-    public boolean esCreador(Long userId)
-    {
-        return (userId.equals(getCreadorId()));
-    }
-
-    public boolean noEsCreador(Long userId)
-    {
-        return !esCreador(userId);
-    }
-
-    public boolean noEsInvitado(List<Persona> invitados, Long connectedUserId)
-    {
-        return !esInvitado(invitados, connectedUserId);
-    }
-
-    public boolean esInvitado(List<Persona> invitados, Long userId)
-    {
-        if (userId == null || reunionOrganos == null || reunionOrganos.isEmpty()) return false;
-
-        return invitados.stream().anyMatch(invitado -> userId.equals(invitado.getId()));
-    }
-
-    public void tieneAcceso(List<Persona> invitados, Long userId)
-            throws InvalidAccessException
-    {
-        if (isPublica()) return;
-
-        if (userId == null) throw new InvalidAccessException("Acceso restringido a usuarios autenticados");
-
-        if (noEsCreador(userId) && noEsMiembro(userId) && noEsInvitado(invitados, userId))
-            throw new InvalidAccessException("No se tiene acceso a esta reunion");
-    }
-
     public boolean noContieneMiembros()
     {
         return !contieneMiembros();
@@ -521,6 +463,33 @@ public class Reunion implements Serializable
                 reunionOrganos.stream().filter(organo -> organo.getMiembros().size() > 0).count();
 
         return (numeroOrganosConMiembros > 0);
+    }
+
+    public boolean isPermitirComentarios(Long connectedUserId)
+    {
+        Set<OrganoReunion> reunionOrganos = getReunionOrganos();
+
+        boolean permitirComentarios = false;
+        for (OrganoReunion organoReunion : reunionOrganos)
+        {
+            Set<OrganoReunionMiembro> miembros = organoReunion.getMiembros();
+
+            for (OrganoReunionMiembro miembro : miembros)
+            {
+                if (miembro.getMiembroId().toString().equals(connectedUserId.toString()) || connectedUserId.equals(
+                        miembro.getSuplenteId()))
+                {
+                    permitirComentarios = true;
+                }
+            }
+        }
+
+        if (getCreadorId().equals(connectedUserId))
+        {
+            permitirComentarios = true;
+        }
+
+        return permitirComentarios;
     }
 
     public Boolean getAvisoPrimeraReunion()

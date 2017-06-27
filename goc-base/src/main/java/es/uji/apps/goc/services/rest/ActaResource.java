@@ -53,16 +53,17 @@ public class ActaResource
             PersonasExternasException, InvalidAccessException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
-
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
-        List<Persona> invitados = reunionDAO.getInvitadosByReunionId(reunionId);
 
         if (reunion == null)
         {
             throw new ReunionNoDisponibleException();
         }
 
-        reunion.tieneAcceso(invitados, connectedUserId);
+        if (!reunionDAO.tieneAcceso(reunionId, connectedUserId))
+        {
+            throw new InvalidAccessException("No se tiene acceso a esta reunión");
+        }
 
         Persona convocante = personaService.getPersonaFromDirectoryByPersonaId(reunion.getCreadorId());
 

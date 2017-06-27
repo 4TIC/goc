@@ -163,6 +163,19 @@ public class ReunionDAO extends BaseDAODatabaseImpl
                 .uniqueResult(qReunionPermiso.personaNombre);
     }
 
+    public Boolean tieneAcceso(Long reunionId, Long connectedUserId)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        ReunionPermiso acceso = query.from(qReunionPermiso)
+                .where(qReunionPermiso.personaId.eq(connectedUserId)
+                        .and(qReunionPermiso.id.eq(reunionId))
+                        .and(qReunionPermiso.asistente.isTrue()))
+                .uniqueResult(qReunionPermiso);
+
+        return (acceso != null);
+    }
+
     public List<Integer> getAnyosConReunionesPublicas()
     {
         JPAQuery query = new JPAQuery(entityManager);
