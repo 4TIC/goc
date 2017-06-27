@@ -37,8 +37,6 @@
               (</span><span class="documentacion"><a th:href="'/goc/rest/publicacion/reuniones/' + ${reunion.id} + '?lang=' + ${applang}">Documentació</a></span>
               <span class="separador">|</span>
               <span class="acta"><a th:href="'/goc/rest/actas/' + ${reunion.id} + '?lang=' + ${applang}">Acta</a></span>
-              <span class="separador">|</span>
-              <span class="asistentes"><a th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/asistentes' + '?lang=' + ${applang}">Assistents</a></span>
               <span class="separador" th:if="${reunion.completada and reunion.asistente}"> | </span>
               <span class="certificado"><a th:if="${reunion.completada and reunion.asistente}" th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/asistencia' + '?lang=' + ${applang}">Certificat d'assistència</a></span>
               <span class="separador">)</span>
