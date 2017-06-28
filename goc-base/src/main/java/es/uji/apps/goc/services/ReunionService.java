@@ -378,6 +378,8 @@ public class ReunionService
         {
             OrganoReunionMiembro responsable = organoReunionMiembroDAO.getMiembroById(responsableActaId);
 
+            reunionFirma.setResponsableActaId(responsable.getMiembroId());
+            reunionFirma.setResponsableActaEmail(responsable.getEmail());
             reunionFirma.setResponsableActa(responsable.getNombre());
             reunionFirma.setCargoResponsableActa(responsable.getCargoNombre());
             reunionFirma.setCargoAlternativoResponsableActa(responsable.getCargoNombreAlternativo());
