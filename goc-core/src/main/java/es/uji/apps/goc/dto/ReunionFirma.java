@@ -74,6 +74,10 @@ public class ReunionFirma implements Serializable
 
     private String responsableActa;
 
+    private String responsableActaId;
+
+    private String responsableActaEmail;
+
     private String cargoResponsableActa;
 
     private String cargoAlternativoResponsableActa;
@@ -356,5 +360,25 @@ public class ReunionFirma implements Serializable
     public void setInvitados(List<InvitadoFirma> invitados)
     {
         this.invitados = invitados;
+    }
+
+    public String getResponsableActaId()
+    {
+        return responsableActaId;
+    }
+
+    public void setResponsableActaId(String responsableActaId)
+    {
+        this.responsableActaId = responsableActaId;
+    }
+
+    public String getResponsableActaEmail()
+    {
+        return responsableActaEmail;
+    }
+
+    public void setResponsableActaEmail(String responsableActaEmail)
+    {
+        this.responsableActaEmail = responsableActaEmail;
     }
 }
