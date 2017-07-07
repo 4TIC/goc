@@ -15,13 +15,6 @@ Ext.define('goc.view.organo.OrganoInvitadoGridController',
                 organoId : organo.get('id')
             }
         });
-
-        if (organo.get('inactivo'))
-        {
-            return this.getView().setDisabled(true);
-        }
-
-        this.getView().setDisabled(false);
     },
 
     onAdd : function()
@@ -71,7 +64,6 @@ Ext.define('goc.view.organo.OrganoInvitadoGridController',
         {
             return Ext.Msg.alert(appI18N.organos.borrarAutorizacion, appI18N.organos.seleccionarParaBorrarInvitado);
         }
-        ;
 
         var vm = this.getViewModel();
         var store = vm.getStore('organoInvitadosStore');

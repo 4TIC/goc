@@ -46,6 +46,8 @@ Ext.define('goc.view.organo.Main',
                 {
                     xtype : 'tabpanel',
                     flex : 1,
+                    activeTab : 0,
+                    disabled: true,
                     width : '100%',
                     items : [
                         {

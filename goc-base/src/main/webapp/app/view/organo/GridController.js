@@ -17,7 +17,7 @@ Ext.define('goc.view.organo.GridController', {
             scope : this
         });
     },
-    
+
     decideRowIsEditable : function(editor, context)
     {
         return context.record.get('externo') !== 'true' || context.record.phantom;
@@ -31,13 +31,13 @@ Ext.define('goc.view.organo.GridController', {
         var recordModel = grid.getSelectedRow();
         var gridAutorizados = grid.up('panel').down('grid[name=autorizadoGrid]');
         var gridInvitados = grid.up('panel').down('grid[name=organoInvitadoGrid]');
+        var tab = this.getView().up('panel').down('tabpanel');
 
         if (!recordModel)
         {
             gridAutorizados.clearStore();
-            gridAutorizados.disable();
             gridInvitados.clearStore();
-            gridInvitados.disable();
+            tab.disable();
 
             toolbar.items.each(function(button)
             {
@@ -60,9 +60,16 @@ Ext.define('goc.view.organo.GridController', {
 
         var selection = grid.getView().getSelectionModel().getSelection();
 
-        var record = selection[selection.length-1];
+        var record = selection[selection.length - 1];
         gridAutorizados.fireEvent('organoSelected', record);
         gridInvitados.fireEvent('organoSelected', record);
+
+        if (record.get('inactivo'))
+        {
+            return tab.disable();
+        }
+
+        tab.enable();
     },
 
     initFilters : function()
@@ -117,6 +124,7 @@ Ext.define('goc.view.organo.GridController', {
                             grid.getSelectionModel().clearSelections();
                             grid.getView().refresh();
                             grid.up('panel').down('grid[name=autorizadoGrid]').clearStore();
+                            grid.up('panel').down('grid[name=organoInvitadoGrid]').clearStore();
                         }
                     });
                 }
@@ -130,6 +138,7 @@ Ext.define('goc.view.organo.GridController', {
                 grid.getSelectionModel().clearSelections();
                 grid.getView().refresh();
                 grid.up('panel').down('grid[name=autorizadoGrid]').clearStore();
+                grid.up('panel').down('grid[name=organoInvitadoGrid]').clearStore();
             }
         });
     }

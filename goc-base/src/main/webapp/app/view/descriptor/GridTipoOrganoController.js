@@ -5,7 +5,6 @@ Ext.define('goc.view.descriptor.GridTipoOrganoController', {
 
     descriptorSelected : function(record)
     {
-        this.getView().setDisabled(false);
         this.descriptor = record;
         var store = this.getView().getStore();
 

@@ -29,6 +29,8 @@ Ext.define('goc.view.descriptor.Main', {
         {
             xtype : 'tabpanel',
             flex : 1,
+            activeTab : 0,
+            disabled: true,
             items : [
                 {
                     xtype : 'claveGrid'

@@ -13,13 +13,13 @@ Ext.define('goc.view.descriptor.GridController', {
         var record = grid.getSelectedRow();
         var claveGrid = grid.up('panel').down('grid[name=claveGrid]');
         var descriptorTipoOrganoGrid = grid.up('panel').down('grid[name=descriptorTipoOrganoGrid]');
+        var tab = this.getView().up('panel').down('tabpanel');
 
         if (!record)
         {
             claveGrid.clearStore();
-            claveGrid.disable();
             descriptorTipoOrganoGrid.clearStore();
-            descriptorTipoOrganoGrid.disable();
+            tab.disable();
             return;
         }
 
@@ -27,6 +27,7 @@ Ext.define('goc.view.descriptor.GridController', {
         {
             claveGrid.fireEvent('descriptorSelected', record);
             descriptorTipoOrganoGrid.fireEvent('descriptorSelected', record);
+            tab.enable();
         }
     },
 
@@ -34,17 +35,11 @@ Ext.define('goc.view.descriptor.GridController', {
     {
         this.callParent(arguments);
 
-        var claveGrid = this.getView().up('panel').down('grid[name=claveGrid]');
-        var tipoOrganoGrid = this.getView().up('panel').down('grid[name=descriptorTipoOrganoGrid]');
+        var tab = this.getView().up('panel').down('tabpanel');
 
-        if (claveGrid)
+        if (tab)
         {
-            claveGrid.setDisabled(false);
-        }
-
-        if (tipoOrganoGrid)
-        {
-            tipoOrganoGrid.setDisabled(false);
+            tab.setDisabled(false);
         }
     },
 
@@ -52,17 +47,21 @@ Ext.define('goc.view.descriptor.GridController', {
     {
         var claveGrid = this.getView().up('panel').down('grid[name=claveGrid]');
         var tipoOrganoGrid = this.getView().up('panel').down('grid[name=descriptorTipoOrganoGrid]');
+        var tab = this.getView().up('panel').down('tabpanel');
 
         if (claveGrid)
         {
             claveGrid.clearStore();
-            claveGrid.setDisabled(true);
         }
 
         if (tipoOrganoGrid)
         {
             tipoOrganoGrid.clearStore();
-            tipoOrganoGrid.setDisabled(true);
+        }
+
+        if (tab)
+        {
+            tab.setDisabled(true);
         }
 
         this.callParent();

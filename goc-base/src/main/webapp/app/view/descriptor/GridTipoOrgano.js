@@ -13,7 +13,6 @@ Ext.define('goc.view.descriptor.GridTipoOrgano', {
     name : 'descriptorTipoOrganoGrid',
     title : appI18N ? appI18N.tipoOrganos.restringirATipoOrganos : "Restringir a aquests tipus d'òrgans",
     scrollable : true,
-    disabled : true,
     tbar : [
         {
             xtype : 'button',

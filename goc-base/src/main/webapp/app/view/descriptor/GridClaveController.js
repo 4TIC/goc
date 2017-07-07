@@ -18,7 +18,6 @@ Ext.define('goc.view.descriptor.GridClaveController', {
 
     descriptorSelected : function(record)
     {
-        this.getView().setDisabled(false);
         this.descriptor = record;
 
         this.getView().getStore().load({
