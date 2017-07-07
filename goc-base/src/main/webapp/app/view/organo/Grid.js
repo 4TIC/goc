@@ -54,7 +54,7 @@ organoGridColumns.push({
 });
 
 organoGridColumns.push({
-    text : appI18N.organos.externo,
+    text : appI18N.organos.ordinario,
     width : 80,
     renderer : function(id, meta, rec)
     {
