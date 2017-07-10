@@ -119,9 +119,14 @@ Ext.define('goc.view.reunion.FormOrdenDiaAcuerdos',
     bbar : [
         '->',
         {
-            xtype : 'button',
-            text : appI18N.reuniones.cerrar,
-            handler : 'onClose'
+            xtype : 'panel',
+            html : '<a style="text-decoration: none; color: #222;" href="#">' + appI18N.reuniones.cerrar + '</a>',
+            listeners : {
+                render : function(component)
+                {
+                    component.getEl().on('click', 'onClose');
+                }
+            }
         }
     ],
 

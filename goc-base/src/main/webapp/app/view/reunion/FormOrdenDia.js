@@ -160,25 +160,28 @@ Ext.define('goc.view.reunion.FormOrdenDia', {
     ],
     controller : 'formOrdenDiaController',
 
-    bbar : [
-        '->', {
-            xtype : 'button',
-            bind : {
-                disabled : '{reunionCompletada}'
-            },
-            text : appI18N.reuniones.guardar,
-            handler : 'onSaveRecord'
-        }, {
-            xtype : 'panel',
-            html : '<a style="text-decoration: none; color: #222;" href="#">' + appI18N.common.cancelar + '</a>',
-            listeners : {
-                render : function(component)
-                {
-                    component.getEl().on('click', 'onCancel');
+    bbar : {
+        defaultButtonUI : 'default',
+        items : [
+            '->', {
+                xtype : 'button',
+                bind : {
+                    disabled : '{reunionCompletada}'
+                },
+                text : appI18N.reuniones.guardar,
+                handler : 'onSaveRecord'
+            }, {
+                xtype : 'panel',
+                html : '<a style="text-decoration: none; color: #222;" href="#">' + appI18N.common.cancelar + '</a>',
+                listeners : {
+                    render : function(component)
+                    {
+                        component.getEl().on('click', 'onCancel');
+                    }
                 }
             }
-        }
-    ],
+        ]
+    },
 
     bind : {
         title : '{title}'
@@ -207,6 +210,6 @@ Ext.define('goc.view.reunion.FormOrdenDia', {
 
     listeners : {
         afterLayout : 'afterRenderFormOrdenDia',
-        close: 'onClose'
+        close : 'onClose'
     }
 });

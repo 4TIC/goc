@@ -61,11 +61,11 @@ formReunionItems.push({
             flex : 1,
             padding : '0 10 0 0'//,
             /*validator : function(date)
-            {
-                var now = new Date();
-                now.setDate(now.getDate() - 1);
-                return Ext.Date.parse(date, 'd/m/Y') > now;
-            }*/
+             {
+             var now = new Date();
+             now.setDate(now.getDate() - 1);
+             return Ext.Date.parse(date, 'd/m/Y') > now;
+             }*/
         },
         {
             allowBlank : false,
@@ -477,27 +477,30 @@ Ext.define('goc.view.reunion.FormReunion',
     requires : ['goc.view.reunion.FormReunionController'],
     controller : 'formReunionController',
 
-    bbar : [
-        '->',
-        {
-            xtype : 'button',
-            text : appI18N.reuniones.guardar,
-            bind : {
-                disabled : '{reunion.completada}'
+    bbar : {
+        defaultButtonUI : 'default',
+        items : [
+            '->',
+            {
+                xtype : 'button',
+                text : appI18N.reuniones.guardar,
+                bind : {
+                    disabled : '{reunion.completada}'
+                },
+                handler : 'onSaveRecord'
             },
-            handler : 'onSaveRecord'
-        },
-        {
-            xtype : 'panel',
-            html : '<a style="text-decoration: none; color: #222;" href="#">' + appI18N.common.cancelar + '</a>',
-            listeners : {
-                render : function(component)
-                {
-                    component.getEl().on('click', 'onClose');
+            {
+                xtype : 'panel',
+                html : '<a style="text-decoration: none; color: #222;" href="#">' + appI18N.common.cancelar + '</a>',
+                listeners : {
+                    render : function(component)
+                    {
+                        component.getEl().on('click', 'onClose');
+                    }
                 }
             }
-        }
-    ],
+        ]
+    },
 
     bind : {
         title : '{title}'
