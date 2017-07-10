@@ -216,5 +216,14 @@
   },
   "invitados": {
     "nombre": "Nombre"
+  },
+  "menu": {
+    "organos": "Órganos",
+    "tiposDeOrganos": "Tipos de órganos",
+    "miembros": "Miembros",
+    "reuniones": "Reuniones",
+    "historicoDeReuniones": "Histórico de reuniones",
+    "cargos": "Cargos",
+    "descriptores": "Descriptores"
   }
 }

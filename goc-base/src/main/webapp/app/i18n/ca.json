@@ -181,10 +181,10 @@
     "urlInvalida": "La url no és vàlida",
     "invitados": "Convidats",
     "sinInvitadosSeleccionados": "Cap convidat seleccionat",
-    "buscarInvitados" : "Cercar convidats per afegir",
+    "buscarInvitados": "Cercar convidats per afegir",
     "seleccionaInvitado": "Selecciona el convidat",
     "fechaAnterior": "Data passada",
-    "fechaAnteriorAActual" : "La data seleccionada és anterior a l'actual, voleu continuar igualment?"
+    "fechaAnteriorAActual": "La data seleccionada és anterior a l'actual, voleu continuar igualment?"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Històric de reunions",
@@ -216,5 +216,14 @@
   },
   "invitados": {
     "nombre": "Nom"
+  },
+  "menu": {
+    "organos": "Òrgans",
+    "tiposDeOrganos": "Tipus d'òrgans",
+    "miembros": "Membres",
+    "reuniones": "Reunions",
+    "historicoDeReuniones": "Històric de reunions",
+    "cargos": "Càrrecs",
+    "descriptores": "Descriptors"
   }
 }

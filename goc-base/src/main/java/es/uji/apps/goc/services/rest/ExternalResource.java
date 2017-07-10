@@ -230,26 +230,13 @@ public class ExternalResource extends CoreBaseService
 
         if (personaService.isAdmin(roles))
         {
-            if (currentLanguage.equals(languageConfig.mainLanguage))
-            {
-                items.add(menuEntry("goc.view.organo.Main", "Órganos"));
-                items.add(menuEntry("goc.view.tipoOrgano.Main", "Tipos de órganos"));
-                items.add(menuEntry("goc.view.miembro.Main", "Miembros"));
-                items.add(menuEntry("goc.view.reunion.Main", "Reuniones"));
-                items.add(menuEntry("goc.view.historicoReunion.Main", "Histórico de reuniones"));
-                items.add(menuEntry("goc.view.cargo.Main", "Cargos"));
-                items.add(menuEntry("goc.view.descriptor.Main", "Descriptores"));
-            }
-            else
-            {
-                items.add(menuEntry("goc.view.organo.Main", "Òrgans"));
-                items.add(menuEntry("goc.view.tipoOrgano.Main", "Tipus d'òrgans"));
-                items.add(menuEntry("goc.view.miembro.Main", "Membres"));
-                items.add(menuEntry("goc.view.reunion.Main", "Reunions"));
-                items.add(menuEntry("goc.view.historicoReunion.Main", "Històric de reunions"));
-                items.add(menuEntry("goc.view.cargo.Main", "Càrrecs"));
-                items.add(menuEntry("goc.view.descriptor.Main", "Descriptors"));
-            }
+            items.add(menuEntry("goc.view.organo.Main", "appI18N.menu.organos"));
+            items.add(menuEntry("goc.view.tipoOrgano.Main", "appI18N.menu.tiposDeOrganos"));
+            items.add(menuEntry("goc.view.miembro.Main", "appI18N.menu.miembros"));
+            items.add(menuEntry("goc.view.reunion.Main", "appI18N.menu.reuniones"));
+            items.add(menuEntry("goc.view.historicoReunion.Main", "appI18N.menu.historicoDeReuniones"));
+            items.add(menuEntry("goc.view.cargo.Main", "appI18N.menu.cargos"));
+            items.add(menuEntry("goc.view.descriptor.Main", "appI18N.menu.descriptores"));
 
             menu.setMenuItems(items);
             return menu;
@@ -257,28 +244,12 @@ public class ExternalResource extends CoreBaseService
 
         if (personaService.isGestor(roles))
         {
-            if (currentLanguage.equals(languageConfig.mainLanguage))
-            {
-                items.add(menuEntry("goc.view.organo.Main", "Órganos"));
-            }
-            else
-            {
-                items.add(menuEntry("goc.view.organo.Main", "Òrgans"));
-            }
+            items.add(menuEntry("goc.view.organo.Main", "appI18N.menu.organos"));
         }
 
-        if (currentLanguage.equals(languageConfig.mainLanguage))
-        {
-            items.add(menuEntry("goc.view.miembro.Main", "Miembros"));
-            items.add(menuEntry("goc.view.reunion.Main", "Reuniones"));
-            items.add(menuEntry("goc.view.historicoReunion.Main", "Histórico de reuniones"));
-        }
-        else
-        {
-            items.add(menuEntry("goc.view.miembro.Main", "Membres"));
-            items.add(menuEntry("goc.view.reunion.Main", "Reunions"));
-            items.add(menuEntry("goc.view.historicoReunion.Main", "Històric de reunions"));
-        }
+        items.add(menuEntry("goc.view.miembro.Main", "appI18N.menu.miembros"));
+        items.add(menuEntry("goc.view.reunion.Main", "appI18N.menu.reuniones"));
+        items.add(menuEntry("goc.view.historicoReunion.Main", "appI18N.menu.historicoDeReuniones"));
 
         menu.setMenuItems(items);
         return menu;

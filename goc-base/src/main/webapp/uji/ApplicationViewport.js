@@ -35,41 +35,42 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
 
         var htmlLanguage = '<ul class="lang" />';
 
-        if (mainLanguage && alternativeLanguage) {
+        if (mainLanguage && alternativeLanguage)
+        {
             htmlLanguage = '<ul class="lang">' +
             '<li><a href="?lang=' + mainLanguage + '">' + mainLanguageDescription + '</a></li><li><a href="?lang=' + alternativeLanguage + '">' + alternativeLanguageDescription + '</a></li></ul>';
         }
 
         var logoPanel = new Ext.Panel(
-            {
-                region: 'north',
-                layout: 'border',
-                height: 70,
-                items: [
-                    {
-                        region: 'center',
-                        border: 0,
-                        html: '<div class="header-center">' +
-                            '<img src="'  + logo + '" class="header-logo" />' +
-                            '<div class="header-title">' +
-                            '<span class="header-title-def">' + this.tituloAplicacion + '</span></div></div>'
-                    },
-                    {
-                        region: 'east',
-                        border: 0,
-                        width: 150,
-                        html: htmlLanguage
-                    },
-                    {
-                        region: 'east',
-                        border: 0,
-                        width: 140,
-                        html: '<div class="header-right">' +
-                            '<span class="header-right-title"><img src="//static.uji.es/js/extjs/uji-commons-extjs/img/lock.png"/>' +
-                            '<a style="color:inherit;" href="/goc/saml/logout">' + appI18N.common.desconectar + '</a></span></div>'
-                    }
-                ]
-            }
+        {
+            region : 'north',
+            layout : 'border',
+            height : 70,
+            items : [
+                {
+                    region : 'center',
+                    border : 0,
+                    html : '<div class="header-center">' +
+                    '<img src="' + logo + '" class="header-logo" />' +
+                    '<div class="header-title">' +
+                    '<span class="header-title-def">' + this.tituloAplicacion + '</span></div></div>'
+                },
+                {
+                    region : 'east',
+                    border : 0,
+                    width : 150,
+                    html : htmlLanguage
+                },
+                {
+                    region : 'east',
+                    border : 0,
+                    width : 140,
+                    html : '<div class="header-right">' +
+                    '<span class="header-right-title"><img src="//static.uji.es/js/extjs/uji-commons-extjs/img/lock.png"/>' +
+                    '<a style="color:inherit;" href="/goc/saml/logout">' + appI18N.common.desconectar + '</a></span></div>'
+                }
+            ]
+        }
         );
 
         this.add(logoPanel);
@@ -94,24 +95,33 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
             {
                 autoLoad : true,
 
-                root :
-                {
+                root : {
                     expanded : true
                 },
 
-                proxy :
-                {
+                proxy : {
                     type : 'ajax',
-                    url : '/goc/rest/external/config/menus/?lang=' + appLang ,
-                    reader :
-                    {
+                    url : '/goc/rest/external/config/menus/?lang=' + appLang,
+                    reader : {
                         type : 'json',
-                        rootProperty : 'row'
+                        rootProperty : 'row',
+                        transform : {
+                            fn : function(data)
+                            {
+                                Ext.each(data.row, function(r)
+                                {
+                                    r.title = (r.title.indexOf("appI18N") != -1) ? eval(r.title) : r.title;
+                                    r.text = (r.text.indexOf("appI18N") != -1) ? eval(r.text) : r.text;
+                                })
+
+                                return data;
+                            }
+                        }
                     }
                 }
             }),
-            listeners: {
-                cellclick: this.addNewTab
+            listeners : {
+                cellclick : this.addNewTab
             }
         });
 
@@ -139,11 +149,13 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
         var id = record.id;
 
         var viewport = this.up("viewport");
-        var activeTab = viewport.tabPanel.items.findBy(function(i) {
+        var activeTab = viewport.tabPanel.items.findBy(function(i)
+        {
             return i instanceof eval(id);
         });
 
-        if (activeTab) {
+        if (activeTab)
+        {
             return viewport.tabPanel.setActiveTab(activeTab);
         }
 
@@ -162,10 +174,10 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
             else
             {
                 alert('[ApplicationViewport.js] ¡Atención!.' +
-                      'El parámetro "pantalla" (newtab) con' +
-                      'el nombre del componente que se quiere' +
-                      'instanciar debe estar definido. Por ejemplo:' +
-                      '"pantalla : \'UJI.XX.GestionXXXPanel\'"');
+                'El parámetro "pantalla" (newtab) con' +
+                'el nombre del componente que se quiere' +
+                'instanciar debe estar definido. Por ejemplo:' +
+                '"pantalla : \'UJI.XX.GestionXXXPanel\'"');
             }
         }, this);
     },
@@ -238,7 +250,7 @@ Ext.define('Ext.ux.uji.ApplicationViewport',
             frame : false,
             border : false,
             html : '<div style="font:normal 11px tahoma,arial,helvetica,sans-serif;border:1px solid gray;padding:8px;background-color:#fff;">' +
-                   '<img style="margin-right:4px;" align="left" src="//static.uji.es/img/commons/loading.gif" /> Carregant...</div>',
+            '<img style="margin-right:4px;" align="left" src="//static.uji.es/img/commons/loading.gif" /> Carregant...</div>',
             hidden : true,
             style : 'z-index: 80000; position:absolute; top:5px; right:5px;',
             renderTo : document.body,
