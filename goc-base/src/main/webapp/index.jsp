@@ -65,5 +65,9 @@
     <script type="text/javascript" src="app/Application.js"></script>
 </head>
 <body>
+    <div id="landing-loading">
+        <img src="img/gears.gif"/>
+        <p>Loading...</p>
+    </div>
 </body>
 </html>

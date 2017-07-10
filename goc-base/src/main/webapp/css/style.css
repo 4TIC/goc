@@ -3,6 +3,14 @@ body {
     color: #555;
 }
 
+#landing-loading {
+    margin: 200px auto;
+    width: 200px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
 .link {
     text-decoration: none;
     color: #222;

@@ -67,6 +67,8 @@ Ext.Ajax.request(
                             tituloAplicacion : appI18N.header.titulo,
                             dashboard : true
                         });
+
+                        document.getElementById('landing-loading').style.display = 'none';
                     }
                 });
             }
