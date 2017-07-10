@@ -156,47 +156,53 @@ Ext.define('goc.view.reunion.FormReunionController', {
 
     onSaveRecord : function(button, context)
     {
-        var vm            = this.getViewModel(),
-            view          = this.getView(),
-            form          = Ext.ComponentQuery.query('form[name=reunion]')[0],
-            multiselector = Ext.ComponentQuery.query('form[name=reunion] multiselector')[0]
+        var form = Ext.ComponentQuery.query('form[name=reunion]')[0];
+
+        if (form.isValid())
+        {
+            var data = form.getValues();
+            var ref = this;
+
+            if (Ext.Date.parse(data.fecha + ' ' + data.hora, 'd/m/Y H:i') < new Date())
+            {
+                Ext.Msg.confirm(appI18N.reuniones.fechaAnterior, appI18N.reuniones.fechaAnteriorAActual, function(result)
+                {
+                    if (result === 'yes')
+                    {
+                        ref.saveReunion();
+                    }
+                });
+            } else
+            {
+                ref.saveReunion();
+            }
+        }
+    },
+
+    saveReunion : function(record, data, store)
+    {
+        var view = this.getView();
+        var vm = this.getViewModel();
+        var form = Ext.ComponentQuery.query('form[name=reunion]')[0];
 
         var organosStore = vm.get('organosStore');
         var invitadosStore = vm.get('reunionInvitadosStore');
 
-        if (form.isValid())
+        var record = vm.get('reunion');
+        var data = form.getValues();
+        var store = vm.get('store');
+
+        view.setLoading(true);
+
+        if (record.create !== true)
         {
-            view.setLoading(true);
-            var record = vm.get('reunion');
-            var data = form.getValues();
-            var store = vm.get('store');
+            record.set('fecha', Ext.Date.parseDate(data.fecha + ' ' + data.hora, 'd/m/Y H:i'));
+            record.set('fechaSegundaConvocatoria', Ext.Date.parseDate(data.fecha + ' ' + data.horaSegundaConvocatoria, 'd/m/Y H:i'));
 
-            if (record.create !== true)
-            {
-                record.set('fecha', Ext.Date.parseDate(data.fecha + ' ' + data.hora, 'd/m/Y H:i'));
-                record.set('fechaSegundaConvocatoria', Ext.Date.parseDate(data.fecha + ' ' + data.horaSegundaConvocatoria, 'd/m/Y H:i'));
-
-                return record.save({
-                    success : function()
-                    {
-                        this.saveOrganosYInvitados(data.id, organosStore.getData(), invitadosStore.getData(), this.onClose);
-                    },
-                    failure : function()
-                    {
-                        view.setLoading(false);
-                    },
-                    scope : this
-                });
-            }
-
-            record.fecha = Ext.Date.parseDate(data.fecha + ' ' + data.hora, 'd/m/Y H:i');
-            record.fechaSegundaConvocatoria = Ext.Date.parseDate(data.fecha + ' ' + data.horaSegundaConvocatoria, 'd/m/Y H:i');
-
-            store.add(record);
-            store.sync({
+            return record.save({
                 success : function()
                 {
-                    this.saveOrganosYInvitados(record.id, organosStore.getData(), invitadosStore.getData(), this.onClose);
+                    this.saveOrganosYInvitados(data.id, organosStore.getData(), invitadosStore.getData(), this.onClose);
                 },
                 failure : function()
                 {
@@ -205,6 +211,22 @@ Ext.define('goc.view.reunion.FormReunionController', {
                 scope : this
             });
         }
+
+        record.fecha = Ext.Date.parseDate(data.fecha + ' ' + data.hora, 'd/m/Y H:i');
+        record.fechaSegundaConvocatoria = Ext.Date.parseDate(data.fecha + ' ' + data.horaSegundaConvocatoria, 'd/m/Y H:i');
+
+        store.add(record);
+        store.sync({
+            success : function()
+            {
+                this.saveOrganosYInvitados(record.id, organosStore.getData(), invitadosStore.getData(), this.onClose);
+            },
+            failure : function()
+            {
+                view.setLoading(false);
+            },
+            scope : this
+        });
     },
 
     afterRenderFormReunion : function(windowFormReunion)

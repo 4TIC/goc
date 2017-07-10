@@ -182,7 +182,9 @@
     "invitados": "Invitados",
     "sinInvitadosSeleccionados": "No ha seleccionado ningún invitado",
     "buscarInvitados": "Buscar invitados para añadir",
-    "seleccionaInvitado": "Selecciona el invitado"
+    "seleccionaInvitado": "Selecciona el invitado",
+    "fechaAnterior": "Fecha pasada",
+    "fechaAnteriorAActual" : "La fecha seleccionada es anterior a la actual, ¿deseas continuar igualmente?"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Histórico de reuniones",

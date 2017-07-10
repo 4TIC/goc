@@ -59,13 +59,13 @@ formReunionItems.push({
                 disabled : '{reunion.completada}'
             },
             flex : 1,
-            padding : '0 10 0 0',
-            validator : function(date)
+            padding : '0 10 0 0'//,
+            /*validator : function(date)
             {
                 var now = new Date();
                 now.setDate(now.getDate() - 1);
                 return Ext.Date.parse(date, 'd/m/Y') > now;
-            }
+            }*/
         },
         {
             allowBlank : false,

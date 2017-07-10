@@ -182,7 +182,9 @@
     "invitados": "Convidats",
     "sinInvitadosSeleccionados": "Cap convidat seleccionat",
     "buscarInvitados" : "Cercar convidats per afegir",
-    "seleccionaInvitado": "Selecciona el convidat"
+    "seleccionaInvitado": "Selecciona el convidat",
+    "fechaAnterior": "Data passada",
+    "fechaAnteriorAActual" : "La data seleccionada és anterior a l'actual, voleu continuar igualment?"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Històric de reunions",
