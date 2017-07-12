@@ -29,12 +29,8 @@ body {
     padding-top: 0.8em;
 }
 
-.inactivo {
-    background: #EEE;
-}
-
 .activo {
-    background: yellow;
+    background-color: #999999 !important;
 }
 
 .nuevo-suplente .header {
@@ -186,13 +182,8 @@ a:hover {
 }
 
 i.fa-caret-right, .fa-caret-down{
-    padding-left: 16px;
-    font-size: 1.4em !important;
-}
-
-i.fa-angle-double-left, i.fa-angle-double-right {
-    padding: 8px;
-    font-size: 1.4em !important;
+    padding-right: 16px;
+    font-size: 1.5em !important;
 }
 
 div.collapsed {
@@ -203,37 +194,84 @@ div.expanded {
     display: initial;
 }
 
-div.pagination-centered {
-    justify-content: center;
-    display: inline-flex;
-    line-height: 1.6em;
-    vertical-align: middle;
-    width: 100%;
-    margin-top: 1.6em;
+.reunion blockquote {
+    color: #7a7a7a;
 }
 
-div.pagination {
-    margin-right: 1em;
-    margin-left: 1em;
-}
-
-div.pagination a {
-    display: inline-flex;
-    align-items: center;
-    text-decoration: none
+.reunion .detalle {
+    color: #7a7a7a;
+    padding-left: 2.5em;
 }
 
 div.reunion-titulo {
+    color: #666;
     display: inline-block;
     font-size: 1.4em;
     font-weight: bold;
     margin-top: 0.8em;
 }
 
-div.reunion > div > div {
-    padding-left: 1.6em;
+.topHeader {
+    padding: 16px 0;
 }
 
+h1.title {
+    color: #0193bc;
+    font-size: 1.6em !important;
+    padding-top: 1em;
+}
+
+h2.title {
+    color: dimgray;
+    padding-top: 1em;
+    font-size: 1.5em !important;
+}
+
+h3.title {
+    color: dimgray;
+    font-size: 1.4em !important;
+}
+
+h4.title {
+    color: dimgray;
+    font-size: 1.3em !important;
+}
+
+.gray-menu-bar {
+    background: #e3e4e6;
+}
+
+.contentList li {
+    list-style: none;
+}
+
+.lista-reuniones a {
+    font-weight: normal !important;
+}
+
+.gray-menu-bar a, .collaptor, .langMenu a, .langMenu span.disabled, a.delete-comentario {
+    color: #363636;
+}
+
+.langMenu a {
+    font-size: 0.9em;
+}
+
+.langMenu span.disabled {
+    font-size: 0.9em;
+}
+
+.asistencia {
+    font-weight: bold;
+}
+
+.asistira {
+    color: #3adb76;
+}
+
+.no-asistira {
+    color: #cc4b37;
+}
 
 /*Para forzar un scrollbar horizontal en el componente multiselector-search de extjs, debido a un bug que no permite redimensionar la ventana*/
 div[id^="multiselector-search"][id$="body"] {

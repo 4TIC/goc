@@ -1,0 +1,40 @@
+<header class="topHeader">
+  <div class="row">
+    <div class="medium-3 large-3 columns">
+      <div>
+        <img src="#" th:src="${logo}" />
+      </div>
+    </div>
+    <div class="medium-6 large-6 columns ">
+      <div>
+        <h1 class="title">Gestión de órganos colegiados</h1>
+      </div>
+    </div>
+    <div class="medium-3 large-3 columns">
+      <div class="langMenu float-right">
+        <ul class="menu" th:if="${alternativeLanguage and alternativeLanguage != ''}">
+          <li>
+            <a th:if="${applang != mainLanguage}" th:href="${'?lang=' + mainLanguage}" th:text="${mainLanguageDescription}">Español</a>
+            <span class="disabled" th:if="${applang == mainLanguage}" th:text="${mainLanguageDescription}">Español</span>        
+          </li>
+          <li>
+            <a th:if="${applang != alternativeLanguage}" th:href="${'?lang=' + alternativeLanguage}" th:text="${alternativeLanguageDescription}">Valencià</a>
+            <span class="disabled" th:if="${applang == alternativeLanguage}" th:text="${alternativeLanguageDescription}">Valencià</span>        
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <nav class="gray-menu-bar">
+    <div class="row columns">
+      <ul class="menu">
+        <li>
+          <a href="/goc/rest/publicacion/acuerdos">Buscador de acuerdos</a>
+        </li>
+        <li>
+          <a href="/goc/rest/publicacion/reuniones">Mis reuniones</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

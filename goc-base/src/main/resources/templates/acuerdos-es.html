@@ -1,154 +1,129 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta th:charset="${charset}" />
-    <link rel="stylesheet" type="text/css" href="/goc/css/jquery.modal.css" />
-    <link rel="stylesheet" type="text/css" href="/goc/css/style.css" />
-    <link rel="stylesheet" type="text/css" href="/goc/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="/goc/css/jquery-ui.min.css" />
-    <link th:if="${customCSS != ''}" rel="stylesheet" type="text/css" th:href="${customCSS}" />
-
-    <script src="/goc/js/jquery.min.js"></script>
-    <script src="/goc/js/jquery.modal.js"></script>
-    <script src="/goc/js/jquery-ui.min.js"></script>
-    <script src="/goc/js/datepicker-es.js"></script>
-    <script th:inline="javascript">
-    /*<![CDATA[*/
-        var applang = [[${applang}]];
-    /*]]>*/
-    </script>
-  </head>
+  <div th:substituteby="head-es" />
   <body>
-    <div class="content">
-      <div class="header">
-        <img class="logo" src="#" th:src="${logo}" />
-        <h1>Gestión de órganos colegiados</h1>
-        <div class="topmenu">
-          <ul th:if="${alternativeLanguage and alternativeLanguage != ''}">
-            <li><a th:href="${'?lang=' + mainLanguage}" th:text="${mainLanguageDescription}">Español</a></li>
-            <li><a th:href="${'?lang=' + alternativeLanguage}" th:text="${alternativeLanguageDescription}">Valencià</a></li>
-          </ul>
-        </div>
+    <div class="off-canvas-content" data-off-canvas-content="data-off-canvas-content">
+      <div th:substituteby="header-es" />
+    </div>  
+    <main class="columns">
+      <div class="row columns">
+        <h2 class="title">Lista de acuerdos de los órganos colegiados</h2>
       </div>
-
-      <h1>Lista de acuerdos de los órganos colegiados</h1>
-
       <form name="form-busqueda" action="/goc/rest/publicacion/acuerdos" method="GET">
         <input type="hidden" name="lang" th:value="${lang}" />
         <input type="hidden" name="pagina" th:value="${pagina}" />
-        <table border="0" cellpadding="2" cellspacing="2">
-          <tr>
-            <td><strong>Año:</strong></td>
-            <td>
-              <select name="anyo" onchange="this.form.submit();">
-                <option value="">-- Años --</option>
-                <option th:each="anyoCalculated : ${anyos}" th:selected="${anyo == anyoCalculated}" th:value="${anyoCalculated}" th:text="${anyoCalculated}">Año</option>
+        <div class="row">
+          <div class="medium-6 large-6 columns">
+            <label>Texto:
+              <input type="text" name="texto" placeholder="Buscar en el texto" th:value="${texto}" />
+            </label>
+          </div>
+          <div class="medium-1 large-1 columns">
+            <label>Años:
+              <select name="anyo" onchange="this.form.submit()">
+                <option value=""></option>
+                <option th:each="anyoCalculated : ${anyos}" th:selected="${anyo == anyoCalculated}" th:value="${anyoCalculated}" th:text="${anyoCalculated}">Any</option>
               </select>
-            </td>
-          </tr>
-
-          <tr>
-            <td><strong>Tipos de órgano:</strong></td>
-            <td>
+            </label> 
+          </div>  
+          <div class="medium-2 large-2 columns">
+            <label>Fechas:
+              <input name="fInicio" th:value="${fInicio}" placeholder="De la fecha" />
+            </label>
+          </div>
+          <div class="medium-2 large-2 columns">
+            <label>&nbsp;
+              <input name="fFin" th:value="${fFin}" placeholder="Hasta la fecha" />
+            </label>
+          </div>
+          <div class="medium-1 large-1 columns">
+          </div>  
+        </div>
+        <div class="row">
+          <div class="medium-5 large-5 columns">  
+            <label>Tipos de órganos:
               <select name="tipoOrganoId" onchange="document['form-busqueda'].organoId.value=''; this.form.submit();">
-                <option value="">-- Tipos de órgano --</option>
-                <option th:each="tipoOrgano : ${tiposOrganos}" th:selected="${tipoOrganoId == tipoOrgano.id}" th:value="${tipoOrgano.id}" th:text="${tipoOrgano.nombre}">Tipo de organo</option>
+                <option value=""></option>
+                  <option th:each="tipoOrgano : ${tiposOrganos}" th:selected="${tipoOrganoId == tipoOrgano.id}" th:value="${tipoOrgano.id}" th:text="${tipoOrgano.nombre}">Tipo de organo</option>
               </select>
-            </td>
-          </tr>
-
-          <tr>
-            <td><strong>Órganos:</strong></td>
-            <td>
+            </label>
+          </div>  
+          <div class="medium-6 large-6 columns">  
+            <label>Órganos:
               <select name="organoId" onchange="this.form.submit();">
-                <option value="">-- Órganos --</option>
+                <option value=""></option>
                 <option th:each="organo : ${organos}" th:selected="${organoId == organo.id}" th:value="${organo.id}" th:text="${organo.nombre}">Òrgano</option>
               </select>
-            </td>
-          </tr>
-
-          <tr>
-            <td><strong>Descriptores:</strong></td>
-            <td>
-              <select name="descriptorId" onchange="document['form-busqueda'].claveId.value=''; this.form.submit();">
-                <option value="">-- Descriptores --</option>
-                <option th:each="desc : ${descriptores}" th:selected="${descriptorId == desc.id}" th:value="${desc.id}" th:text="${desc.descriptor}">Descriptor</option>
-              </select>
-            </td>
-          </tr>
-
-          <tr>
-            <td><strong>Claves:</strong></td>
-            <td>
-              <select name="claveId" onchange="this.form.submit();">
-                <option value="">-- Claves --</option>
-                <option th:each="clave : ${claves}" th:selected="${claveId == clave.id}" th:value="${clave.id}" th:text="${clave.clave}">Clave</option>
-              </select>
-            </td>
-          </tr>
-
-          <tr>
-            <td><strong>Texto:</strong></td>
-            <td>
-              <input type="text" name="texto" placeholder="Buscar en el texto" th:value="${texto}"/>
-            </td>
-          </tr>
-
-          <tr>
-            <td><strong>Entre:</strong></td>
-            <td>
-            <input name="fInicio" th:value="${fInicio}" placeholder="dd/mm/aaaa" />
-            <strong> y </strong>
-            <input name="fFin" th:value="${fFin}" placeholder="dd/mm/aaaa" />
-            </td>
-          </tr>
-
-          <tr>
-            <td></td>
-            <td>
-              <button type="submit">Aplicar</button>
-            </td>
-          </tr>
-
-        </table>
-
-        <div>
-          <div th:each="reunion : ${reuniones}" class="reunion">
-            <div class="reunion-titulo" th:text="${reunion.asunto}">Asunto</div>
-            <div class="collapsible collapsed">
-              <div>
-                <strong>Fecha:</strong>
-                <span th:text="${#dates.format(reunion.fecha,'dd/MM/yyyy HH:mm')}">Fecha</span>
-              </div>
-
-              <div>
-                <strong>Duración:</strong>
-                <span th:text="${reunion.duracion + ' minutos'}">Fecha</span>
-              </div>
-
-              <div>
-                <strong>Acuerdos generales:</strong>
-                <span th:text="${reunion.acuerdos}">Acords</span>
-              </div>
-              <blockquote th:each="puntoDia : ${reunion.puntosOrdenDia}" class="punto-del-dia">
-                <div th:if="${puntoDia.publico}" th:remove="tag">
-                  <h3 th:text="${puntoDia.titulo}"></h3>
-                  <div th:text="${puntoDia.acuerdos}"></div>
-                </div>
-              </blockquote>
-            </div>
+            </label>
+          </div>  
+          <div class="medium-1 large-1 columns">  
           </div>
         </div>
-        <div class="pagination-centered">
-          <div class="pagination" th:if="${hasPrevPage}">
-            <a class="prevPage" href="#"><i class="fa fa-angle-double-left"></i>anterior</a>
+        <div class="row">
+          <div class="medium-5 large-5 columns">
+            <label>Descriptores:
+              <select name="descriptorId" onchange="document['form-busqueda'].claveId.value=''; this.form.submit();">
+                <option value=""></option>
+                <option th:each="desc : ${descriptores}" th:selected="${descriptorId == desc.id}" th:value="${desc.id}" th:text="${desc.descriptor}">Descriptor</option>
+              </select>
+            </label> 
           </div>
-          <div class="pagination" th:if="${hasNextPage}">
-            <a class="nextPage" href="#">siguiente<i class="fa fa-angle-double-right"></i></a>
+          <div class="medium-6 large-6 columns">
+            <label>Claves:
+              <select name="claveId" onchange="this.form.submit();">
+                <option value=""></option>
+                <option th:each="clave : ${claves}" th:selected="${claveId == clave.id}" th:value="${clave.id}" th:text="${clave.clave}">Clau</option>
+              </select>
+            </label> 
+          </div>
+          <div class="medium-1 large-1 columns">  
+            <label>&nbsp;
+              <button class="button float-right" type="submit">Filtrar</button>
+            </label> 
           </div>
         </div>
       </form>
-    </div>
+      <ul class="contentList row columns">
+        <li th:each="reunion : ${reuniones}" class="reunion">
+          <div class="reunion-titulo" th:text="${reunion.asunto}">Asunto</div>
+          <div class="collapsible collapsed">
+            <blockquote>
+              <div style="display: inline-block;">
+                <strong>Fecha:</strong>
+                <span th:text="${#dates.format(reunion.fecha,'dd/MM/yyyy HH:mm')}">Fecha</span>
+              </div>
+              <div style="display: inline;">
+                <strong>Duración:</strong>
+                <span th:text="${reunion.duracion + ' minuts'}">Fecha</span>
+              </div>
+              <div th:if="${reunion.acuerdos}">
+                <strong>Acuerdos generales:</strong>
+                <span th:text="${reunion.acuerdos}">Acords</span>
+              </div>
+              <div>
+                <strong>Puntos del orden del día:</strong>
+              </div>  
+              <fieldset class="fieldset" th:each="puntoDia : ${reunion.puntosOrdenDia}" th:if="${puntoDia.publico}">
+                <legend th:text="${puntoDia.titulo}"></legend>
+                <div th:text="${puntoDia.acuerdos}"></div>
+              </fieldset>
+            </blockquote>
+          </div>
+        </li>
+      </ul>
+      <ul class="pagination text-center" role="navigation" aria-label="Pagination">
+        <li th:class="${'pagination-previous ' + (hasPrevPage ? '' : 'disabled')}">
+          <a th:if="${hasPrevPage}" class="prevPage" href="#" aria-label="Previous page">Anterior</a>
+          <span th:unless="${hasPrevPage}">Anterior</span>
+        </li>
+        <li th:class="${'pagination-next ' + (hasNextPage ? '' : 'disabled')}">
+          <a th:if="${hasNextPage}" class="nextPage" href="#" aria-label="Next page">Siguiente</a>
+          <span th:unless="${hasNextPage}">Siguiente</span>
+        </li>
+      </ul>
+
+    </main>
+    
     <script src="/goc/js/acuerdos.js"></script>
   </body>
 </html>
