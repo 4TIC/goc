@@ -1,38 +1,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta th:charset="${charset}" />
-    <title>Acta gestión organos colegiados</title>
-    <link rel="stylesheet" type="text/css" href="/goc/css/jquery.modal.css" />
-    <link rel="stylesheet" type="text/css" href="/goc/css/style.css" />
-    <link rel="stylesheet" type="text/css" href="/goc/css/font-awesome.min.css" />
-    <link th:if="${customCSS != ''}" rel="stylesheet" type="text/css" th:href="${customCSS}" />
-
-    <script src="/goc/js/jquery.min.js"></script>
-    <script src="/goc/js/jquery.modal.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <script th:inline="javascript">
-    /*<![CDATA[*/
-        var applang = [[${applang}]];
-    /*]]>*/
-    </script>
-  </head>
+  <div th:substituteby="head-es" />
   <body>
-    <div class="content">
-      <div class="header">
-        <img class="logo" src="#" th:src="${logo}" />
-        <h1>Gestión de órganos colegiados</h1>
-        <div class="topmenu">
-          <ul th:if="${alternativeLanguage and alternativeLanguage != ''}">
-            <li><a th:href="${'?lang=' + mainLanguage}" th:text="${mainLanguageDescription}">Español</a></li>
-            <li><a th:href="${'?lang=' + alternativeLanguage}" th:text="${alternativeLanguageDescription}">Valencià</a></li>
-          </ul>
-        </div>
+    <div class="off-canvas-content" data-off-canvas-content="data-off-canvas-content">
+      <div th:substituteby="header-es" />
+    </div>
+    <main class="columns reunion">
+      <div class="row columns">
+        <h2 th:text="'Reunión: ' + ${reunion.asunto}" class="title">title</h2>
       </div>
-
-      <h1 style="clear:both;" th:text="'Reunión: ' + ${reunion.asunto}">Título reunión</h1>
-      <h2>Información básica</h2>
-      <ul>
+      <div class="row columns">
+        <h3 class="title" >Información básica</h3>      
+      </div>
+      <ul class="contentList detalle row columns">
         <li th:utext="'&lt;strong&gt;Fecha&lt;/strong&gt;: ' + ${#dates.format(reunion.fecha, 'dd/MM/YYYY HH:mm')}"></li>
         <li th:if="${reunion.fechaSegundaConvocatoria}" th:utext="'&lt;strong&gt;Segunda convocatoria&lt;/strong&gt;: ' + ${#dates.format(reunion.fechaSegundaConvocatoria, 'dd/MM/YYYY HH:mm')}"></li>
         <li th:if="${reunion.responsableActa}" th:utext="'&lt;strong&gt;Responsable de acta&lt;/strong&gt;: ' + ${reunion.responsableActa}"></li>
@@ -44,55 +24,66 @@
         <li th:if="${reunion.urlGrabacion != null}"><strong>URL grabación</strong>: <a th:href="${reunion.urlGrabacion}" th:text="${reunion.urlGrabacion}"></a></li>
         <li th:if="${reunion.telematica}"><strong>Reunión telemática. Instrucciones</strong>: <span th:text="${reunion.telematicaDescripcion}"></span></li>
       </ul>
-      <h2 th:if="${not #lists.isEmpty(reunion.organos)}">Órganos y asistentes</h2>
-      <ul th:if="${not #lists.isEmpty(reunion.organos)}">
+      <div th:if="${not #lists.isEmpty(reunion.organos)}" class="row columns">
+        <h3 class="title">Órganos y asistentes</h3>      
+      </div>
+      <ul th:if="${not #lists.isEmpty(reunion.organos)}" class="contentList detalle row columns">
         <li th:each="organo : ${reunion.organos}">
-          <h3 th:text="${organo.nombre}">Órgano asistente</h3>
+          <h4 class="title" th:text="${organo.nombre}">Órgano asistente</h4>
           <ul th:with="miembros=${organo.asistentes}">
             <li th:each="miembro : ${miembros}">
               <div>
-                <span th:text="${miembro.cargo.nombre} + ' - ' + ${miembro.nombre} + ' (' + ${miembro.email} + ')'">Miembro</span>
-                <span th:if="${miembro.suplente}" th:text="'[Assisteix com a suplent ' + ${miembro.suplente} + ']'">Suplente</span>
-                <strong th:if="${miembro.asistenciaConfirmada}">Asistirá</strong>
-                <strong th:if="${miembro.asistenciaConfirmada == false}">No asistirá</strong>
+                <span th:text="${miembro.nombre} + ' (' + ${miembro.email} + ')' + ' - ' + ${miembro.cargo.nombre}">Miembro</span>
+                <span class="asistencia asistira" th:if="${miembro.asistenciaConfirmada}">Asistirá</span>
+                <span class="asistencia no-asistira" th:if="${miembro.asistenciaConfirmada == false}">No asistirá</span>
+                <div class="detalle">
+                  <strong th:if="${miembro.suplente}" th:text="'Asiste como suplene ' + ${miembro.suplente}">Suplente</strong>
+                </div>  
               </div>
               <div class="confirmacion" th:if="${reunion.completada != true and (connectedUserId == miembro.miembroId or (miembro.suplenteId != null and connectedUserId == miembro.suplenteId))}">
-                <strong>Confirma asistencia:</strong>
-                <button th:class="${miembro.asistenciaConfirmada == true } ? activo : inactivo" name="confirmar">Sí</button>
-                <button th:class="${miembro.asistenciaConfirmada == false} ? activo : inactivo" name="denegar">No</button>
-                <button th:attr="data-miembroid=${miembro.id}, data-suplente=${miembro.suplente}" th:if="${reunion.admiteSuplencia and (connectedUserId == miembro.miembroId or miembro.suplenteId != null and connectedUserId == miembro.suplenteId)}" name="suplente">Gestionar suplente</button>
+                <button class="button success tiny" th:if="${miembro.asistenciaConfirmada == true }" disabled="disabled" name="confirmar">Asistirá</button>
+                <button class="button success tiny" th:unless="${miembro.asistenciaConfirmada == true }" name="confirmar">Asistirá</button>
+                <button class="button alert tiny" th:if="${miembro.asistenciaConfirmada == false}" disabled="disabled" name="denegar">No asistirá</button>
+                <button class="button alert tiny" th:unless="${miembro.asistenciaConfirmada == false}" name="denegar">No asistirá</button>
+                <button class="button tiny" style="margin-left: 3em;" th:attr="data-miembroid=${miembro.id}, data-suplente=${miembro.suplente}" th:if="${reunion.admiteSuplencia and (connectedUserId == miembro.miembroId or miembro.suplenteId != null and connectedUserId == miembro.suplenteId)}" name="suplente">Gestionar suplente</button>
               </div>
             </li>
           </ul>
         </li>
       </ul>
-      <h2 th:if="${not #lists.isEmpty(reunion.invitados)}">Invitados</h2>
-      <ul th:if="${not #lists.isEmpty(reunion.invitados)}">
+      <div th:if="${not #lists.isEmpty(reunion.invitados)}" class="row columns">
+        <h3 class="title">Invitados</h3>      
+      </div>
+      <ul th:if="${not #lists.isEmpty(reunion.invitados)}" class="contentList detalle row columns">
         <li th:each="invitado : ${reunion.invitados}">
           <span th:text="${invitado.nombre} + ' (' + ${invitado.email} + ')'">Invitado</span>
         </li>
       </ul>
-      <h2 th:if="${not #lists.isEmpty(reunion.documentos)}">Documentación</h2>
-      <ul th:if="${not #lists.isEmpty(reunion.documentos)}">
+      <div th:if="${not #lists.isEmpty(reunion.documentos)}" class="row columns">
+        <h3 class="title">Documentación</h3>      
+      </div>
+      <ul th:if="${not #lists.isEmpty(reunion.documentos)}" class="contentList detalle row columns">
         <li th:each="documento : ${reunion.documentos}"><a th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/documentos/' + ${documento.id} + '/descargar'" th:text="${documento.descripcion}">Descripción documento</a></li>
       </ul>
-      <h2 th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}">Puntos del orden del día</h2>
-      <ol th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}">
+      <div th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}" class="row columns">
+        <h3 class="title">Puntos del orden del día</h3>      
+      </div>
+      <ol th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}" class="detalle row columns">
         <li th:each="puntoOrdenDia : ${reunion.puntosOrdenDia}">
-          <span th:text="${puntoOrdenDia.titulo}"></span>
-          <div th:if="${puntoOrdenDia.descripcion} != null" th:text="'Descripción: ' + ${puntoOrdenDia.descripcion}"></div>
-          <div th:if="${puntoOrdenDia.deliberaciones} != null" th:text="'Deliberaciones: ' + ${puntoOrdenDia.deliberaciones}"></div>
-          <div th:if="${puntoOrdenDia.acuerdos} != null" th:text="'Acuerdos: ' + ${puntoOrdenDia.acuerdos}"></div>
-          <span th:if="${not #lists.isEmpty(puntoOrdenDia.documentos)}">Documentación:</span>
-          <ul th:with="documentos=${puntoOrdenDia.documentos}">
+          <strong th:text="${puntoOrdenDia.titulo}"></strong>
+          <div th:if="${puntoOrdenDia.descripcion} != null" th:utext="'&lt;strong&gt;Descripción&lt;/strong&gt;: ' + ${puntoOrdenDia.descripcion}"></div>
+          <div th:if="${puntoOrdenDia.deliberaciones} != null" th:utext="'&lt;strong&gt;Deliberaciones&lt;/strong&gt;: ' + ${puntoOrdenDia.deliberaciones}"></div>
+          <div th:if="${puntoOrdenDia.acuerdos} != null" th:utext="'&lt;strong&gt;Acuerdos&lt;/strong&gt;: ' + ${puntoOrdenDia.acuerdos}"></div>
+          <strong th:if="${not #lists.isEmpty(puntoOrdenDia.documentos)}">Documentación:</strong>
+          <ul class="contentList" th:with="documentos=${puntoOrdenDia.documentos}">
             <li th:each="documento : ${documentos}"><a th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/puntosOrdenDia/' + ${puntoOrdenDia.id} + '/documentos/' + ${documento.id} + '/descargar'" th:text="${documento.descripcion}">Descripcion documento</a></li>
           </ul>
-          <span th:if="${not #lists.isEmpty(puntoOrdenDia.documentosAcuerdos)}">Acuerdos:</span>
-          <ul th:with="acuerdos=${puntoOrdenDia.documentosAcuerdos}">
+          <strong th:if="${not #lists.isEmpty(puntoOrdenDia.documentosAcuerdos)}">Acuerdos:</strong>
+          <ul class="contentList" th:with="acuerdos=${puntoOrdenDia.documentosAcuerdos}">
             <li th:each="acuerdo : ${acuerdos}"><a th:href="'/goc/rest/reuniones/' + ${acuerdo.id} + '/puntosOrdenDia/' + ${puntoOrdenDia.id} + '/acuerdos/' + ${acuerdo.id} + '/descargar'" th:text="${acuerdo.descripcion}">Descripción acuerdo</a></li>
           </ul>
-          <span th:if="${not #lists.isEmpty(puntoOrdenDia.descriptores)}">Descriptores:</span>
-          <ul th:with="descriptores=${puntoOrdenDia.descriptores}">
+          <strong th:if="${not #lists.isEmpty(puntoOrdenDia.descriptores)}">Descriptores:</strong>
+          <ul class="contentList" th:with="descriptores=${puntoOrdenDia.descriptores}">
             <li th:each="descriptor : ${descriptores}">
               <span th:text="${descriptor.descriptorNombre}">Nombre descriptior</span>
               :
@@ -102,19 +93,22 @@
           <br />
         </li>
       </ol>
+      <div class="row columns">
+        <h3 class="title">Convocante</h3>  
+        <span class="detalle" th:text="${reunion.creadorNombre} + '(' + ${reunion.creadorEmail} + ')'">Info convocante</span>    
+      </div>
 
-      <h3>Convocante: <span style="font-weight: normal; font-size: 16px;" th:text="${reunion.creadorNombre} + '(' + ${reunion.creadorEmail} + ')'">Info convocante</span></h3>
       <div class="nuevo-suplente" style="display: none;">
         <input type="hidden" name="organoMiembroId" />
-        <p class="suplente-actual">Suplente actual: <strong></strong> <button name="borra-suplente">Borrar suplente</button></p>
+        <p class="suplente-actual">Suplente actual: <strong></strong> <button class="button small" name="borra-suplente">Borrar suplente</button></p>
         <p>Añadir un suplente:</p>
         <div class="header">
-          <input type="text" name="query-persona" /><button name="busca-persona">Buscar</button>
+          <input type="text" name="query-persona" /><button class="button" name="busca-persona">Buscar</button>
         </div>
         <ul class="resultados">
         </ul>
         <div class="footer">
-          <button name="add-suplente">Añadir suplente</button>
+          <button class="button" name="add-suplente">Añadir suplente</button>
         </div>
       </div>
 
@@ -122,12 +116,19 @@
         <p>Añadir un comentario:</p>
         <input type="hidden" name="reunionId" th:value="${reunion.id}" />
         <textarea style="width: 100%; height: 240px;"></textarea>
-        <button class="post-comentario">Añadir</button>
+        <button class="button post-comentario">Añadir</button>
       </div>
       <br style="margin-top: 2em;"/>
-      <button th:if="${ not reunion.completada and reunion.admiteComentarios and permitirComentarios}"   class="add-comentario">Añadir un comentario</button>
-      <div th:if="${permitirComentarios}" class="comentarios"></div>
-    </div>
+      
+      <div class="row columns">
+        <button th:if="${ not reunion.completada and reunion.admiteComentarios and permitirComentarios}" class=" button add-comentario">Añadir un comentario</button>
+      </div>  
+      
+      <div class="row columns">
+        <div th:if="${permitirComentarios}" class="comentarios"></div>
+      </div>
+
+    </main>
     <script src="/goc/js/script.js"></script>
   </body>
 </html>

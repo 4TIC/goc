@@ -16,13 +16,13 @@ $(function()
                     return;
                 }
 
-                var html = '<h1>' + appI18N.acta.comentarios + '</h1>';
+                var html = '<h3 class="title">' + appI18N.acta.comentarios + '</h3>';
 
                 response.data.map(function(comentario)
                 {
                     var creador = comentario.creadorNombre ? comentario.creadorNombre : comentario.creadorId;
                     html +=
-                    '<div>' +
+                    '<div class="row columns">' +
                     '  <a href="#" class="delete-comentario" data-id="' + comentario.id + '"><i class="fa fa-times"></i></a>' +
                     '  <div class="comentario">' +
                     '    <p class=""autor"><strong>' + appI18N.acta.autor + '</strong>: ' + creador + '</p>' +
@@ -45,7 +45,7 @@ $(function()
         for (var i = 0; i < result.data.length; i++)
         {
             var persona = result.data[i];
-            items.push('<li><input type="radio" value="' + persona.id + '"/> <label for="suplenteNombre">' + persona.nombre + '</label> (<label for="suplenteEmail">' + persona.email + '</label>)</li>')
+            items.push('<li><input type="radio" value="' + persona.id + '"/> <label style="display: inline; margin-right: 0px;" for="suplenteNombre">' + persona.nombre + '</label> <span style="display: inline">(</span><label style="display: inline" for="suplenteEmail">' + persona.email + '</label><span style="display: inline">)</span></li>')
         }
 
         $('div.nuevo-suplente ul.resultados').html(items.join('\n'));
