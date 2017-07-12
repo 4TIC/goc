@@ -1,48 +1,29 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta th:charset="${charset}" />
-    <link rel="stylesheet" type="text/css" href="/goc/css/jquery.modal.css" />
-    <link rel="stylesheet" type="text/css" href="/goc/css/style.css" />
-    <link th:if="${customCSS != ''}" rel="stylesheet" type="text/css" th:href="${customCSS}" />
-
-    <script src="/goc/js/jquery.min.js"></script>
-    <script src="/goc/js/jquery.modal.js"></script>
-    <script th:inline="javascript">
-    /*<![CDATA[*/
-        var applang = [[${applang}]];
-    /*]]>*/
-    </script>
-  </head>
+  <div th:substituteby="head-ca" />
   <body>
-    <div class="content">
-      <div class="header">
-        <img class="logo" src="#" th:src="${logo}" />
-        <div class="h1"><h1>Gestió d'Òrgans Col·legiats</h1></div>
-        <div class="topmenu">
-          <ul th:if="${alternativeLanguage and alternativeLanguage != ''}">
-            <li><a th:href="${'?lang=' + mainLanguage}" th:text="${mainLanguageDescription}">Español</a></li>
-            <li><a th:href="${'?lang=' + alternativeLanguage}" th:text="${alternativeLanguageDescription}">Valencià</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="list">
-          <h1>Llistat de reunions</h1>
-          <ul>
-            <li th:each="reunion : ${reuniones}">
-              <strong th:text="${#dates.format(reunion.fecha, 'dd/MM/YYYY HH:mm')}"></strong>
-              <span class="titulo" th:text="${reunion.asuntoAlternativo}"></span>
-              <span class="separador">
-              (</span><span class="documentacion"><a th:href="'/goc/rest/publicacion/reuniones/' + ${reunion.id} + '?lang=' + ${applang}">Documentació</a></span>
-              <span class="separador">|</span>
-              <span class="acta"><a th:href="'/goc/rest/actas/' + ${reunion.id} + '?lang=' + ${applang}">Acta</a></span>
-              <span class="separador" th:if="${reunion.completada and reunion.asistente}"> | </span>
-              <span class="certificado"><a th:if="${reunion.completada and reunion.asistente}" th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/asistencia' + '?lang=' + ${applang}">Certificat d'assistència</a></span>
-              <span class="separador">)</span>
-            </li>
-          </ul>
-      </div>
-    </div>
+    <div class="off-canvas-content" data-off-canvas-content="data-off-canvas-content">
+      <div th:substituteby="header-ca" />
+    </div> 
+    <main class="columns">
+      <div class="row columns">
+        <h2 class="title">Llistat de reunions</h2>
+      </div>  
+      <ul class="lista-reuniones contentList row columns">
+        <li th:each="reunion : ${reuniones}">
+          <div style="display: block" class="reunion-titulo" th:text="${reunion.asuntoAlternativo}"></div>
+          <div style="display: inline" th:text="${#dates.format(reunion.fecha, 'dd/MM/YYYY HH:mm')}"></div>
+          <div style="display: inline">
+            <span class="separador">&nbsp;</span>
+            <span class="documentacion"><a th:href="'/goc/rest/publicacion/reuniones/' + ${reunion.id} + '?lang=' + ${applang}">Documentació</a></span>
+            <span class="separador">|</span>
+            <span><a th:href="'/goc/rest/actas/' + ${reunion.id} + '?lang=' + ${applang}">Acta</a></span>
+            <span class="separador" th:if="${reunion.completada and reunion.asistente}"> | </span>
+            <span><a th:if="${reunion.completada and reunion.asistente}" th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/asistencia' + '?lang=' + ${applang}">Certificat d'assistència</a></span>
+            <hr />
+          </div>
+        </li>
+      </ul>
+    </main>
   </body>
 </html>
