@@ -187,7 +187,8 @@
     "fechaAnteriorAActual" : "La fecha seleccionada es anterior a la actual, ¿deseas continuar igualmente?",
     "suplenteNoTendraEfecto": "Hay un suplente definido, pero NO tendrá efecto si seleccionas no asistir a la reunión. ¿deseas continuar igualmente?",
     "suplenteNoTendraEfectoAviso": "Hay un suplente definido, pero NO tendrá efecto si seleccionas no asistir a la reunión",
-    "borrarAsistencia": "Quitar asistencia"
+    "borrarAsistencia": "Quitar asistencia",
+    "noAddSuplentePorqueNoAsiste": "No se puede añadir un suplente porque no asistirá a la reunión"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Histórico de reuniones",

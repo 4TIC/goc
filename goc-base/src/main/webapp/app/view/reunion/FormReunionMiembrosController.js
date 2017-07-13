@@ -20,6 +20,12 @@ Ext.define('goc.view.reunion.FormReunionMiembrosController', {
             return Ext.Msg.alert(appI18N.reuniones.addSuplente, appI18N.reuniones.seleccionarParaAnyadirSuplente);
         }
 
+        if (!record.data.asistencia)
+        {
+            Ext.Msg.alert(appI18N.reuniones.addSuplente, appI18N.reuniones.noAddSuplentePorqueNoAsiste);
+            return;
+        }
+
         var window = Ext.create('goc.view.common.LookupWindowPersonas', {
             appPrefix : 'goc',
             title : appI18N.reuniones.seleccionaSuplente

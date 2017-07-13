@@ -102,7 +102,16 @@ $(function()
 
     $('button[name=borra-suplente]').on('click', function(ev)
     {
-        var organoMiembroId = $('div.nuevo-suplente input[name=organoMiembroId]').val();
+        borraSuplente($('div.nuevo-suplente input[name=organoMiembroId]').val());
+    });
+
+    $('button[name=borra-suplente-directo]').on('click', function(ev)
+    {
+        borraSuplente($(this).attr('data-miembroid'));
+    });
+
+    function borraSuplente(organoMiembroId)
+    {
         var data = {
             organoMiembroId : organoMiembroId
         };
@@ -118,7 +127,7 @@ $(function()
                 window.location.reload();
             }
         });
-    });
+    };
 
     $('button[name=add-suplente]').on('click', function(ev)
     {

@@ -187,7 +187,8 @@
     "fechaAnteriorAActual": "La data seleccionada és anterior a l'actual, voleu continuar igualment?",
     "suplenteNoTendraEfecto": "Hi ha un suplent definit, però NO tindrà efecte si seleccioneu no assistir a la reunió. Voleu continuar? ",
     "suplenteNoTendraEfectoAviso": "Hi ha un suplent definit, però NO tindrà efecte si seleccioneu no assistir a la reunió",
-    "borrarAsistencia": "Esborrar assistència"
+    "borrarAsistencia": "Esborrar assistència",
+    "noAddSuplentePorqueNoAsiste": "No es pot afegir un suplent perquè no assistirà a la reunió"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Històric de reunions",

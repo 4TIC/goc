@@ -45,7 +45,9 @@
                 <button class="button success tiny" th:unless="${miembro.asistenciaConfirmada == true }" name="confirmar">Assistirà</button>
                 <button class="button alert tiny" th:if="${miembro.asistenciaConfirmada == false}" disabled="disabled" name="denegar">No assistirà</button>
                 <button class="button alert tiny" th:unless="${miembro.asistenciaConfirmada == false}" name="denegar">No assistirà</button>
-                <button class="button tiny" style="margin-left: 3em;" th:attr="data-miembroid=${miembro.id}, data-suplente=${miembro.suplente}" th:if="${reunion.admiteSuplencia and (connectedUserId == miembro.miembroId or miembro.suplenteId != null and connectedUserId == miembro.suplenteId)}" name="suplente">Gestionar suplent</button>
+                <button class="button tiny" disabled="disabled" style="margin-left: 3em;" th:attr="data-miembroid=${miembro.id}, data-suplente=${miembro.suplente}" th:if="${miembro.asistenciaConfirmada == false and reunion.admiteSuplencia and (connectedUserId == miembro.miembroId or miembro.suplenteId != null and connectedUserId == miembro.suplenteId)}" name="suplente">Gestionar suplent</button>
+                <button class="button tiny" style="margin-left: 3em;" th:attr="data-miembroid=${miembro.id}, data-suplente=${miembro.suplente}" th:if="${miembro.asistenciaConfirmada == true and reunion.admiteSuplencia and (connectedUserId == miembro.miembroId or miembro.suplenteId != null and connectedUserId == miembro.suplenteId)}" name="suplente">Gestionar suplent</button>
+                <button class="button tiny secondary" th:attr="data-miembroid=${miembro.id}" th:if="${reunion.admiteSuplencia and (miembro.suplenteId != null and (connectedUserId == miembro.miembroId or connectedUserId == miembro.suplenteId))}" name="borra-suplente-directo">Esborrar suplent</button>
               </div>
             </li>
           </ul>
