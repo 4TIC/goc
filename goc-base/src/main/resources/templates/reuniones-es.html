@@ -11,7 +11,7 @@
       </div> 
       <ul class="lista-reuniones contentList row columns">
         <li th:each="reunion : ${reuniones}">
-          <div style="display: block" class="reunion-titulo" class="titulo" th:text="${reunion.asunto}"></div>
+          <div style="display: block" class="reunion-titulo" th:text="${reunion.asunto}"></div>
           <div style="display: inline" th:text="${#dates.format(reunion.fecha, 'dd/MM/YYYY HH:mm')}"></div>
           <div style="display: inline">
             <span class="separador">&nbsp;</span>
