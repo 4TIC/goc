@@ -114,6 +114,24 @@ public class ReunionResource extends CoreBaseService
         return reunionMiembroResource;
     }
 
+    @GET
+    @Path("{reunionId}/tienesuplente")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public ResponseMessage tieneSuplente(@PathParam("reunionId") Long reunionId)
+            throws AsistenteNoEncontradoException, ReunionYaCompletadaException
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+        Boolean tieneSuplente = organoReunionMiembroService.tieneSuplente(reunionId, connectedUserId);
+
+        if (tieneSuplente)
+        {
+            return new ResponseMessage(true, "true");
+        }
+
+        return new ResponseMessage(true, "false");
+    }
+
     @POST
     @Path("{reunionId}/confirmar")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -125,6 +143,7 @@ public class ReunionResource extends CoreBaseService
         Boolean asistencia = new Boolean(ui.get("confirmacion"));
 
         reunionService.compruebaReunionNoCompletada(reunionId);
+
         organoReunionMiembroService.estableceAsistencia(reunionId, connectedUserId, asistencia);
     }
 
@@ -433,7 +452,8 @@ public class ReunionResource extends CoreBaseService
             throw new ReunionNoCompletadaException();
         }
 
-        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, false);
+        ReunionTemplate reunionTemplate =
+                reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, false);
         String nombreAsistente = reunionService.getNombreAsistente(reunionId, connectedUserId);
 
         if (nombreAsistente == null)
@@ -472,7 +492,8 @@ public class ReunionResource extends CoreBaseService
             throw new ReunionNoDisponibleException();
         }
 
-        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, false);
+        ReunionTemplate reunionTemplate =
+                reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, false);
 
         String applang = getLangCode(lang);
 

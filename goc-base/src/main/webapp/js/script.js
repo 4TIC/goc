@@ -195,19 +195,50 @@ $(function()
     $('div.confirmacion button[name=confirmar], div.confirmacion button[name=denegar]').on('click', function()
     {
         var confirmacion = $(this).attr("name") === 'confirmar' ? true : false;
+
+        if (!confirmacion)
+        {
+            $.ajax({
+                type : "GET",
+                url : "/goc/rest/reuniones/" + reunionId + "/tienesuplente",
+                success : function(response)
+                {
+                    if (response.message == 'true')
+                    {
+                        if (confirm(eval('appI18N.reuniones.suplenteNoTendraEfecto')))
+                        {
+                            updateConfirmacion(false)
+                            return;
+                        } else
+                        {
+                            return;
+                        }
+                    }
+
+                    updateConfirmacion(confirmacion);
+                }
+            });
+
+            return;
+        }
+
+        updateConfirmacion(confirmacion);
+    })
+
+    function updateConfirmacion(confirmacion)
+    {
         $.ajax({
             type : "POST",
             url : "/goc/rest/reuniones/" + reunionId + "/confirmar",
             data : JSON.stringify({confirmacion : confirmacion}),
             contentType : "application/json; charset=utf-8",
             dataType : "json",
-            success : function()
+            success : function(response)
             {
                 window.location.reload();
             }
         });
-
-    })
+    }
 
     $.getJSON('/goc/app/i18n/' + applang + '.json', function(data)
     {

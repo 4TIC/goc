@@ -130,8 +130,16 @@ public class OrganoReunionMiembroService
         organoReunionMiembroDAO.update(miembro);
     }
 
-    public List<OrganoReunionMiembro> getAsistentes(Long reunionId, Long connectedUserId)
+    public Boolean tieneSuplente(Long reunionId, Long connectedUserId)
     {
-        return organoReunionMiembroDAO.getAsistentesByReunionId(reunionId);
+        List<OrganoReunionMiembro> asistentes =
+                organoReunionMiembroDAO.getMiembroByAsistenteIdOrSuplenteId(reunionId, connectedUserId);
+
+        for (OrganoReunionMiembro asistente : asistentes)
+        {
+            if (asistente.getSuplenteId() != null) return true;
+        }
+
+        return false;
     }
 }

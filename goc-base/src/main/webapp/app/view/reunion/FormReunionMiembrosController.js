@@ -1,40 +1,47 @@
 Ext.define('goc.view.reunion.FormReunionMiembrosController', {
-    extend: 'Ext.app.ViewController',
-    alias: 'controller.formReunionMiembrosController',
-    onClose: function () {
-        var win = this.getView(); 
-        if (win) {
+    extend : 'Ext.app.ViewController',
+    alias : 'controller.formReunionMiembrosController',
+    onClose : function()
+    {
+        var win = this.getView();
+        if (win)
+        {
             win.destroy();
         }
     },
 
-    onAddSuplente: function () {
+    onAddSuplente : function()
+    {
         var grid = this.getView().down('grid');
         var record = grid.getView().getSelectionModel().getSelection()[0];
 
-        if (!record) {
+        if (!record)
+        {
             return Ext.Msg.alert(appI18N.reuniones.addSuplente, appI18N.reuniones.seleccionarParaAnyadirSuplente);
         }
 
         var window = Ext.create('goc.view.common.LookupWindowPersonas', {
-            appPrefix: 'goc',
-            title: appI18N.reuniones.seleccionaSuplente
+            appPrefix : 'goc',
+            title : appI18N.reuniones.seleccionaSuplente
         });
 
         window.show();
 
-        window.on('LookoupWindowClickSeleccion', function (res) {
+        window.on('LookoupWindowClickSeleccion', function(res)
+        {
             record.set('suplenteId', res.get('id'));
             record.set('suplenteNombre', res.get('nombre'));
             record.set('suplenteEmail', res.get('email'));
         });
     },
 
-    onRemoveSuplente: function () {
+    onRemoveSuplente : function()
+    {
         var grid = this.getView().down('grid');
         var record = grid.getView().getSelectionModel().getSelection()[0];
 
-        if (!record) {
+        if (!record)
+        {
             return Ext.Msg.alert(appI18N.reuniones.borrarSuplente, appI18N.reuniones.seleccionarParaBorrarSuplente);
         }
         record.set('suplenteId', null);
@@ -42,7 +49,8 @@ Ext.define('goc.view.reunion.FormReunionMiembrosController', {
         record.set('suplenteEmail', null);
     },
 
-    onLoad: function () {
+    onLoad : function()
+    {
         var viewModel = this.getViewModel();
         var reunionId = viewModel.get('reunionId');
         var organoId = viewModel.get('organoId');
@@ -50,53 +58,65 @@ Ext.define('goc.view.reunion.FormReunionMiembrosController', {
         var remoteLoad = viewModel.get('remoteLoad')
         var grid = this.getView().down('grid');
 
-        if (remoteLoad) {
+        if (remoteLoad)
+        {
 
-            if (reunionId) {
+            if (reunionId)
+            {
                 return viewModel.get('store').load({
-                    url: '/goc/rest/reuniones/' + reunionId + '/miembros',
-                    params: {
-                        organoId: organoId,
-                        externo: externo
+                    url : '/goc/rest/reuniones/' + reunionId + '/miembros',
+                    params : {
+                        organoId : organoId,
+                        externo : externo
                     }
                 });
             }
 
             return viewModel.get('store').load({
-                url: '/goc/rest/miembros',
-                params: {
-                    organoId: organoId,
-                    externo: externo
+                url : '/goc/rest/miembros',
+                params : {
+                    organoId : organoId,
+                    externo : externo
                 }
             });
         }
     },
 
-    onSave: function () {
+    onSave : function()
+    {
         var viewModel = this.getViewModel();
         var store = viewModel.get('store')
         var reunionId = viewModel.get('reunionId');
         this.onClose();
     },
 
-    onSearchMiembro: function(field, searchString) {
+    onSearchMiembro : function(field, searchString)
+    {
         var viewModel = this.getViewModel();
         var store = viewModel.get('store')
 
-        if (!searchString) {
+        if (!searchString)
+        {
             store.clearFilter();
             return;
         }
 
-        var filter  = new Ext.util.Filter(
-            {
-                id : 'tipoOrganoId',
-                property : 'nombre',
-                value : searchString,
-                anyMatch: true
-            });
+        var filter = new Ext.util.Filter(
+        {
+            id : 'tipoOrganoId',
+            property : 'nombre',
+            value : searchString,
+            anyMatch : true
+        });
 
         store.addFilter(filter);
+    },
 
+    onChangeAsistencia : function(elem, rowIndex, checked, record)
+    {
+        if (!checked && record.data.suplenteId)
+        {
+            Ext.Msg.alert(appI18N.reuniones.borrarAsistencia, appI18N.reuniones.suplenteNoTendraEfectoAviso);
+        }
     }
 });

@@ -184,7 +184,10 @@
     "buscarInvitados": "Cercar convidats per afegir",
     "seleccionaInvitado": "Selecciona el convidat",
     "fechaAnterior": "Data passada",
-    "fechaAnteriorAActual": "La data seleccionada és anterior a l'actual, voleu continuar igualment?"
+    "fechaAnteriorAActual": "La data seleccionada és anterior a l'actual, voleu continuar igualment?",
+    "suplenteNoTendraEfecto": "Hi ha un suplent definit, però NO tindrà efecte si seleccioneu no assistir a la reunió. Voleu continuar? ",
+    "suplenteNoTendraEfectoAviso": "Hi ha un suplent definit, però NO tindrà efecte si seleccioneu no assistir a la reunió",
+    "borrarAsistencia": "Esborrar assistència"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Històric de reunions",

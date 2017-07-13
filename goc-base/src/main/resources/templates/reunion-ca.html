@@ -40,7 +40,7 @@
                   <strong th:if="${miembro.suplente}" th:text="'Assisteix com a suplent ' + ${miembro.suplente} ">Suplente</strong>
                 </div>  
               </div>
-              <div class="confirmacion" th:if="${reunion.completada != true and (connectedUserId == miembro.miembroId or (miembro.suplenteId != null and connectedUserId == miembro.suplenteId))}">
+              <div class="detalle confirmacion" th:if="${reunion.completada != true and (connectedUserId == miembro.miembroId or (miembro.suplenteId != null and connectedUserId == miembro.suplenteId))}">
                 <button class="button success tiny" th:if="${miembro.asistenciaConfirmada == true }" disabled="disabled" name="confirmar">Assistirà</button>
                 <button class="button success tiny" th:unless="${miembro.asistenciaConfirmada == true }" name="confirmar">Assistirà</button>
                 <button class="button alert tiny" th:if="${miembro.asistenciaConfirmada == false}" disabled="disabled" name="denegar">No assistirà</button>

@@ -97,6 +97,9 @@ Ext.define('goc.view.reunion.FormReunionMiembros', {
                     dataIndex : 'asistencia',
                     bind : {
                         disabled : '{reunionCompletada}'
+                    },
+                    listeners : {
+                        checkchange  : 'onChangeAsistencia'
                     }
                 }
             ]
