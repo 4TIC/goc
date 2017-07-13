@@ -185,8 +185,8 @@
     "seleccionaInvitado": "Selecciona el invitado",
     "fechaAnterior": "Fecha pasada",
     "fechaAnteriorAActual" : "La fecha seleccionada es anterior a la actual, ¿deseas continuar igualmente?",
-    "suplenteNoTendraEfecto": "Hay un suplente definido, pero NO tendrá efecto si seleccionas no asistir a la reunión. ¿deseas continuar igualmente?",
-    "suplenteNoTendraEfectoAviso": "Hay un suplente definido, pero NO tendrá efecto si seleccionas no asistir a la reunión",
+    "suplenteNoTendraEfecto": "Hay un suplente definido, pero éste NO se tendrá en cuenta si se selecciona no asistir a la reunión. ¿deseas continuar igualmente?",
+    "suplenteNoTendraEfectoAviso": "Hay un suplente definido, pero éste NO se tendrá en cuenta si se selecciona no asistir a la reunión",
     "borrarAsistencia": "Quitar asistencia",
     "noAddSuplentePorqueNoAsiste": "No se puede añadir un suplente porque no asistirá a la reunión"
   },
