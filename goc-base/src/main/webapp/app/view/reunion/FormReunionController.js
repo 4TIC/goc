@@ -134,6 +134,8 @@ Ext.define('goc.view.reunion.FormReunionController', {
                     miembros.push({
                         id : record.get('id'),
                         email : record.get('email'),
+                        nombre : record.get('nombre'),
+                        cargo : record.get('cargo'),
                         asistencia : record.get('asistencia'),
                         suplenteId : record.get('suplenteId'),
                         suplenteNombre : record.get('suplenteNombre'),
