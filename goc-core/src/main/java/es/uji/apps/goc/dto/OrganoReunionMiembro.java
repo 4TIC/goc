@@ -60,14 +60,14 @@ public class OrganoReunionMiembro implements Serializable
     @Column(name = "ASISTENCIA_CONFIRMADA")
     private Boolean asistenciaConfirmada;
 
-    @Column(name = "DELEGADO_ID")
-    private Long delegadoId;
+    @Column(name = "DELEGADO_VOTO_ID")
+    private Long delegadoVotoId;
 
-    @Column(name = "DELEGADO_NOMBRE")
-    private String delegadoNombre;
+    @Column(name = "DELEGADO_VOTO_NOMBRE")
+    private String delegadoVotoNombre;
 
-    @Column(name = "DELEGADO_EMAIL")
-    private String delegadoEmail;
+    @Column(name = "DELEGADOV_EMAIL")
+    private String delegadoVotoEmail;
 
     @ManyToOne
     @JoinColumn(name = "ORGANO_REUNION_ID")
@@ -247,33 +247,33 @@ public class OrganoReunionMiembro implements Serializable
         this.cargoNombreAlternativo = cargoNombreAlternativo;
     }
 
-    public Long getDelegadoId()
+    public Long getDelegadoVotoId()
     {
-        return delegadoId;
+        return delegadoVotoId;
     }
 
-    public void setDelegadoId(Long delegadoId)
+    public void setDelegadoVotoId(Long delegadoVotoId)
     {
-        this.delegadoId = delegadoId;
+        this.delegadoVotoId = delegadoVotoId;
     }
 
-    public String getDelegadoNombre()
+    public String getDelegadoVotoNombre()
     {
-        return delegadoNombre;
+        return delegadoVotoNombre;
     }
 
-    public void setDelegadoNombre(String delegadoNombre)
+    public void setDelegadoVotoNombre(String delegadoVotoNombre)
     {
-        this.delegadoNombre = delegadoNombre;
+        this.delegadoVotoNombre = delegadoVotoNombre;
     }
 
-    public String getDelegadoEmail()
+    public String getDelegadoVotoEmail()
     {
-        return delegadoEmail;
+        return delegadoVotoEmail;
     }
 
-    public void setDelegadoEmail(String delegadoEmail)
+    public void setDelegadoVotoEmail(String delegadoVotoEmail)
     {
-        this.delegadoEmail = delegadoEmail;
+        this.delegadoVotoEmail = delegadoVotoEmail;
     }
 }
