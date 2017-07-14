@@ -94,6 +94,8 @@ public class ReunionMiembroService
         organoReunionMiembro.setOrganoExterno(externo);
         organoReunionMiembro.setReunionId(reunionId);
         organoReunionMiembro.setMiembroId(miembro.getId().toString());
+        organoReunionMiembro.setCargoId(miembro.getCargo().getId());
+        organoReunionMiembro.setCargoNombre(miembro.getCargo().getNombre());
 
         return organoReunionMiembro;
     }
