@@ -60,7 +60,7 @@ public class AvisosReunion
 
         String asunto = "[GOC]";
 
-        asunto += " suplent en reunió " + getNombreOrganos(reunion);
+        asunto += " Suplent en reunió " + getNombreOrganos(reunion);
 
         if (reunion.getNumeroSesion() != null)
         {
