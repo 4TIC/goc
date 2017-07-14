@@ -114,6 +114,20 @@
         </div>
       </div>
 
+      <div class="nuevo-delegado" style="display: none;">
+        <input type="hidden" name="organoMiembroId" />
+        <p class="delegado-actual">Delegación de voto actual: <strong></strong> <button class="button small" name="borra-delegado">Borrar delegación de voto</button></p>
+        <p>Añadir una delegación de voto:</p>
+        <div class="header">
+          <input type="text" name="query-persona" /><button class="button" name="busca-persona">Buscar</button>
+        </div>
+        <ul class="resultados">
+        </ul>
+        <div class="footer">
+          <button class="button" name="add-delegado">Añadir delegación de voto</button>
+        </div>
+      </div>
+
       <div class="nuevo-comentario" style="display: none;">
         <p>Añadir un comentario:</p>
         <input type="hidden" name="reunionId" th:value="${reunion.id}" />

@@ -60,6 +60,15 @@ public class OrganoReunionMiembro implements Serializable
     @Column(name = "ASISTENCIA_CONFIRMADA")
     private Boolean asistenciaConfirmada;
 
+    @Column(name = "DELEGADO_ID")
+    private Long delegadoId;
+
+    @Column(name = "DELEGADO_NOMBRE")
+    private String delegadoNombre;
+
+    @Column(name = "DELEGADO_EMAIL")
+    private String delegadoEmail;
+
     @ManyToOne
     @JoinColumn(name = "ORGANO_REUNION_ID")
     private OrganoReunion organoReunion;
@@ -236,5 +245,35 @@ public class OrganoReunionMiembro implements Serializable
     public void setCargoNombreAlternativo(String cargoNombreAlternativo)
     {
         this.cargoNombreAlternativo = cargoNombreAlternativo;
+    }
+
+    public Long getDelegadoId()
+    {
+        return delegadoId;
+    }
+
+    public void setDelegadoId(Long delegadoId)
+    {
+        this.delegadoId = delegadoId;
+    }
+
+    public String getDelegadoNombre()
+    {
+        return delegadoNombre;
+    }
+
+    public void setDelegadoNombre(String delegadoNombre)
+    {
+        this.delegadoNombre = delegadoNombre;
+    }
+
+    public String getDelegadoEmail()
+    {
+        return delegadoEmail;
+    }
+
+    public void setDelegadoEmail(String delegadoEmail)
+    {
+        this.delegadoEmail = delegadoEmail;
     }
 }
