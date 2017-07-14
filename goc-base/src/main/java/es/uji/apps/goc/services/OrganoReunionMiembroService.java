@@ -1,5 +1,10 @@
 package es.uji.apps.goc.services;
 
+import es.uji.apps.goc.dao.ReunionDAO;
+import es.uji.apps.goc.dto.Reunion;
+import es.uji.apps.goc.exceptions.NotificacionesException;
+import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
+import es.uji.apps.goc.notifications.AvisosReunion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -30,9 +35,15 @@ public class OrganoReunionMiembroService
     @Autowired
     private OrganoReunionDAO organoReunionDAO;
 
+    @Autowired
+    private ReunionDAO reunionDAO;
+
+    @Autowired
+    private AvisosReunion avisosReunion;
+
     public void updateOrganoReunionMiembrosDesdeOrganosUI(List<UIEntity> organosUI, Long reunionId,
             Long connectedUserId)
-            throws MiembrosExternosException
+            throws MiembrosExternosException, NotificacionesException, ReunionNoDisponibleException
     {
         if (organosUI != null)
         {
@@ -66,6 +77,7 @@ public class OrganoReunionMiembroService
 
     @Transactional
     private void updateOrganoReunionMiembrosDesdeOrganoUI(UIEntity organoUI, Long reunionId)
+            throws MiembrosExternosException, ReunionNoDisponibleException, NotificacionesException
     {
         List<UIEntity> miembrosUI = organoUI.getRelations().get("miembros");
         String organoId = organoUI.get("id");
@@ -78,6 +90,7 @@ public class OrganoReunionMiembroService
 
         for (UIEntity miembroUI : miembrosUI)
         {
+            String email = miembroUI.get("email");
             Long suplenteId = Long.parseLong(miembroUI.get("suplenteId"));
             String suplenteNombre = miembroUI.get("suplenteNombre");
             String suplenteEmail = miembroUI.get("suplenteEmail");
@@ -86,7 +99,14 @@ public class OrganoReunionMiembroService
                 suplenteId = null;
             }
             Boolean asistencia = new Boolean(miembroUI.get("asistencia"));
-            String email = miembroUI.get("email");
+
+            OrganoReunionMiembro miembroGuardado =
+                    organoReunionMiembroDAO.getByReunionAndOrganoAndEmail(reunionId, organoId, externo, email);
+
+            if (miembroGuardado != null && suplenteId != null && !suplenteId.equals(miembroGuardado.getSuplenteId()))
+            {
+                avisosReunion.enviaAvisoAltaSuplente(reunionId, suplenteEmail, miembroGuardado.getNombre(), miembroGuardado.getCargoNombre());
+            }
 
             organoReunionMiembroDAO.updateAsistenteReunionByEmail(reunionId, organoId, externo, email, asistencia,
                     suplenteId, suplenteNombre, suplenteEmail);
@@ -111,12 +131,15 @@ public class OrganoReunionMiembroService
     @Transactional
     public void estableceSuplente(Long reunionId, Long connectedUserId, Long suplenteId, String suplenteNombre,
             String suplenteEmail, Long organoMiembroId)
+            throws MiembrosExternosException, ReunionNoDisponibleException, NotificacionesException
     {
         OrganoReunionMiembro miembro = organoReunionMiembroDAO.getMiembroById(organoMiembroId);
 
         miembro.setSuplenteId(suplenteId);
         miembro.setSuplenteNombre(suplenteNombre);
         miembro.setSuplenteEmail(suplenteEmail);
+
+        avisosReunion.enviaAvisoAltaSuplente(reunionId, miembro.getSuplenteEmail(), miembro.getNombre(), miembro.getCargoNombre());
         organoReunionMiembroDAO.update(miembro);
     }
 

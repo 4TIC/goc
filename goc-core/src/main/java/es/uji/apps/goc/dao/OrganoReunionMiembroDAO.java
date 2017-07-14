@@ -122,4 +122,20 @@ public class OrganoReunionMiembroDAO extends BaseDAODatabaseImpl
                 .orderBy(qOrganoReunionMiembro.nombre.asc())
                 .list(qOrganoReunionMiembro);
     }
+
+    public OrganoReunionMiembro getByReunionAndOrganoAndEmail(Long reunionId, String organoId, Boolean externo, String email)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        List<OrganoReunionMiembro> miembros = query.from(qOrganoReunionMiembro)
+                .where(qOrganoReunionMiembro.email.eq(email)
+                        .and(qOrganoReunionMiembro.reunionId.eq(reunionId)
+                                .and(qOrganoReunionMiembro.organoId.eq(organoId)
+                                        .and(qOrganoReunionMiembro.organoExterno.eq(externo)))))
+                .list(qOrganoReunionMiembro);
+
+        if (miembros.size() == 0) return null;
+
+        return miembros.get(0);
+    }
 }

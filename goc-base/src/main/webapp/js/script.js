@@ -137,9 +137,11 @@ $(function()
         var data = {
             suplenteId : suplente.children('input[type=radio]').val(),
             suplenteNombre : suplente.children('label[for=suplenteNombre]').html(),
-            suplenteEmail : suplente.children('label').next('label[for=suplenteEmail]').html(),
+            suplenteEmail : suplente.children('label[for=suplenteEmail]').html(),
             organoMiembroId : organoMiembroId
         };
+
+        console.log(data);
 
         $.ajax({
             type : "POST",

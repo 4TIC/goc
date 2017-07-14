@@ -21,6 +21,7 @@ import org.thymeleaf.util.StringUtils;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -45,6 +46,53 @@ public class AvisosReunion
         this.reunionDAO = reunionDAO;
         this.organoReunionMiembroDAO = organoReunionMiembroDAO;
         this.notificacionesDAO = notificacionesDAO;
+    }
+
+    @Transactional
+    public void enviaAvisoAltaSuplente(Long reunionId, String emailSuplente, String miembroNombre, String miembroCargo)
+            throws ReunionNoDisponibleException, MiembrosExternosException, NotificacionesException
+    {
+        Reunion reunion = reunionDAO.getReunionById(reunionId);
+
+        if (emailSuplente == null) return;
+
+        String textoAux = "Heu estat dessignat com a suplent de " + miembroNombre + " (" + miembroCargo +")";
+
+        String asunto = "[GOC]";
+
+        asunto += " suplent en reunió " + getNombreOrganos(reunion);
+
+        if (reunion.getNumeroSesion() != null)
+        {
+            asunto += " n. " + reunion.getNumeroSesion();
+        }
+
+        SimpleDateFormat dataFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        asunto += " " + dataFormatter.format(reunion.getFecha());
+
+        buildAndSendMessageWithExtraText(reunion, Collections.singletonList(emailSuplente), asunto, textoAux);
+    }
+
+    @Transactional
+    public void enviaAvisoBajaSuplente(Reunion reunion, OrganoReunionMiembro organoReunionMiembro)
+            throws ReunionNoDisponibleException, MiembrosExternosException, NotificacionesException
+    {
+        String emailSuplente = obtenerMailAsistente(organoReunionMiembro);
+        String textoAux = "Heu estat donat de baixa com a suplent de " + organoReunionMiembro.getNombre() + " (" + organoReunionMiembro.getCargoNombre() +")";
+
+        String asunto = "[GOC]";
+
+        asunto += " baixa com a suplent en reunió " + getNombreOrganos(reunion);
+
+        if (reunion.getNumeroSesion() != null)
+        {
+            asunto += " n. " + reunion.getNumeroSesion();
+        }
+
+        SimpleDateFormat dataFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        asunto += " " + dataFormatter.format(reunion.getFecha());
+
+        buildAndSendMessageWithExtraText(reunion, Collections.singletonList(emailSuplente), asunto, textoAux);
     }
 
     @Transactional
@@ -103,7 +151,7 @@ public class AvisosReunion
         return true;
     }
 
-    private void buildAndSendMessage(Reunion reunion, List<String> miembros, String asunto)
+    private void buildAndSendMessageWithExtraText(Reunion reunion, List<String> miembros, String asunto, String textoAux)
             throws NotificacionesException
     {
         Mensaje mensaje = new Mensaje();
@@ -111,12 +159,18 @@ public class AvisosReunion
         mensaje.setContentType("text/html");
 
         ReunionFormatter formatter = new ReunionFormatter(reunion);
-        mensaje.setCuerpo(formatter.format(publicUrl));
+        mensaje.setCuerpo(formatter.format(publicUrl, textoAux));
         mensaje.setFrom(defaultSender);
         mensaje.setReplyTo(defaultSender);
         mensaje.setDestinos(miembros);
 
         notificacionesDAO.enviaNotificacion(mensaje);
+    }
+
+    private void buildAndSendMessage(Reunion reunion, List<String> miembros, String asunto)
+            throws NotificacionesException
+    {
+        buildAndSendMessageWithExtraText(reunion, miembros, asunto, null);
     }
 
     private List<String> getMiembros(Reunion reunion, Boolean confirmados)

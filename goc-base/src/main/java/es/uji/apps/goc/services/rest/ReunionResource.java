@@ -152,7 +152,8 @@ public class ReunionResource extends CoreBaseService
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public void establecerSuplente(@PathParam("reunionId") Long reunionId, UIEntity suplente)
-            throws AsistenteNoEncontradoException, ReunionYaCompletadaException, ReunionNoAdmiteSuplenciaException
+            throws AsistenteNoEncontradoException, ReunionYaCompletadaException, ReunionNoAdmiteSuplenciaException,
+            MiembrosExternosException, ReunionNoDisponibleException, NotificacionesException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
         Long suplenteId = Long.parseLong(suplente.get("suplenteId"));
