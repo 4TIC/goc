@@ -47,6 +47,9 @@ public class ReunionFirma implements Serializable
     @JsonProperty("admite_suplencia")
     private Boolean admiteSuplencia;
 
+    @JsonProperty("admite_delegacion_voto")
+    private Boolean admiteDelegacionVoto;
+
     private Boolean completada;
 
     @JsonProperty("creador_nombre")
@@ -380,5 +383,15 @@ public class ReunionFirma implements Serializable
     public void setResponsableActaEmail(String responsableActaEmail)
     {
         this.responsableActaEmail = responsableActaEmail;
+    }
+
+    public Boolean getAdmiteDelegacionVoto()
+    {
+        return admiteDelegacionVoto;
+    }
+
+    public void setAdmiteDelegacionVoto(Boolean admiteDelegacionVoto)
+    {
+        this.admiteDelegacionVoto = admiteDelegacionVoto;
     }
 }

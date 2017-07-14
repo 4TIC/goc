@@ -147,15 +147,7 @@ formReunionItems.push({
                 disabled : '{reunion.completada}'
             },
             padding : '0 10 0 0'
-        }
-    ]
-});
-
-formReunionItems.push({
-    xtype : 'container',
-    fieldLabel : 'Número de sessió',
-    layout : 'hbox',
-    items : [
+        } ,
         {
             fieldLabel : appI18N.reuniones.numeroSesion,
             name : 'numeroSesion',
@@ -164,17 +156,37 @@ formReunionItems.push({
                 value : '{reunion.numeroSesion}',
                 disabled : '{reunion.completada}'
             },
-            width : 180
+            width : 180,
+            labelWidth : 140
+        }
+    ]
+});
+
+formReunionItems.push({
+    xtype : 'fieldcontainer',
+    fieldLabel : appI18N.reuniones.opciones,
+    layout : 'hbox',
+    items : [
+        {
+            boxLabel : appI18N.reuniones.admiteSuplencia,
+            name : 'admiteSuplencia',
+            bind : {
+                value : '{reunion.admiteSuplencia}',
+                disabled : '{reunion.completada}'
+            },
+            xtype : 'checkbox',
+            checked : true,
+            inputValue : '1'
         },
         {
             xtype : 'tbfill',
             flex : 1
         },
         {
-            boxLabel : appI18N.reuniones.admiteSuplencia,
-            name : 'admiteSuplencia',
+            boxLabel : appI18N.reuniones.admiteDelegacionVoto,
+            name : 'admiteDelegacionVoto',
             bind : {
-                value : '{reunion.admiteSuplencia}',
+                value : '{reunion.admiteDelegacionVoto}',
                 disabled : '{reunion.completada}'
             },
             xtype : 'checkbox',

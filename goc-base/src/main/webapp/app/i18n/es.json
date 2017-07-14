@@ -122,6 +122,7 @@
     "hora": "hora",
     "numeroSesion": "Número de sesión",
     "admiteSuplencia": "Admite suplencias",
+    "admiteDelegacionVoto": "Admite delegación de voto",
     "admiteComentarios": "Admite comentarios",
     "reunionPublica": "Reunión pública",
     "reunionTelematica": "Reunión telemática",
@@ -188,7 +189,8 @@
     "suplenteNoTendraEfecto": "Hay un suplente definido, pero éste NO se tendrá en cuenta si se selecciona no asistir a la reunión. ¿deseas continuar igualmente?",
     "suplenteNoTendraEfectoAviso": "Hay un suplente definido, pero éste NO se tendrá en cuenta si se selecciona no asistir a la reunión",
     "borrarAsistencia": "Quitar asistencia",
-    "noAddSuplentePorqueNoAsiste": "No se puede añadir un suplente porque no asistirá a la reunión"
+    "noAddSuplentePorqueNoAsiste": "No se puede añadir un suplente porque no asistirá a la reunión",
+    "opciones": "Opciones"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Histórico de reuniones",

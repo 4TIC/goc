@@ -252,6 +252,41 @@
 <ownDataTypeParameters>400 BYTE,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="DELEGADO_VOTO_ID" id="755E55CF-1631-E72E-84DC-D9B83DE6DEF7">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-07-14 12:00:27 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DELEGADO_VOTO_NOMBRE" id="0AD5A895-DB7F-22B3-D03F-B73CFCF4D8F1">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-07-14 12:00:27 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1000</dataTypeSize>
+<ownDataTypeParameters>1000,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DELEGADO_VOTO_EMAIL" id="9166F0AF-4896-827B-05B0-AA99F0F9267C">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-07-14 12:00:27 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="E75BA17D-6D5E-5C6B-3B0F-30252D3EEE25" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_ORGANOS_REUNIONES_MIEMBROS_PK">

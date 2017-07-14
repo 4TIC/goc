@@ -57,6 +57,7 @@ Ext.define('goc.view.reunion.FormReunionController', {
                     reunionId : reunionId,
                     reunionCompletada : reunionId ? reunion.get('completada') : false,
                     admiteSuplencia : formData.admiteSuplencia ? true : false,
+                    admiteDelegacionVoto : formData.admiteDelegacionVoto ? true : false,
                     admiteComentarios : formData.admiteComentarios ? true : false,
                     organoId : organo.get('id'),
                     externo : organo.get('externo'),

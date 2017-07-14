@@ -41,6 +41,8 @@ public class ReunionTemplate implements Serializable
 
     private Boolean admiteSuplencia;
 
+    private Boolean admiteDelegacionVoto;
+
     private Boolean admiteComentarios;
 
     private String telematicaDescripcion;
@@ -401,5 +403,15 @@ public class ReunionTemplate implements Serializable
     public void setInvitados(List<InvitadoTemplate> invitados)
     {
         this.invitados = invitados;
+    }
+
+    public Boolean getAdmiteDelegacionVoto()
+    {
+        return admiteDelegacionVoto;
+    }
+
+    public void setAdmiteDelegacionVoto(Boolean admiteDelegacionVoto)
+    {
+        this.admiteDelegacionVoto = admiteDelegacionVoto;
     }
 }

@@ -218,6 +218,7 @@ public class ReunionResource extends CoreBaseService
         String telematicaDescripcion = reunionUI.get("telematicaDescripcion");
         String telematicaDescripcionAlternativa = reunionUI.get("telematicaDescripcionAlternativa");
         Boolean admiteSuplencia = new Boolean(reunionUI.get("admiteSuplencia"));
+        Boolean admiteDelegacionVoto = new Boolean(reunionUI.get("admiteDelegacionVoto"));
         Boolean admiteComentarios = new Boolean(reunionUI.get("admiteComentarios"));
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -253,7 +254,7 @@ public class ReunionResource extends CoreBaseService
                 reunionService.updateReunion(reunionId, asunto, asuntoAlternativo, descripcion, descripcionAlternativa,
                         duracion, fecha, fechaSegundaConvocatoria, ubicacion, ubicacionAlternativa, urlGrabacion,
                         numeroSesion, publica, telematica, telematicaDescripcion, telematicaDescripcionAlternativa,
-                        admiteSuplencia, admiteComentarios, connectedUserId);
+                        admiteSuplencia, admiteDelegacionVoto, admiteComentarios, connectedUserId);
 
         return UIEntity.toUI(reunion);
     }
@@ -299,6 +300,7 @@ public class ReunionResource extends CoreBaseService
 
         reunion.setPublica(new Boolean(reunionUI.get("publica")));
         reunion.setAdmiteSuplencia(new Boolean(reunionUI.get("admiteSuplencia")));
+        reunion.setAdmiteDelegacionVoto(new Boolean(reunionUI.get("admiteDelegacionVoto")));
         reunion.setAdmiteComentarios(new Boolean(reunionUI.get("admiteComentarios")));
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");

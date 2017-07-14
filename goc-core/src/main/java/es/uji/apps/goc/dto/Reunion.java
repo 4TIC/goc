@@ -70,6 +70,9 @@ public class Reunion implements Serializable
     @Column(name = "ADMITE_COMENTARIOS")
     private Boolean admiteComentarios;
 
+    @Column(name = "ADMITE_DELEGACION_VOTO")
+    private Boolean admiteDelegacionVoto;
+
     private Boolean telematica;
 
     @Column(name = "TELEMATICA_DESCRIPCION")
@@ -388,6 +391,16 @@ public class Reunion implements Serializable
     public void setAdmiteComentarios(Boolean admiteComentarios)
     {
         this.admiteComentarios = admiteComentarios;
+    }
+
+    public Boolean isAdmiteDelegacionVoto()
+    {
+        return admiteDelegacionVoto;
+    }
+
+    public void setAdmiteDelegacionVoto(Boolean admiteDelegacionVoto)
+    {
+        this.admiteDelegacionVoto = admiteDelegacionVoto;
     }
 
     public Date getFechaSegundaConvocatoria()

@@ -1,5 +1,6 @@
 package es.uji.apps.goc.services;
 
+import com.mysema.query.types.expr.BooleanExpression;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -121,7 +122,7 @@ public class ReunionService
             String descripcionAlternativa, Long duracion, Date fecha, Date fechaSegundaConvocatoria, String ubicacion,
             String ubicacionAlternativa, String urlGrabacion, Long numeroSesion, Boolean publica, Boolean telematica,
             String telematicaDescripcion, String telematicaDescripcionAlternativa, Boolean admiteSuplencia,
-            Boolean admiteComentarios, Long connectedUserId)
+            Boolean admiteDelegacionVoto, Boolean admiteComentarios, Long connectedUserId)
             throws ReunionNoDisponibleException
     {
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
@@ -147,6 +148,7 @@ public class ReunionService
         reunion.setTelematicaDescripcion(telematicaDescripcion);
         reunion.setTelematicaDescripcionAlternativa(telematicaDescripcionAlternativa);
         reunion.setAdmiteSuplencia(admiteSuplencia);
+        reunion.setAdmiteDelegacionVoto(admiteDelegacionVoto);
         reunion.setAdmiteComentarios(admiteComentarios);
 
         return reunionDAO.update(reunion);
@@ -370,6 +372,7 @@ public class ReunionService
         reunionFirma.setTelematicaDescripcion(reunion.getTelematicaDescripcion());
         reunionFirma.setTelematicaDescripcionAlternativa(reunion.getTelematicaDescripcionAlternativa());
         reunionFirma.setAdmiteSuplencia(reunion.isAdmiteSuplencia());
+        reunionFirma.setAdmiteDelegacionVoto(reunion.isAdmiteDelegacionVoto());
         reunionFirma.setCompletada(reunion.getCompletada());
         reunionFirma.setCreadorNombre(reunion.getCreadorNombre());
         reunionFirma.setCreadorEmail(reunion.getCreadorEmail());
@@ -568,6 +571,7 @@ public class ReunionService
         reunionTemplate.setTelematicaDescripcion(reunion.getTelematicaDescripcion());
         reunionTemplate.setTelematicaDescripcionAlternativa(reunion.getTelematicaDescripcionAlternativa());
         reunionTemplate.setAdmiteSuplencia(reunion.isAdmiteSuplencia());
+        reunionTemplate.setAdmiteDelegacionVoto(reunion.isAdmiteDelegacionVoto());
         reunionTemplate.setAdmiteComentarios(reunion.isAdmiteComentarios());
         reunionTemplate.setCompletada(reunion.getCompletada());
         reunionTemplate.setCreadorNombre(reunion.getCreadorNombre());

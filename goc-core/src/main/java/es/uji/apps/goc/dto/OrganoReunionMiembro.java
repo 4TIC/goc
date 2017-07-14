@@ -66,7 +66,7 @@ public class OrganoReunionMiembro implements Serializable
     @Column(name = "DELEGADO_VOTO_NOMBRE")
     private String delegadoVotoNombre;
 
-    @Column(name = "DELEGADOV_EMAIL")
+    @Column(name = "DELEGADO_VOTO_EMAIL")
     private String delegadoVotoEmail;
 
     @ManyToOne

@@ -512,6 +512,17 @@
 <ownDataTypeParameters>4000,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="ADMITE_DELEGACION_VOTO" id="19578113-0F8F-2D5D-6A2C-DE2B8105AB7D">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-07-14 12:17:09 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<ownDataTypeParameters>,1,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="E7E0C857-67B7-B381-7809-CCE9D0CA86E5" name="REUNIONES_PK">
