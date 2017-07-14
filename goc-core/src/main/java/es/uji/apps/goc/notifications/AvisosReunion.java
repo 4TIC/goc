@@ -54,7 +54,7 @@ public class AvisosReunion
     {
         Reunion reunion = reunionDAO.getReunionById(reunionId);
 
-        if (emailSuplente == null) return;
+        if (emailSuplente == null || emailSuplente.isEmpty()) return;
 
         String textoAux = "Heu estat dessignat com a suplent de " + miembroNombre + " (" + miembroCargo +")";
 
@@ -74,11 +74,14 @@ public class AvisosReunion
     }
 
     @Transactional
-    public void enviaAvisoBajaSuplente(Reunion reunion, OrganoReunionMiembro organoReunionMiembro)
+    public void enviaAvisoBajaSuplente(Long reunionId, String emailSuplente, String miembroNombre, String miembroCargo)
             throws ReunionNoDisponibleException, MiembrosExternosException, NotificacionesException
     {
-        String emailSuplente = obtenerMailAsistente(organoReunionMiembro);
-        String textoAux = "Heu estat donat de baixa com a suplent de " + organoReunionMiembro.getNombre() + " (" + organoReunionMiembro.getCargoNombre() +")";
+        Reunion reunion = reunionDAO.getReunionById(reunionId);
+
+        if (emailSuplente == null || emailSuplente.isEmpty()) return;
+
+        String textoAux = "Heu estat donat de baixa com a suplent de " + miembroNombre + " (" + miembroCargo +")";
 
         String asunto = "[GOC]";
 

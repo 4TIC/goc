@@ -172,7 +172,8 @@ public class ReunionResource extends CoreBaseService
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public void borraSuplente(@PathParam("reunionId") Long reunionId, UIEntity miembro)
-            throws ReunionYaCompletadaException, ReunionNoAdmiteSuplenciaException
+            throws ReunionYaCompletadaException, ReunionNoAdmiteSuplenciaException, MiembrosExternosException,
+            ReunionNoDisponibleException, NotificacionesException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
         Long miembroId = Long.parseLong(miembro.get("organoMiembroId"));

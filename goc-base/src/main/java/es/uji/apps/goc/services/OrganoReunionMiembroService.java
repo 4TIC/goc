@@ -108,6 +108,11 @@ public class OrganoReunionMiembroService
                 avisosReunion.enviaAvisoAltaSuplente(reunionId, suplenteEmail, miembroGuardado.getNombre(), miembroGuardado.getCargoNombre());
             }
 
+            if (miembroGuardado != null && suplenteId == null && miembroGuardado.getSuplenteId() != null)
+            {
+                avisosReunion.enviaAvisoBajaSuplente(reunionId, miembroGuardado.getSuplenteEmail(), miembroGuardado.getNombre(), miembroGuardado.getCargoNombre());
+            }
+
             organoReunionMiembroDAO.updateAsistenteReunionByEmail(reunionId, organoId, externo, email, asistencia,
                     suplenteId, suplenteNombre, suplenteEmail);
         }
@@ -145,11 +150,15 @@ public class OrganoReunionMiembroService
 
     @Transactional
     public void borraSuplente(Long reunionId, Long miembroId, Long connectedUserId)
+            throws MiembrosExternosException, ReunionNoDisponibleException, NotificacionesException
     {
         OrganoReunionMiembro miembro = organoReunionMiembroDAO.getMiembroById(miembroId);
+        avisosReunion.enviaAvisoBajaSuplente(reunionId, miembro.getSuplenteEmail(), miembro.getNombre(), miembro.getCargoNombre());
+
         miembro.setSuplenteId(null);
         miembro.setSuplenteNombre(null);
         miembro.setSuplenteEmail(null);
+
         organoReunionMiembroDAO.update(miembro);
     }
 
