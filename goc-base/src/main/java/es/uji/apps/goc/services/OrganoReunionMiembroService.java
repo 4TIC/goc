@@ -103,20 +103,14 @@ public class OrganoReunionMiembroService
             OrganoReunionMiembro miembroGuardado =
                     organoReunionMiembroDAO.getByReunionAndOrganoAndEmail(reunionId, organoId, externo, email);
 
-            if (miembroGuardado != null && suplenteId != null && !suplenteId.equals(miembroGuardado.getSuplenteId()))
-            {
-                avisosReunion.enviaAvisoAltaSuplente(reunionId, suplenteEmail, miembroGuardado.getNombre(), miembroGuardado.getCargoNombre());
-            }
-
-            if (miembroGuardado != null && suplenteId == null && miembroGuardado.getSuplenteId() != null)
-            {
-                avisosReunion.enviaAvisoBajaSuplente(reunionId, miembroGuardado.getSuplenteEmail(), miembroGuardado.getNombre(), miembroGuardado.getCargoNombre());
-            }
+            enviaMailSuplente(reunionId, suplenteId, suplenteEmail, miembroGuardado);
 
             organoReunionMiembroDAO.updateAsistenteReunionByEmail(reunionId, organoId, externo, email, asistencia,
                     suplenteId, suplenteNombre, suplenteEmail);
         }
     }
+
+
 
     @Transactional
     public void estableceAsistencia(Long reunionId, Long connectedUserId, Boolean asistencia)
@@ -140,11 +134,12 @@ public class OrganoReunionMiembroService
     {
         OrganoReunionMiembro miembro = organoReunionMiembroDAO.getMiembroById(organoMiembroId);
 
+        enviaMailSuplente(reunionId, suplenteId, suplenteEmail, miembro);
+
         miembro.setSuplenteId(suplenteId);
         miembro.setSuplenteNombre(suplenteNombre);
         miembro.setSuplenteEmail(suplenteEmail);
 
-        avisosReunion.enviaAvisoAltaSuplente(reunionId, miembro.getSuplenteEmail(), miembro.getNombre(), miembro.getCargoNombre());
         organoReunionMiembroDAO.update(miembro);
     }
 
@@ -153,7 +148,8 @@ public class OrganoReunionMiembroService
             throws MiembrosExternosException, ReunionNoDisponibleException, NotificacionesException
     {
         OrganoReunionMiembro miembro = organoReunionMiembroDAO.getMiembroById(miembroId);
-        avisosReunion.enviaAvisoBajaSuplente(reunionId, miembro.getSuplenteEmail(), miembro.getNombre(), miembro.getCargoNombre());
+
+        enviaMailSuplente(reunionId, null,null, miembro);
 
         miembro.setSuplenteId(null);
         miembro.setSuplenteNombre(null);
@@ -173,5 +169,30 @@ public class OrganoReunionMiembroService
         }
 
         return false;
+    }
+
+    private void enviaMailSuplente(Long reunionId, Long suplenteId, String suplenteEmail,
+            OrganoReunionMiembro miembroGuardado)
+            throws ReunionNoDisponibleException, MiembrosExternosException, NotificacionesException
+    {
+        if (miembroGuardado == null) return;
+
+        if (suplenteId != null && !suplenteId.equals(miembroGuardado.getSuplenteId()))
+        {
+            avisosReunion.enviaAvisoAltaSuplente(reunionId, suplenteEmail, miembroGuardado.getNombre(),
+                    miembroGuardado.getCargoNombre());
+
+            if (miembroGuardado.getSuplenteId() != null)
+            {
+                avisosReunion.enviaAvisoBajaSuplente(reunionId, miembroGuardado.getSuplenteEmail(),
+                        miembroGuardado.getNombre(), miembroGuardado.getCargoNombre());
+            }
+        }
+
+        if (suplenteId == null && miembroGuardado.getSuplenteId() != null)
+        {
+            avisosReunion.enviaAvisoBajaSuplente(reunionId, miembroGuardado.getSuplenteEmail(),
+                    miembroGuardado.getNombre(), miembroGuardado.getCargoNombre());
+        }
     }
 }
