@@ -88,6 +88,7 @@
         <fo:block margin-left="1cm" space-after="0.5cm" th:each="miembro : ${organo.asistentes}">
           <fo:block th:text="${miembro.cargo.nombreAlternativo} + ' - ' + ${miembro.nombre} + ' (' + ${miembro.email} + ') '"></fo:block>
           <fo:block font-size="10pt" th:if="${miembro.suplente}" th:text="'Assisteix com a suplent ' + ${miembro.suplente}"></fo:block>
+          <fo:block font-size="10pt" th:if="${not #lists.isEmpty(miembro.delegacionesDeVoto)}" th:text="${'Delegació de vot de: ' + miembro.nombresDelegacionesDeVoto}"></fo:block>
         </fo:block>
       </fo:block>
 
