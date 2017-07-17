@@ -1,5 +1,10 @@
 package es.uji.apps.goc.dto;
+
 import es.uji.apps.goc.model.Cargo;
+import org.thymeleaf.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MiembroFirma
 {
@@ -16,6 +21,9 @@ public class MiembroFirma
     private Long delegadoVotoId;
 
     private Cargo cargo;
+
+    private List<String> delegacionesDeVoto;
+    private String nombresDelegacionesDeVoto;
 
     public String getId()
     {
@@ -110,4 +118,44 @@ public class MiembroFirma
     {
         this.delegadoVotoId = delegadoVotoId;
     }
+
+    public List<String> getDelegacionesDeVoto()
+    {
+        return delegacionesDeVoto;
+    }
+
+    public void setDelegacionesDeVoto(List<String> delegacionesDeVoto)
+    {
+        this.delegacionesDeVoto = delegacionesDeVoto;
+    }
+
+    public void addDelegacionDeVoto(String delegadoVoto)
+    {
+        if (this.delegacionesDeVoto == null) delegacionesDeVoto = new ArrayList<>();
+
+        delegacionesDeVoto.add(delegadoVoto);
+    }
+
+    public String getNombresDelegacionesDeVoto()
+    {
+        return nombresDelegacionesDeVoto;
+    }
+
+    public void setNombresDelegacionesDeVoto(String nombresDelegacionesDeVoto)
+    {
+        this.nombresDelegacionesDeVoto = nombresDelegacionesDeVoto;
+    }
+
+    public void buildNombresDelegacionesDeVoto()
+    {
+        if (this.delegacionesDeVoto == null || this.delegacionesDeVoto.isEmpty())
+        {
+            nombresDelegacionesDeVoto = "";
+            return;
+        }
+
+        nombresDelegacionesDeVoto = StringUtils.join(this.delegacionesDeVoto, ", ");
+    }
 }
+
+

@@ -730,13 +730,17 @@ public class ReunionService
                 organoReunionMiembroDAO.getAsistenteReunionByOrganoAndReunionId(organo.getId(), organo.isExterno(),
                         reunion.getId());
 
-        organoFirma.setAsistentes(getAsistentesFirmaDesdeListaOrganoReunionMiembro(listaAsistentes));
+        List<OrganoReunionMiembro> listaMiembros =
+                organoReunionMiembroDAO.getMiembroReunionByOrganoAndReunionId(organo.getId(), organo.isExterno(),
+                        reunion.getId());
+
+        organoFirma.setAsistentes(getAsistentesFirmaDesdeListaOrganoReunionMiembro(listaAsistentes, listaMiembros));
 
         return organoFirma;
     }
 
     private List<MiembroFirma> getAsistentesFirmaDesdeListaOrganoReunionMiembro(
-            List<OrganoReunionMiembro> listaAsistentes)
+            List<OrganoReunionMiembro> listaAsistentes, List<OrganoReunionMiembro> listaMiembros)
     {
         List<MiembroFirma> listaMiembroFirma = new ArrayList<>();
 
@@ -744,7 +748,28 @@ public class ReunionService
         {
             listaMiembroFirma.add(getAsistenteFirmaDesdeOrganoReunionMiembro(organoReunionMiembro));
         }
+
+        for (MiembroFirma miembroFirma : listaMiembroFirma)
+        {
+            setDelegacionDeVotoToFirma(miembroFirma, listaMiembros);
+        }
+
         return listaMiembroFirma;
+    }
+
+    private void setDelegacionDeVotoToFirma(MiembroFirma miembroFirma, List<OrganoReunionMiembro> miembros)
+    {
+        for (OrganoReunionMiembro miembro : miembros)
+        {
+            if (miembro.getDelegadoVotoId() != null && miembroFirma.getId()
+                    .equals(miembro.getDelegadoVotoId().toString()) && !(miembroFirma.getId()
+                    .equals(miembro.getMiembroId())))
+            {
+                miembroFirma.addDelegacionDeVoto(miembro.getNombre());
+            }
+        }
+
+        miembroFirma.buildNombresDelegacionesDeVoto();
     }
 
     private MiembroFirma getAsistenteFirmaDesdeOrganoReunionMiembro(OrganoReunionMiembro organoReunionMiembro)
@@ -781,13 +806,13 @@ public class ReunionService
 
         for (MiembroTemplate miembroTemplate : listaMiembroTemplate)
         {
-            setDelegacionDeVoto(miembroTemplate, listaMiembros);
+            setDelegacionDeVotoToPlantilla(miembroTemplate, listaMiembros);
         }
 
         return listaMiembroTemplate;
     }
 
-    private void setDelegacionDeVoto(MiembroTemplate miembroTemplate, List<OrganoReunionMiembro> miembros)
+    private void setDelegacionDeVotoToPlantilla(MiembroTemplate miembroTemplate, List<OrganoReunionMiembro> miembros)
     {
         for (OrganoReunionMiembro miembro : miembros)
         {
