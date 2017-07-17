@@ -1,6 +1,10 @@
 package es.uji.apps.goc.dto;
 
 import es.uji.apps.goc.model.Cargo;
+import org.thymeleaf.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MiembroTemplate
 {
@@ -20,6 +24,8 @@ public class MiembroTemplate
     private Boolean asistencia;
 
     private Cargo cargo;
+
+    private List<String> delegacionesDeVoto;
 
     public String getId()
     {
@@ -133,5 +139,29 @@ public class MiembroTemplate
     public void setDelegadoVotoId(Long delegadoVotoId)
     {
         this.delegadoVotoId = delegadoVotoId;
+    }
+
+    public List<String> getDelegacionesDeVoto()
+    {
+        return delegacionesDeVoto;
+    }
+
+    public void setDelegacionesDeVoto(List<String> delegacionesDeVoto)
+    {
+        this.delegacionesDeVoto = delegacionesDeVoto;
+    }
+
+    public void addDelegacionDeVoto(String delegadoVoto)
+    {
+        if (this.delegacionesDeVoto == null) delegacionesDeVoto = new ArrayList<>();
+
+        delegacionesDeVoto.add(delegadoVoto);
+    }
+
+    public String getNombresDelegacionesDeVoto()
+    {
+        if (this.delegacionesDeVoto == null || this.delegacionesDeVoto.isEmpty()) return "";
+
+        return StringUtils.join(this.delegacionesDeVoto, ", ");
     }
 }

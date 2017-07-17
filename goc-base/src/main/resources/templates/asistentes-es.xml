@@ -95,6 +95,7 @@
             <fo:table-row th:each="asistente: ${organo.asistentes}" height="1.4cm" keep-together.within-column="always">
               <fo:table-cell border="solid" border-width="0.01cm" padding="0.10cm" number-rows-spanned="1" number-columns-spanned="1" display-align="center">
                 <fo:block th:text="${asistente.suplente} ? ${asistente.suplente} : ${asistente.nombre}" font-family="sans-serif" font-size="10pt" color="black" font-weight="normal" font-style="normal" text-align="start" space-after="0.00cm" space-before="0.00cm">Alcañiz Garcia, Marina</fo:block>
+                <fo:block th:if="${not #lists.isEmpty(asistente.delegacionesDeVoto)}" th:text="${'Delegación de voto de: ' + asistente.nombresDelegacionesDeVoto}" font-family="sans-serif" font-size="9pt" color="black" font-weight="normal" font-style="italic" text-align="start" space-after="0.00cm" space-before="0.00cm" margin-left="0.20cm">Alcañiz Garcia, Marina</fo:block>
               </fo:table-cell>
               <fo:table-cell border="solid" border-width="0.01cm" padding="0.10cm" number-rows-spanned="1" number-columns-spanned="1" display-align="center">
                 <fo:block th:text="${asistente.cargo.nombre}" font-family="sans-serif" font-size="10pt" color="black" font-weight="normal" font-style="normal" text-align="start" space-after="0.00cm" space-before="0.00cm">35605505X</fo:block>

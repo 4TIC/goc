@@ -685,12 +685,12 @@ public class ReunionService
         organoTemplate.setTipoOrganoId(organo.getTipoOrgano().getId());
 
         List<OrganoReunionMiembro> listaAsistentes;
+        List<OrganoReunionMiembro> listaMiembros = organoReunionMiembroDAO.getMiembroReunionByOrganoAndReunionId(organo.getId(), organo.isExterno(),
+                reunion.getId());
 
         if (withNoAsistentes)
         {
-            listaAsistentes =
-                    organoReunionMiembroDAO.getMiembroReunionByOrganoAndReunionId(organo.getId(), organo.isExterno(),
-                            reunion.getId());
+            listaAsistentes = listaMiembros;
         }
         else
         {
@@ -699,7 +699,7 @@ public class ReunionService
                             reunion.getId());
         }
 
-        organoTemplate.setAsistentes(getAsistentesDesdeListaOrganoReunionMiembro(listaAsistentes));
+        organoTemplate.setAsistentes(getAsistentesDesdeListaOrganoReunionMiembro(listaAsistentes, listaMiembros));
         return organoTemplate;
     }
 
@@ -770,7 +770,7 @@ public class ReunionService
     }
 
     private List<MiembroTemplate> getAsistentesDesdeListaOrganoReunionMiembro(
-            List<OrganoReunionMiembro> listaAsistentes)
+            List<OrganoReunionMiembro> listaAsistentes, List<OrganoReunionMiembro> listaMiembros)
     {
         List<MiembroTemplate> listaMiembroTemplate = new ArrayList<>();
 
@@ -779,7 +779,25 @@ public class ReunionService
             listaMiembroTemplate.add(getAsistenteDesdeOrganoReunionMiembro(organoReunionMiembro));
         }
 
+        for (MiembroTemplate miembroTemplate : listaMiembroTemplate)
+        {
+            setDelegacionDeVoto(miembroTemplate, listaMiembros);
+        }
+
         return listaMiembroTemplate;
+    }
+
+    private void setDelegacionDeVoto(MiembroTemplate miembroTemplate, List<OrganoReunionMiembro> miembros)
+    {
+        for (OrganoReunionMiembro miembro : miembros)
+        {
+            if (miembro.getDelegadoVotoId() != null && miembroTemplate.getMiembroId()
+                    .equals(miembro.getDelegadoVotoId().toString()) && !(miembroTemplate.getMiembroId()
+                    .equals(miembro.getMiembroId())))
+            {
+                miembroTemplate.addDelegacionDeVoto(miembro.getNombre());
+            }
+        }
     }
 
     private MiembroTemplate getAsistenteDesdeOrganoReunionMiembro(OrganoReunionMiembro organoReunionMiembro)
