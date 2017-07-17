@@ -12,6 +12,8 @@ public class MiembroTemplate
 
     private String suplente;
     private Long suplenteId;
+    private String delegadoVoto;
+    private Long delegadoVotoId;
     private String miembroId;
 
     private Boolean asistenciaConfirmada;
@@ -111,5 +113,25 @@ public class MiembroTemplate
     public void setAsistencia(Boolean asistencia)
     {
         this.asistencia = asistencia;
+    }
+
+    public String getDelegadoVoto()
+    {
+        return delegadoVoto;
+    }
+
+    public void setDelegadoVoto(String delegadoVoto)
+    {
+        this.delegadoVoto = delegadoVoto;
+    }
+
+    public Long getDelegadoVotoId()
+    {
+        return delegadoVotoId;
+    }
+
+    public void setDelegadoVotoId(Long delegadoVotoId)
+    {
+        this.delegadoVotoId = delegadoVotoId;
     }
 }

@@ -12,6 +12,8 @@ public class MiembroFirma
     private String suplente;
     private Long suplenteId;
     private Boolean asistenciaConfirmada;
+    private String delegadoVoto;
+    private Long delegadoVotoId;
 
     private Cargo cargo;
 
@@ -87,5 +89,25 @@ public class MiembroFirma
     public void setAsistenciaConfirmada(Boolean asistenciaConfirmada)
     {
         this.asistenciaConfirmada = asistenciaConfirmada;
+    }
+
+    public String getDelegadoVoto()
+    {
+        return delegadoVoto;
+    }
+
+    public void setDelegadoVoto(String delegadoVoto)
+    {
+        this.delegadoVoto = delegadoVoto;
+    }
+
+    public Long getDelegadoVotoId()
+    {
+        return delegadoVotoId;
+    }
+
+    public void setDelegadoVotoId(Long delegadoVotoId)
+    {
+        this.delegadoVotoId = delegadoVotoId;
     }
 }

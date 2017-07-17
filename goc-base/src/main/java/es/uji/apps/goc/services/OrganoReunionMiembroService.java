@@ -1,10 +1,17 @@
 package es.uji.apps.goc.services;
 
+import es.uji.apps.goc.dao.OrganoReunionDAO;
+import es.uji.apps.goc.dao.OrganoReunionMiembroDAO;
 import es.uji.apps.goc.dao.ReunionDAO;
-import es.uji.apps.goc.dto.Reunion;
+import es.uji.apps.goc.dto.OrganoReunion;
+import es.uji.apps.goc.dto.OrganoReunionMiembro;
+import es.uji.apps.goc.exceptions.AsistenteNoEncontradoException;
+import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.exceptions.NotificacionesException;
 import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
+import es.uji.apps.goc.model.Miembro;
 import es.uji.apps.goc.notifications.AvisosReunion;
+import es.uji.commons.rest.UIEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -12,15 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import es.uji.apps.goc.dao.OrganoReunionDAO;
-import es.uji.apps.goc.dao.OrganoReunionMiembroDAO;
-import es.uji.apps.goc.dto.OrganoReunion;
-import es.uji.apps.goc.dto.OrganoReunionMiembro;
-import es.uji.apps.goc.exceptions.AsistenteNoEncontradoException;
-import es.uji.apps.goc.exceptions.MiembrosExternosException;
-import es.uji.apps.goc.model.Miembro;
-import es.uji.commons.rest.UIEntity;
 
 @Service
 @Component
@@ -111,7 +109,6 @@ public class OrganoReunionMiembroService
     }
 
 
-
     @Transactional
     public void estableceAsistencia(Long reunionId, Long connectedUserId, Boolean asistencia)
             throws AsistenteNoEncontradoException
@@ -144,16 +141,47 @@ public class OrganoReunionMiembroService
     }
 
     @Transactional
+    public void estableceDelegadoVoto(Long reunionId, Long connectedUserId, Long delegadoVotoId,
+            String delegadoVotoNombre, String delegadoVotoEmail, Long organoMiembroId)
+            throws MiembrosExternosException, ReunionNoDisponibleException, NotificacionesException
+    {
+        OrganoReunionMiembro miembro = organoReunionMiembroDAO.getMiembroById(organoMiembroId);
+
+        enviaMailDelegadoVoto(reunionId, delegadoVotoId, delegadoVotoEmail, miembro);
+
+        miembro.setDelegadoVotoId(delegadoVotoId);
+        miembro.setDelegadoVotoEmail(delegadoVotoEmail);
+        miembro.setDelegadoVotoNombre(delegadoVotoNombre);
+
+        organoReunionMiembroDAO.update(miembro);
+    }
+
+    @Transactional
     public void borraSuplente(Long reunionId, Long miembroId, Long connectedUserId)
             throws MiembrosExternosException, ReunionNoDisponibleException, NotificacionesException
     {
         OrganoReunionMiembro miembro = organoReunionMiembroDAO.getMiembroById(miembroId);
 
-        enviaMailSuplente(reunionId, null,null, miembro);
+        enviaMailSuplente(reunionId, null, null, miembro);
 
         miembro.setSuplenteId(null);
         miembro.setSuplenteNombre(null);
         miembro.setSuplenteEmail(null);
+
+        organoReunionMiembroDAO.update(miembro);
+    }
+
+    @Transactional
+    public void borraDelegadoVoto(Long reunionId, Long miembroId, Long connectedUserId)
+            throws MiembrosExternosException, ReunionNoDisponibleException, NotificacionesException
+    {
+        OrganoReunionMiembro miembro = organoReunionMiembroDAO.getMiembroById(miembroId);
+
+        enviaMailDelegadoVoto(reunionId, null, null, miembro);
+
+        miembro.setDelegadoVotoId(null);
+        miembro.setDelegadoVotoEmail(null);
+        miembro.setDelegadoVotoNombre(null);
 
         organoReunionMiembroDAO.update(miembro);
     }
@@ -192,6 +220,31 @@ public class OrganoReunionMiembroService
         if (suplenteId == null && miembroGuardado.getSuplenteId() != null)
         {
             avisosReunion.enviaAvisoBajaSuplente(reunionId, miembroGuardado.getSuplenteEmail(),
+                    miembroGuardado.getNombre(), miembroGuardado.getCargoNombre());
+        }
+    }
+
+    private void enviaMailDelegadoVoto(Long reunionId, Long delegadoVotoId, String delegadoVotoEmail,
+            OrganoReunionMiembro miembroGuardado)
+            throws MiembrosExternosException, ReunionNoDisponibleException, NotificacionesException
+    {
+        if (miembroGuardado == null) return;
+
+        if (delegadoVotoId != null && !delegadoVotoId.equals(miembroGuardado.getDelegadoVotoId()))
+        {
+            avisosReunion.enviaAvisoAltaDelegacionVoto(reunionId, delegadoVotoEmail, miembroGuardado.getNombre(),
+                    miembroGuardado.getCargoNombre());
+
+            if (miembroGuardado.getDelegadoVotoId() != null)
+            {
+                avisosReunion.enviaAvisoBajaDelegacionVoto(reunionId, miembroGuardado.getDelegadoVotoEmail(),
+                        miembroGuardado.getNombre(), miembroGuardado.getCargoNombre());
+            }
+        }
+
+        if (delegadoVotoId == null && miembroGuardado.getDelegadoVotoId() != null)
+        {
+            avisosReunion.enviaAvisoBajaDelegacionVoto(reunionId, miembroGuardado.getDelegadoVotoEmail(),
                     miembroGuardado.getNombre(), miembroGuardado.getCargoNombre());
         }
     }

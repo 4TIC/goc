@@ -37,21 +37,21 @@ $(function()
         });
     }
 
-    function loadResultadosBusquedaPersonas(result)
+    function loadResultadosBusquedaPersonas(result, clase, nombre)
     {
         var items = [];
-        $('div.nuevo-suplente .footer button').show();
+        $('div.' + clase + ' .footer button').show();
 
         for (var i = 0; i < result.data.length; i++)
         {
             var persona = result.data[i];
-            items.push('<li><input type="radio" value="' + persona.id + '"/> <label style="display: inline; margin-right: 0px;" for="suplenteNombre">' + persona.nombre + '</label> <span style="display: inline">(</span><label style="display: inline" for="suplenteEmail">' + persona.email + '</label><span style="display: inline">)</span></li>')
+            items.push('<li><input type="radio" value="' + persona.id + '"/> <label style="display: inline; margin-right: 0px;" for="' + nombre + 'Nombre">' + persona.nombre + '</label> <span style="display: inline">(</span><label style="display: inline" for="' + nombre + 'Email">' + persona.email + '</label><span style="display: inline">)</span></li>')
         }
 
-        $('div.nuevo-suplente ul.resultados').html(items.join('\n'));
+        $('div.' + clase + ' ul.resultados').html(items.join('\n'));
     }
 
-    function buscaPersona(query)
+    function buscaPersona(query, clase, nombre)
     {
         $.ajax({
             type : "GET",
@@ -61,7 +61,7 @@ $(function()
             dataType : "json",
             success : function(result)
             {
-                loadResultadosBusquedaPersonas(result)
+                loadResultadosBusquedaPersonas(result, clase, nombre)
             }
         });
     }
@@ -87,17 +87,38 @@ $(function()
         $('div.nuevo-suplente').modal();
     });
 
-    $('input[name=query-persona]').keypress(function(e)
+    $('button[name=delegado-voto]').on('click', function(ev)
+    {
+        $('div.nuevo-delegado-voto input[name=organoMiembroId]').val($(this).data('miembroid'));
+
+        var delegadoVoto = $(this).data('delegadoVoto');
+
+        if (delegadoVoto)
+        {
+            $('div.nuevo-delegado-voto p.delegado-voto-actual').show();
+            $('div.nuevo-delegado-voto p.delegado-voto-actual > strong').html(delegadoVoto);
+        } else
+        {
+            $('div.nuevo-delegado-voto p.delegado-voto-actual').hide();
+        }
+
+        $('div.nuevo-delegado-voto .header input[name=query-persona]').val('');
+        $('div.nuevo-delegado-voto .footer button').hide();
+        $('div.nuevo-delegado-voto ul.resultados').html('');
+        $('div.nuevo-delegado-voto').modal();
+    });
+
+    $('div.nuevo-suplente input[name=query-persona]').keypress(function(e)
     {
         if (e.which == 13)
         {
-            buscaPersona($('input[name=query-persona]').val());
+            buscaPersona($('div.nuevo-suplente input[name=query-persona]').val(), 'nuevo-suplente', 'suplente');
         }
     });
 
-    $('button[name=busca-persona]').on('click', function(ev)
+    $('div.nuevo-suplente button[name=busca-persona]').on('click', function(ev)
     {
-        buscaPersona($('input[name=query-persona]').val());
+        buscaPersona($('div.nuevo-suplente input[name=query-persona]').val(), 'nuevo-suplente', 'suplente');
     });
 
     $('button[name=borra-suplente]').on('click', function(ev)
@@ -110,6 +131,29 @@ $(function()
         borraSuplente($(this).attr('data-miembroid'));
     });
 
+    $('div.nuevo-delegado-voto input[name=query-persona]').keypress(function(e)
+    {
+        if (e.which == 13)
+        {
+            buscaPersona($('div.nuevo-delegado-voto input[name=query-persona]').val(), 'nuevo-delegado-voto', 'delegadoVoto');
+        }
+    });
+
+    $('div.nuevo-delegado-voto button[name=busca-persona]').on('click', function(ev)
+    {
+        buscaPersona($('div.nuevo-delegado-voto input[name=query-persona]').val(), 'nuevo-delegado-voto', 'delegadoVoto');
+    });
+
+    $('button[name=borra-delegado-voto]').on('click', function(ev)
+    {
+        borraDelegadoVoto($('div.nuevo-delegado-voto input[name=organoMiembroId]').val());
+    });
+
+    $('button[name=borra-delegado-voto-directo]').on('click', function(ev)
+    {
+        borraDelegadoVoto($(this).attr('data-miembroid'));
+    });
+
     function borraSuplente(organoMiembroId)
     {
         var data = {
@@ -119,6 +163,25 @@ $(function()
         $.ajax({
             type : "DELETE",
             url : "/goc/rest/reuniones/" + reunionId + "/suplente",
+            data : JSON.stringify(data),
+            contentType : "application/json; charset=utf-8",
+            dataType : "json",
+            success : function()
+            {
+                window.location.reload();
+            }
+        });
+    };
+
+    function borraDelegadoVoto(organoMiembroId)
+    {
+        var data = {
+            organoMiembroId : organoMiembroId
+        };
+
+        $.ajax({
+            type : "DELETE",
+            url : "/goc/rest/reuniones/" + reunionId + "/delegadovoto",
             data : JSON.stringify(data),
             contentType : "application/json; charset=utf-8",
             dataType : "json",
@@ -141,11 +204,34 @@ $(function()
             organoMiembroId : organoMiembroId
         };
 
-        console.log(data);
-
         $.ajax({
             type : "POST",
             url : "/goc/rest/reuniones/" + reunionId + "/suplente",
+            data : JSON.stringify(data),
+            contentType : "application/json; charset=utf-8",
+            dataType : "json",
+            success : function()
+            {
+                window.location.reload();
+            }
+        });
+    });
+
+    $('button[name=add-delegado-voto]').on('click', function(ev)
+    {
+        var delegacionVoto = $('div.nuevo-delegado-voto ul.resultados li input[type=radio]').filter(':checked').parent('li');
+        var organoMiembroId = $('div.nuevo-delegado-voto input[name=organoMiembroId]').val();
+
+        var data = {
+            delegadoVotoId : delegacionVoto.children('input[type=radio]').val(),
+            delegadoVotoNombre : delegacionVoto.children('label[for=delegadoVotoNombre]').html(),
+            delegadoVotoEmail : delegacionVoto.children('label[for=delegadoVotoEmail]').html(),
+            organoMiembroId : organoMiembroId
+        };
+
+        $.ajax({
+            type : "POST",
+            url : "/goc/rest/reuniones/" + reunionId + "/delegadovoto",
             data : JSON.stringify(data),
             contentType : "application/json; charset=utf-8",
             dataType : "json",
@@ -187,8 +273,6 @@ $(function()
     {
         event.preventDefault();
         var comentarioId = $(this).attr('data-id');
-
-        console.log(appI18N);
 
         if (confirm(appI18N.reuniones.deseaBorrarComentario))
         {

@@ -755,6 +755,8 @@ public class ReunionService
         miembroFirma.setId(organoReunionMiembro.getMiembroId());
         miembroFirma.setSuplente(organoReunionMiembro.getSuplenteNombre());
         miembroFirma.setSuplenteId(organoReunionMiembro.getSuplenteId());
+        miembroFirma.setDelegadoVotoId(organoReunionMiembro.getDelegadoVotoId());
+        miembroFirma.setDelegadoVoto(organoReunionMiembro.getDelegadoVotoNombre());
         miembroFirma.setAsistenciaConfirmada(organoReunionMiembro.getAsistenciaConfirmada());
 
         Cargo cargo = new Cargo();
@@ -789,6 +791,8 @@ public class ReunionService
         miembroTemplate.setMiembroId(organoReunionMiembro.getMiembroId());
         miembroTemplate.setSuplente(organoReunionMiembro.getSuplenteNombre());
         miembroTemplate.setSuplenteId(organoReunionMiembro.getSuplenteId());
+        miembroTemplate.setDelegadoVoto(organoReunionMiembro.getDelegadoVotoNombre());
+        miembroTemplate.setDelegadoVotoId(organoReunionMiembro.getDelegadoVotoId());
         miembroTemplate.setAsistenciaConfirmada(organoReunionMiembro.getAsistenciaConfirmada());
         miembroTemplate.setAsistencia(organoReunionMiembro.getAsistencia());
 
@@ -985,6 +989,18 @@ public class ReunionService
         if (reunion.isAdmiteSuplencia() != null && !reunion.isAdmiteSuplencia())
         {
             throw new ReunionNoAdmiteSuplenciaException();
+        }
+    }
+
+
+    public void compruebaReunionAdmiteDelegacionVoto(Long reunionId)
+            throws ReunionNoAdmiteDelegacionVotoException
+    {
+        Reunion reunion = reunionDAO.getReunionById(reunionId);
+
+        if (reunion.isAdmiteDelegacionVoto() != null && !reunion.isAdmiteDelegacionVoto())
+        {
+            throw new ReunionNoAdmiteDelegacionVotoException();
         }
     }
 

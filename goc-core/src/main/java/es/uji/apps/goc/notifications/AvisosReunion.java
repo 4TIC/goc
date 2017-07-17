@@ -85,7 +85,7 @@ public class AvisosReunion
 
         String asunto = "[GOC]";
 
-        asunto += " baixa com a suplent en reunió " + getNombreOrganos(reunion);
+        asunto += " Baixa com a suplent en reunió " + getNombreOrganos(reunion);
 
         if (reunion.getNumeroSesion() != null)
         {
@@ -96,6 +96,56 @@ public class AvisosReunion
         asunto += " " + dataFormatter.format(reunion.getFecha());
 
         buildAndSendMessageWithExtraText(reunion, Collections.singletonList(emailSuplente), asunto, textoAux);
+    }
+
+    @Transactional
+    public void enviaAvisoAltaDelegacionVoto(Long reunionId, String emailDelegadoVoto, String miembroNombre, String miembroCargo)
+            throws ReunionNoDisponibleException, MiembrosExternosException, NotificacionesException
+    {
+        Reunion reunion = reunionDAO.getReunionById(reunionId);
+
+        if (emailDelegadoVoto == null || emailDelegadoVoto.isEmpty()) return;
+
+        String textoAux = "Se vos ha dessignat la delegació de vot de " + miembroNombre + " (" + miembroCargo +")";
+
+        String asunto = "[GOC]";
+
+        asunto += " Delegació de vot en reunió " + getNombreOrganos(reunion);
+
+        if (reunion.getNumeroSesion() != null)
+        {
+            asunto += " n. " + reunion.getNumeroSesion();
+        }
+
+        SimpleDateFormat dataFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        asunto += " " + dataFormatter.format(reunion.getFecha());
+
+        buildAndSendMessageWithExtraText(reunion, Collections.singletonList(emailDelegadoVoto), asunto, textoAux);
+    }
+
+    @Transactional
+    public void enviaAvisoBajaDelegacionVoto(Long reunionId, String emailDelegadoVoto, String miembroNombre, String miembroCargo)
+            throws ReunionNoDisponibleException, MiembrosExternosException, NotificacionesException
+    {
+        Reunion reunion = reunionDAO.getReunionById(reunionId);
+
+        if (emailDelegadoVoto == null || emailDelegadoVoto.isEmpty()) return;
+
+        String textoAux = "Heu estat donat de baixa de la delegació de vot de " + miembroNombre + " (" + miembroCargo +")";
+
+        String asunto = "[GOC]";
+
+        asunto += " Baixa de delegació de vot en reunió " + getNombreOrganos(reunion);
+
+        if (reunion.getNumeroSesion() != null)
+        {
+            asunto += " n. " + reunion.getNumeroSesion();
+        }
+
+        SimpleDateFormat dataFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        asunto += " " + dataFormatter.format(reunion.getFecha());
+
+        buildAndSendMessageWithExtraText(reunion, Collections.singletonList(emailDelegadoVoto), asunto, textoAux);
     }
 
     @Transactional

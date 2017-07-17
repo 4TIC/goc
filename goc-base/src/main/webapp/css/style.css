@@ -33,31 +33,31 @@ body {
     background-color: #999999 !important;
 }
 
-.nuevo-suplente .header {
+.nuevo-suplente .header, .nuevo-delegado-voto .header {
     width: 100%;
 }
 
-.nuevo-suplente .header input[type=text] {
+.nuevo-suplente .header input[type=text], .nuevo-delegado-voto .header input[type=text] {
     width: 320px;
     margin-right: 1em;
 }
 
-.nuevo-suplente .footer {
+.nuevo-suplente .footer, .nuevo-delegado-voto .footer {
     text-align: right;
     margin-top: 1em;
 }
 
-.nuevo-suplente .footer button {
+.nuevo-suplente .footer button, .nuevo-delegado-voto .footer button {
     display: none;
 }
 
-.nuevo-suplente p.suplente-actual {
+.nuevo-suplente p.suplente-actual, .nuevo-delegado-voto p.delegado-voto-actual {
     display: none;
     padding-bottom: 1em;
     border-bottom: 1px solid #CCC;
 }
 
-.nuevo-suplente ul li {
+.nuevo-suplente ul li, .nuevo-delegado-voto ul li {
     list-style: none;
 }
 

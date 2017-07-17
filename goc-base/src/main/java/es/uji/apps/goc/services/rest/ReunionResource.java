@@ -1,7 +1,9 @@
 package es.uji.apps.goc.services.rest;
 
 import com.sun.jersey.api.core.InjectParam;
-import es.uji.apps.goc.dto.*;
+import es.uji.apps.goc.dto.Reunion;
+import es.uji.apps.goc.dto.ReunionInvitado;
+import es.uji.apps.goc.dto.ReunionTemplate;
 import es.uji.apps.goc.exceptions.*;
 import es.uji.apps.goc.model.Organo;
 import es.uji.apps.goc.services.*;
@@ -181,6 +183,42 @@ public class ReunionResource extends CoreBaseService
         reunionService.compruebaReunionNoCompletada(reunionId);
         reunionService.compruebaReunionAdmiteSuplencia(reunionId);
         organoReunionMiembroService.borraSuplente(reunionId, miembroId, connectedUserId);
+    }
+
+    @POST
+    @Path("{reunionId}/delegadovoto")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public void establecerDelegacionVoto(@PathParam("reunionId") Long reunionId, UIEntity delegadoVoto)
+            throws ReunionYaCompletadaException, ReunionNoAdmiteDelegacionVotoException, MiembrosExternosException,
+            ReunionNoDisponibleException, NotificacionesException
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+        Long delegadoVotoId = Long.parseLong(delegadoVoto.get("delegadoVotoId"));
+        String delegadoVotoNombre = delegadoVoto.get("delegadoVotoNombre");
+        String delegadoVotoEmail = delegadoVoto.get("delegadoVotoEmail");
+        Long organoMiembroId = Long.parseLong(delegadoVoto.get("organoMiembroId"));
+
+        reunionService.compruebaReunionNoCompletada(reunionId);
+        reunionService.compruebaReunionAdmiteDelegacionVoto(reunionId);
+        organoReunionMiembroService.estableceDelegadoVoto(reunionId, connectedUserId, delegadoVotoId, delegadoVotoNombre,
+                delegadoVotoEmail, organoMiembroId);
+    }
+
+    @DELETE
+    @Path("{reunionId}/delegadovoto")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public void borraDelegacionVoto(@PathParam("reunionId") Long reunionId, UIEntity miembro)
+            throws ReunionYaCompletadaException, ReunionNoAdmiteDelegacionVotoException, MiembrosExternosException,
+            ReunionNoDisponibleException, NotificacionesException
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+        Long miembroId = Long.parseLong(miembro.get("organoMiembroId"));
+
+        reunionService.compruebaReunionNoCompletada(reunionId);
+        reunionService.compruebaReunionAdmiteDelegacionVoto(reunionId);
+        organoReunionMiembroService.borraDelegadoVoto(reunionId, miembroId, connectedUserId);
     }
 
     @POST
