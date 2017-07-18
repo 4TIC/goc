@@ -1,5 +1,6 @@
 package es.uji.apps.goc.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -20,10 +21,43 @@ public class ReunionDocumentoDAO extends BaseDAODatabaseImpl
     {
         JPAQuery query = new JPAQuery(entityManager);
 
-        query.from(qReunionDocumento).where(qReunionDocumento.reunion.id.eq(reunionId))
+        query.from(qReunionDocumento)
+                .where(qReunionDocumento.reunion.id.eq(reunionId))
                 .orderBy(qReunionDocumento.fechaAdicion.desc());
 
         return query.list(qReunionDocumento);
+    }
+
+    public List<ReunionDocumento> getDatosDocumentosByReunionId(Long reunionId)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        query.from(qReunionDocumento)
+                .where(qReunionDocumento.reunion.id.eq(reunionId))
+                .orderBy(qReunionDocumento.fechaAdicion.desc());
+
+        List<Tuple> tuplas = query.list(qReunionDocumento.creadorId, qReunionDocumento.descripcion,
+                qReunionDocumento.descripcionAlternativa, qReunionDocumento.fechaAdicion, qReunionDocumento.id,
+                qReunionDocumento.mimeType, qReunionDocumento.nombreFichero);
+
+        List<ReunionDocumento> documentos = new ArrayList<>();
+
+        for (Tuple tupla : tuplas)
+        {
+            ReunionDocumento reunionDocumento = new ReunionDocumento();
+
+            reunionDocumento.setId(tupla.get(qReunionDocumento.id));
+            reunionDocumento.setCreadorId(tupla.get(qReunionDocumento.creadorId));
+            reunionDocumento.setDescripcion(tupla.get(qReunionDocumento.descripcion));
+            reunionDocumento.setDescripcionAlternativa(tupla.get(qReunionDocumento.descripcionAlternativa));
+            reunionDocumento.setFechaAdicion(tupla.get(qReunionDocumento.fechaAdicion));
+            reunionDocumento.setMimeType(tupla.get(qReunionDocumento.mimeType));
+            reunionDocumento.setNombreFichero(tupla.get(qReunionDocumento.nombreFichero));
+
+            documentos.add(reunionDocumento);
+        }
+
+        return documentos;
     }
 
     public ReunionDocumento getDocumentoById(Long documentoId)

@@ -1,7 +1,9 @@
 package es.uji.apps.goc.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import es.uji.apps.goc.dto.ReunionDocumento;
 import org.springframework.stereotype.Repository;
 
 import com.mysema.query.Tuple;
@@ -50,5 +52,37 @@ public class PuntoOrdenDiaDocumentoDAO extends BaseDAODatabaseImpl
                 .orderBy(qPuntoOrdenDiaDocumento.fechaAdicion.desc());
 
         return query.list(qPuntoOrdenDiaDocumento);
+    }
+
+    public List<PuntoOrdenDiaDocumento> getDatosDocumentosByPuntoOrdenDiaId(Long puntoOrdenDiaId)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        query.from(qPuntoOrdenDiaDocumento)
+                .where(qPuntoOrdenDiaDocumento.puntoOrdenDia.id.eq(puntoOrdenDiaId))
+                .orderBy(qPuntoOrdenDiaDocumento.fechaAdicion.desc());
+
+        List<Tuple> tuplas = query.list(qPuntoOrdenDiaDocumento.creadorId, qPuntoOrdenDiaDocumento.descripcion,
+                qPuntoOrdenDiaDocumento.descripcionAlternativa, qPuntoOrdenDiaDocumento.fechaAdicion, qPuntoOrdenDiaDocumento.id,
+                qPuntoOrdenDiaDocumento.mimeType, qPuntoOrdenDiaDocumento.nombreFichero);
+
+        List<PuntoOrdenDiaDocumento> documentos = new ArrayList<>();
+
+        for (Tuple tupla : tuplas)
+        {
+            PuntoOrdenDiaDocumento puntoOrdenDiaDocumento = new PuntoOrdenDiaDocumento();
+
+            puntoOrdenDiaDocumento.setId(tupla.get(qPuntoOrdenDiaDocumento.id));
+            puntoOrdenDiaDocumento.setCreadorId(tupla.get(qPuntoOrdenDiaDocumento.creadorId));
+            puntoOrdenDiaDocumento.setDescripcion(tupla.get(qPuntoOrdenDiaDocumento.descripcion));
+            puntoOrdenDiaDocumento.setDescripcionAlternativa(tupla.get(qPuntoOrdenDiaDocumento.descripcionAlternativa));
+            puntoOrdenDiaDocumento.setFechaAdicion(tupla.get(qPuntoOrdenDiaDocumento.fechaAdicion));
+            puntoOrdenDiaDocumento.setMimeType(tupla.get(qPuntoOrdenDiaDocumento.mimeType));
+            puntoOrdenDiaDocumento.setNombreFichero(tupla.get(qPuntoOrdenDiaDocumento.nombreFichero));
+
+            documentos.add(puntoOrdenDiaDocumento);
+        }
+
+        return documentos;
     }
 }

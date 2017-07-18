@@ -592,7 +592,7 @@ public class ReunionService
         List<OrganoTemplate> listaOrganosTemplate = getOrganosTemplateDesdeOrganos(organos, reunion, withNoAsistentes, mainLanguage);
         reunionTemplate.setOrganos(listaOrganosTemplate);
 
-        List<ReunionDocumento> reunionDocumentos = reunionDocumentoDAO.getDocumentosByReunionId(reunion.getId());
+        List<ReunionDocumento> reunionDocumentos = reunionDocumentoDAO.getDatosDocumentosByReunionId(reunion.getId());
         List<DocumentoTemplate> listaDocumentosTemplate = getReunionDocumentosTemplateDesdeDocumentos(reunionDocumentos, mainLanguage);
 
         reunionTemplate.setDocumentos(listaDocumentosTemplate);
@@ -891,10 +891,10 @@ public class ReunionService
         puntoOrdenDiaTemplate.setPublico(puntoOrdenDia.isPublico());
 
         List<PuntoOrdenDiaDocumento> documentos =
-                puntoOrdenDiaDocumentoDAO.getDocumentosByPuntoOrdenDiaId(puntoOrdenDia.getId());
+                puntoOrdenDiaDocumentoDAO.getDatosDocumentosByPuntoOrdenDiaId(puntoOrdenDia.getId());
 
         List<PuntoOrdenDiaAcuerdo> acuerdos =
-                puntoOrdenDiaAcuerdoDAO.getAcuerdosByPuntoOrdenDiaId(puntoOrdenDia.getId());
+                puntoOrdenDiaAcuerdoDAO.getDatosAcuerdosByPuntoOrdenDiaId(puntoOrdenDia.getId());
 
         List<PuntoOrdenDiaDescriptor> descriptores =
                 puntoOrdenDiaDescriptorDAO.getDescriptoresOrdenDia(puntoOrdenDia.getId());
