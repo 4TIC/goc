@@ -1098,7 +1098,7 @@ public class ReunionService
                 reunionDAO.getReunionesPublicasPaginated(acuerdosSearch.getTipoOrganoId(), acuerdosSearch.getOrganoId(),
                         acuerdosSearch.getDescriptorId(), acuerdosSearch.getClaveId(), acuerdosSearch.getAnyo(),
                         acuerdosSearch.getfInicio(), acuerdosSearch.getfFin(), acuerdosSearch.getTexto(),
-                        acuerdosSearch.getIdiomaAlternatico(), acuerdosSearch.getStartSearch(),
+                        acuerdosSearch.getIdiomaAlternativo(), acuerdosSearch.getStartSearch(),
                         acuerdosSearch.getNumResults());
         return filtrarDuplicadosReuniones(reunionesPublicas);
     }
@@ -1109,7 +1109,7 @@ public class ReunionService
                 reunionDAO.getReunionesPublicas(acuerdosSearch.getTipoOrganoId(), acuerdosSearch.getOrganoId(),
                         acuerdosSearch.getDescriptorId(), acuerdosSearch.getClaveId(), acuerdosSearch.getAnyo(),
                         acuerdosSearch.getfInicio(), acuerdosSearch.getfFin(), acuerdosSearch.getTexto(),
-                        acuerdosSearch.getIdiomaAlternatico());
+                        acuerdosSearch.getIdiomaAlternativo());
         return filtrarDuplicadosReuniones(reunionesPublicasClave).size();
     }
 

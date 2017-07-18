@@ -143,7 +143,7 @@ public class PublicacionService extends CoreBaseService
         acuerdosSearch.setTipoOrganoId(tipoOrganoId);
         acuerdosSearch.setOrganoId(organoId);
 
-        acuerdosSearch.setIdiomaAlternatico(applang.equals(languageConfig.alternativeLanguage) ? true : false);
+        acuerdosSearch.setIdiomaAlternativo(!languageConfig.isMainLangauge(lang));
 
         reuniones = reunionService.getReunionesPublicas(acuerdosSearch);
         Integer numReuniones = reunionService.getNumReunionesPublicas(acuerdosSearch);

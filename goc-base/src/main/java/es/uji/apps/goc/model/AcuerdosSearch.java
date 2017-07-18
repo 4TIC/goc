@@ -16,14 +16,14 @@ public class AcuerdosSearch
     private Date fInicio;
     private Date fFin;
     private String texto;
-    private Boolean idiomaAlternatico;
+    private Boolean idiomaAlternativo;
 
     public AcuerdosSearch(Integer anyo, Integer startSearch, Integer numResults)
     {
         this.anyo = anyo;
         this.startSearch = startSearch;
         this.numResults = numResults;
-        this.idiomaAlternatico = false;
+        this.idiomaAlternativo = false;
     }
 
     public Integer getStartSearch()
@@ -126,13 +126,13 @@ public class AcuerdosSearch
         this.texto = texto;
     }
 
-    public Boolean getIdiomaAlternatico()
+    public Boolean getIdiomaAlternativo()
     {
-        return idiomaAlternatico;
+        return idiomaAlternativo;
     }
 
-    public void setIdiomaAlternatico(Boolean idiomaAlternatico)
+    public void setIdiomaAlternativo(Boolean idiomaAlternativo)
     {
-        this.idiomaAlternatico = idiomaAlternatico;
+        this.idiomaAlternativo = idiomaAlternativo;
     }
 }
