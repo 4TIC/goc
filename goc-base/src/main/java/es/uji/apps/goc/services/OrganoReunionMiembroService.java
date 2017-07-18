@@ -97,14 +97,20 @@ public class OrganoReunionMiembroService
                 suplenteId = null;
             }
             Boolean asistencia = new Boolean(miembroUI.get("asistencia"));
+            Boolean guardarAsistencia = false;
 
             OrganoReunionMiembro miembroGuardado =
                     organoReunionMiembroDAO.getByReunionAndOrganoAndEmail(reunionId, organoId, externo, email);
 
+            if (!asistencia.equals(miembroGuardado.getAsistencia()))
+            {
+                guardarAsistencia = true;
+            }
+
             enviaMailSuplente(reunionId, suplenteId, suplenteEmail, miembroGuardado);
 
             organoReunionMiembroDAO.updateAsistenteReunionByEmail(reunionId, organoId, externo, email, asistencia,
-                    suplenteId, suplenteNombre, suplenteEmail);
+                    suplenteId, suplenteNombre, suplenteEmail, guardarAsistencia);
         }
     }
 

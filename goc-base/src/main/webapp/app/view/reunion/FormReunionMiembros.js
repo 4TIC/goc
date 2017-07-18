@@ -25,7 +25,7 @@ Ext.define('goc.view.reunion.FormReunionMiembros', {
             text : appI18N.reuniones.anadirSuplente,
             handler : 'onAddSuplente',
             bind : {
-                disabled : '{!admiteSuplencia || selectedMiembro.delegadoVotoId}'
+                disabled : '{!admiteSuplencia || selectedMiembro.delegadoVotoId || !selectedMiembro.asistencia}'
             }
         },
         {

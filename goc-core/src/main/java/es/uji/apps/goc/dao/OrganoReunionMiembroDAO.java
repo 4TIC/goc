@@ -2,6 +2,7 @@ package es.uji.apps.goc.dao;
 
 import java.util.List;
 
+import com.mysema.query.types.expr.BooleanExpression;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,11 +70,17 @@ public class OrganoReunionMiembroDAO extends BaseDAODatabaseImpl
 
     @Transactional
     public void updateAsistenteReunionByEmail(Long reunionId, String organoId, Boolean externo, String asistenteEmail,
-            Boolean asistencia, Long suplenteId, String suplenteNombre, String suplenteEmail)
+            Boolean asistencia, Long suplenteId, String suplenteNombre, String suplenteEmail, Boolean guardarAsistencia)
     {
         JPAUpdateClause update = new JPAUpdateClause(entityManager, qOrganoReunionMiembro);
-        update.set(qOrganoReunionMiembro.asistencia, asistencia)
-                .set(qOrganoReunionMiembro.suplenteId, suplenteId)
+
+        if (guardarAsistencia)
+        {
+            update.set(qOrganoReunionMiembro.asistencia, asistencia)
+                    .set(qOrganoReunionMiembro.asistenciaConfirmada, asistencia);
+        }
+
+        update.set(qOrganoReunionMiembro.suplenteId, suplenteId)
                 .set(qOrganoReunionMiembro.suplenteNombre, suplenteNombre)
                 .set(qOrganoReunionMiembro.suplenteEmail, suplenteEmail)
                 .where(qOrganoReunionMiembro.email.eq(asistenteEmail)
@@ -123,7 +130,8 @@ public class OrganoReunionMiembroDAO extends BaseDAODatabaseImpl
                 .list(qOrganoReunionMiembro);
     }
 
-    public OrganoReunionMiembro getByReunionAndOrganoAndEmail(Long reunionId, String organoId, Boolean externo, String email)
+    public OrganoReunionMiembro getByReunionAndOrganoAndEmail(Long reunionId, String organoId, Boolean externo,
+            String email)
     {
         JPAQuery query = new JPAQuery(entityManager);
 
