@@ -23,7 +23,7 @@ public class MiembroTemplate
     private Boolean asistenciaConfirmada;
     private Boolean asistencia;
 
-    private Cargo cargo;
+    private CargoTemplate cargo;
 
     private List<String> delegacionesDeVoto;
 
@@ -61,12 +61,12 @@ public class MiembroTemplate
     {
     }
 
-    public Cargo getCargo()
+    public CargoTemplate getCargo()
     {
         return cargo;
     }
 
-    public void setCargo(Cargo cargo)
+    public void setCargo(CargoTemplate cargo)
     {
         this.cargo = cargo;
     }

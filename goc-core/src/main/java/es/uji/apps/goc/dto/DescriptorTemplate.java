@@ -14,15 +14,9 @@ public class DescriptorTemplate
 
     private String descriptorNombre;
 
-    private String descriptorNombreAlternativo;
-
     private String descriptorDescripcion;
 
-    private String descriptorDescripcionAlternativa;
-
     private String claveNombre;
-
-    private String claveNombreAlternativo;
 
     public Long getId()
     {
@@ -84,16 +78,6 @@ public class DescriptorTemplate
         this.descriptorNombre = descriptorNombre;
     }
 
-    public String getDescriptorNombreAlternativo()
-    {
-        return descriptorNombreAlternativo;
-    }
-
-    public void setDescriptorNombreAlternativo(String descriptorNombreAlternativo)
-    {
-        this.descriptorNombreAlternativo = descriptorNombreAlternativo;
-    }
-
     public String getDescriptorDescripcion()
     {
         return descriptorDescripcion;
@@ -104,16 +88,6 @@ public class DescriptorTemplate
         this.descriptorDescripcion = descriptorDescripcion;
     }
 
-    public String getDescriptorDescripcionAlternativa()
-    {
-        return descriptorDescripcionAlternativa;
-    }
-
-    public void setDescriptorDescripcionAlternativa(String descriptorDescripcionAlternativa)
-    {
-        this.descriptorDescripcionAlternativa = descriptorDescripcionAlternativa;
-    }
-
     public String getClaveNombre()
     {
         return claveNombre;
@@ -122,15 +96,5 @@ public class DescriptorTemplate
     public void setClaveNombre(String claveNombre)
     {
         this.claveNombre = claveNombre;
-    }
-
-    public String getClaveNombreAlternativo()
-    {
-        return claveNombreAlternativo;
-    }
-
-    public void setClaveNombreAlternativo(String claveNombreAlternativo)
-    {
-        this.claveNombreAlternativo = claveNombreAlternativo;
     }
 }

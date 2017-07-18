@@ -1,6 +1,7 @@
 package es.uji.apps.goc.services.rest;
 
 import com.sun.jersey.api.core.InjectParam;
+import es.uji.apps.goc.auth.LanguageConfig;
 import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.dto.ReunionInvitado;
 import es.uji.apps.goc.dto.ReunionTemplate;
@@ -50,6 +51,9 @@ public class ReunionResource extends CoreBaseService
 
     @InjectParam
     private OrganoReunionMiembroService organoReunionMiembroService;
+
+    @InjectParam
+    private LanguageConfig languageConfig;
 
     @Value("${uji.smtp.defaultSender}")
     private String defaultSender;
@@ -496,8 +500,8 @@ public class ReunionResource extends CoreBaseService
             throw new ReunionNoCompletadaException();
         }
 
-        ReunionTemplate reunionTemplate =
-                reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, false);
+        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, false,
+                languageConfig.isMainLangauge(lang));
         String nombreAsistente = reunionService.getNombreAsistente(reunionId, connectedUserId);
 
         if (nombreAsistente == null)
@@ -505,7 +509,7 @@ public class ReunionResource extends CoreBaseService
             throw new AsistenteNoEncontradoException();
         }
 
-        String applang = getLangCode(lang);
+        String applang = languageConfig.getLangCode(lang);
 
         Template template = new PDFTemplate("asistencia-" + applang);
         template.put("logo", logoUrl);
@@ -514,7 +518,6 @@ public class ReunionResource extends CoreBaseService
         template.put("tituloReunion", reunionTemplate.getAsunto());
         template.put("fechaReunion", getFechaReunion(reunionTemplate.getFecha()));
         template.put("horaReunion", getHoraReunion(reunionTemplate.getFecha()));
-        template.put("duracionReunion", getDuracionReunion(reunionTemplate.getDuracion()));
         template.put("nombreConvocante", reunionTemplate.getCreadorNombre());
 
         return template;
@@ -536,10 +539,10 @@ public class ReunionResource extends CoreBaseService
             throw new ReunionNoDisponibleException();
         }
 
-        ReunionTemplate reunionTemplate =
-                reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, false);
+        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, false,
+                languageConfig.isMainLangauge(lang));
 
-        String applang = getLangCode(lang);
+        String applang = languageConfig.getLangCode(lang);
 
         Template template = new PDFTemplate("asistentes-" + applang);
         template.put("logo", logoUrl);
@@ -547,18 +550,6 @@ public class ReunionResource extends CoreBaseService
         template.put("reunion", reunionTemplate);
 
         return template;
-    }
-
-
-    private String getLangCode(String lang)
-    {
-
-        if (lang == null || lang.isEmpty() || !(lang.toLowerCase().equals("ca") || lang.toLowerCase().equals("es")))
-        {
-            return "ca";
-        }
-
-        return lang;
     }
 
     private String getFechaReunion(Date fecha)
@@ -571,14 +562,6 @@ public class ReunionResource extends CoreBaseService
     {
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
         return sdf.format(fecha);
-    }
-
-    private String getDuracionReunion(Long minutos)
-    {
-        Long horas = minutos / 60;
-        Long minutosSobrantes = minutos % 60;
-
-        return String.format("%d:%02d", horas, minutosSobrantes);
     }
 
     @GET

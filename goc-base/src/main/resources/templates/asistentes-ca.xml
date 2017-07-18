@@ -57,7 +57,7 @@
 
               <fo:table-cell display-align="center" padding="0.4cm">
                 <fo:block font-size="11pt">
-                  Assumpte: <fo:inline th:text="${reunion.asuntoAlternativo}">25</fo:inline>
+                  Assumpte: <fo:inline th:text="${reunion.asunto}">25</fo:inline>
                 </fo:block>
                 <fo:block th:if="${reunion.numeroSesion} != null">
                   Núm. de la sessió: <fo:inline th:text="${reunion.numeroSesion}">25</fo:inline>
@@ -75,7 +75,7 @@
     <fo:flow flow-name="xsl-region-body">
 
       <fo:block th:each="organo: ${reunion.organos}" th:remove="tag">
-        <fo:block padding-top="0.80cm" font-size="12pt" font-weight="bold" th:text="${organo.nombreAlternativo}"></fo:block>
+        <fo:block padding-top="0.80cm" font-size="12pt" font-weight="bold" th:text="${organo.nombre}"></fo:block>
         <fo:table border-width="0.06cm" text-align="start" keep-with-previous.within-page="always">
           <fo:table-column column-width="7.50cm"/>
           <fo:table-column column-width="3.50cm"/>
@@ -98,7 +98,7 @@
                 <fo:block th:if="${not #lists.isEmpty(asistente.delegacionesDeVoto)}" th:text="${'Delegació de vot de: ' + asistente.nombresDelegacionesDeVoto}" font-family="sans-serif" font-size="9pt" color="black" font-weight="normal" font-style="italic" text-align="start" space-after="0.00cm" space-before="0.00cm" margin-left="0.20cm">Alcañiz Garcia, Marina</fo:block>
               </fo:table-cell>
               <fo:table-cell border="solid" border-width="0.01cm" padding="0.10cm" number-rows-spanned="1" number-columns-spanned="1" display-align="center">
-                <fo:block th:text="${asistente.cargo.nombreAlternativo}" font-family="sans-serif" font-size="10pt" color="black" font-weight="normal" font-style="normal" text-align="start" space-after="0.00cm" space-before="0.00cm">35605505X</fo:block>
+                <fo:block th:text="${asistente.cargo.nombre}" font-family="sans-serif" font-size="10pt" color="black" font-weight="normal" font-style="normal" text-align="start" space-after="0.00cm" space-before="0.00cm">35605505X</fo:block>
               </fo:table-cell>
               <fo:table-cell border="solid" border-width="0.01cm" padding="0.10cm" number-rows-spanned="1" number-columns-spanned="1" display-align="center">
                 <fo:block font-family="sans-serif" font-size="10pt" color="black" font-weight="normal" font-style="normal" text-align="start" space-after="0.00cm" space-before="0.00cm"></fo:block>

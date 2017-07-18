@@ -67,10 +67,10 @@ public class ActaResource
 
         Persona convocante = personaService.getPersonaFromDirectoryByPersonaId(reunion.getCreadorId());
 
-        ReunionTemplate reunionTemplate =
-                reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, false);
+        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, false,
+                languageConfig.isMainLangauge(lang));
 
-        String applang = getLangCode(lang);
+        String applang = languageConfig.getLangCode(lang);
 
         Template template = new PDFTemplate("acta-" + applang);
         template.put("logo", logoUrl);
@@ -80,16 +80,5 @@ public class ActaResource
         template.put("applang", applang);
 
         return template;
-    }
-
-    private String getLangCode(String lang)
-    {
-        if (lang == null || lang.isEmpty() || !(lang.toLowerCase()
-                .equals(languageConfig.mainLanguage) || lang.toLowerCase().equals(languageConfig.alternativeLanguage)))
-        {
-            return languageConfig.mainLanguage;
-        }
-
-        return lang;
     }
 }

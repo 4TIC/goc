@@ -7,7 +7,7 @@
     </div>
     <main class="columns reunion">
       <div class="row columns">
-        <h2 th:text="'Reunió: ' + ${reunion.asuntoAlternativo}" class="title">title</h2>
+        <h2 th:text="'Reunió: ' + ${reunion.asunto}" class="title">title</h2>
       </div>
       <div class="row columns">
         <h3 class="title" >Informació bàsica</h3>      
@@ -17,19 +17,19 @@
         <li th:if="${reunion.fechaSegundaConvocatoria}" th:utext="'&lt;strong&gt;Segona convocatòria&lt;/strong&gt;: ' + ${#dates.format(reunion.fechaSegundaConvocatoria, 'dd/MM/YYYY HH:mm')}"></li>
         <li th:if="${reunion.responsableActa}" th:utext="'&lt;strong&gt;Responsable d\'acta&lt;/strong&gt;: ' + ${reunion.responsableActa}"></li>
         <li th:if="${reunion.numeroSesion} != null" th:utext="'&lt;strong&gt;Número de sessió&lt;/strong&gt;: ' + ${reunion.numeroSesion}"></li>
-        <li th:if="${reunion.ubicacionAlternativa}" th:utext="'&lt;strong&gt;Lloc&lt;/strong&gt;: ' + ${reunion.ubicacionAlternativa}"></li>
+        <li th:if="${reunion.ubicacion}" th:utext="'&lt;strong&gt;Lloc&lt;/strong&gt;: ' + ${reunion.ubicacion}"></li>
         <li th:utext="'&lt;strong&gt;Duració&lt;/strong&gt;: ' + ${reunion.duracion} + ' minuts'"></li>
-        <li th:if="${reunion.descripcionAlternativa}" th:utext="'&lt;strong&gt;Descripció&lt;/strong&gt;: ' + ${reunion.descripcionAlternativa}"></li>
-        <li th:if="${reunion.acuerdosAlternativos != null}" th:utext="'&lt;strong&gt;Acords&lt;/strong&gt;: ' + ${reunion.acuerdosAlternativos}"></li>
+        <li th:if="${reunion.descripcion}" th:utext="'&lt;strong&gt;Descripció&lt;/strong&gt;: ' + ${reunion.descripcion}"></li>
+        <li th:if="${reunion.acuerdos != null}" th:utext="'&lt;strong&gt;Acords&lt;/strong&gt;: ' + ${reunion.acuerdos}"></li>
         <li th:if="${reunion.urlGrabacion != null}"><strong>URL gravació</strong>: <a th:href="${reunion.urlGrabacion}" th:text="${reunion.urlGrabacion}"></a></li>
-        <li th:if="${reunion.telematica}"><strong>Reunió telemàtica. Instruccions</strong>: <span th:text="${reunion.telematicaDescripcionAlternativa}"></span></li>
+        <li th:if="${reunion.telematica}"><strong>Reunió telemàtica. Instruccions</strong>: <span th:text="${reunion.telematicaDescripcion}"></span></li>
       </ul>
       <div th:if="${not #lists.isEmpty(reunion.organos)}" class="row columns">
         <h3 class="title">Òrgans i assistents</h3>      
       </div>
       <ul th:if="${not #lists.isEmpty(reunion.organos)}" class="contentList detalle row columns">
         <li th:each="organo : ${reunion.organos}">
-          <h4 class="title" th:text="${organo.nombreAlternativo}">Òrgan assistent</h4>
+          <h4 class="title" th:text="${organo.nombre}">Òrgan assistent</h4>
           <ul th:with="miembros=${organo.asistentes}">
             <li th:each="miembro : ${miembros}">
               <div>
@@ -74,31 +74,31 @@
         <h3 class="title">Documentació</h3>      
       </div>
       <ul th:if="${not #lists.isEmpty(reunion.documentos)}" class="contentList detalle row columns">
-        <li th:each="documento : ${reunion.documentos}"><a th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/documentos/' + ${documento.id} + '/descargar'" th:text="${documento.descripcionAlternativa}">Descripcion documento</a></li>
+        <li th:each="documento : ${reunion.documentos}"><a th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/documentos/' + ${documento.id} + '/descargar'" th:text="${documento.descripcion}">Descripcion documento</a></li>
       </ul>
       <div th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}" class="row columns">
         <h3 class="title">Punts de l'ordre del dia</h3>      
       </div>
       <ol th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}" class="detalle row columns">
         <li th:each="puntoOrdenDia : ${reunion.puntosOrdenDia}">
-          <strong th:text="${puntoOrdenDia.tituloAlternativo}"></strong>
-          <div th:if="${puntoOrdenDia.descripcionAlternativa} != null" th:utext="'&lt;strong&gt;Descripció&lt;/strong&gt;: ' + ${puntoOrdenDia.descripcionAlternativa}"></div>
-          <div th:if="${puntoOrdenDia.deliberacionesAlternativas} != null" th:utext="'&lt;strong&gt;Deliberacions&lt;/strong&gt;: ' + ${puntoOrdenDia.deliberacionesAlternativas}"></div>
-          <div th:if="${puntoOrdenDia.acuerdosAlternativos} != null" th:utext="'&lt;strong&gt;Acords&lt;/strong&gt;: ' + ${puntoOrdenDia.acuerdosAlternativos}"></div>
+          <strong th:text="${puntoOrdenDia.titulo}"></strong>
+          <div th:if="${puntoOrdenDia.descripcion} != null" th:utext="'&lt;strong&gt;Descripció&lt;/strong&gt;: ' + ${puntoOrdenDia.descripcion}"></div>
+          <div th:if="${puntoOrdenDia.deliberaciones} != null" th:utext="'&lt;strong&gt;Deliberacions&lt;/strong&gt;: ' + ${puntoOrdenDia.deliberaciones}"></div>
+          <div th:if="${puntoOrdenDia.acuerdos} != null" th:utext="'&lt;strong&gt;Acords&lt;/strong&gt;: ' + ${puntoOrdenDia.acuerdos}"></div>
           <strong th:if="${not #lists.isEmpty(puntoOrdenDia.documentos)}">Documentació:</strong>
           <ul class="contentList" th:with="documentos=${puntoOrdenDia.documentos}">
-            <li th:each="documento : ${documentos}"><a th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/puntosOrdenDia/' + ${puntoOrdenDia.id} + '/documentos/' + ${documento.id} + '/descargar'" th:text="${documento.descripcionAlternativa}">Descripcion documento</a></li>
+            <li th:each="documento : ${documentos}"><a th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/puntosOrdenDia/' + ${puntoOrdenDia.id} + '/documentos/' + ${documento.id} + '/descargar'" th:text="${documento.descripcion}">Descripcion documento</a></li>
           </ul>
           <strong th:if="${not #lists.isEmpty(puntoOrdenDia.documentosAcuerdos)}">Acords:</strong>
           <ul class="contentList" th:with="acuerdos=${puntoOrdenDia.documentosAcuerdos}">
-            <li th:each="acuerdo : ${acuerdos}"><a th:href="'/goc/rest/reuniones/' + ${acuerdo.id} + '/puntosOrdenDia/' + ${puntoOrdenDia.id} + '/acuerdos/' + ${acuerdo.id} + '/descargar'" th:text="${acuerdo.descripcionAlternativa}">Descripcion acuerdo</a></li>
+            <li th:each="acuerdo : ${acuerdos}"><a th:href="'/goc/rest/reuniones/' + ${acuerdo.id} + '/puntosOrdenDia/' + ${puntoOrdenDia.id} + '/acuerdos/' + ${acuerdo.id} + '/descargar'" th:text="${acuerdo.descripcion}">Descripcion acuerdo</a></li>
           </ul>
           <strong th:if="${not #lists.isEmpty(puntoOrdenDia.descriptores)}">Descriptors:</strong>
           <ul class="contentList" th:with="descriptores=${puntoOrdenDia.descriptores}">
             <li th:each="descriptor : ${descriptores}">
-              <span th:text="${descriptor.descriptorNombreAlternativo}">Nombre descriptior</span>
+              <span th:text="${descriptor.descriptorNombre}">Nombre descriptior</span>
               :
-              <span th:text="${descriptor.claveNombreAlternativo}">Nombre clave</span>
+              <span th:text="${descriptor.claveNombre}">Nombre clave</span>
             </li>
           </ul>
           <br />

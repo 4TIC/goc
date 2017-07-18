@@ -70,10 +70,10 @@ public class PublicacionService extends CoreBaseService
 
         List<ReunionPermiso> reuniones = reunionService.getReunionesAccesiblesByPersonaId(connectedUserId);
 
-        String applang = getLangCode(lang);
+        String applang = languageConfig.getLangCode(lang);
         Template template = new HTMLTemplate("reuniones-" + applang);
         template.put("logo", logoUrl);
-        template.put("reuniones", reuniones);
+        template.put("reuniones", setLanguageFields(reuniones, lang));
         template.put("applang", applang);
         template.put("charset", charset);
         template.put("mainLanguage", languageConfig.mainLanguage);
@@ -86,6 +86,17 @@ public class PublicacionService extends CoreBaseService
         return template;
     }
 
+    public List<ReunionPermiso> setLanguageFields(List<ReunionPermiso> reuniones, String lang)
+    {
+        for (ReunionPermiso reunionPermiso : reuniones)
+        {
+            reunionPermiso.setAsunto(languageConfig.isMainLangauge(
+                    lang) ? reunionPermiso.getAsunto() : reunionPermiso.getAsuntoAlternativo());
+        }
+
+        return reuniones;
+    }
+
     @GET
     @Path("acuerdos")
     @Produces(MediaType.TEXT_HTML)
@@ -96,7 +107,7 @@ public class PublicacionService extends CoreBaseService
             @QueryParam("pagina") @DefaultValue("0") Integer pagina)
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
-        String applang = getLangCode(lang);
+        String applang = languageConfig.getLangCode(lang);
 
         List<Integer> anyos = reunionService.getAnyosConReunionesPublicas();
         List<TipoOrganoLocal> tiposOrganos = reunionService.getTiposOrganosConReunionesPublicas();
@@ -137,7 +148,7 @@ public class PublicacionService extends CoreBaseService
         reuniones = reunionService.getReunionesPublicas(acuerdosSearch);
         Integer numReuniones = reunionService.getNumReunionesPublicas(acuerdosSearch);
 
-        reunionesTemplate = buildReunionTemplate(connectedUserId, reuniones);
+        reunionesTemplate = buildReunionTemplate(connectedUserId, reuniones, lang);
 
         Template template = new HTMLTemplate("acuerdos-" + applang);
         template.put("logo", logoUrl);
@@ -194,11 +205,12 @@ public class PublicacionService extends CoreBaseService
         }
     }
 
-    private List<ReunionTemplate> buildReunionTemplate(Long connectedUserId, List<Reunion> reuniones)
+    private List<ReunionTemplate> buildReunionTemplate(Long connectedUserId, List<Reunion> reuniones, String lang)
     {
         List<ReunionTemplate> reunionesTemplate;
         reunionesTemplate = reuniones.stream()
-                .map(r -> reunionService.getReunionTemplateDesdeReunion(r, connectedUserId, false))
+                .map(r -> reunionService.getReunionTemplateDesdeReunion(r, connectedUserId, false,
+                        languageConfig.isMainLangauge(lang)))
                 .collect(Collectors.toList());
         return reunionesTemplate;
     }
@@ -226,9 +238,10 @@ public class PublicacionService extends CoreBaseService
 
         boolean permitirComentarios = reunion.isPermitirComentarios(connectedUserId);
 
-        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, true);
+        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, true,
+                languageConfig.isMainLangauge(lang));
 
-        String applang = getLangCode(lang);
+        String applang = languageConfig.getLangCode(lang);
 
         Template template = new HTMLTemplate("reunion-" + applang);
         template.put("logo", logoUrl);
@@ -244,16 +257,5 @@ public class PublicacionService extends CoreBaseService
         template.put("permitirComentarios", permitirComentarios);
 
         return template;
-    }
-
-    private String getLangCode(String lang)
-    {
-        if (lang == null || lang.isEmpty() || !(lang.toLowerCase()
-                .equals(languageConfig.mainLanguage) || lang.toLowerCase().equals(languageConfig.alternativeLanguage)))
-        {
-            return languageConfig.mainLanguage;
-        }
-
-        return lang;
     }
 }

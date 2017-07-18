@@ -17,4 +17,20 @@ public class LanguageConfig
 
     @Value("${goc.alternativeLanguageDescription}")
     public String alternativeLanguageDescription;
+
+    public boolean isMainLangauge(String lang)
+    {
+        return (lang != null && !lang.isEmpty() && lang.equals(mainLanguage));
+    }
+
+    public String getLangCode(String lang)
+    {
+        if (lang == null || lang.isEmpty() || !(lang.toLowerCase()
+                .equals(mainLanguage) || lang.toLowerCase().equals(alternativeLanguage)))
+        {
+            return mainLanguage;
+        }
+
+        return lang;
+    }
 }

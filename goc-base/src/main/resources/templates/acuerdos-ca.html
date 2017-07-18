@@ -44,7 +44,7 @@
             <label>Tipus d'òrgans:
               <select name="tipoOrganoId" onchange="document['form-busqueda'].organoId.value=''; this.form.submit();">
                 <option value=""></option>
-                  <option th:each="tipoOrgano : ${tiposOrganos}" th:selected="${tipoOrganoId == tipoOrgano.id}" th:value="${tipoOrgano.id}" th:text="${tipoOrgano.nombreAlternativo}">Tipo de organo</option>
+                  <option th:each="tipoOrgano : ${tiposOrganos}" th:selected="${tipoOrganoId == tipoOrgano.id}" th:value="${tipoOrgano.id}" th:text="${tipoOrgano.nombre}">Tipo de organo</option>
               </select>
             </label>
           </div>  
@@ -52,7 +52,7 @@
             <label>Òrgans:
               <select name="organoId" onchange="this.form.submit();">
                 <option value=""></option>
-                <option th:each="organo : ${organos}" th:selected="${organoId == organo.id}" th:value="${organo.id}" th:text="${organo.nombreAlternativo}">Òrgano</option>
+                <option th:each="organo : ${organos}" th:selected="${organoId == organo.id}" th:value="${organo.id}" th:text="${organo.nombre}">Òrgano</option>
               </select>
             </label>
           </div>  
@@ -85,7 +85,7 @@
       </form>
       <ul class="contentList row columns">
         <li th:each="reunion : ${reuniones}" class="reunion">
-          <div class="reunion-titulo" th:text="${reunion.asuntoAlternativo}">Assumpte</div>
+          <div class="reunion-titulo" th:text="${reunion.asunto}">Assumpte</div>
           <div class="collapsible collapsed">
             <blockquote>
               <div style="display: inline-block;">
@@ -96,16 +96,16 @@
                 <strong>Duració:</strong>
                 <span th:text="${reunion.duracion + ' minuts'}">Fecha</span>
               </div>
-              <div th:if="${reunion.acuerdosAlternativos}">
+              <div th:if="${reunion.acuerdos}">
                 <strong>Acords generals:</strong>
-                <span th:text="${reunion.acuerdosAlternativos}">Acords</span>
+                <span th:text="${reunion.acuerdos}">Acords</span>
               </div>
               <div>
                 <strong>Punts ordre del dia:</strong>
               </div>  
               <fieldset class="fieldset" th:each="puntoDia : ${reunion.puntosOrdenDia}" th:if="${puntoDia.publico}">
-                <legend th:text="${puntoDia.tituloAlternativo}"></legend>
-                <div th:text="${puntoDia.acuerdosAlternativos}"></div>
+                <legend th:text="${puntoDia.titulo}"></legend>
+                <div th:text="${puntoDia.acuerdos}"></div>
               </fieldset>
             </blockquote>
           </div>

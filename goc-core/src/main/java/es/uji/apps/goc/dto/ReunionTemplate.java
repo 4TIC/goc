@@ -13,8 +13,6 @@ public class ReunionTemplate implements Serializable
 
     private String asunto;
 
-    private String asuntoAlternativo;
-
     private Date fecha;
 
     private Date fechaSegundaConvocatoria;
@@ -23,17 +21,11 @@ public class ReunionTemplate implements Serializable
 
     private String descripcion;
 
-    private String descripcionAlternativa;
-
     private Long duracion;
 
     private String ubicacion;
 
-    private String ubicacionAlternativa;
-
     private String acuerdos;
-
-    private String acuerdosAlternativos;
 
     private Boolean telematica;
 
@@ -46,8 +38,6 @@ public class ReunionTemplate implements Serializable
     private Boolean admiteComentarios;
 
     private String telematicaDescripcion;
-
-    private String telematicaDescripcionAlternativa;
 
     private String creadorNombre;
 
@@ -63,15 +53,13 @@ public class ReunionTemplate implements Serializable
 
     private String cargoResponsableActa;
 
-    private String cargoAlternativoResponsableActa;
-
     private List<OrganoTemplate> organos;
 
     private List<Comentario> comentarios;
 
     private List<PuntoOrdenDiaTemplate> puntosOrdenDia;
 
-    private List<Documento> documentos;
+    private List<DocumentoTemplate> documentos;
 
     private List<InvitadoTemplate> invitados;
 
@@ -174,12 +162,12 @@ public class ReunionTemplate implements Serializable
         this.organos = organos;
     }
 
-    public List<Documento> getDocumentos()
+    public List<DocumentoTemplate> getDocumentos()
     {
         return documentos;
     }
 
-    public void setDocumentos(List<Documento> documentos)
+    public void setDocumentos(List<DocumentoTemplate> documentos)
     {
         this.documentos = documentos;
     }
@@ -315,56 +303,6 @@ public class ReunionTemplate implements Serializable
         this.fechaSegundaConvocatoria = fechaSegundaConvocatoria;
     }
 
-    public String getAsuntoAlternativo()
-    {
-        return asuntoAlternativo;
-    }
-
-    public void setAsuntoAlternativo(String asuntoAlternativo)
-    {
-        this.asuntoAlternativo = asuntoAlternativo;
-    }
-
-    public String getDescripcionAlternativa()
-    {
-        return descripcionAlternativa;
-    }
-
-    public void setDescripcionAlternativa(String descripcionAlternativa)
-    {
-        this.descripcionAlternativa = descripcionAlternativa;
-    }
-
-    public String getUbicacionAlternativa()
-    {
-        return ubicacionAlternativa;
-    }
-
-    public void setUbicacionAlternativa(String ubicacionAlternativa)
-    {
-        this.ubicacionAlternativa = ubicacionAlternativa;
-    }
-
-    public String getAcuerdosAlternativos()
-    {
-        return acuerdosAlternativos;
-    }
-
-    public void setAcuerdosAlternativos(String acuerdosAlternativos)
-    {
-        this.acuerdosAlternativos = acuerdosAlternativos;
-    }
-
-    public String getTelematicaDescripcionAlternativa()
-    {
-        return telematicaDescripcionAlternativa;
-    }
-
-    public void setTelematicaDescripcionAlternativa(String telematicaDescripcionAlternativa)
-    {
-        this.telematicaDescripcionAlternativa = telematicaDescripcionAlternativa;
-    }
-
     public String getCargoResponsableActa()
     {
         return cargoResponsableActa;
@@ -373,16 +311,6 @@ public class ReunionTemplate implements Serializable
     public void setCargoResponsableActa(String cargoResponsableActa)
     {
         this.cargoResponsableActa = cargoResponsableActa;
-    }
-
-    public String getCargoAlternativoResponsableActa()
-    {
-        return cargoAlternativoResponsableActa;
-    }
-
-    public void setCargoAlternativoResponsableActa(String cargoAlternativoResponsableActa)
-    {
-        this.cargoAlternativoResponsableActa = cargoAlternativoResponsableActa;
     }
 
     public Long getCreadorId()

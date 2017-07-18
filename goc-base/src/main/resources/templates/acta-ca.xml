@@ -46,7 +46,7 @@
         ACTA DE REUNIÓ
       </fo:block>
 
-      <fo:block font-weight="bold" font-size="14pt" space-before="0.5cm" th:text="${reunion.asuntoAlternativo}">
+      <fo:block font-weight="bold" font-size="14pt" space-before="0.5cm" th:text="${reunion.asunto}">
         Informació bàsica
       </fo:block>
 
@@ -59,19 +59,19 @@
       </fo:block>
 
       <fo:block th:if="${reunion.responsableActa}">
-        Responsable d'acta: <fo:inline th:text="${reunion.responsableActa} + ' (' + ${reunion.cargoAlternativoResponsableActa} +')'"></fo:inline>
+        Responsable d'acta: <fo:inline th:text="${reunion.responsableActa} + ' (' + ${reunion.cargoResponsableActa} +')'"></fo:inline>
       </fo:block>
 
-      <fo:block th:if="${reunion.ubicacionAlternativa}">
-        Lloc: <fo:inline th:text="${reunion.ubicacionAlternativa}">Despatx 123</fo:inline>
+      <fo:block th:if="${reunion.ubicacion}">
+        Lloc: <fo:inline th:text="${reunion.ubicacion}">Despatx 123</fo:inline>
       </fo:block>
 
       <fo:block th:if="${reunion.urlGrabacion}">
         URL gravació: <fo:inline th:text="${reunion.urlGrabacion}">URL gravació</fo:inline>
       </fo:block>
 
-      <fo:block th:if="${reunion.descripcionAlternativa}">
-        Descripció: <fo:inline th:text="${reunion.descripcionAlternativa}">Descripción</fo:inline>
+      <fo:block th:if="${reunion.descripcion}">
+        Descripció: <fo:inline th:text="${reunion.descripcion}">Descripción</fo:inline>
       </fo:block>
 
       <fo:block th:if="${reunion.telematica}">
@@ -83,10 +83,10 @@
       </fo:block>
 
       <fo:block th:each="organo : ${reunion.organos}">
-        <fo:block space-after="0.2cm" th:text="${organo.nombreAlternativo} + ':'" />
+        <fo:block space-after="0.2cm" th:text="${organo.nombre} + ':'" />
 
         <fo:block margin-left="1cm" space-after="0.5cm" th:each="miembro : ${organo.asistentes}">
-          <fo:block th:text="${miembro.cargo.nombreAlternativo} + ' - ' + ${miembro.nombre} + ' (' + ${miembro.email} + ') '"></fo:block>
+          <fo:block th:text="${miembro.cargo.nombre} + ' - ' + ${miembro.nombre} + ' (' + ${miembro.email} + ') '"></fo:block>
           <fo:block font-size="10pt" th:if="${miembro.suplente}" th:text="'Assisteix com a suplent ' + ${miembro.suplente}"></fo:block>
           <fo:block font-size="10pt" th:if="${not #lists.isEmpty(miembro.delegacionesDeVoto)}" th:text="${'Delegació de vot de: ' + miembro.nombresDelegacionesDeVoto}"></fo:block>
         </fo:block>
@@ -110,8 +110,8 @@
             <fo:block th:text="${rowStat.index+1} + '.'" />
           </fo:list-item-label>
           <fo:list-item-body start-indent="body-start()">
-            <fo:block th:text="${puntoOrdenDia.tituloAlternativo}" />
-            <fo:block th:text="${puntoOrdenDia.descripcionAlternativa}" />
+            <fo:block th:text="${puntoOrdenDia.titulo}" />
+            <fo:block th:text="${puntoOrdenDia.descripcion}" />
           </fo:list-item-body>
         </fo:list-item>
       </fo:list-block>
@@ -130,7 +130,7 @@
             <fo:block th:text="${rowStat.index+1} + '.'" />
           </fo:list-item-label>
           <fo:list-item-body start-indent="body-start()">
-            <fo:block th:text="${puntoOrdenDia.deliberacionesAlternativas == null} ? 'Sense deliberacions' : ${puntoOrdenDia.deliberacionesAlternativas}" />
+            <fo:block th:text="${puntoOrdenDia.deliberaciones == null} ? 'Sense deliberacions' : ${puntoOrdenDia.deliberaciones}" />
           </fo:list-item-body>
         </fo:list-item>
       </fo:list-block>
@@ -145,7 +145,7 @@
             <fo:block th:text="${rowStat.index+1} + '.'" />
           </fo:list-item-label>
           <fo:list-item-body start-indent="body-start()">
-            <fo:block th:text="${puntoOrdenDia.acuerdosAlternativos == null} ? 'Sense acords': ${puntoOrdenDia.acuerdosAlternativos}" />
+            <fo:block th:text="${puntoOrdenDia.acuerdos == null} ? 'Sense acords': ${puntoOrdenDia.acuerdos}" />
           </fo:list-item-body>
         </fo:list-item>
       </fo:list-block>

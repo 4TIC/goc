@@ -10,27 +10,19 @@ public class PuntoOrdenDiaTemplate
 
     private String titulo;
 
-    private String tituloAlternativo;
-
     private String descripcion;
-
-    private String descripcionAlternativa;
 
     private Long orden;
 
     private String acuerdos;
 
-    private String acuerdosAlternativos;
-
     private String deliberaciones;
-
-    private String deliberacionesAlternativas;
 
     private boolean publico;
 
-    private List<Documento> documentos;
+    private List<DocumentoTemplate> documentos;
 
-    private List<Documento> documentosAcuerdos;
+    private List<DocumentoTemplate> documentosAcuerdos;
 
     private List<DescriptorTemplate> descriptores;
 
@@ -94,52 +86,12 @@ public class PuntoOrdenDiaTemplate
         this.deliberaciones = deliberaciones;
     }
 
-    public List<Documento> getDocumentos() {
+    public List<DocumentoTemplate> getDocumentos() {
         return documentos;
     }
 
-    public void setDocumentos(List<Documento> documentos) {
+    public void setDocumentos(List<DocumentoTemplate> documentos) {
         this.documentos = documentos;
-    }
-
-    public String getTituloAlternativo()
-    {
-        return tituloAlternativo;
-    }
-
-    public void setTituloAlternativo(String tituloAlternativo)
-    {
-        this.tituloAlternativo = tituloAlternativo;
-    }
-
-    public String getDescripcionAlternativa()
-    {
-        return descripcionAlternativa;
-    }
-
-    public void setDescripcionAlternativa(String descripcionAlternativa)
-    {
-        this.descripcionAlternativa = descripcionAlternativa;
-    }
-
-    public String getAcuerdosAlternativos()
-    {
-        return acuerdosAlternativos;
-    }
-
-    public void setAcuerdosAlternativos(String acuerdosAlternativos)
-    {
-        this.acuerdosAlternativos = acuerdosAlternativos;
-    }
-
-    public String getDeliberacionesAlternativas()
-    {
-        return deliberacionesAlternativas;
-    }
-
-    public void setDeliberacionesAlternativas(String deliberacionesAlternativas)
-    {
-        this.deliberacionesAlternativas = deliberacionesAlternativas;
     }
 
     public boolean isPublico() {
@@ -150,12 +102,12 @@ public class PuntoOrdenDiaTemplate
         this.publico = publico;
     }
 
-    public List<Documento> getDocumentosAcuerdos()
+    public List<DocumentoTemplate> getDocumentosAcuerdos()
     {
         return documentosAcuerdos;
     }
 
-    public void setDocumentosAcuerdos(List<Documento> documentosAcuerdos)
+    public void setDocumentosAcuerdos(List<DocumentoTemplate> documentosAcuerdos)
     {
         this.documentosAcuerdos = documentosAcuerdos;
     }
