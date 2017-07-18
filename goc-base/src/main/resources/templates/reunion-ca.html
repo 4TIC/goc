@@ -44,11 +44,11 @@
                 </div>
               </div>
               <div class="detalle confirmacion" th:if="${reunion.completada != true and (connectedUserId == miembro.miembroId)}">
-                <button class="button success tiny" th:if="${miembro.asistenciaConfirmada == true or miembro.delegadoVotoId != null}" disabled="disabled" name="confirmar">Assistirà</button>
-                <button class="button success tiny" th:unless="${miembro.asistenciaConfirmada == true or miembro.delegadoVotoId != null}" name="confirmar">Assistirà</button>
+                <button class="button success tiny" th:attr="data-miembroid=${miembro.id}" th:if="${miembro.asistenciaConfirmada == true or miembro.delegadoVotoId != null}" disabled="disabled" name="confirmar">Assistirà</button>
+                <button class="button success tiny" th:attr="data-miembroid=${miembro.id}" th:unless="${miembro.asistenciaConfirmada == true or miembro.delegadoVotoId != null}" name="confirmar">Assistirà</button>
 
-                <button class="button alert tiny" th:if="${miembro.asistenciaConfirmada == false or miembro.suplenteId != null}" disabled="disabled" name="denegar">No assistirà</button>
-                <button class="button alert tiny" th:unless="${miembro.asistenciaConfirmada == false or miembro.suplenteId != null}" name="denegar">No assistirà</button>
+                <button class="button alert tiny" th:attr="data-miembroid=${miembro.id}" th:if="${miembro.asistenciaConfirmada == false or miembro.suplenteId != null}" disabled="disabled" name="denegar">No assistirà</button>
+                <button class="button alert tiny" th:attr="data-miembroid=${miembro.id}" th:unless="${miembro.asistenciaConfirmada == false or miembro.suplenteId != null}" name="denegar">No assistirà</button>
 
                 <button class="button tiny" disabled="disabled" style="margin-left: 3em;" th:attr="data-miembroid=${miembro.id}, data-suplente=${miembro.suplente}" th:if="${reunion.admiteSuplencia and (miembro.asistenciaConfirmada == false or miembro.delegadoVotoId != null)}" name="suplente">Gestionar suplent</button>
                 <button class="button tiny" style="margin-left: 3em;" th:attr="data-miembroid=${miembro.id}, data-suplente=${miembro.suplente}" th:if="${reunion.admiteSuplencia and (miembro.asistenciaConfirmada == null or miembro.asistenciaConfirmada == true) and miembro.delegadoVotoId == null}" name="suplente">Gestionar suplent</button>

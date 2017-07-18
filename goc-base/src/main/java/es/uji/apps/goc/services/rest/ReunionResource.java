@@ -117,14 +117,15 @@ public class ReunionResource extends CoreBaseService
     }
 
     @GET
-    @Path("{reunionId}/tienesuplente")
+    @Path("{reunionId}/tienesuplente/{reunionMiembroId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ResponseMessage tieneSuplente(@PathParam("reunionId") Long reunionId)
+    public ResponseMessage tieneSuplente(@PathParam("reunionId") Long reunionId,
+            @PathParam("reunionMiembroId") Long reunionMiembroId)
             throws AsistenteNoEncontradoException, ReunionYaCompletadaException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
-        Boolean tieneSuplente = organoReunionMiembroService.tieneSuplente(reunionId, connectedUserId);
+        Boolean tieneSuplente = organoReunionMiembroService.tieneSuplente(reunionMiembroId, connectedUserId);
 
         if (tieneSuplente)
         {
@@ -135,10 +136,11 @@ public class ReunionResource extends CoreBaseService
     }
 
     @POST
-    @Path("{reunionId}/confirmar")
+    @Path("{reunionId}/confirmar/{reunionMiembroId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void confirmarAsistencia(@PathParam("reunionId") Long reunionId, UIEntity ui)
+    public void confirmarAsistencia(@PathParam("reunionId") Long reunionId,
+            @PathParam("reunionMiembroId") Long reunionMiembroId, UIEntity ui)
             throws AsistenteNoEncontradoException, ReunionYaCompletadaException
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
@@ -146,7 +148,7 @@ public class ReunionResource extends CoreBaseService
 
         reunionService.compruebaReunionNoCompletada(reunionId);
 
-        organoReunionMiembroService.estableceAsistencia(reunionId, connectedUserId, asistencia);
+        organoReunionMiembroService.estableceAsistencia(reunionMiembroId, connectedUserId, asistencia);
     }
 
     @POST
@@ -201,8 +203,8 @@ public class ReunionResource extends CoreBaseService
 
         reunionService.compruebaReunionNoCompletada(reunionId);
         reunionService.compruebaReunionAdmiteDelegacionVoto(reunionId);
-        organoReunionMiembroService.estableceDelegadoVoto(reunionId, connectedUserId, delegadoVotoId, delegadoVotoNombre,
-                delegadoVotoEmail, organoMiembroId);
+        organoReunionMiembroService.estableceDelegadoVoto(reunionId, connectedUserId, delegadoVotoId,
+                delegadoVotoNombre, delegadoVotoEmail, organoMiembroId);
     }
 
     @DELETE

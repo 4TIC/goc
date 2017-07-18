@@ -116,18 +116,14 @@ public class OrganoReunionMiembroService
 
 
     @Transactional
-    public void estableceAsistencia(Long reunionId, Long connectedUserId, Boolean asistencia)
+    public void estableceAsistencia(Long reunionMiembroId, Long connectedUserId, Boolean asistencia)
             throws AsistenteNoEncontradoException
     {
-        List<OrganoReunionMiembro> asistentes =
-                organoReunionMiembroDAO.getMiembroByAsistenteIdOrSuplenteId(reunionId, connectedUserId);
+        OrganoReunionMiembro miembro = organoReunionMiembroDAO.getMiembroById(reunionMiembroId);
 
-        for (OrganoReunionMiembro asistente : asistentes)
-        {
-            asistente.setAsistenciaConfirmada(asistencia);
-            asistente.setAsistencia(asistencia);
-            organoReunionMiembroDAO.update(asistente);
-        }
+        miembro.setAsistenciaConfirmada(asistencia);
+        miembro.setAsistencia(asistencia);
+        organoReunionMiembroDAO.update(miembro);
     }
 
     @Transactional
@@ -194,15 +190,11 @@ public class OrganoReunionMiembroService
         organoReunionMiembroDAO.update(miembro);
     }
 
-    public Boolean tieneSuplente(Long reunionId, Long connectedUserId)
+    public Boolean tieneSuplente(Long reunionMiembroId, Long connectedUserId)
     {
-        List<OrganoReunionMiembro> asistentes =
-                organoReunionMiembroDAO.getMiembroByAsistenteIdOrSuplenteId(reunionId, connectedUserId);
+        OrganoReunionMiembro miembro = organoReunionMiembroDAO.getMiembroById(reunionMiembroId);
 
-        for (OrganoReunionMiembro asistente : asistentes)
-        {
-            if (asistente.getSuplenteId() != null) return true;
-        }
+        if (miembro.getSuplenteId() != null) return true;
 
         return false;
     }

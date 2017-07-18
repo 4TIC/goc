@@ -308,19 +308,20 @@ $(function()
     $('div.confirmacion button[name=confirmar], div.confirmacion button[name=denegar]').on('click', function()
     {
         var confirmacion = $(this).attr("name") === 'confirmar' ? true : false;
+        var organoMiembroId = $(this).attr('data-miembroid');
 
         if (!confirmacion)
         {
             $.ajax({
                 type : "GET",
-                url : "/goc/rest/reuniones/" + reunionId + "/tienesuplente",
+                url : "/goc/rest/reuniones/" + reunionId + "/tienesuplente/" + organoMiembroId,
                 success : function(response)
                 {
                     if (response.message == 'true')
                     {
                         if (confirm(eval('appI18N.reuniones.suplenteNoTendraEfecto')))
                         {
-                            updateConfirmacion(false)
+                            updateConfirmacion(false, organoMiembroId)
                             return;
                         } else
                         {
@@ -328,21 +329,21 @@ $(function()
                         }
                     }
 
-                    updateConfirmacion(confirmacion);
+                    updateConfirmacion(confirmacion, organoMiembroId);
                 }
             });
 
             return;
         }
 
-        updateConfirmacion(confirmacion);
+        updateConfirmacion(confirmacion, organoMiembroId);
     })
 
-    function updateConfirmacion(confirmacion)
+    function updateConfirmacion(confirmacion, organoMiembroId)
     {
         $.ajax({
             type : "POST",
-            url : "/goc/rest/reuniones/" + reunionId + "/confirmar",
+            url : "/goc/rest/reuniones/" + reunionId + "/confirmar/" + organoMiembroId,
             data : JSON.stringify({confirmacion : confirmacion}),
             contentType : "application/json; charset=utf-8",
             dataType : "json",
