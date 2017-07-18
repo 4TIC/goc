@@ -152,6 +152,8 @@ public class OrganoReunionMiembroService
         miembro.setDelegadoVotoId(delegadoVotoId);
         miembro.setDelegadoVotoEmail(delegadoVotoEmail);
         miembro.setDelegadoVotoNombre(delegadoVotoNombre);
+        miembro.setAsistencia(false);
+        miembro.setAsistenciaConfirmada(false);
 
         organoReunionMiembroDAO.update(miembro);
     }

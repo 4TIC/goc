@@ -37,21 +37,35 @@ $(function()
         });
     }
 
-    function loadResultadosBusquedaPersonas(result, clase, nombre)
+    function loadResultadosBusquedaMiembros(result)
     {
         var items = [];
-        $('div.' + clase + ' .footer button').show();
+        $('div.nuevo-delegado-voto .footer button').show();
 
         for (var i = 0; i < result.data.length; i++)
         {
             var persona = result.data[i];
-            items.push('<li><input type="radio" value="' + persona.id + '"/> <label style="display: inline; margin-right: 0px;" for="' + nombre + 'Nombre">' + persona.nombre + '</label> <span style="display: inline">(</span><label style="display: inline" for="' + nombre + 'Email">' + persona.email + '</label><span style="display: inline">)</span></li>')
+            items.push('<li><input type="radio" name="persona" value="' + persona.id + '"/> <label style="display: inline; margin-right: 0px;" for="delegadoVotoNombre">' + persona.nombre + '</label> <span style="display: inline">(</span><label style="display: inline" for="delegadoVotoEmail">' + persona.email + '</label><span style="display: inline">)</span></li>')
         }
 
-        $('div.' + clase + ' ul.resultados').html(items.join('\n'));
+        $('div.nuevo-delegado-voto ul.resultados').html(items.join('\n'));
     }
 
-    function buscaPersona(query, clase, nombre)
+    function loadResultadosBusquedaPersonas(result)
+    {
+        var items = [];
+        $('div.nuevo-suplente .footer button').show();
+
+        for (var i = 0; i < result.data.length; i++)
+        {
+            var persona = result.data[i];
+            items.push('<li><input type="radio" name="persona" value="' + persona.id + '"/> <label style="display: inline; margin-right: 0px;" for="suplenteNombre">' + persona.nombre + '</label> <span style="display: inline">(</span><label style="display: inline" for="suplenteEmail">' + persona.email + '</label><span style="display: inline">)</span></li>')
+        }
+
+        $('div.nuevo-suplente ul.resultados').html(items.join('\n'));
+    }
+
+    function buscaPersona(query)
     {
         $.ajax({
             type : "GET",
@@ -61,7 +75,22 @@ $(function()
             dataType : "json",
             success : function(result)
             {
-                loadResultadosBusquedaPersonas(result, clase, nombre)
+                loadResultadosBusquedaPersonas(result)
+            }
+        });
+    }
+
+    function buscaMiembro(query)
+    {
+        $.ajax({
+            type : "GET",
+            url : "/goc/rest/reuniones/" + reunionId + "/miembros",
+            data : {query : query},
+            contentType : "application/json; charset=utf-8",
+            dataType : "json",
+            success : function(result)
+            {
+                loadResultadosBusquedaMiembros(result)
             }
         });
     }
@@ -102,6 +131,8 @@ $(function()
             $('div.nuevo-delegado-voto p.delegado-voto-actual').hide();
         }
 
+        buscaMiembro($('div.nuevo-delegado-voto input[name=query-persona]').val());
+
         $('div.nuevo-delegado-voto .header input[name=query-persona]').val('');
         $('div.nuevo-delegado-voto .footer button').hide();
         $('div.nuevo-delegado-voto ul.resultados').html('');
@@ -112,13 +143,13 @@ $(function()
     {
         if (e.which == 13)
         {
-            buscaPersona($('div.nuevo-suplente input[name=query-persona]').val(), 'nuevo-suplente', 'suplente');
+            buscaPersona($('div.nuevo-suplente input[name=query-persona]').val());
         }
     });
 
     $('div.nuevo-suplente button[name=busca-persona]').on('click', function(ev)
     {
-        buscaPersona($('div.nuevo-suplente input[name=query-persona]').val(), 'nuevo-suplente', 'suplente');
+        buscaPersona($('div.nuevo-suplente input[name=query-persona]').val());
     });
 
     $('button[name=borra-suplente]').on('click', function(ev)
@@ -129,19 +160,6 @@ $(function()
     $('button[name=borra-suplente-directo]').on('click', function(ev)
     {
         borraSuplente($(this).attr('data-miembroid'));
-    });
-
-    $('div.nuevo-delegado-voto input[name=query-persona]').keypress(function(e)
-    {
-        if (e.which == 13)
-        {
-            buscaPersona($('div.nuevo-delegado-voto input[name=query-persona]').val(), 'nuevo-delegado-voto', 'delegadoVoto');
-        }
-    });
-
-    $('div.nuevo-delegado-voto button[name=busca-persona]').on('click', function(ev)
-    {
-        buscaPersona($('div.nuevo-delegado-voto input[name=query-persona]').val(), 'nuevo-delegado-voto', 'delegadoVoto');
     });
 
     $('button[name=borra-delegado-voto]').on('click', function(ev)
