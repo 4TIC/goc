@@ -150,8 +150,8 @@ formReunionItems.push({
                 value : '{reunion.numeroSesion}',
                 disabled : '{reunion.completada}'
             },
-            width : 180,
-            labelWidth : 140
+            width : 200,
+            labelWidth : 120
         }
     ]
 });
