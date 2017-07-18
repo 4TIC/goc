@@ -60,12 +60,6 @@ formReunionItems.push({
             },
             flex : 1,
             padding : '0 10 0 0'//,
-            /*validator : function(date)
-             {
-             var now = new Date();
-             now.setDate(now.getDate() - 1);
-             return Ext.Date.parse(date, 'd/m/Y') > now;
-             }*/
         },
         {
             allowBlank : false,
@@ -239,7 +233,9 @@ formReunionItems.push({
             handler : function(grid, value)
             {
                 grid.up('formReunion').down('textareafield[name=telematicaDescripcion]').setVisible(value);
-                grid.up('formReunion').down('textareafield[name=telematicaDescripcionAlternativa]').setVisible(value);
+                var alternativa = grid.up('formReunion').down('textareafield[name=telematicaDescripcionAlternativa]')
+
+                if (alternativa) alternativa.setVisible(value);
             }
         }
     ]
