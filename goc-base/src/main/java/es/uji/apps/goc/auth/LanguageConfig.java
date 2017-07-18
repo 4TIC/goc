@@ -20,7 +20,7 @@ public class LanguageConfig
 
     public boolean isMainLangauge(String lang)
     {
-        return (lang != null && !lang.isEmpty() && lang.equals(mainLanguage));
+        return (lang == null || lang.isEmpty() || lang.equals(mainLanguage));
     }
 
     public String getLangCode(String lang)
