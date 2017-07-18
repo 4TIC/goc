@@ -190,7 +190,9 @@
     "suplenteNoTendraEfectoAviso": "Hay un suplente definido, pero éste NO se tendrá en cuenta si se selecciona no asistir a la reunión",
     "borrarAsistencia": "Quitar asistencia",
     "noAddSuplentePorqueNoAsiste": "No se puede añadir un suplente porque no asistirá a la reunión",
-    "opciones": "Opciones"
+    "opciones": "Opciones",
+    "delegacionVoto": "Delegación de voto",
+    "delegacionVotoEmail": "E-mail delegación de voto"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Histórico de reuniones",

@@ -1,7 +1,7 @@
 Ext.define('goc.view.reunion.FormReunionMiembros', {
     extend : 'Ext.window.Window',
     xtype : 'formReunionMiembros',
-    width : 640,
+    width : 850,
     modal : true,
     bodyPadding : 10,
     layout : {
@@ -25,7 +25,7 @@ Ext.define('goc.view.reunion.FormReunionMiembros', {
             text : appI18N.reuniones.anadirSuplente,
             handler : 'onAddSuplente',
             bind : {
-                disabled : '{!admiteSuplencia}'
+                disabled : '{!admiteSuplencia || selectedMiembro.delegadoVotoId}'
             }
         },
         {
@@ -59,7 +59,8 @@ Ext.define('goc.view.reunion.FormReunionMiembros', {
                 markDirty : false
             },
             bind : {
-                store : '{store}'
+                store : '{store}',
+                selection : '{selectedMiembro}'
             },
             columns : [
                 {
@@ -92,6 +93,16 @@ Ext.define('goc.view.reunion.FormReunionMiembros', {
                     flex : 1
                 },
                 {
+                    text : appI18N.reuniones.delegacionVoto,
+                    dataIndex : 'delegadoVotoNombre',
+                    flex : 1
+                },
+                {
+                    text : appI18N.reuniones.delegacionVotoEmail,
+                    dataIndex : 'delegadoVotoEmail',
+                    flex : 1
+                },
+                {
                     text : appI18N.reuniones.asistencia,
                     xtype : 'checkcolumn',
                     dataIndex : 'asistencia',
@@ -99,7 +110,16 @@ Ext.define('goc.view.reunion.FormReunionMiembros', {
                         disabled : '{reunionCompletada}'
                     },
                     listeners : {
-                        checkchange  : 'onChangeAsistencia'
+                        checkchange : 'onChangeAsistencia'
+                    },
+                    renderer : function(value, metadata, rec)
+                    {
+                        if (rec.get('delegadoVotoId') || rec.get('suplenteId'))
+                        {
+                            metadata.tdCls = 'x-item-disabled';
+                        }
+
+                        return this.defaultRenderer(value, metadata);
                     }
                 }
             ]
