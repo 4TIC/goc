@@ -1,10 +1,12 @@
 package es.uji.apps.goc.services;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
+import es.uji.commons.rest.StreamUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -40,12 +42,13 @@ public class ReunionDocumentoService
     public ReunionDocumento addDocumento(Long reunionId, String fileName, String descripcion,
                                          String descripcionAlternativa, String mimeType, InputStream data,
                                          Long connectedUserId)
+            throws IOException
     {
 
         ReunionDocumento reunionDocumento = new ReunionDocumento();
         Reunion reunion = new Reunion(reunionId);
         reunionDocumento.setReunion(reunion);
-        reunionDocumento.setDatos(this.inputStreamToByteArray(data));
+        reunionDocumento.setDatos(StreamUtils.inputStreamToByteArray(data));
         reunionDocumento.setMimeType(mimeType);
         reunionDocumento.setNombreFichero(fileName);
         reunionDocumento.setDescripcion(descripcion);
@@ -54,28 +57,5 @@ public class ReunionDocumentoService
         reunionDocumento.setCreadorId(connectedUserId);
 
         return reunionDocumentoDAO.insert(reunionDocumento);
-    }
-
-    public byte[] inputStreamToByteArray(InputStream inputStream)
-    {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        int size = 1024;
-        byte[] buffer = new byte[size];
-        int len;
-
-        try
-        {
-            while ((len = inputStream.read(buffer, 0, size)) != -1)
-            {
-                outputStream.write(buffer, 0, len);
-            }
-
-            return outputStream.toByteArray();
-        }
-        catch (Exception e)
-        {
-        }
-
-        return null;
     }
 }
