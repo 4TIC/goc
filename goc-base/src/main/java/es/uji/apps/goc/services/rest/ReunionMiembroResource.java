@@ -1,19 +1,6 @@
 package es.uji.apps.goc.services.rest;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-
 import com.sun.jersey.api.core.InjectParam;
-
 import es.uji.apps.goc.dto.OrganoReunionMiembro;
 import es.uji.apps.goc.exceptions.MiembroNoDisponibleException;
 import es.uji.apps.goc.exceptions.MiembrosExternosException;
@@ -23,6 +10,13 @@ import es.uji.apps.goc.services.ReunionMiembroService;
 import es.uji.commons.rest.CoreBaseService;
 import es.uji.commons.rest.UIEntity;
 import es.uji.commons.sso.AccessManager;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/reuniones/{reunionId}/miembros")
 public class ReunionMiembroResource extends CoreBaseService
@@ -36,6 +30,28 @@ public class ReunionMiembroResource extends CoreBaseService
     @PathParam("reunionId")
     Long reunionId;
 
+
+    @GET
+    @Path("otros")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UIEntity> getOtrosMiembrosOrganoReunionByReunionId()
+            throws MiembrosExternosException
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+
+        if (reunionId != null)
+        {
+            List<OrganoReunionMiembro> listaMiembros =
+                    reunionMiembroService.getMiembrosReunionByReunionId(reunionId, connectedUserId);
+
+            return UIEntity.toUI(listaMiembros.stream()
+                    .filter(m -> !m.getMiembroId().equals(connectedUserId.toString()))
+                    .collect(Collectors.toList()));
+        }
+
+        return Collections.emptyList();
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<UIEntity> getMiembrosOrganoReunion(@QueryParam("organoId") String organoId,
@@ -46,16 +62,17 @@ public class ReunionMiembroResource extends CoreBaseService
 
         if (reunionId != null && organoId == null)
         {
-            List<OrganoReunionMiembro> listaMiembros = reunionMiembroService
-                    .getMiembrosReunionByReunionId(reunionId, connectedUserId);
+            List<OrganoReunionMiembro> listaMiembros =
+                    reunionMiembroService.getMiembrosReunionByReunionId(reunionId, connectedUserId);
             return UIEntity.toUI(listaMiembros);
 
         }
 
         if (reunionId != null)
         {
-            List<OrganoReunionMiembro> listaMiembros = reunionMiembroService
-                    .getMiembrosReunionByReunionIdAndOrganoId(reunionId, organoId, externo, connectedUserId);
+            List<OrganoReunionMiembro> listaMiembros =
+                    reunionMiembroService.getMiembrosReunionByReunionIdAndOrganoId(reunionId, organoId, externo,
+                            connectedUserId);
             return UIEntity.toUI(listaMiembros);
         }
 
@@ -73,8 +90,7 @@ public class ReunionMiembroResource extends CoreBaseService
         return miembrosToUI(listaMiembros, organoId, externo);
     }
 
-    private List<UIEntity> miembrosToUI(List<Miembro> listaMiembros, String organoId,
-            Boolean externo)
+    private List<UIEntity> miembrosToUI(List<Miembro> listaMiembros, String organoId, Boolean externo)
     {
         List<UIEntity> miembrosUI = new ArrayList<>();
 
@@ -110,8 +126,8 @@ public class ReunionMiembroResource extends CoreBaseService
         Long connectedUserId = AccessManager.getConnectedUserId(request);
         Boolean asistencia = new Boolean(miembroUI.get("asistencia"));
 
-        OrganoReunionMiembro miembro = reunionMiembroService.updateReunionMiembro(miembroId,
-                asistencia, connectedUserId);
+        OrganoReunionMiembro miembro =
+                reunionMiembroService.updateReunionMiembro(miembroId, asistencia, connectedUserId);
 
         return UIEntity.toUI(miembro);
     }

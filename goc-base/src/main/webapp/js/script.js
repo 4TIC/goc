@@ -84,7 +84,7 @@ $(function()
     {
         $.ajax({
             type : "GET",
-            url : "/goc/rest/reuniones/" + reunionId + "/miembros",
+            url : "/goc/rest/reuniones/" + reunionId + "/miembros/otros",
             data : {query : query},
             contentType : "application/json; charset=utf-8",
             dataType : "json",
