@@ -74,6 +74,10 @@
         Descripción: <fo:inline th:text="${reunion.descripcion}">Descripción</fo:inline>
       </fo:block>
 
+      <fo:block th:if="${reunion.acuerdos}">
+        Acuerdos: <fo:inline th:text="${reunion.acuerdos}">Acuerdos</fo:inline>
+      </fo:block>
+
       <fo:block th:if="${reunion.telematica}">
         Reunión telemática
       </fo:block>
