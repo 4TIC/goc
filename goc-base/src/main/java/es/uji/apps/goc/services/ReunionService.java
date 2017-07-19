@@ -1,10 +1,10 @@
 package es.uji.apps.goc.services;
 
-import com.mysema.query.types.expr.BooleanExpression;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.core.InjectParam;
+import es.uji.apps.goc.Utils;
 import es.uji.apps.goc.auth.LanguageConfig;
 import es.uji.apps.goc.dao.*;
 import es.uji.apps.goc.dto.*;
@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +36,9 @@ public class ReunionService
 
     @Value("${goc.external.authToken}")
     private String authToken;
+
+    @Value("${goc.publicUrl}")
+    private String publicUrl;
 
     @Autowired
     private ReunionDAO reunionDAO;
@@ -324,7 +329,7 @@ public class ReunionService
     public void firmarReunion(Long reunionId, String acuerdos, String acuerdosAlternativos, Long responsableActaId,
             Long connectedUserId)
             throws ReunionYaCompletadaException, FirmaReunionException, OrganosExternosException,
-            PersonasExternasException
+            PersonasExternasException, IOException, NoSuchAlgorithmException
     {
         Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
 
@@ -354,7 +359,7 @@ public class ReunionService
     }
 
     private ReunionFirma reunionFirmaDesdeReunion(Reunion reunion, Long responsableActaId, Long connectedUserId)
-            throws OrganosExternosException, PersonasExternasException
+            throws OrganosExternosException, PersonasExternasException, IOException, NoSuchAlgorithmException
     {
         ReunionFirma reunionFirma = new ReunionFirma();
 
@@ -399,7 +404,7 @@ public class ReunionService
         reunionFirma.setOrganos(listaOrganosFirma);
 
         List<ReunionDocumento> reunionDocumentos = reunionDocumentoDAO.getDocumentosByReunionId(reunion.getId());
-        List<Documento> listaDocumentosFirma = getReunionDocumentosFirmaDesdeDocumentos(reunionDocumentos);
+        List<DocumentoFirma> listaDocumentosFirma = getReunionDocumentosFirmaDesdeDocumentos(reunionDocumentos);
 
         reunionFirma.setDocumentos(listaDocumentosFirma);
         reunionFirma.setComentarios(getComentariosFirmaDesdeComentarios(comentarios));
@@ -421,13 +426,13 @@ public class ReunionService
 
         for (Persona invitado : invitados)
         {
-            listaInvitadosFirma.add(getInvitadoFirmaDessdeInvitado(invitado));
+            listaInvitadosFirma.add(getInvitadoFirmaDesdeInvitado(invitado));
         }
 
         return listaInvitadosFirma;
     }
 
-    private InvitadoFirma getInvitadoFirmaDessdeInvitado(Persona invitado)
+    private InvitadoFirma getInvitadoFirmaDesdeInvitado(Persona invitado)
     {
         InvitadoFirma invitadoFirma = new InvitadoFirma();
 
@@ -439,6 +444,7 @@ public class ReunionService
     }
 
     private List<PuntoOrdenDiaFirma> getPuntosOrdenDiaFirmaDesdePuntosOrdenDia(List<PuntoOrdenDia> puntosOrdenDia)
+            throws IOException, NoSuchAlgorithmException
     {
         List<PuntoOrdenDiaFirma> listaPuntosOrdenDiaFirma = new ArrayList<>();
 
@@ -450,6 +456,7 @@ public class ReunionService
     }
 
     private PuntoOrdenDiaFirma getPuntoOrdenDiaFirmaDesdePuntoOrdenDia(PuntoOrdenDia puntoOrdenDia)
+            throws IOException, NoSuchAlgorithmException
     {
         PuntoOrdenDiaFirma puntoOrdenDiaFirma = new PuntoOrdenDiaFirma();
         puntoOrdenDiaFirma.setId(puntoOrdenDia.getId());
@@ -466,14 +473,57 @@ public class ReunionService
         List<PuntoOrdenDiaDocumento> documentos =
                 puntoOrdenDiaDocumentoDAO.getDocumentosByPuntoOrdenDiaId(puntoOrdenDia.getId());
 
+        List<PuntoOrdenDiaAcuerdo> documentosAcuerdos =
+                puntoOrdenDiaAcuerdoDAO.getAcuerdosByPuntoOrdenDiaId(puntoOrdenDia.getId());
+
         puntoOrdenDiaFirma.setDocumentos(getDocumentosFirmaDesdePuntosOrdenDiaDocumentos(documentos));
+        puntoOrdenDiaFirma.setDocumentosAcuerdos(
+                getDocumentosAcuerdosFirmaDesdePuntosOrdenDiaDocumentos(documentosAcuerdos));
 
         return puntoOrdenDiaFirma;
     }
 
-    private List<Documento> getDocumentosFirmaDesdePuntosOrdenDiaDocumentos(List<PuntoOrdenDiaDocumento> documentos)
+    private List<DocumentoFirma> getDocumentosAcuerdosFirmaDesdePuntosOrdenDiaDocumentos(
+            List<PuntoOrdenDiaAcuerdo> documentos)
+            throws IOException, NoSuchAlgorithmException
     {
-        List<Documento> listaDocumentoTemplate = new ArrayList<>();
+        List<DocumentoFirma> listaDocumentoTemplate = new ArrayList<>();
+
+        for (PuntoOrdenDiaAcuerdo puntoOrdenDiaAcuerdo : documentos)
+        {
+            listaDocumentoTemplate.add(getAcuerdoDocumentoFirmaDesdePuntoOrdenDiaDocumento(puntoOrdenDiaAcuerdo));
+        }
+
+        return listaDocumentoTemplate;
+    }
+
+    private DocumentoFirma getAcuerdoDocumentoFirmaDesdePuntoOrdenDiaDocumento(
+            PuntoOrdenDiaAcuerdo puntoOrdenDiaAcuerdo)
+            throws IOException, NoSuchAlgorithmException
+    {
+        DocumentoFirma documentoFirma = new DocumentoFirma();
+
+        documentoFirma.setId(puntoOrdenDiaAcuerdo.getId());
+        documentoFirma.setDescripcion(puntoOrdenDiaAcuerdo.getDescripcion());
+        documentoFirma.setDescripcionAlternativa(puntoOrdenDiaAcuerdo.getDescripcionAlternativa());
+        documentoFirma.setMimeType(puntoOrdenDiaAcuerdo.getMimeType());
+        documentoFirma.setFechaAdicion(puntoOrdenDiaAcuerdo.getFechaAdicion());
+        documentoFirma.setCreadorId(puntoOrdenDiaAcuerdo.getCreadorId());
+        documentoFirma.setNombreFichero(puntoOrdenDiaAcuerdo.getNombreFichero());
+        documentoFirma.setHash(Utils.getHash(puntoOrdenDiaAcuerdo.getDatos()));
+        documentoFirma.setUrlDescarga(publicUrl + "/goc/rest/reuniones/" + puntoOrdenDiaAcuerdo.getPuntoOrdenDia()
+                .getReunion()
+                .getId() + "/puntosOrdenDia/" + puntoOrdenDiaAcuerdo.getPuntoOrdenDia()
+                .getId() + "/acuerdos/" + puntoOrdenDiaAcuerdo.getId() + "/descargar");
+
+        return documentoFirma;
+    }
+
+    private List<DocumentoFirma> getDocumentosFirmaDesdePuntosOrdenDiaDocumentos(
+            List<PuntoOrdenDiaDocumento> documentos)
+            throws IOException, NoSuchAlgorithmException
+    {
+        List<DocumentoFirma> listaDocumentoTemplate = new ArrayList<>();
 
         for (PuntoOrdenDiaDocumento puntoOrdenDiaDocumento : documentos)
         {
@@ -483,9 +533,10 @@ public class ReunionService
         return listaDocumentoTemplate;
     }
 
-    private Documento getDocumentoFirmaDesdePuntoOrdenDiaDocumento(PuntoOrdenDiaDocumento puntoOrdenDiaDocumento)
+    private DocumentoFirma getDocumentoFirmaDesdePuntoOrdenDiaDocumento(PuntoOrdenDiaDocumento puntoOrdenDiaDocumento)
+            throws IOException, NoSuchAlgorithmException
     {
-        Documento documentoFirma = new Documento();
+        DocumentoFirma documentoFirma = new DocumentoFirma();
 
         documentoFirma.setId(puntoOrdenDiaDocumento.getId());
         documentoFirma.setDescripcion(puntoOrdenDiaDocumento.getDescripcion());
@@ -494,7 +545,11 @@ public class ReunionService
         documentoFirma.setFechaAdicion(puntoOrdenDiaDocumento.getFechaAdicion());
         documentoFirma.setCreadorId(puntoOrdenDiaDocumento.getCreadorId());
         documentoFirma.setNombreFichero(puntoOrdenDiaDocumento.getNombreFichero());
-        documentoFirma.setDatosBase64(new String(Base64.encodeBase64(puntoOrdenDiaDocumento.getDatos())));
+        documentoFirma.setHash(Utils.getHash(puntoOrdenDiaDocumento.getDatos()));
+        documentoFirma.setUrlDescarga(publicUrl + "/goc/rest/reuniones/" + puntoOrdenDiaDocumento.getPuntoOrdenDia()
+                .getReunion()
+                .getId() + "/puntosOrdenDia/" + puntoOrdenDiaDocumento.getPuntoOrdenDia()
+                .getId() + "/documentos/" + puntoOrdenDiaDocumento.getId() + "/descargar");
 
         return documentoFirma;
     }
@@ -523,9 +578,10 @@ public class ReunionService
         return comentarioFirma;
     }
 
-    private List<Documento> getReunionDocumentosFirmaDesdeDocumentos(List<ReunionDocumento> reunionDocumentos)
+    private List<DocumentoFirma> getReunionDocumentosFirmaDesdeDocumentos(List<ReunionDocumento> reunionDocumentos)
+            throws IOException, NoSuchAlgorithmException
     {
-        List<Documento> listaDocumentoFirma = new ArrayList<>();
+        List<DocumentoFirma> listaDocumentoFirma = new ArrayList<>();
 
         for (ReunionDocumento reunionDocumento : reunionDocumentos)
         {
@@ -535,9 +591,10 @@ public class ReunionService
         return listaDocumentoFirma;
     }
 
-    private Documento getDocumentoFirmaDesdeReunionDocumento(ReunionDocumento reunionDocumento)
+    private DocumentoFirma getDocumentoFirmaDesdeReunionDocumento(ReunionDocumento reunionDocumento)
+            throws IOException, NoSuchAlgorithmException
     {
-        Documento documentoFirma = new Documento();
+        DocumentoFirma documentoFirma = new DocumentoFirma();
 
         documentoFirma.setId(reunionDocumento.getId());
         documentoFirma.setDescripcion(reunionDocumento.getDescripcion());
@@ -546,7 +603,9 @@ public class ReunionService
         documentoFirma.setFechaAdicion(reunionDocumento.getFechaAdicion());
         documentoFirma.setCreadorId(reunionDocumento.getCreadorId());
         documentoFirma.setNombreFichero(reunionDocumento.getNombreFichero());
-        documentoFirma.setDatosBase64(new String(Base64.encodeBase64(reunionDocumento.getDatos())));
+        documentoFirma.setHash(Utils.getHash(reunionDocumento.getDatos()));
+        documentoFirma.setUrlDescarga(publicUrl + "/goc/rest/reuniones/" + reunionDocumento.getReunion()
+                .getId() + "/documentos/" + reunionDocumento.getId() + "/descargar");
 
         return documentoFirma;
     }
@@ -567,7 +626,8 @@ public class ReunionService
         reunionTemplate.setFechaSegundaConvocatoria(reunion.getFechaSegundaConvocatoria());
         reunionTemplate.setUrlGrabacion(reunion.getUrlGrabacion());
         reunionTemplate.setTelematica(reunion.isTelematica());
-        reunionTemplate.setTelematicaDescripcion(mainLanguage ? reunion.getTelematicaDescripcion() : reunion.getTelematicaDescripcionAlternativa());
+        reunionTemplate.setTelematicaDescripcion(
+                mainLanguage ? reunion.getTelematicaDescripcion() : reunion.getTelematicaDescripcionAlternativa());
         reunionTemplate.setAdmiteSuplencia(reunion.isAdmiteSuplencia());
         reunionTemplate.setAdmiteDelegacionVoto(reunion.isAdmiteDelegacionVoto());
         reunionTemplate.setAdmiteComentarios(reunion.isAdmiteComentarios());
@@ -582,18 +642,21 @@ public class ReunionService
                     organoReunionMiembroDAO.getMiembroById(reunion.getMiembroResponsableActa().getId());
 
             reunionTemplate.setResponsableActa(responsable.getNombre());
-            reunionTemplate.setCargoResponsableActa(mainLanguage ? responsable.getCargoNombre() : responsable.getCargoNombreAlternativo());
+            reunionTemplate.setCargoResponsableActa(
+                    mainLanguage ? responsable.getCargoNombre() : responsable.getCargoNombreAlternativo());
         }
 
         List<Organo> organos = organoService.getOrganosByReunionIdAndUserId(reunion.getId(), connectedUserId);
         List<ReunionComentario> comentarios =
                 reunionComentarioService.getComentariosByReunionId(reunion.getId(), connectedUserId);
 
-        List<OrganoTemplate> listaOrganosTemplate = getOrganosTemplateDesdeOrganos(organos, reunion, withNoAsistentes, mainLanguage);
+        List<OrganoTemplate> listaOrganosTemplate =
+                getOrganosTemplateDesdeOrganos(organos, reunion, withNoAsistentes, mainLanguage);
         reunionTemplate.setOrganos(listaOrganosTemplate);
 
         List<ReunionDocumento> reunionDocumentos = reunionDocumentoDAO.getDatosDocumentosByReunionId(reunion.getId());
-        List<DocumentoTemplate> listaDocumentosTemplate = getReunionDocumentosTemplateDesdeDocumentos(reunionDocumentos, mainLanguage);
+        List<DocumentoTemplate> listaDocumentosTemplate =
+                getReunionDocumentosTemplateDesdeDocumentos(reunionDocumentos, mainLanguage);
 
         reunionTemplate.setDocumentos(listaDocumentosTemplate);
         reunionTemplate.setComentarios(getComentariosTemplateDessdeComentarios(comentarios));
@@ -670,18 +733,21 @@ public class ReunionService
         return listaOrganoTemplate;
     }
 
-    private OrganoTemplate getOrganoTemplateDesdeOrgano(Organo organo, Reunion reunion, Boolean withNoAsistentes, boolean mainLanguage)
+    private OrganoTemplate getOrganoTemplateDesdeOrgano(Organo organo, Reunion reunion, Boolean withNoAsistentes,
+            boolean mainLanguage)
     {
         OrganoTemplate organoTemplate = new OrganoTemplate();
         organoTemplate.setId(organo.getId());
         organoTemplate.setNombre(mainLanguage ? organo.getNombre() : organo.getNombreAlternativo());
         organoTemplate.setTipoCodigo(organo.getTipoOrgano().getCodigo());
-        organoTemplate.setTipoNombre(mainLanguage ? organo.getTipoOrgano().getNombre() : organo.getTipoOrgano().getNombreAlternativo());
+        organoTemplate.setTipoNombre(
+                mainLanguage ? organo.getTipoOrgano().getNombre() : organo.getTipoOrgano().getNombreAlternativo());
         organoTemplate.setTipoOrganoId(organo.getTipoOrgano().getId());
 
         List<OrganoReunionMiembro> listaAsistentes;
-        List<OrganoReunionMiembro> listaMiembros = organoReunionMiembroDAO.getMiembroReunionByOrganoAndReunionId(organo.getId(), organo.isExterno(),
-                reunion.getId());
+        List<OrganoReunionMiembro> listaMiembros =
+                organoReunionMiembroDAO.getMiembroReunionByOrganoAndReunionId(organo.getId(), organo.isExterno(),
+                        reunion.getId());
 
         if (withNoAsistentes)
         {
@@ -694,7 +760,8 @@ public class ReunionService
                             reunion.getId());
         }
 
-        organoTemplate.setAsistentes(getAsistentesDesdeListaOrganoReunionMiembro(listaAsistentes, listaMiembros, mainLanguage));
+        organoTemplate.setAsistentes(
+                getAsistentesDesdeListaOrganoReunionMiembro(listaAsistentes, listaMiembros, mainLanguage));
         return organoTemplate;
     }
 
@@ -820,7 +887,8 @@ public class ReunionService
         }
     }
 
-    private MiembroTemplate getAsistenteDesdeOrganoReunionMiembro(OrganoReunionMiembro organoReunionMiembro, boolean mainLanguage)
+    private MiembroTemplate getAsistenteDesdeOrganoReunionMiembro(OrganoReunionMiembro organoReunionMiembro,
+            boolean mainLanguage)
     {
         MiembroTemplate miembroTemplate = new MiembroTemplate();
         miembroTemplate.setNombre(organoReunionMiembro.getNombre());
@@ -836,14 +904,16 @@ public class ReunionService
 
         CargoTemplate cargo = new CargoTemplate();
         cargo.setId(organoReunionMiembro.getCargoId());
-        cargo.setNombre(mainLanguage ? organoReunionMiembro.getCargoNombre() : organoReunionMiembro.getCargoNombreAlternativo());
+        cargo.setNombre(
+                mainLanguage ? organoReunionMiembro.getCargoNombre() : organoReunionMiembro.getCargoNombreAlternativo());
 
         miembroTemplate.setCargo(cargo);
 
         return miembroTemplate;
     }
 
-    private List<DocumentoTemplate> getReunionDocumentosTemplateDesdeDocumentos(List<ReunionDocumento> reunionDocumentos, boolean mainLanguage)
+    private List<DocumentoTemplate> getReunionDocumentosTemplateDesdeDocumentos(
+            List<ReunionDocumento> reunionDocumentos, boolean mainLanguage)
     {
         List<DocumentoTemplate> listaDocumento = new ArrayList<>();
 
@@ -854,11 +924,13 @@ public class ReunionService
         return listaDocumento;
     }
 
-    private DocumentoTemplate getDocumentoTemplateDesdeReunionDocumento(ReunionDocumento reunionDocumento, boolean mainLanguage)
+    private DocumentoTemplate getDocumentoTemplateDesdeReunionDocumento(ReunionDocumento reunionDocumento,
+            boolean mainLanguage)
     {
         DocumentoTemplate documento = new DocumentoTemplate();
         documento.setId(reunionDocumento.getId());
-        documento.setDescripcion(mainLanguage ? reunionDocumento.getDescripcion() : reunionDocumento.getDescripcionAlternativa());
+        documento.setDescripcion(
+                mainLanguage ? reunionDocumento.getDescripcion() : reunionDocumento.getDescripcionAlternativa());
         documento.setMimeType(reunionDocumento.getMimeType());
         documento.setFechaAdicion(reunionDocumento.getFechaAdicion());
         documento.setCreadorId(reunionDocumento.getCreadorId());
@@ -867,7 +939,8 @@ public class ReunionService
         return documento;
     }
 
-    private List<PuntoOrdenDiaTemplate> getPuntosOrdenDiaTemplateDesdePuntosOrdenDia(List<PuntoOrdenDia> puntosOrdenDia, boolean mainLanguage)
+    private List<PuntoOrdenDiaTemplate> getPuntosOrdenDiaTemplateDesdePuntosOrdenDia(List<PuntoOrdenDia> puntosOrdenDia,
+            boolean mainLanguage)
     {
         List<PuntoOrdenDiaTemplate> listaPuntosOrdenDiaTemplate = new ArrayList<>();
 
@@ -879,15 +952,20 @@ public class ReunionService
         return listaPuntosOrdenDiaTemplate;
     }
 
-    private PuntoOrdenDiaTemplate getPuntoOrdenDiaTemplateDesdePuntoOrdenDia(PuntoOrdenDia puntoOrdenDia, boolean mainLanguage)
+    private PuntoOrdenDiaTemplate getPuntoOrdenDiaTemplateDesdePuntoOrdenDia(PuntoOrdenDia puntoOrdenDia,
+            boolean mainLanguage)
     {
         PuntoOrdenDiaTemplate puntoOrdenDiaTemplate = new PuntoOrdenDiaTemplate();
         puntoOrdenDiaTemplate.setId(puntoOrdenDia.getId());
         puntoOrdenDiaTemplate.setOrden(puntoOrdenDia.getOrden());
-        puntoOrdenDiaTemplate.setAcuerdos(mainLanguage ? puntoOrdenDia.getAcuerdos() : puntoOrdenDia.getAcuerdosAlternativos());
-        puntoOrdenDiaTemplate.setDeliberaciones(mainLanguage ? puntoOrdenDia.getDeliberaciones() : puntoOrdenDia.getDeliberacionesAlternativas());
-        puntoOrdenDiaTemplate.setDescripcion(mainLanguage ? puntoOrdenDia.getDescripcion() : puntoOrdenDia.getDescripcionAlternativa());
-        puntoOrdenDiaTemplate.setTitulo(mainLanguage ? puntoOrdenDia.getTitulo() : puntoOrdenDia.getTituloAlternativo());
+        puntoOrdenDiaTemplate.setAcuerdos(
+                mainLanguage ? puntoOrdenDia.getAcuerdos() : puntoOrdenDia.getAcuerdosAlternativos());
+        puntoOrdenDiaTemplate.setDeliberaciones(
+                mainLanguage ? puntoOrdenDia.getDeliberaciones() : puntoOrdenDia.getDeliberacionesAlternativas());
+        puntoOrdenDiaTemplate.setDescripcion(
+                mainLanguage ? puntoOrdenDia.getDescripcion() : puntoOrdenDia.getDescripcionAlternativa());
+        puntoOrdenDiaTemplate.setTitulo(
+                mainLanguage ? puntoOrdenDia.getTitulo() : puntoOrdenDia.getTituloAlternativo());
         puntoOrdenDiaTemplate.setPublico(puntoOrdenDia.isPublico());
 
         List<PuntoOrdenDiaDocumento> documentos =
@@ -899,14 +977,18 @@ public class ReunionService
         List<PuntoOrdenDiaDescriptor> descriptores =
                 puntoOrdenDiaDescriptorDAO.getDescriptoresOrdenDia(puntoOrdenDia.getId());
 
-        puntoOrdenDiaTemplate.setDocumentos(getDocumentosTemplateDesdePuntosOrdenDiaDocumentos(documentos, mainLanguage));
-        puntoOrdenDiaTemplate.setDocumentosAcuerdos(getAcuerdosTemplateDesdePuntosOrdenDiaAcuerdos(acuerdos, mainLanguage));
-        puntoOrdenDiaTemplate.setDescriptores(getDescriptoresTemplateDesdePuntosOrdenDiaAcuerdos(descriptores, mainLanguage));
+        puntoOrdenDiaTemplate.setDocumentos(
+                getDocumentosTemplateDesdePuntosOrdenDiaDocumentos(documentos, mainLanguage));
+        puntoOrdenDiaTemplate.setDocumentosAcuerdos(
+                getAcuerdosTemplateDesdePuntosOrdenDiaAcuerdos(acuerdos, mainLanguage));
+        puntoOrdenDiaTemplate.setDescriptores(
+                getDescriptoresTemplateDesdePuntosOrdenDiaAcuerdos(descriptores, mainLanguage));
 
         return puntoOrdenDiaTemplate;
     }
 
-    private List<DocumentoTemplate> getDocumentosTemplateDesdePuntosOrdenDiaDocumentos(List<PuntoOrdenDiaDocumento> documentos, boolean mainLanguage)
+    private List<DocumentoTemplate> getDocumentosTemplateDesdePuntosOrdenDiaDocumentos(
+            List<PuntoOrdenDiaDocumento> documentos, boolean mainLanguage)
     {
         List<DocumentoTemplate> listaDocumento = new ArrayList<>();
 
@@ -918,7 +1000,8 @@ public class ReunionService
         return listaDocumento;
     }
 
-    private List<DocumentoTemplate> getAcuerdosTemplateDesdePuntosOrdenDiaAcuerdos(List<PuntoOrdenDiaAcuerdo> acuerdos, boolean mainLanguage)
+    private List<DocumentoTemplate> getAcuerdosTemplateDesdePuntosOrdenDiaAcuerdos(List<PuntoOrdenDiaAcuerdo> acuerdos,
+            boolean mainLanguage)
     {
         List<DocumentoTemplate> listaDocumento = new ArrayList<>();
 
@@ -943,11 +1026,13 @@ public class ReunionService
         return listaDesciptores;
     }
 
-    private DocumentoTemplate getDocumentoTemplateDesdePuntoOrdenDiaDocumento(PuntoOrdenDiaDocumento puntoOrdenDiaDocumento, boolean mainLanguage)
+    private DocumentoTemplate getDocumentoTemplateDesdePuntoOrdenDiaDocumento(
+            PuntoOrdenDiaDocumento puntoOrdenDiaDocumento, boolean mainLanguage)
     {
         DocumentoTemplate documento = new DocumentoTemplate();
         documento.setId(puntoOrdenDiaDocumento.getId());
-        documento.setDescripcion(mainLanguage ? puntoOrdenDiaDocumento.getDescripcion() : puntoOrdenDiaDocumento.getDescripcionAlternativa());
+        documento.setDescripcion(
+                mainLanguage ? puntoOrdenDiaDocumento.getDescripcion() : puntoOrdenDiaDocumento.getDescripcionAlternativa());
         documento.setMimeType(puntoOrdenDiaDocumento.getMimeType());
         documento.setFechaAdicion(puntoOrdenDiaDocumento.getFechaAdicion());
         documento.setCreadorId(puntoOrdenDiaDocumento.getCreadorId());
@@ -956,12 +1041,14 @@ public class ReunionService
         return documento;
     }
 
-    private DocumentoTemplate getAcuerdoTemplateDesdePuntoOrdenDiaAcuerdo(PuntoOrdenDiaAcuerdo puntoOrdenDiaAcuerdo, boolean mainLanguage)
+    private DocumentoTemplate getAcuerdoTemplateDesdePuntoOrdenDiaAcuerdo(PuntoOrdenDiaAcuerdo puntoOrdenDiaAcuerdo,
+            boolean mainLanguage)
     {
         DocumentoTemplate documento = new DocumentoTemplate();
 
         documento.setId(puntoOrdenDiaAcuerdo.getId());
-        documento.setDescripcion(mainLanguage ? puntoOrdenDiaAcuerdo.getDescripcion() : puntoOrdenDiaAcuerdo.getDescripcionAlternativa());
+        documento.setDescripcion(
+                mainLanguage ? puntoOrdenDiaAcuerdo.getDescripcion() : puntoOrdenDiaAcuerdo.getDescripcionAlternativa());
         documento.setMimeType(puntoOrdenDiaAcuerdo.getMimeType());
         documento.setFechaAdicion(puntoOrdenDiaAcuerdo.getFechaAdicion());
         documento.setCreadorId(puntoOrdenDiaAcuerdo.getCreadorId());
@@ -970,7 +1057,8 @@ public class ReunionService
         return documento;
     }
 
-    private DescriptorTemplate getDescriptorTemplateDesdePuntoOrdenDiaAcuerdo(PuntoOrdenDiaDescriptor descriptor, boolean mainLanguage)
+    private DescriptorTemplate getDescriptorTemplateDesdePuntoOrdenDiaAcuerdo(PuntoOrdenDiaDescriptor descriptor,
+            boolean mainLanguage)
     {
         DescriptorTemplate descriptorTemplate = new DescriptorTemplate();
 
@@ -978,9 +1066,16 @@ public class ReunionService
         descriptorTemplate.setPuntoOrdenDiaId(descriptor.getPuntoOrdenDia().getId());
         descriptorTemplate.setClaveId(descriptor.getClave().getId());
         descriptorTemplate.setDescriptorId(descriptor.getClave().getDescriptor().getId());
-        descriptorTemplate.setDescriptorNombre(mainLanguage ? descriptor.getClave().getDescriptor().getDescriptor() : descriptor.getClave().getDescriptor().getDescriptorAlternativo());
-        descriptorTemplate.setDescriptorDescripcion(mainLanguage ? descriptor.getClave().getDescriptor().getDescripcion() : descriptor.getClave().getDescriptor().getDescripcionAlternativa());
-        descriptorTemplate.setClaveNombre(mainLanguage ? descriptor.getClave().getClave() : descriptor.getClave().getClaveAlternativa());
+        descriptorTemplate.setDescriptorNombre(
+                mainLanguage ? descriptor.getClave().getDescriptor().getDescriptor() : descriptor.getClave()
+                        .getDescriptor()
+                        .getDescriptorAlternativo());
+        descriptorTemplate.setDescriptorDescripcion(
+                mainLanguage ? descriptor.getClave().getDescriptor().getDescripcion() : descriptor.getClave()
+                        .getDescriptor()
+                        .getDescripcionAlternativa());
+        descriptorTemplate.setClaveNombre(
+                mainLanguage ? descriptor.getClave().getClave() : descriptor.getClave().getClaveAlternativa());
 
         return descriptorTemplate;
     }

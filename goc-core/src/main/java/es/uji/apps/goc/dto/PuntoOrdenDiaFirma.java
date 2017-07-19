@@ -31,7 +31,8 @@ public class PuntoOrdenDiaFirma
     @JsonProperty(value = "deliberaciones_alternativas")
     private String deliberacionesAlternativas;
 
-    private List<Documento> documentos;
+    private List<DocumentoFirma> documentos;
+    private List<DocumentoFirma> documentosAcuerdos;
 
     public Long getId()
     {
@@ -93,11 +94,11 @@ public class PuntoOrdenDiaFirma
         this.deliberaciones = deliberaciones;
     }
 
-    public List<Documento> getDocumentos() {
+    public List<DocumentoFirma> getDocumentos() {
         return documentos;
     }
 
-    public void setDocumentos(List<Documento> documentos) {
+    public void setDocumentos(List<DocumentoFirma> documentos) {
         this.documentos = documentos;
     }
 
@@ -139,5 +140,15 @@ public class PuntoOrdenDiaFirma
     public void setDeliberacionesAlternativas(String deliberacionesAlternativas)
     {
         this.deliberacionesAlternativas = deliberacionesAlternativas;
+    }
+
+    public List<DocumentoFirma> getDocumentosAcuerdos()
+    {
+        return documentosAcuerdos;
+    }
+
+    public void setDocumentosAcuerdos(List<DocumentoFirma> documentosAcuerdos)
+    {
+        this.documentosAcuerdos = documentosAcuerdos;
     }
 }

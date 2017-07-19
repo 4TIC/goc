@@ -23,8 +23,10 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -373,7 +375,7 @@ public class ReunionResource extends CoreBaseService
     @Consumes(MediaType.APPLICATION_JSON)
     public void modificaReunionCompletada(@PathParam("reunionId") Long reunionId, UIEntity data)
             throws ReunionNoDisponibleException, ReunionYaCompletadaException, FirmaReunionException,
-            OrganosExternosException, PersonasExternasException
+            OrganosExternosException, PersonasExternasException, IOException, NoSuchAlgorithmException
     {
         String acuerdos = data.get("acuerdos");
         String acuerdosAlternativos = data.get("acuerdosAlternativos");

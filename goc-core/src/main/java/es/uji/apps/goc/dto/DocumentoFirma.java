@@ -1,13 +1,12 @@
 package es.uji.apps.goc.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.Date;
 
-public class DocumentoTemplate
+public class DocumentoFirma
 {
     private Long id;
     private String descripcion;
+    private String descripcionAlternativa;
 
     private String mimeType;
 
@@ -16,6 +15,10 @@ public class DocumentoTemplate
     private Date fechaAdicion;
 
     private Long creadorId;
+
+    private String hash;
+
+    private String urlDescarga;
 
     public Long getId()
     {
@@ -73,5 +76,35 @@ public class DocumentoTemplate
 
     public void setCreadorId(Long creadorId) {
         this.creadorId = creadorId;
+    }
+
+    public String getHash()
+    {
+        return hash;
+    }
+
+    public void setHash(String hash)
+    {
+        this.hash = hash;
+    }
+
+    public String getUrlDescarga()
+    {
+        return urlDescarga;
+    }
+
+    public void setUrlDescarga(String urlDescarga)
+    {
+        this.urlDescarga = urlDescarga;
+    }
+
+    public String getDescripcionAlternativa()
+    {
+        return descripcionAlternativa;
+    }
+
+    public void setDescripcionAlternativa(String descripcionAlternativa)
+    {
+        this.descripcionAlternativa = descripcionAlternativa;
     }
 }

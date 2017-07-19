@@ -68,7 +68,7 @@ public class ReunionFirma implements Serializable
 
     private List<Comentario> comentarios;
 
-    private List<Documento> documentos;
+    private List<DocumentoFirma> documentos;
 
     private List<InvitadoFirma> invitados;
 
@@ -207,12 +207,12 @@ public class ReunionFirma implements Serializable
         this.comentarios = comentarios;
     }
 
-    public List<Documento> getDocumentos()
+    public List<DocumentoFirma> getDocumentos()
     {
         return documentos;
     }
 
-    public void setDocumentos(List<Documento> documentos)
+    public void setDocumentos(List<DocumentoFirma> documentos)
     {
         this.documentos = documentos;
     }

@@ -1,21 +1,17 @@
 package es.uji.apps.goc.services;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
-import java.util.List;
-
+import es.uji.apps.goc.dao.ReunionDocumentoDAO;
+import es.uji.apps.goc.dto.Reunion;
+import es.uji.apps.goc.dto.ReunionDocumento;
 import es.uji.commons.rest.StreamUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.mysema.query.Tuple;
-
-import es.uji.apps.goc.dao.ReunionDocumentoDAO;
-import es.uji.apps.goc.dto.Reunion;
-import es.uji.apps.goc.dto.ReunionDocumento;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
+import java.util.List;
 
 @Service
 @Component
