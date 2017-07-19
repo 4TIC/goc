@@ -15,11 +15,14 @@ Ext.define('goc.view.reunion.ReunionGridController', {
 
     onEdit : function(grid, td, cellindex)
     {
-        var cell = grid.getHeaderCt().getHeaderAtIndex(cellindex);
-
-        if (cell.getReference() === 'documentos')
+        if (grid && grid.getHeaderCt)
         {
-            return this.onAttachmentEdit();
+            var cell = grid.getHeaderCt().getHeaderAtIndex(cellindex);
+
+            if (cell.getReference() === 'documentos')
+            {
+                return this.onAttachmentEdit();
+            }
         }
 
         var grid = this.getView();
