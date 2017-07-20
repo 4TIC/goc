@@ -110,7 +110,16 @@ Ext.define('goc.view.reunion.FormReunionMiembros', {
                         disabled : '{reunionCompletada}'
                     },
                     listeners : {
-                        checkchange : 'onChangeAsistencia'
+                        checkchange : 'onChangeAsistencia',
+                        beforecheckchange : function(me, rowIndex, checked, rec)
+                        {
+                            if (rec.get('delegadoVotoId') || rec.get('suplenteId'))
+                            {
+                                return false;
+                            }
+
+                            return true;
+                        }
                     },
                     renderer : function(value, metadata, rec)
                     {
