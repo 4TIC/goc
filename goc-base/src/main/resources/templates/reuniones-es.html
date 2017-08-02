@@ -18,6 +18,8 @@
             <span class="documentacion"><a th:href="'/goc/rest/publicacion/reuniones/' + ${reunion.id} + '?lang=' + ${applang}">Documentación</a></span>
             <span class="separador">|</span>
             <span><a th:href="'/goc/rest/actas/' + ${reunion.id} + '?lang=' + ${applang}">Acta</a></span>
+            <span class="separador" th:if="${reunion.completada}"> | </span>
+            <span><a th:if="${reunion.completada}" th:href="'/goc/rest/publicacion/reuniones/' + ${reunion.id} + '/acuerdos' + '?lang=' + ${applang}">Puntos orden del día</a></span>
             <span class="separador" th:if="${reunion.completada and reunion.asistente}"> | </span>
             <span><a th:if="${reunion.completada and reunion.asistente}" th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/asistencia' + '?lang=' + ${applang}">Certificado de asistencia</a></span>
             <hr />

@@ -1,40 +1,29 @@
 package es.uji.apps.goc.services;
 
 import com.sun.jersey.api.core.InjectParam;
-
+import es.uji.apps.goc.auth.LanguageConfig;
+import es.uji.apps.goc.auth.PersonalizationConfig;
+import es.uji.apps.goc.dao.ReunionDAO;
 import es.uji.apps.goc.dto.*;
+import es.uji.apps.goc.exceptions.*;
 import es.uji.apps.goc.model.AcuerdosSearch;
-import es.uji.apps.goc.model.Persona;
+import es.uji.apps.goc.templates.HTMLTemplate;
+import es.uji.apps.goc.templates.PDFTemplate;
+import es.uji.apps.goc.templates.Template;
+import es.uji.commons.rest.CoreBaseService;
+import es.uji.commons.sso.AccessManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
-import java.text.ParseException;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-
-import es.uji.apps.goc.auth.LanguageConfig;
-import es.uji.apps.goc.auth.PersonalizationConfig;
-import es.uji.apps.goc.dao.ReunionDAO;
-import es.uji.apps.goc.exceptions.InvalidAccessException;
-import es.uji.apps.goc.exceptions.MiembrosExternosException;
-import es.uji.apps.goc.exceptions.OrganosExternosException;
-import es.uji.apps.goc.exceptions.PersonasExternasException;
-import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
-import es.uji.apps.goc.templates.HTMLTemplate;
-import es.uji.apps.goc.templates.Template;
-import es.uji.commons.rest.CoreBaseService;
-import es.uji.commons.sso.AccessManager;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 @Path("publicacion")
@@ -50,8 +39,14 @@ public class PublicacionService extends CoreBaseService
     @Value("${goc.logo}")
     private String logoUrl;
 
+    @Value("${goc.logoDocumentos}")
+    private String logoDocumentosUrl;
+
     @Value("${goc.charset}")
     private String charset;
+
+    @Value("${goc.nombreInstitucion}")
+    private String nombreInstitucion;
 
     @InjectParam
     private ReunionService reunionService;
@@ -257,5 +252,123 @@ public class PublicacionService extends CoreBaseService
         template.put("permitirComentarios", permitirComentarios);
 
         return template;
+    }
+
+    @GET
+    @Path("reuniones/{reunionId}/acuerdos")
+    @Produces(MediaType.TEXT_HTML)
+    public Template reunionAcuerdos(@PathParam("reunionId") Long reunionId, @QueryParam("lang") String lang)
+            throws OrganosExternosException, MiembrosExternosException, ReunionNoDisponibleException,
+            PersonasExternasException, InvalidAccessException, ReunionNoCompletadaException
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+        Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
+
+        if (reunion == null)
+        {
+            throw new ReunionNoDisponibleException();
+        }
+
+        if (!reunionDAO.tieneAcceso(reunionId, connectedUserId))
+        {
+            throw new InvalidAccessException("No se tiene acceso a esta reunión");
+        }
+
+        if (!reunion.getCompletada())
+        {
+            throw new ReunionNoCompletadaException();
+        }
+
+        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, true,
+                languageConfig.isMainLangauge(lang));
+
+        String applang = languageConfig.getLangCode(lang);
+
+        Template template = new HTMLTemplate("reunion-acuerdos-" + applang);
+        template.put("logo", logoUrl);
+        template.put("charset", charset);
+        template.put("reunion", reunionTemplate);
+        template.put("applang", applang);
+        template.put("mainLanguage", languageConfig.mainLanguage);
+        template.put("alternativeLanguage", languageConfig.alternativeLanguage);
+        template.put("mainLanguageDescription", languageConfig.mainLanguageDescription);
+        template.put("alternativeLanguageDescription", languageConfig.alternativeLanguageDescription);
+        template.put("customCSS", (personalizationConfig.customCSS != null) ? personalizationConfig.customCSS : "");
+        template.put("connectedUserId", connectedUserId);
+
+        return template;
+    }
+
+    @GET
+    @Path("reuniones/{reunionId}/acuerdos/{puntoOrdenDiaId}")
+    @Produces("application/pdf")
+    public Template reunionAcuerdoCertificado(@PathParam("reunionId") Long reunionId,
+            @PathParam("puntoOrdenDiaId") Long puntoOrdenDiaId, @QueryParam("lang") String lang)
+            throws OrganosExternosException, MiembrosExternosException, ReunionNoDisponibleException,
+            PersonasExternasException, InvalidAccessException, ReunionNoCompletadaException,
+            PuntoDelDiaNoDisponibleException, PuntoDelDiaNoTieneAcuerdosException
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+        Reunion reunion = reunionDAO.getReunionConOrganosById(reunionId);
+
+        if (reunion == null)
+        {
+            throw new ReunionNoDisponibleException();
+        }
+
+        if (!reunionDAO.tieneAcceso(reunionId, connectedUserId))
+        {
+            throw new InvalidAccessException("No se tiene acceso a esta reunión");
+        }
+
+        if (!reunion.getCompletada())
+        {
+            throw new ReunionNoCompletadaException();
+        }
+
+        ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, true,
+                languageConfig.isMainLangauge(lang));
+
+        PuntoOrdenDiaTemplate puntoOrdenDiaTemplate = reunionTemplate.getPuntosOrdenDia().stream().filter(p -> p.getId().equals(puntoOrdenDiaId)).findFirst().orElse(null);
+
+        if (puntoOrdenDiaTemplate == null)
+        {
+            throw new PuntoDelDiaNoDisponibleException();
+        }
+
+        if (puntoOrdenDiaTemplate.getAcuerdos() == null || puntoOrdenDiaTemplate.getAcuerdos().isEmpty())
+        {
+            throw new PuntoDelDiaNoTieneAcuerdosException();
+        }
+
+        String applang = languageConfig.getLangCode(lang);
+
+        Template template = new PDFTemplate("reunion-acuerdo-" + applang);
+        template.put("logo", logoDocumentosUrl);
+        template.put("puntoOrdenDia", puntoOrdenDiaTemplate);
+        template.put("nombreInstitucion", nombreInstitucion);
+        template.put("fechaReunion", getFechaReunion(reunionTemplate.getFecha()));
+        template.put("tituloReunion", reunionTemplate.getAsunto());
+        template.put("organos", getNombreOrganos(reunionTemplate));
+
+        return template;
+    }
+
+    private String getFechaReunion(Date fecha)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+        return sdf.format(fecha);
+    }
+
+    private String getNombreOrganos(ReunionTemplate reunionTemplate)
+    {
+        List<String> nombreOrganos = new ArrayList<>();
+
+        for (OrganoTemplate organo : reunionTemplate.getOrganos())
+        {
+            nombreOrganos.add(organo.getNombre());
+        }
+
+        return StringUtils.join(nombreOrganos, ", ");
     }
 }

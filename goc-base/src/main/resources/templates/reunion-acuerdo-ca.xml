@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:th="http://www.thymeleaf.org">
+    <fo:layout-master-set>
+        <fo:simple-page-master master-name="acta"
+                               margin-right="2.5cm" margin-left="2.5cm" margin-bottom="1.00cm" margin-top="1.00cm"
+                               page-width="21.00cm" page-height="29.70cm">
+            <fo:region-body margin-top="4cm" margin-bottom="2.5cm"/>
+            <fo:region-before extent="4.00cm"/>
+            <fo:region-after extent="2.00cm"/>
+        </fo:simple-page-master>
+    </fo:layout-master-set>
+
+    <fo:page-sequence master-reference="acta">
+        <fo:static-content flow-name="xsl-region-before">
+            <fo:block font-size="10pt" space-after="0.1cm">
+                <fo:table border-width="0.06cm" text-align="start">
+                    <fo:table-column column-width="3cm"/>
+                    <fo:table-column column-width="7.7cm"/>
+                    <fo:table-column column-width="7cm"/>
+
+                    <fo:table-body>
+                        <fo:table-row>
+                            <fo:table-cell display-align="center">
+                                <fo:block font-size="10pt" text-align="center">
+                                    <fo:external-graphic th:src="${logo}" content-height="2.5cm"/>
+                                </fo:block>
+                            </fo:table-cell>
+
+                            <fo:table-cell display-align="center" border-right="solid" border-width="0.2cm"
+                                           padding="0.4cm">
+                                <fo:block font-size="12pt" font-weight="bold" text-align="end">
+                                    <fo:inline th:text="${nombreInstitucion}">25</fo:inline>
+                                </fo:block>
+                            </fo:table-cell>
+
+                            <fo:table-cell display-align="center" padding="0.4cm">
+                                <fo:block font-size="11pt">Certificat d'acords adoptats</fo:block>
+                            </fo:table-cell>
+                        </fo:table-row>
+                    </fo:table-body>
+                </fo:table>
+            </fo:block>
+        </fo:static-content>
+
+        <fo:flow flow-name="xsl-region-body">
+            <fo:block>
+                Per la present, certifique que el <fo:inline th:text="${organos}"></fo:inline>, en sessió del
+                dia <fo:inline th:text="${fechaReunion}"></fo:inline>, va adoptar l'acord de
+                <fo:inline th:text="${puntoOrdenDia.acuerdos}"></fo:inline>
+            </fo:block>
+        </fo:flow>
+    </fo:page-sequence>
+</fo:root>

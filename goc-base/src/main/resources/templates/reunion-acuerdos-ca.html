@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <div th:substituteby="head-ca" />
+  <body>
+    <div class="off-canvas-content" data-off-canvas-content="data-off-canvas-content">
+      <div th:substituteby="header-es" />
+    </div>
+    <main class="columns reunion">
+      <div class="row columns">
+        <h2 th:text="'Reunió: ' + ${reunion.asunto}" class="title">title</h2>
+      </div>
+      <div class="row columns">
+        <h3 class="title" >Informació bàsica</h3>      
+      </div>
+      <ul class="contentList detalle row columns">
+        <li th:utext="'&lt;strong&gt;Data&lt;/strong&gt;: ' + ${#dates.format(reunion.fecha, 'dd/MM/YYYY HH:mm')}"></li>
+        <li th:if="${reunion.fechaSegundaConvocatoria}" th:utext="'&lt;strong&gt;Segona convocatòria&lt;/strong&gt;: ' + ${#dates.format(reunion.fechaSegundaConvocatoria, 'dd/MM/YYYY HH:mm')}"></li>
+        <li th:if="${reunion.responsableActa}" th:utext="'&lt;strong&gt;Responsable d\'acta&lt;/strong&gt;: ' + ${reunion.responsableActa}"></li>
+        <li th:if="${reunion.numeroSesion} != null" th:utext="'&lt;strong&gt;Número de sessió&lt;/strong&gt;: ' + ${reunion.numeroSesion}"></li>
+        <li th:if="${reunion.ubicacion}" th:utext="'&lt;strong&gt;Lloc&lt;/strong&gt;: ' + ${reunion.ubicacion}"></li>
+        <li th:utext="'&lt;strong&gt;Duració&lt;/strong&gt;: ' + ${reunion.duracion} + ' minuts'"></li>
+        <li th:if="${reunion.descripcion}" th:utext="'&lt;strong&gt;Descripció&lt;/strong&gt;: ' + ${reunion.descripcion}"></li>
+        <li th:if="${reunion.acuerdos != null}" th:utext="'&lt;strong&gt;Acords&lt;/strong&gt;: ' + ${reunion.acuerdos}"></li>
+        <li th:if="${reunion.urlGrabacion != null}"><strong>URL gravació</strong>: <a th:href="${reunion.urlGrabacion}" th:text="${reunion.urlGrabacion}"></a></li>
+        <li th:if="${reunion.telematica}"><strong>Reunió telemàtica. Instruccions</strong>: <span th:text="${reunion.telematicaDescripcion}"></span></li>
+      </ul>
+      <div th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}" class="row columns">
+        <h3 class="title">Punts de l'ordre del dia</h3>      
+      </div>
+      <ol th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}" class="detalle row columns">
+        <li th:each="puntoOrdenDia : ${reunion.puntosOrdenDia}">
+          <strong th:text="${puntoOrdenDia.titulo}"></strong>
+          <div th:if="${puntoOrdenDia.descripcion} != null" th:utext="'&lt;strong&gt;Descripció&lt;/strong&gt;: ' + ${puntoOrdenDia.descripcion}"></div>
+          <div th:if="${puntoOrdenDia.deliberaciones} != null" th:utext="'&lt;strong&gt;Deliberacions&lt;/strong&gt;: ' + ${puntoOrdenDia.deliberaciones}"></div>
+          <div th:if="${puntoOrdenDia.acuerdos} != null" th:utext="'&lt;strong&gt;Acords&lt;/strong&gt;: ' + ${puntoOrdenDia.acuerdos}"></div>
+          <div th:if="${puntoOrdenDia.acuerdos} != null">
+            <span><a th:href="'/goc/rest/publicacion/reuniones/' + ${reunion.id} + '/acuerdos/' + ${puntoOrdenDia.id} + '?lang=' + ${applang}">Certificat</a></span>
+          </div>
+          <br/>
+        </li>
+      </ol>
+    </main>
+  </body>
+</html>
