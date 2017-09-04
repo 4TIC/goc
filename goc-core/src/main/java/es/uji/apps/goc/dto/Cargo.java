@@ -12,6 +12,8 @@ public class Cargo implements Serializable
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String codigo;
+
     private String nombre;
 
     @Column(name = "NOMBRE_ALT")
@@ -67,5 +69,15 @@ public class Cargo implements Serializable
     public void setNombreAlternativo(String nombreAlternativo)
     {
         this.nombreAlternativo = nombreAlternativo;
+    }
+
+    public String getCodigo()
+    {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo)
+    {
+        this.codigo = codigo;
     }
 }

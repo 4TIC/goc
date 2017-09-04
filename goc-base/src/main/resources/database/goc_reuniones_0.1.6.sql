@@ -114,5 +114,13 @@ AS
             persona_id,
             persona_nombre;
 
+alter table goc_cargos add (codigo varchar2(10));
 
+ALTER TABLE UJI_REUNIONES.GOC_CARGOS
+MODIFY(CODIGO  NOT NULL);
 
+ALTER TABLE UJI_REUNIONES.GOC_CARGOS ADD
+CONSTRAINT GOC_CARGOS_U01
+ UNIQUE (CODIGO)
+ ENABLE
+ VALIDATE;

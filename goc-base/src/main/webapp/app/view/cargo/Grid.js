@@ -5,9 +5,18 @@ var cargoGridColumns = [
         hidden : true
     },
     {
+        text : getMultiLangLabel(appI18N.cargos.codigo, mainLanguage),
+        dataIndex : 'codigo',
+        editor : {
+            field : {
+                allowBlank : false
+            }
+        }
+    },
+    {
         text : getMultiLangLabel(appI18N.cargos.nombre, mainLanguage),
         dataIndex : 'nombre',
-        flex : 4,
+        flex : 1,
         editor : {
             field : {
                 allowBlank : false
@@ -21,7 +30,7 @@ if (isMultilanguageApplication())
     cargoGridColumns.push({
         text : getMultiLangLabel(appI18N.cargos.nombre, alternativeLanguage),
         dataIndex : 'nombreAlternativo',
-        flex : 4,
+        flex : 1,
         editor : {
             field : {
                 allowBlank : false
