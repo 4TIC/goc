@@ -29,10 +29,12 @@
     <div class="row columns">
       <ul class="menu">
         <li>
-          <a href="/goc/rest/publicacion/acuerdos">Buscador de acuerdos</a>
+          <a th:if="${alternativeLanguage and alternativeLanguage != ''}" href="/goc/rest/publicacion/acuerdos?lang=es">Buscador de acuerdos</a>
+          <a th:unless="${alternativeLanguage and alternativeLanguage != ''}" href="/goc/rest/publicacion/acuerdos">Buscador de acuerdos</a>
         </li>
         <li>
-          <a href="/goc/rest/publicacion/reuniones">Mis reuniones</a>
+          <a th:if="${alternativeLanguage and alternativeLanguage != ''}" href="/goc/rest/publicacion/reuniones?lang=es">Mis reuniones</a>
+          <a th:unless="${alternativeLanguage and alternativeLanguage != ''}" href="/goc/rest/publicacion/reuniones">Mis reuniones</a>
         </li>
       </ul>
     </div>
