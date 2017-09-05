@@ -69,9 +69,11 @@ public class ExternalFirmasTest extends JerseySpringTest
 
         Cargo c1 = new Cargo();
         c1.setId("1");
+        c1.setCodigo("PR");
         c1.setNombre("Presidente");
         Cargo c2 = new Cargo();
         c2.setId("2");
+        c2.setCodigo("VO");
         c2.setNombre("Vocal");
 
         MiembroFirma m1 = new MiembroFirma();

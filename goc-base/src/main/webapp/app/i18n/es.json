@@ -201,7 +201,8 @@
   "cargos": {
     "titulo": "Cargos",
     "nombre": "Nombre",
-    "seleccionaUnCargo": "Selecciona un cargo"
+    "seleccionaUnCargo": "Selecciona un cargo",
+    "codigo": "Código"
   },
   "acta": {
     "comentarios": "Comentarios",

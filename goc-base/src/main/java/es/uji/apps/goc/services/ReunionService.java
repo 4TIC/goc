@@ -848,6 +848,7 @@ public class ReunionService
 
         Cargo cargo = new Cargo();
         cargo.setId(organoReunionMiembro.getCargoId());
+        cargo.setCodigo(organoReunionMiembro.getCargoCodigo());
         cargo.setNombre(organoReunionMiembro.getCargoNombre());
         cargo.setNombreAlternativo(organoReunionMiembro.getCargoNombreAlternativo());
 

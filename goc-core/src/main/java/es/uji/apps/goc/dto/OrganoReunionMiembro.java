@@ -42,6 +42,9 @@ public class OrganoReunionMiembro implements Serializable
     @Column(name = "CARGO_ID")
     private String cargoId;
 
+    @Column(name = "CARGO_CODIGO")
+    private String cargoCodigo;
+
     @Column(name = "CARGO_NOMBRE")
     private String cargoNombre;
 
@@ -275,5 +278,15 @@ public class OrganoReunionMiembro implements Serializable
     public void setDelegadoVotoEmail(String delegadoVotoEmail)
     {
         this.delegadoVotoEmail = delegadoVotoEmail;
+    }
+
+    public String getCargoCodigo()
+    {
+        return cargoCodigo;
+    }
+
+    public void setCargoCodigo(String cargoCodigo)
+    {
+        this.cargoCodigo = cargoCodigo;
     }
 }

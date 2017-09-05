@@ -110,6 +110,7 @@ public class Miembro
         organoReunionMiembro.setReunionId(organoReunion.getReunion().getId());
         organoReunionMiembro.setMiembroId(this.getPersonaId().toString());
         organoReunionMiembro.setCargoId(this.getCargo().getId());
+        organoReunionMiembro.setCargoCodigo(this.getCargo().getCodigo());
         organoReunionMiembro.setCargoNombre(this.getCargo().getNombre());
         organoReunionMiembro.setCargoNombreAlternativo(this.getCargo().getNombreAlternativo());
 

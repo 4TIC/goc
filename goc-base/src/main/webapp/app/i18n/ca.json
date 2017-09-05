@@ -201,7 +201,8 @@
   "cargos": {
     "titulo": "Càrrecs",
     "nombre": "Nom",
-    "seleccionaUnCargo": "Selecciona un càrrec"
+    "seleccionaUnCargo": "Selecciona un càrrec",
+    "codigo": "Codi"
   },
   "acta": {
     "comentarios": "Comentaris",

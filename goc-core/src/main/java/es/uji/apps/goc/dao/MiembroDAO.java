@@ -67,6 +67,7 @@ public class MiembroDAO extends BaseDAODatabaseImpl
         if (miembroLocal.getCargo() != null)
         {
             Cargo cargo = new Cargo(miembroLocal.getCargo().getId().toString());
+            cargo.setCodigo(miembroLocal.getCargo().getCodigo());
             cargo.setNombre(miembroLocal.getCargo().getNombre());
             cargo.setNombreAlternativo(miembroLocal.getCargo().getNombreAlternativo());
             miembro.setCargo(cargo);
@@ -150,54 +151,5 @@ public class MiembroDAO extends BaseDAODatabaseImpl
         return miembroLocal;
     }
 
-    public List<Miembro> getMiembrosExternos(String organoId, Long connectedUserId)
-            throws MiembrosExternosException
-    {
-        WebResource getMiembrosResource =
-                Client.create().resource(this.miembrosExternosEndpoint.replace("{organoId}", organoId));
 
-        ClientResponse response = getMiembrosResource.type(MediaType.APPLICATION_JSON)
-                .header("X-UJI-AuthToken", authToken)
-                .get(ClientResponse.class);
-
-        if (response.getStatus() != 200)
-        {
-            throw new MiembrosExternosException();
-        }
-
-        JSONListaMiembrosDeserializer jsonDeserializer = response.getEntity(JSONListaMiembrosDeserializer.class);
-
-        List<MiembroExterno> listaMiembrosExternos = jsonDeserializer.getMiembros();
-        return creaListaMiembroDesdeListaMiembrosExternos(listaMiembrosExternos);
-    }
-
-    private List<Miembro> creaListaMiembroDesdeListaMiembrosExternos(List<MiembroExterno> listaMiembrosExternos)
-    {
-        List<Miembro> listaMiembros = new ArrayList<>();
-
-        for (MiembroExterno miembroExterno : listaMiembrosExternos)
-        {
-            listaMiembros.add(creaMiembroDesdeMiembroExterno(miembroExterno));
-        }
-
-        return listaMiembros;
-    }
-
-    private Miembro creaMiembroDesdeMiembroExterno(MiembroExterno miembroExterno)
-    {
-        Cargo cargo = new Cargo(miembroExterno.getCargo().getId().toString());
-        cargo.setNombre(miembroExterno.getCargo().getNombre());
-        cargo.setNombreAlternativo(miembroExterno.getCargo().getNombreAlternativo());
-
-        Miembro miembro = new Miembro();
-        miembro.setId(miembroExterno.getId());
-        miembro.setPersonaId(miembroExterno.getId());
-        miembro.setNombre(miembroExterno.getNombre());
-        miembro.setEmail(miembroExterno.getEmail());
-        miembro.setCargo(cargo);
-
-        miembro.setOrgano(new Organo(miembroExterno.getOrgano().getId()));
-
-        return miembro;
-    }
 }

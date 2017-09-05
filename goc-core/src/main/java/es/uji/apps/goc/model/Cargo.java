@@ -6,6 +6,8 @@ public class Cargo
 {
     private String id;
 
+    private String codigo;
+
     private String nombre;
 
     private String nombreAlternativo;
@@ -53,5 +55,15 @@ public class Cargo
     public void setNombreAlternativo(String nombreAlternativo)
     {
         this.nombreAlternativo = nombreAlternativo;
+    }
+
+    public String getCodigo()
+    {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo)
+    {
+        this.codigo = codigo;
     }
 }
