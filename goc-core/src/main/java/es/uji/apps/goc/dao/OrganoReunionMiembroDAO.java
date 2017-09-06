@@ -2,7 +2,9 @@ package es.uji.apps.goc.dao;
 
 import java.util.List;
 
+import com.mysema.query.jpa.impl.JPADeleteClause;
 import com.mysema.query.types.expr.BooleanExpression;
+import es.uji.apps.goc.dto.Cargo;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -120,16 +122,6 @@ public class OrganoReunionMiembroDAO extends BaseDAODatabaseImpl
                 .list(qOrganoReunionMiembro);
     }
 
-    public List<OrganoReunionMiembro> getAsistentesByReunionId(Long reunionId)
-    {
-        JPAQuery query = new JPAQuery(entityManager);
-
-        return query.from(qOrganoReunionMiembro)
-                .where(qOrganoReunionMiembro.reunionId.eq(reunionId).and(qOrganoReunionMiembro.asistencia.eq(true)))
-                .orderBy(qOrganoReunionMiembro.nombre.asc())
-                .list(qOrganoReunionMiembro);
-    }
-
     public OrganoReunionMiembro getByReunionAndOrganoAndEmail(Long reunionId, String organoId, Boolean externo,
             String email)
     {
@@ -145,5 +137,33 @@ public class OrganoReunionMiembroDAO extends BaseDAODatabaseImpl
         if (miembros.size() == 0) return null;
 
         return miembros.get(0);
+    }
+
+    @Transactional
+    public void deleteByOrganoReunionIdPersonaIdAndCargoId(Long organoReunionId, String personaId, String cargoId)
+    {
+        JPADeleteClause deleteClause = new JPADeleteClause(entityManager, qOrganoReunionMiembro);
+
+        deleteClause.where(qOrganoReunionMiembro.organoReunion.id.eq(organoReunionId)
+                .and(qOrganoReunionMiembro.miembroId.eq(personaId).and(qOrganoReunionMiembro.cargoId.eq(cargoId))))
+                .execute();
+    }
+
+    public void ByOrganoReunionIdPersonaIdAndCargoId(Long organoReunionId, String personaId, String cargoId,
+            String nombre, String email, Cargo cargo)
+    {
+        JPAUpdateClause update = new JPAUpdateClause(entityManager, qOrganoReunionMiembro);
+
+        update.set(qOrganoReunionMiembro.nombre, nombre).
+                set(qOrganoReunionMiembro.email, email).
+                set(qOrganoReunionMiembro.cargoId, cargo.getId().toString()).
+                set(qOrganoReunionMiembro.cargoCodigo, cargo.getCodigo()).
+                set(qOrganoReunionMiembro.cargoNombre, cargo.getNombre()).
+                set(qOrganoReunionMiembro.cargoNombreAlternativo, cargo.getNombreAlternativo()).
+                where(qOrganoReunionMiembro.organoReunion.id.eq(organoReunionId)
+                        .and(qOrganoReunionMiembro.miembroId.eq(personaId)
+                                .and(qOrganoReunionMiembro.cargoId.eq(cargoId))));
+
+        update.execute();
     }
 }

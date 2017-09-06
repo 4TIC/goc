@@ -76,6 +76,7 @@ public class MiembroService
 
         List<OrganoReunion> organoReuniones =
                 organoReunionDAO.getOrganosReunionNoCompletadasByOrganoId(Long.parseLong(miembro.getOrgano().getId()));
+
         for (OrganoReunion organoReunion : organoReuniones)
         {
             OrganoReunionMiembro organoReunionMiembro = miembro.toOrganoReunionMiembro(organoReunion);
@@ -85,26 +86,40 @@ public class MiembroService
         return miembro;
     }
 
+    @Transactional
     public Miembro updateMiembro(Long miembroId, String nombre, String email, String cargoId, Long connectedUserId)
             throws OrganoNoDisponibleException, MiembroNoDisponibleException
     {
         Miembro miembro = miembroDAO.getMiembroByIdAndUserId(miembroId, connectedUserId);
-        miembro.setNombre(nombre);
-        miembro.setEmail(email);
-
-        if (cargoId != null)
-        {
-            miembro.setCargo(new Cargo(cargoId));
-        }
 
         if (miembro == null)
         {
             throw new MiembroNoDisponibleException();
         }
 
+        miembro.setNombre(nombre);
+        miembro.setEmail(email);
+
+        es.uji.apps.goc.dto.Cargo cargo =
+                cargoDAO.get(es.uji.apps.goc.dto.Cargo.class, Long.parseLong(cargoId)).get(0);
+
+        miembro.getCargo().setCodigo(cargo.getCodigo());
+        miembro.getCargo().setNombre(cargo.getNombre());
+        miembro.getCargo().setNombreAlternativo(cargo.getNombreAlternativo());
+
+        List<OrganoReunion> organoReuniones =
+                organoReunionDAO.getOrganosReunionNoCompletadasByOrganoId(Long.parseLong(miembro.getOrgano().getId()));
+
+        for (OrganoReunion organoReunion : organoReuniones)
+        {
+            organoReunionMiembroDAO.ByOrganoReunionIdPersonaIdAndCargoId(organoReunion.getId(),
+                    miembro.getPersonaId().toString(), miembro.getCargo().getId(), nombre, email, cargo);
+        }
+
         return miembroDAO.updateMiembro(miembro);
     }
 
+    @Transactional
     public void removeMiembroById(Long miembroId, Long connectedUserId)
             throws MiembroNoDisponibleException
     {
@@ -116,6 +131,15 @@ public class MiembroService
         }
 
         miembroDAO.delete(MiembroLocal.class, miembroId);
+
+        List<OrganoReunion> organoReuniones =
+                organoReunionDAO.getOrganosReunionNoCompletadasByOrganoId(Long.parseLong(miembro.getOrgano().getId()));
+
+        for (OrganoReunion organoReunion : organoReuniones)
+        {
+            organoReunionMiembroDAO.deleteByOrganoReunionIdPersonaIdAndCargoId(organoReunion.getId(),
+                    miembro.getPersonaId().toString(), miembro.getCargo().getId());
+        }
     }
 
     public List<Miembro> getMiembrosExternos(String organoId, Long connectedUserId)
