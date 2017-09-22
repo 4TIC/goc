@@ -30,6 +30,11 @@ public class ReunionPermiso
     @Column(name = "PERSONA_NOMBRE")
     private String personaNombre;
 
+    @Column(name = "URL_ACTA")
+    private String urlActa;
+
+    @Column(name = "URL_ACTA_ALT")
+    private String urlActaAlternativa;
 
     public ReunionPermiso()
     {
@@ -118,5 +123,25 @@ public class ReunionPermiso
     public void setPersonaNombre(String personaNombre)
     {
         this.personaNombre = personaNombre;
+    }
+
+    public String getUrlActa()
+    {
+        return urlActa;
+    }
+
+    public void setUrlActa(String urlActa)
+    {
+        this.urlActa = urlActa;
+    }
+
+    public String getUrlActaAlternativa()
+    {
+        return urlActaAlternativa;
+    }
+
+    public void setUrlActaAlternativa(String urlActaAlternativa)
+    {
+        this.urlActaAlternativa = urlActaAlternativa;
     }
 }

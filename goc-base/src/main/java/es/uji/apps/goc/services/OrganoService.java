@@ -120,6 +120,7 @@ public class OrganoService
         ClientResponse response = getOrganosResource.type(MediaType.APPLICATION_JSON)
                 .header("X-UJI-AuthToken", authToken)
                 .get(ClientResponse.class);
+
         if (response.getStatus() != 200)
         {
             throw new OrganosExternosException();

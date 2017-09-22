@@ -87,6 +87,9 @@ public class PublicacionService extends CoreBaseService
         {
             reunionPermiso.setAsunto(languageConfig.isMainLangauge(
                     lang) ? reunionPermiso.getAsunto() : reunionPermiso.getAsuntoAlternativo());
+
+            reunionPermiso.setUrlActa(languageConfig.isMainLangauge(lang) ? reunionPermiso.getUrlActa() : reunionPermiso
+                    .getUrlActaAlternativa());
         }
 
         return reuniones;
@@ -329,7 +332,11 @@ public class PublicacionService extends CoreBaseService
         ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, true,
                 languageConfig.isMainLangauge(lang));
 
-        PuntoOrdenDiaTemplate puntoOrdenDiaTemplate = reunionTemplate.getPuntosOrdenDia().stream().filter(p -> p.getId().equals(puntoOrdenDiaId)).findFirst().orElse(null);
+        PuntoOrdenDiaTemplate puntoOrdenDiaTemplate = reunionTemplate.getPuntosOrdenDia()
+                .stream()
+                .filter(p -> p.getId().equals(puntoOrdenDiaId))
+                .findFirst()
+                .orElse(null);
 
         if (puntoOrdenDiaTemplate == null)
         {

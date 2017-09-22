@@ -100,6 +100,12 @@ public class Reunion implements Serializable
     @Column(name = "AVISO_PRIMERA_REUNION")
     private Boolean avisoPrimeraReunion;
 
+    @Column(name = "URL_ACTA")
+    private String urlActa;
+
+    @Column(name = "URL_ACTA_ALT")
+    private String urlActaAlternativa;
+
     @OneToOne
     @JoinColumn(name = "MIEMBRO_RESPONSABLE_ACTA_ID")
     private OrganoReunionMiembro miembroResponsableActa;
@@ -533,5 +539,25 @@ public class Reunion implements Serializable
     public void setReunionBusqueda(Set<ReunionBusqueda> reunionBusqueda)
     {
         this.reunionBusqueda = reunionBusqueda;
+    }
+
+    public String getUrlActa()
+    {
+        return urlActa;
+    }
+
+    public void setUrlActa(String urlActa)
+    {
+        this.urlActa = urlActa;
+    }
+
+    public String getUrlActaAlternativa()
+    {
+        return urlActaAlternativa;
+    }
+
+    public void setUrlActaAlternativa(String urlActaAlternativa)
+    {
+        this.urlActaAlternativa = urlActaAlternativa;
     }
 }

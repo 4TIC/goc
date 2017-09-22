@@ -6,6 +6,7 @@ import com.mysema.query.jpa.impl.JPAUpdateClause;
 import com.mysema.query.types.expr.BooleanExpression;
 import es.uji.apps.goc.dto.*;
 import es.uji.apps.goc.model.Persona;
+import es.uji.apps.goc.model.RespuestaFirma;
 import es.uji.commons.db.BaseDAODatabaseImpl;
 import es.uji.commons.rest.StringUtils;
 import org.springframework.stereotype.Repository;
@@ -83,8 +84,8 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     }
 
     @Transactional
-    public void marcarReunionComoCompletadaYActualizarAcuerdo(Long reunionId, Long responsableActaId, String acuerdos,
-            String acuerdosAlternativos)
+    public void marcarReunionComoCompletadaYActualizarAcuerdoYUrl(Long reunionId, Long responsableActaId, String acuerdos,
+            String acuerdosAlternativos, RespuestaFirma respuestaFirma)
     {
         JPAUpdateClause update = new JPAUpdateClause(entityManager, qReunion);
         update.set(qReunion.completada, true)
@@ -92,6 +93,8 @@ public class ReunionDAO extends BaseDAODatabaseImpl
                 .set(qReunion.miembroResponsableActa.id, responsableActaId)
                 .set(qReunion.acuerdos, acuerdos)
                 .set(qReunion.acuerdosAlternativos, acuerdosAlternativos)
+                .set(qReunion.urlActa, respuestaFirma.getUrlActa())
+                .set(qReunion.urlActaAlternativa, respuestaFirma.getUrlActaAlternativa())
                 .where(qReunion.id.eq(reunionId));
         update.execute();
     }

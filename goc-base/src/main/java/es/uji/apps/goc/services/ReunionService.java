@@ -349,13 +349,18 @@ public class ReunionService
                 .header("X-UJI-AuthToken", authToken)
                 .post(ClientResponse.class, reunionFirma);
 
-        if (response.getStatus() != 204)
+        if (response.getStatus() != 200)
         {
             throw new FirmaReunionException();
         }
 
-        reunionDAO.marcarReunionComoCompletadaYActualizarAcuerdo(reunionId, responsableActaId, acuerdos,
-                acuerdosAlternativos);
+        JSONRespuestaFirmaDeserializer jsonDeserializer =
+                response.getEntity(JSONRespuestaFirmaDeserializer.class);
+
+        RespuestaFirma respuestaFirma = jsonDeserializer.getRespuestaFirma();
+
+        reunionDAO.marcarReunionComoCompletadaYActualizarAcuerdoYUrl(reunionId, responsableActaId, acuerdos,
+                acuerdosAlternativos, respuestaFirma);
     }
 
     private ReunionFirma reunionFirmaDesdeReunion(Reunion reunion, Long responsableActaId, Long connectedUserId)
@@ -635,6 +640,7 @@ public class ReunionService
         reunionTemplate.setCreadorNombre(reunion.getCreadorNombre());
         reunionTemplate.setCreadorEmail(reunion.getCreadorEmail());
         reunionTemplate.setCreadorId(reunion.getCreadorId());
+        reunionTemplate.setUrlActa(mainLanguage ? reunion.getUrlActa() : reunion.getUrlActaAlternativa());
 
         if (reunion.getMiembroResponsableActa() != null)
         {

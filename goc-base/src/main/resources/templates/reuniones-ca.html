@@ -17,7 +17,10 @@
             <span class="separador">&nbsp;</span>
             <span class="documentacion"><a th:href="'/goc/rest/publicacion/reuniones/' + ${reunion.id} + '?lang=' + ${applang}">Documentació</a></span>
             <span class="separador">|</span>
-            <span><a th:href="'/goc/rest/actas/' + ${reunion.id} + '?lang=' + ${applang}">Acta</a></span>
+            <span>
+              <a th:if="${reunion.urlActa}" th:href="${reunion.urlActa}">Acta</a>
+              <span th:unless="${reunion.urlActa}" data-tooltip="data-tooltip" class="has-tip link-desactivado" title="Acta no disponible fins que finalitze la reunió">Acta</span>
+            </span>
             <span class="separador" th:if="${reunion.completada}"> | </span>
             <span><a th:if="${reunion.completada}" th:href="'/goc/rest/publicacion/reuniones/' + ${reunion.id} + '/acuerdos' + '?lang=' + ${applang}">Punts d'ordre del dia</a></span>
             <span class="separador" th:if="${reunion.completada and reunion.asistente}"> | </span>

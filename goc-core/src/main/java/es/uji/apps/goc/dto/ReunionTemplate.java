@@ -1,11 +1,10 @@
 package es.uji.apps.goc.dto;
 
+import es.uji.apps.goc.model.Comentario;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
-import es.uji.apps.goc.model.Comentario;
-import es.uji.apps.goc.model.Documento;
 
 public class ReunionTemplate implements Serializable
 {
@@ -62,6 +61,8 @@ public class ReunionTemplate implements Serializable
     private List<DocumentoTemplate> documentos;
 
     private List<InvitadoTemplate> invitados;
+
+    private String urlActa;
 
     public ReunionTemplate()
     {
@@ -341,5 +342,15 @@ public class ReunionTemplate implements Serializable
     public void setAdmiteDelegacionVoto(Boolean admiteDelegacionVoto)
     {
         this.admiteDelegacionVoto = admiteDelegacionVoto;
+    }
+
+    public String getUrlActa()
+    {
+        return urlActa;
+    }
+
+    public void setUrlActa(String urlActa)
+    {
+        this.urlActa = urlActa;
     }
 }
