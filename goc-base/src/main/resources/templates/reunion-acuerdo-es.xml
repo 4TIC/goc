@@ -33,13 +33,9 @@
               </fo:table-cell>
 
               <fo:table-cell display-align="center" padding="0.4cm">
-                <fo:block>
-                  Por la presente, certifico que el <fo:inline th:text="${organos}"></fo:inline>, en sesión celebrada el
-                  dia <fo:inline th:text="${fechaReunion}"></fo:inline>, adoptó el acuerdo de
-                  <fo:inline th:text="${puntoOrdenDia.acuerdos}"></fo:inline>
-                </fo:block>
-
+                <fo:block font-size="11pt">Certificado de acuerdos adoptados</fo:block>
               </fo:table-cell>
+
             </fo:table-row>
           </fo:table-body>
         </fo:table>
@@ -48,7 +44,9 @@
 
     <fo:flow flow-name="xsl-region-body">
       <fo:block>
-        Por la presente, certifico que
+        Por la presente, certifico que el <fo:inline th:text="${organos}"></fo:inline>, en sesión celebrada el
+        dia <fo:inline th:text="${fechaReunion}"></fo:inline>, adoptó el acuerdo de
+        <fo:inline th:text="${puntoOrdenDia.acuerdos}"></fo:inline>
       </fo:block>
     </fo:flow>
   </fo:page-sequence>
