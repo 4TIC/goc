@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ws.rs.core.MediaType;
 
 import es.uji.apps.goc.dto.*;
+import es.uji.apps.goc.model.RespuestaFirma;
 import org.junit.Test;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -14,6 +15,8 @@ import com.sun.jersey.api.client.ClientResponse;
 import es.uji.apps.goc.model.Cargo;
 
 import static es.uji.commons.testing.hamcrest.ClientNoContentResponseMatcher.noContentClientResponse;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 
 public class ExternalFirmasTest extends JerseySpringTest
@@ -26,7 +29,11 @@ public class ExternalFirmasTest extends JerseySpringTest
         ClientResponse response = this.resource.path(firmasUrl).type(MediaType.APPLICATION_JSON)
                 .header("X-UJI-AuthToken", authToken).post(ClientResponse.class, reunionFirma);
 
-        assertThat(response, noContentClientResponse());
+        assertThat(response.getStatus(), equalTo(200));
+
+        RespuestaFirma respuestaFirma = RespuestaFirma.buildRespuestaFirma(response);
+
+        assertThat(respuestaFirma.getUrlActa(), notNullValue());
     }
 
     private ReunionFirma getReunionExterna()

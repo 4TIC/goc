@@ -1,5 +1,11 @@
 package es.uji.apps.goc;
 
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import es.uji.commons.rest.json.UIEntityListMessageBodyReader;
+import es.uji.commons.rest.json.UIEntityMessageBodyReader;
+import es.uji.commons.rest.json.UIEntityMessageBodyWriter;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,5 +45,15 @@ public class Utils
         }
 
         return new String(hexChars);
+    }
+
+    public static ClientConfig createClientConfig()
+    {
+        ClientConfig config = new DefaultClientConfig();
+        config.getClasses().add(UIEntityMessageBodyReader.class);
+        config.getClasses().add(UIEntityListMessageBodyReader.class);
+        config.getClasses().add(UIEntityMessageBodyWriter.class);
+
+        return config;
     }
 }

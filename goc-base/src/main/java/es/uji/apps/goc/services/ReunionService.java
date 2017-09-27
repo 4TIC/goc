@@ -1,8 +1,12 @@
 package es.uji.apps.goc.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.core.InjectParam;
 import es.uji.apps.goc.Utils;
 import es.uji.apps.goc.auth.LanguageConfig;
@@ -12,19 +16,26 @@ import es.uji.apps.goc.exceptions.*;
 import es.uji.apps.goc.model.*;
 import es.uji.apps.goc.model.Cargo;
 import es.uji.apps.goc.notifications.AvisosReunion;
+import es.uji.commons.rest.UIEntity;
+import es.uji.commons.rest.json.UIEntityListMessageBodyReader;
+import es.uji.commons.rest.json.UIEntityMessageBodyReader;
+import es.uji.commons.rest.json.UIEntityMessageBodyWriter;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.w3c.dom.events.UIEvent;
 
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -344,7 +355,10 @@ public class ReunionService
 
         ReunionFirma reunionFirma = reunionFirmaDesdeReunion(reunion, responsableActaId, connectedUserId);
 
-        WebResource getFirmasResource = Client.create().resource(this.firmasEndpoint);
+        Client client = Client.create(Utils.createClientConfig());
+
+        WebResource getFirmasResource = client.resource(this.firmasEndpoint);
+
         ClientResponse response = getFirmasResource.type(MediaType.APPLICATION_JSON)
                 .header("X-UJI-AuthToken", authToken)
                 .post(ClientResponse.class, reunionFirma);
@@ -354,13 +368,20 @@ public class ReunionService
             throw new FirmaReunionException();
         }
 
-        JSONRespuestaFirmaDeserializer jsonDeserializer =
-                response.getEntity(JSONRespuestaFirmaDeserializer.class);
+        RespuestaFirma respuestaFirma = RespuestaFirma.buildRespuestaFirma(response);
 
-        RespuestaFirma respuestaFirma = jsonDeserializer.getRespuestaFirma();
+        actualizarAcuerdosPuntosDelDia(respuestaFirma);
 
         reunionDAO.marcarReunionComoCompletadaYActualizarAcuerdoYUrl(reunionId, responsableActaId, acuerdos,
                 acuerdosAlternativos, respuestaFirma);
+    }
+
+    private void actualizarAcuerdosPuntosDelDia(RespuestaFirma respuestaFirma)
+    {
+        for (RespuestaFirmaPuntoOrdenDiaAcuerdo acuerdo : respuestaFirma.getPuntoOrdenDiaAcuerdos())
+        {
+            reunionDAO.updateAcuerdoPuntoDelDiaUrlActa(acuerdo);
+        }
     }
 
     private ReunionFirma reunionFirmaDesdeReunion(Reunion reunion, Long responsableActaId, Long connectedUserId)
@@ -974,6 +995,8 @@ public class ReunionService
         puntoOrdenDiaTemplate.setTitulo(
                 mainLanguage ? puntoOrdenDia.getTitulo() : puntoOrdenDia.getTituloAlternativo());
         puntoOrdenDiaTemplate.setPublico(puntoOrdenDia.isPublico());
+        puntoOrdenDiaTemplate.setUrlActa(
+                mainLanguage ? puntoOrdenDia.getUrlActa() : puntoOrdenDia.getUrlActaAlternativa());
 
         List<PuntoOrdenDiaDocumento> documentos =
                 puntoOrdenDiaDocumentoDAO.getDatosDocumentosByPuntoOrdenDiaId(puntoOrdenDia.getId());

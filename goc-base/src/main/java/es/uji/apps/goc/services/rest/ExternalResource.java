@@ -207,9 +207,9 @@ public class ExternalResource extends CoreBaseService
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Firma del acta de una reunión", notes = "Firma el acta de una reunión ya concluida con todos los puntos acordados en ella")
-    public void firmaReunion(ReunionFirma reunionFirma)
+    public UIEntity firmaReunion(ReunionFirma reunionFirma)
     {
-        firmaService.firmaReunion(reunionFirma);
+        return UIEntity.toUI(firmaService.firmaReunion(reunionFirma));
     }
 
     @GET

@@ -7,6 +7,7 @@ import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.spi.spring.container.servlet.SpringServlet;
 import com.sun.jersey.test.framework.JerseyTest;
 import com.sun.jersey.test.framework.WebAppDescriptor;
+import es.uji.apps.goc.Utils;
 import es.uji.apps.goc.dto.OrganoExterno;
 import es.uji.commons.rest.json.UIEntityListMessageBodyReader;
 import es.uji.commons.rest.json.UIEntityMessageBodyReader;
@@ -37,7 +38,7 @@ public class JerseySpringTest extends JerseyTest
                 .contextListenerClass(ContextLoaderListener.class)
                 .requestListenerClass(RequestContextListener.class)
                 .servletClass(SpringServlet.class)
-                .clientConfig(createClientConfig())
+                .clientConfig(Utils.createClientConfig())
                 .initParam("com.sun.jersey.config.property.packages",
                         "es.uji.commons.rest.shared; es.uji.commons.rest.json; com.fasterxml.jackson.jaxrs.json; " + PACKAGE_NAME)
                 .build());
@@ -46,16 +47,6 @@ public class JerseySpringTest extends JerseyTest
 
         this.client().addFilter(new LoggingFilter());
         this.resource = resource();
-    }
-
-    private static ClientConfig createClientConfig()
-    {
-        ClientConfig config = new DefaultClientConfig();
-        config.getClasses().add(UIEntityMessageBodyReader.class);
-        config.getClasses().add(UIEntityListMessageBodyReader.class);
-        config.getClasses().add(UIEntityMessageBodyWriter.class);
-
-        return config;
     }
 
     private void initAuthProperties()

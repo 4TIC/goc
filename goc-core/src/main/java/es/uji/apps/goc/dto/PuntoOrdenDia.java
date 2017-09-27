@@ -39,6 +39,12 @@ public class PuntoOrdenDia implements Serializable
     @Column(name = "DELIBERACIONES_ALT")
     private String deliberacionesAlternativas;
 
+    @Column(name = "URL_ACTA")
+    private String urlActa;
+
+    @Column(name = "URL_ACTA_ALT")
+    private String urlActaAlternativa;
+
     @ManyToOne
     @JoinColumn(name = "REUNION_ID")
     private Reunion reunion;
@@ -192,5 +198,25 @@ public class PuntoOrdenDia implements Serializable
     public void setPuntoOrdenDiaAcuerdos(Set<PuntoOrdenDiaAcuerdo> puntoOrdenDiaAcuerdos)
     {
         this.puntoOrdenDiaAcuerdos = puntoOrdenDiaAcuerdos;
+    }
+
+    public String getUrlActa()
+    {
+        return urlActa;
+    }
+
+    public void setUrlActa(String urlActa)
+    {
+        this.urlActa = urlActa;
+    }
+
+    public String getUrlActaAlternativa()
+    {
+        return urlActaAlternativa;
+    }
+
+    public void setUrlActaAlternativa(String urlActaAlternativa)
+    {
+        this.urlActaAlternativa = urlActaAlternativa;
     }
 }

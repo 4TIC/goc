@@ -132,3 +132,5 @@ AS
     persona_nombre,
     url_acta,
     url_acta_alt;
+
+alter table goc_reuniones_puntos_orden_dia add (url_acta varchar2(1000), url_acta_alt varchar2(1000))

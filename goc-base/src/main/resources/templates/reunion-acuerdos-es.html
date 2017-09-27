@@ -34,8 +34,11 @@
           <div th:if="${puntoOrdenDia.deliberaciones} != null" th:utext="'&lt;strong&gt;Deliberaciones&lt;/strong&gt;: ' + ${puntoOrdenDia.deliberaciones}"></div>
           <div th:if="${puntoOrdenDia.acuerdos} != null" th:utext="'&lt;strong&gt;Acuerdos&lt;/strong&gt;: ' + ${puntoOrdenDia.acuerdos}"></div>
           <div th:if="${puntoOrdenDia.acuerdos} != null">
-            <span><a th:href="'/goc/rest/publicacion/reuniones/' + ${reunion.id} + '/acuerdos/' + ${puntoOrdenDia.id} + '?lang=' + ${applang}">Certificado</a></span>
-          </div>
+            <span>
+              <a th:if="${puntoOrdenDia.urlActa}" th:href="${puntoOrdenDia.urlActa}">Certificado</a>
+              <span th:unless="${puntoOrdenDia.urlActa}" data-tooltip="data-tooltip" class="has-tip link-desactivado" title="Certificado no disponible hasta que finalice la reunión">Certificado</span>
+            </span>
+        </div>
           <br/>
         </li>
       </ol>

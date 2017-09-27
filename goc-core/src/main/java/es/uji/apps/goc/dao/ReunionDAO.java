@@ -7,6 +7,7 @@ import com.mysema.query.types.expr.BooleanExpression;
 import es.uji.apps.goc.dto.*;
 import es.uji.apps.goc.model.Persona;
 import es.uji.apps.goc.model.RespuestaFirma;
+import es.uji.apps.goc.model.RespuestaFirmaPuntoOrdenDiaAcuerdo;
 import es.uji.commons.db.BaseDAODatabaseImpl;
 import es.uji.commons.rest.StringUtils;
 import org.springframework.stereotype.Repository;
@@ -84,8 +85,8 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     }
 
     @Transactional
-    public void marcarReunionComoCompletadaYActualizarAcuerdoYUrl(Long reunionId, Long responsableActaId, String acuerdos,
-            String acuerdosAlternativos, RespuestaFirma respuestaFirma)
+    public void marcarReunionComoCompletadaYActualizarAcuerdoYUrl(Long reunionId, Long responsableActaId,
+            String acuerdos, String acuerdosAlternativos, RespuestaFirma respuestaFirma)
     {
         JPAUpdateClause update = new JPAUpdateClause(entityManager, qReunion);
         update.set(qReunion.completada, true)
@@ -171,8 +172,7 @@ public class ReunionDAO extends BaseDAODatabaseImpl
         JPAQuery query = new JPAQuery(entityManager);
 
         ReunionPermiso acceso = query.from(qReunionPermiso)
-                .where(qReunionPermiso.personaId.eq(connectedUserId)
-                        .and(qReunionPermiso.id.eq(reunionId)))
+                .where(qReunionPermiso.personaId.eq(connectedUserId).and(qReunionPermiso.id.eq(reunionId)))
                 .uniqueResult(qReunionPermiso);
 
         return (acceso != null);
@@ -414,5 +414,14 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     public boolean personaContainsId(List<Persona> personas, Long id)
     {
         return personas.stream().anyMatch(p -> id.equals(p.getId()));
+    }
+
+    public void updateAcuerdoPuntoDelDiaUrlActa(RespuestaFirmaPuntoOrdenDiaAcuerdo acuerdo)
+    {
+        JPAUpdateClause update = new JPAUpdateClause(entityManager, qPuntoOrdenDia);
+
+        update.set(qPuntoOrdenDia.urlActa, acuerdo.getUrlActa()).where(qPuntoOrdenDia.id.eq(acuerdo.getId()));
+
+        update.execute();
     }
 }

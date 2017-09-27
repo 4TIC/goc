@@ -26,6 +26,8 @@ public class PuntoOrdenDiaTemplate
 
     private List<DescriptorTemplate> descriptores;
 
+    private String urlActa;
+
     public Long getId()
     {
         return id;
@@ -120,5 +122,15 @@ public class PuntoOrdenDiaTemplate
     public void setDescriptores(List<DescriptorTemplate> descriptores)
     {
         this.descriptores = descriptores;
+    }
+
+    public String getUrlActa()
+    {
+        return urlActa;
+    }
+
+    public void setUrlActa(String urlActa)
+    {
+        this.urlActa = urlActa;
     }
 }
