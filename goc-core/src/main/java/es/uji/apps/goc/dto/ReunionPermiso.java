@@ -36,6 +36,12 @@ public class ReunionPermiso
     @Column(name = "URL_ACTA_ALT")
     private String urlActaAlternativa;
 
+    @Column(name = "URL_ASISTENCIA")
+    private String urlAsistencia;
+
+    @Column(name = "URL_ASISTENCIA_ALT")
+    private String urlAsistenciaAlternativa;
+
     public ReunionPermiso()
     {
     }
@@ -143,5 +149,25 @@ public class ReunionPermiso
     public void setUrlActaAlternativa(String urlActaAlternativa)
     {
         this.urlActaAlternativa = urlActaAlternativa;
+    }
+
+    public String getUrlAsistencia()
+    {
+        return urlAsistencia;
+    }
+
+    public void setUrlAsistencia(String urlAsistencia)
+    {
+        this.urlAsistencia = urlAsistencia;
+    }
+
+    public String getUrlAsistenciaAlternativa()
+    {
+        return urlAsistenciaAlternativa;
+    }
+
+    public void setUrlAsistenciaAlternativa(String urlAsistenciaAlternativa)
+    {
+        this.urlAsistenciaAlternativa = urlAsistenciaAlternativa;
     }
 }

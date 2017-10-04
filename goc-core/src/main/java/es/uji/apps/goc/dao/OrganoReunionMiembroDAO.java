@@ -1,19 +1,16 @@
 package es.uji.apps.goc.dao;
 
-import java.util.List;
-
 import com.mysema.query.jpa.impl.JPADeleteClause;
-import com.mysema.query.types.expr.BooleanExpression;
-import es.uji.apps.goc.dto.Cargo;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.jpa.impl.JPAUpdateClause;
-
+import es.uji.apps.goc.dto.Cargo;
 import es.uji.apps.goc.dto.OrganoReunionMiembro;
 import es.uji.apps.goc.dto.QOrganoReunionMiembro;
 import es.uji.commons.db.BaseDAODatabaseImpl;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Repository
 public class OrganoReunionMiembroDAO extends BaseDAODatabaseImpl

@@ -371,9 +371,20 @@ public class ReunionService
         RespuestaFirma respuestaFirma = RespuestaFirma.buildRespuestaFirma(response);
 
         actualizarAcuerdosPuntosDelDia(respuestaFirma);
+        actualizarAsistencias(reunion.getId(), respuestaFirma);
 
         reunionDAO.marcarReunionComoCompletadaYActualizarAcuerdoYUrl(reunionId, responsableActaId, acuerdos,
                 acuerdosAlternativos, respuestaFirma);
+    }
+
+    private void actualizarAsistencias(Long reunionId, RespuestaFirma respuestaFirma)
+    {
+        for (RespuestaFirmaAsistencia respuestaFirmaAsistencia : respuestaFirma.getAsistencias())
+        {
+            reunionDAO.updateAsistenciaInvitadoReunion(reunionId, respuestaFirmaAsistencia);
+            reunionDAO.updateAsistenciaInvitadoOrgano(reunionId, respuestaFirmaAsistencia);
+            reunionDAO.updateAsistenciaMiembrosYSuplentes(reunionId, respuestaFirmaAsistencia);
+        }
     }
 
     private void actualizarAcuerdosPuntosDelDia(RespuestaFirma respuestaFirma)
@@ -872,6 +883,7 @@ public class ReunionService
         miembroFirma.setDelegadoVotoId(organoReunionMiembro.getDelegadoVotoId());
         miembroFirma.setDelegadoVoto(organoReunionMiembro.getDelegadoVotoNombre());
         miembroFirma.setAsistenciaConfirmada(organoReunionMiembro.getAsistenciaConfirmada());
+        miembroFirma.setAsistencia(organoReunionMiembro.getAsistencia());
 
         Cargo cargo = new Cargo();
         cargo.setId(organoReunionMiembro.getCargoId());

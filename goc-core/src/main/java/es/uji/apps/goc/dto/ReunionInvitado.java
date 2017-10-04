@@ -27,6 +27,12 @@ public class ReunionInvitado implements Serializable
     @Column(name = "PERSONA_EMAIL")
     private String personaEmail;
 
+    @Column(name = "URL_ASISTENCIA")
+    private String urlAsistencia;
+
+    @Column(name = "URL_ASISTENCIA_ALT")
+    private String urlAsistenciaAlternativa;
+
     public Long getId()
     {
         return id;
@@ -75,5 +81,25 @@ public class ReunionInvitado implements Serializable
     public void setPersonaEmail(String personaEmail)
     {
         this.personaEmail = personaEmail;
+    }
+
+    public String getUrlAsistencia()
+    {
+        return urlAsistencia;
+    }
+
+    public void setUrlAsistencia(String urlAsistencia)
+    {
+        this.urlAsistencia = urlAsistencia;
+    }
+
+    public String getUrlAsistenciaAlternativa()
+    {
+        return urlAsistenciaAlternativa;
+    }
+
+    public void setUrlAsistenciaAlternativa(String urlAsistenciaAlternativa)
+    {
+        this.urlAsistenciaAlternativa = urlAsistenciaAlternativa;
     }
 }

@@ -72,6 +72,12 @@ public class OrganoReunionMiembro implements Serializable
     @Column(name = "DELEGADO_VOTO_EMAIL")
     private String delegadoVotoEmail;
 
+    @Column(name = "URL_ASISTENCIA")
+    private String urlAsistencia;
+
+    @Column(name = "URL_ASISTENCIA_ALT")
+    private String urlAsistenciaAlternativa;
+
     @ManyToOne
     @JoinColumn(name = "ORGANO_REUNION_ID")
     private OrganoReunion organoReunion;
@@ -288,5 +294,25 @@ public class OrganoReunionMiembro implements Serializable
     public void setCargoCodigo(String cargoCodigo)
     {
         this.cargoCodigo = cargoCodigo;
+    }
+
+    public String getUrlAsistencia()
+    {
+        return urlAsistencia;
+    }
+
+    public void setUrlAsistencia(String urlAsistencia)
+    {
+        this.urlAsistencia = urlAsistencia;
+    }
+
+    public String getUrlAsistenciaAlternativa()
+    {
+        return urlAsistenciaAlternativa;
+    }
+
+    public void setUrlAsistenciaAlternativa(String urlAsistenciaAlternativa)
+    {
+        this.urlAsistenciaAlternativa = urlAsistenciaAlternativa;
     }
 }

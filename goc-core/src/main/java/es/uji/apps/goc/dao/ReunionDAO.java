@@ -7,8 +7,10 @@ import com.mysema.query.types.expr.BooleanExpression;
 import es.uji.apps.goc.dto.*;
 import es.uji.apps.goc.model.Persona;
 import es.uji.apps.goc.model.RespuestaFirma;
+import es.uji.apps.goc.model.RespuestaFirmaAsistencia;
 import es.uji.apps.goc.model.RespuestaFirmaPuntoOrdenDiaAcuerdo;
 import es.uji.commons.db.BaseDAODatabaseImpl;
+import es.uji.commons.rest.ParamUtils;
 import es.uji.commons.rest.StringUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,7 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     private QOrganoReunion qOrganoReunion = QOrganoReunion.organoReunion;
     private QPuntoOrdenDia qPuntoOrdenDia = QPuntoOrdenDia.puntoOrdenDia;
     private QOrganoReunionMiembro qOrganoReunionMiembro = QOrganoReunionMiembro.organoReunionMiembro;
+    private QOrganoReunionInvitado qOrganoReunionInvitado = QOrganoReunionInvitado.organoReunionInvitado;
     private QPuntoOrdenDiaDescriptor qPuntoOrdenDiaDescriptor = QPuntoOrdenDiaDescriptor.puntoOrdenDiaDescriptor;
     private QDescriptor qDescriptor = QDescriptor.descriptor1;
     private QClave qClave = QClave.clave1;
@@ -349,7 +352,6 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     public List<Persona> getInvitadosByReunionId(Long reunionId)
     {
         JPAQuery queryReunionesInvitados = new JPAQuery(entityManager);
-        JPAQuery queryOrganos = new JPAQuery(entityManager);
         JPAQuery queryOrganosInvitados = new JPAQuery(entityManager);
 
         List<Persona> personas = new ArrayList<>();
@@ -358,14 +360,10 @@ public class ReunionDAO extends BaseDAODatabaseImpl
                 .where(qReunionInvitado.reunion.id.eq(reunionId))
                 .list(qReunionInvitado);
 
-        List<String> organosId = queryOrganos.from(qOrganoReunion)
-                .where(qOrganoReunion.reunion.id.eq(reunionId))
-                .list(qOrganoReunion.organoId);
-
-        List<OrganoInvitado> invitadosPorOrgano = queryOrganosInvitados.from(qOrganoInvitado)
-                .where(qOrganoInvitado.organoId.in(organosId))
+        List<OrganoReunionInvitado> invitadosPorOrgano = queryOrganosInvitados.from(qOrganoReunionInvitado)
+                .where(qOrganoReunionInvitado.reunionId.in(reunionId))
                 .distinct()
-                .list(qOrganoInvitado);
+                .list(qOrganoReunionInvitado);
 
         addToPersonasListFromReunionInvitados(personas, invitadosPorReunion);
         addToPersonasListFromOrganoInvitados(personas, invitadosPorOrgano);
@@ -392,21 +390,21 @@ public class ReunionDAO extends BaseDAODatabaseImpl
         return persona;
     }
 
-    public void addToPersonasListFromOrganoInvitados(List<Persona> personas, List<OrganoInvitado> invitados)
+    public void addToPersonasListFromOrganoInvitados(List<Persona> personas, List<OrganoReunionInvitado> invitados)
     {
         personas.addAll(invitados.stream()
-                .filter(i -> !personaContainsId(personas, i.getPersonaId()))
+                .filter(i -> !personaContainsId(personas, ParamUtils.parseLong(i.getPersonaId())))
                 .map(i -> toPersona(i))
                 .collect(Collectors.toList()));
     }
 
-    public Persona toPersona(OrganoInvitado organoInvitado)
+    public Persona toPersona(OrganoReunionInvitado organoReunionInvitado)
     {
         Persona persona = new Persona();
 
-        persona.setId(organoInvitado.getPersonaId());
-        persona.setEmail(organoInvitado.getPersonaEmail());
-        persona.setNombre(organoInvitado.getPersonaNombre());
+        persona.setId(ParamUtils.parseLong(organoReunionInvitado.getPersonaId()));
+        persona.setEmail(organoReunionInvitado.getEmail());
+        persona.setNombre(organoReunionInvitado.getNombre());
 
         return persona;
     }
@@ -420,7 +418,50 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     {
         JPAUpdateClause update = new JPAUpdateClause(entityManager, qPuntoOrdenDia);
 
-        update.set(qPuntoOrdenDia.urlActa, acuerdo.getUrlActa()).where(qPuntoOrdenDia.id.eq(acuerdo.getId()));
+        update.set(qPuntoOrdenDia.urlActa, acuerdo.getUrlActa())
+                .set(qPuntoOrdenDia.urlActaAlternativa, acuerdo.getUrlActaAlternativa())
+                .where(qPuntoOrdenDia.id.eq(acuerdo.getId()));
+
+        update.execute();
+    }
+
+    public void updateAsistenciaMiembrosYSuplentes(Long reunionId, RespuestaFirmaAsistencia respuestaFirmaAsistencia)
+    {
+        JPAUpdateClause update = new JPAUpdateClause(entityManager, qOrganoReunionMiembro);
+
+        update.set(qOrganoReunionMiembro.urlAsistencia, respuestaFirmaAsistencia.getUrlAsistencia())
+                .set(qOrganoReunionMiembro.urlAsistenciaAlternativa,
+                        respuestaFirmaAsistencia.getUrlAsistenciaAlternativa())
+                .where(qOrganoReunionMiembro.asistencia.isTrue()
+                        .and(qOrganoReunionMiembro.reunionId.eq(reunionId))
+                        .and((qOrganoReunionMiembro.miembroId.eq(respuestaFirmaAsistencia.getPersonaId())
+                                .and(qOrganoReunionMiembro.suplenteId.isNull())).or(qOrganoReunionMiembro.suplenteId.eq(
+                                Long.parseLong(respuestaFirmaAsistencia.getPersonaId()))
+                                .and(qOrganoReunionMiembro.suplenteId.isNotNull()))));
+
+        update.execute();
+    }
+
+    public void updateAsistenciaInvitadoReunion(Long reunionId, RespuestaFirmaAsistencia respuestaFirmaAsistencia)
+    {
+        JPAUpdateClause update = new JPAUpdateClause(entityManager, qReunionInvitado);
+
+        update.set(qReunionInvitado.urlAsistencia, respuestaFirmaAsistencia.getUrlAsistencia())
+                .set(qReunionInvitado.urlAsistenciaAlternativa, respuestaFirmaAsistencia.getUrlAsistenciaAlternativa())
+                .where(qReunionInvitado.reunion.id.eq(reunionId)
+                        .and(qReunionInvitado.personaId.eq(Long.parseLong(respuestaFirmaAsistencia.getPersonaId()))));
+
+        update.execute();
+    }
+
+    public void updateAsistenciaInvitadoOrgano(Long reunionId, RespuestaFirmaAsistencia respuestaFirmaAsistencia)
+    {
+        JPAUpdateClause update = new JPAUpdateClause(entityManager, qOrganoReunionInvitado);
+
+        update.set(qOrganoReunionInvitado.urlAsistencia, respuestaFirmaAsistencia.getUrlAsistencia())
+                .set(qOrganoReunionInvitado.urlAsistenciaAlternativa, respuestaFirmaAsistencia.getUrlAsistenciaAlternativa())
+                .where(qOrganoReunionInvitado.reunionId.eq(reunionId)
+                        .and(qOrganoReunionInvitado.personaId.eq(respuestaFirmaAsistencia.getPersonaId())));
 
         update.execute();
     }

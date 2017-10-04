@@ -129,4 +129,6 @@ public class AcuerdoPuntoOrdenDiaFirma
     {
         this.organos = organos;
     }
+
+
 }

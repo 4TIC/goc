@@ -1,9 +1,9 @@
 package es.uji.apps.goc.services;
 
-import es.uji.apps.goc.dao.OrganoReunionDAO;
-import es.uji.apps.goc.dao.OrganoReunionMiembroDAO;
-import es.uji.apps.goc.dao.ReunionDAO;
+import es.uji.apps.goc.dao.*;
+import es.uji.apps.goc.dto.OrganoInvitado;
 import es.uji.apps.goc.dto.OrganoReunion;
+import es.uji.apps.goc.dto.OrganoReunionInvitado;
 import es.uji.apps.goc.dto.OrganoReunionMiembro;
 import es.uji.apps.goc.exceptions.AsistenteNoEncontradoException;
 import es.uji.apps.goc.exceptions.MiembrosExternosException;
@@ -11,6 +11,7 @@ import es.uji.apps.goc.exceptions.NotificacionesException;
 import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
 import es.uji.apps.goc.model.Miembro;
 import es.uji.apps.goc.notifications.AvisosReunion;
+import es.uji.commons.rest.ParamUtils;
 import es.uji.commons.rest.UIEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,6 +29,9 @@ public class OrganoReunionMiembroService
     private OrganoReunionMiembroDAO organoReunionMiembroDAO;
 
     @Autowired
+    private OrganoReunionInvitadoDAO organoReunionInvitadoDAO;
+
+    @Autowired
     private MiembroService miembroService;
 
     @Autowired
@@ -38,6 +42,52 @@ public class OrganoReunionMiembroService
 
     @Autowired
     private AvisosReunion avisosReunion;
+
+    @Autowired
+    private OrganoInvitadoDAO organoInvitadoDAO;
+
+    @Transactional
+    public void updateOrganoReunionInvitadosDesdeOrganosUI(List<UIEntity> organosUI, Long reunionId,
+            Long connectedUserId)
+    {
+        organoReunionInvitadoDAO.deleteAllByReunionId(reunionId);
+
+        if (organosUI != null)
+        {
+            for (UIEntity organoUI : organosUI)
+            {
+                updateOrganoReunionInvitadosDesdeOrganoUI(organoUI, reunionId);
+            }
+        }
+    }
+
+    @Transactional
+    private void updateOrganoReunionInvitadosDesdeOrganoUI(UIEntity organoUI, Long reunionId)
+    {
+        String organoId = organoUI.get("id");
+
+        if (organoId == null) return;
+
+        List<OrganoInvitado> organoInvitados = organoInvitadoDAO.getInvitadosByOrgano(organoId);
+
+        for (OrganoInvitado organoInvitado : organoInvitados)
+        {
+            OrganoReunionInvitado organoReunionInvitado = new OrganoReunionInvitado();
+
+            organoReunionInvitado.setReunionId(reunionId);
+            organoReunionInvitado.setPersonaId(organoInvitado.getPersonaId().toString());
+            organoReunionInvitado.setEmail(organoInvitado.getPersonaEmail());
+            organoReunionInvitado.setNombre(organoInvitado.getPersonaNombre());
+            organoReunionInvitado.setOrganoExterno(new Boolean(organoUI.get("externo")));
+            organoReunionInvitado.setOrganoId(organoId);
+
+            OrganoReunion organoReunion = organoReunionDAO.getOrganoReunionByReunionIdAndOrganoId(reunionId, ParamUtils.parseLong(organoId));
+
+            organoReunionInvitado.setOrganoReunion(organoReunion);
+
+            organoReunionInvitadoDAO.insert(organoReunionInvitado);
+        }
+    }
 
     public void updateOrganoReunionMiembrosDesdeOrganosUI(List<UIEntity> organosUI, Long reunionId,
             Long connectedUserId)

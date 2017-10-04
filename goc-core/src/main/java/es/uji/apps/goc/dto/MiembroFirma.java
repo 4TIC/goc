@@ -16,6 +16,7 @@ public class MiembroFirma
 
     private String suplente;
     private Long suplenteId;
+    private Boolean asistencia;
     private Boolean asistenciaConfirmada;
     private String delegadoVoto;
     private Long delegadoVotoId;
@@ -155,6 +156,16 @@ public class MiembroFirma
         }
 
         nombresDelegacionesDeVoto = StringUtils.join(this.delegacionesDeVoto, ", ");
+    }
+
+    public Boolean getAsistencia()
+    {
+        return asistencia;
+    }
+
+    public void setAsistencia(Boolean asistencia)
+    {
+        this.asistencia = asistencia;
     }
 }
 

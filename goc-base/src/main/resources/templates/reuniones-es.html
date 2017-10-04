@@ -24,7 +24,10 @@
             <span class="separador" th:if="${reunion.completada}"> | </span>
             <span><a th:if="${reunion.completada}" th:href="'/goc/rest/publicacion/reuniones/' + ${reunion.id} + '/acuerdos' + '?lang=' + ${applang}">Puntos orden del día</a></span>
             <span class="separador" th:if="${reunion.completada and reunion.asistente}"> | </span>
-            <span><a th:if="${reunion.completada and reunion.asistente}" th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/asistencia' + '?lang=' + ${applang}">Certificado de asistencia</a></span>
+            <span>
+              <a th:if="${reunion.urlAsistencia}" th:href="${reunion.urlAsistencia}">Certificado de asistencia</a>
+              <span th:if="${!reunion.urlAsistencia and reunion.asistente}" data-tooltip="data-tooltip" class="has-tip link-desactivado" title="Certificado no disponible hasta que finalice la reunión">Certificado de asistencia</span>
+            </span>
             <hr />
           </div>          
         </li>

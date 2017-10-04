@@ -90,6 +90,9 @@ public class PublicacionService extends CoreBaseService
 
             reunionPermiso.setUrlActa(languageConfig.isMainLangauge(lang) ? reunionPermiso.getUrlActa() : reunionPermiso
                     .getUrlActaAlternativa());
+
+            reunionPermiso.setUrlAsistencia(languageConfig.isMainLangauge(lang) ? reunionPermiso.getUrlAsistencia() : reunionPermiso
+                    .getUrlAsistenciaAlternativa());
         }
 
         return reuniones;

@@ -13,9 +13,12 @@ public class RespuestaFirma
 
     private List<RespuestaFirmaPuntoOrdenDiaAcuerdo> puntoOrdenDiaAcuerdos;
 
+    private List<RespuestaFirmaAsistencia> asistencias;
+
     public RespuestaFirma()
     {
         puntoOrdenDiaAcuerdos = new ArrayList<>();
+        asistencias = new ArrayList<>();
     }
 
     public String getUrlActa()
@@ -53,6 +56,21 @@ public class RespuestaFirma
         this.puntoOrdenDiaAcuerdos.add(puntoOrdenDiaAcuerdo);
     }
 
+    public List<RespuestaFirmaAsistencia> getAsistencias()
+    {
+        return asistencias;
+    }
+
+    public void setAsistencias(List<RespuestaFirmaAsistencia> asistencias)
+    {
+        this.asistencias = asistencias;
+    }
+
+    public void addAsistencia(RespuestaFirmaAsistencia respuestaFirmaAsistencia)
+    {
+        this.asistencias.add(respuestaFirmaAsistencia);
+    }
+
     public static RespuestaFirma buildRespuestaFirma(ClientResponse response)
     {
         UIEntity entityResponse = response.getEntity(UIEntity.class);
@@ -79,6 +97,22 @@ public class RespuestaFirma
                 respuestaFirma.addPuntoOrdenDiaAcuerdos(respuestaFirmaPuntoOrdenDiaAcuerdo);
             }
         }
+
+        List<UIEntity> entityAsistencias = entityData.getRelations().get("asistencias");
+
+        if (entityAsistencias != null)
+        {
+            for (UIEntity entityAsistencia : entityAsistencias)
+            {
+                RespuestaFirmaAsistencia respuestaFirmaAsistencia = new RespuestaFirmaAsistencia();
+
+                respuestaFirmaAsistencia.setPersonaId(entityAsistencia.get("personaId"));
+                respuestaFirmaAsistencia.setUrlAsistencia(entityAsistencia.get("urlAsistencia"));
+
+                respuestaFirma.addAsistencia(respuestaFirmaAsistencia);
+            }
+        }
+
         return respuestaFirma;
     }
 }

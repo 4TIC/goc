@@ -46,6 +46,9 @@ public class OrganoReunion implements Serializable
     @OneToMany(mappedBy = "organoReunion", cascade = CascadeType.REMOVE)
     private Set<OrganoReunionMiembro> miembros;
 
+    @OneToMany(mappedBy = "organoReunion", cascade = CascadeType.REMOVE)
+    private Set<OrganoReunionInvitado> invitados;
+
     public Reunion getReunion()
     {
         return reunion;
@@ -122,5 +125,15 @@ public class OrganoReunion implements Serializable
     public void setOrganoNombreAlternativo(String organoNombreAlternativo)
     {
         this.organoNombreAlternativo = organoNombreAlternativo;
+    }
+
+    public Set<OrganoReunionInvitado> getInvitados()
+    {
+        return invitados;
+    }
+
+    public void setInvitados(Set<OrganoReunionInvitado> invitados)
+    {
+        this.invitados = invitados;
     }
 }
