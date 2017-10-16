@@ -84,12 +84,14 @@
           <strong th:text="${puntoOrdenDia.titulo}"></strong>
           <div th:if="${puntoOrdenDia.descripcion} != null" th:utext="'&lt;strong&gt;Descripción&lt;/strong&gt;: ' + ${puntoOrdenDia.descripcion}"></div>
           <div th:if="${puntoOrdenDia.deliberaciones} != null" th:utext="'&lt;strong&gt;Deliberaciones&lt;/strong&gt;: ' + ${puntoOrdenDia.deliberaciones}"></div>
-          <div th:if="${puntoOrdenDia.acuerdos} != null" th:utext="'&lt;strong&gt;Acuerdos&lt;/strong&gt;: ' + ${puntoOrdenDia.acuerdos}"></div>
+          <div th:if="${puntoOrdenDia.acuerdos} != null and ${reunion.completada}" th:utext="'&lt;strong&gt;Acuerdos&lt;/strong&gt;: ' + ${puntoOrdenDia.acuerdos}"></div>
+          <div th:if="${puntoOrdenDia.acuerdos} != null and not ${reunion.completada}" th:utext="'&lt;strong&gt;Popuesta de acuerdos&lt;/strong&gt;: ' + ${puntoOrdenDia.acuerdos}"></div>
           <strong th:if="${not #lists.isEmpty(puntoOrdenDia.documentos)}">Documentación:</strong>
           <ul class="contentList" th:with="documentos=${puntoOrdenDia.documentos}">
             <li th:each="documento : ${documentos}"><a th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/puntosOrdenDia/' + ${puntoOrdenDia.id} + '/documentos/' + ${documento.id} + '/descargar'" th:text="${documento.descripcion}">Descripcion documento</a></li>
           </ul>
-          <strong th:if="${not #lists.isEmpty(puntoOrdenDia.documentosAcuerdos)}">Acuerdos:</strong>
+          <strong th:if="${not #lists.isEmpty(puntoOrdenDia.documentosAcuerdos)} and ${reunion.completada}">Acuerdos:</strong>
+          <strong th:if="${not #lists.isEmpty(puntoOrdenDia.documentosAcuerdos)} and not ${reunion.completada}">Propuesta de acuerdos:</strong>
           <ul class="contentList" th:with="acuerdos=${puntoOrdenDia.documentosAcuerdos}">
             <li th:each="acuerdo : ${acuerdos}"><a th:href="'/goc/rest/reuniones/' + ${acuerdo.id} + '/puntosOrdenDia/' + ${puntoOrdenDia.id} + '/acuerdos/' + ${acuerdo.id} + '/descargar'" th:text="${acuerdo.descripcion}">Descripción acuerdo</a></li>
           </ul>
