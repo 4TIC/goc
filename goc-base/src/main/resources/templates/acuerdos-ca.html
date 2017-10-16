@@ -106,6 +106,7 @@
               <fieldset class="fieldset" th:each="puntoDia : ${reunion.puntosOrdenDia}" th:if="${puntoDia.publico}">
                 <legend th:text="${puntoDia.titulo}"></legend>
                 <div th:text="${puntoDia.acuerdos}"></div>
+                <a th:if="${puntoDia.urlActa}" th:href="${puntoDia.urlActa}">Certificat</a>
               </fieldset>
             </blockquote>
           </div>
