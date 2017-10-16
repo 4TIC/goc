@@ -39,6 +39,9 @@ public class ReunionEditor
     @Column(name = "NUM_DOCUMENTOS")
     private Long numeroDocumentos;
 
+    @Column(name = "AVISO_PRIMERA_REUNION")
+    private Long avisoPrimeraReunion;
+
     public ReunionEditor()
     {
     }
@@ -156,5 +159,15 @@ public class ReunionEditor
     public void setEditorId(Long editorId)
     {
         this.editorId = editorId;
+    }
+
+    public Long getAvisoPrimeraReunion()
+    {
+        return avisoPrimeraReunion;
+    }
+
+    public void setAvisoPrimeraReunion(Long avisoPrimeraReunion)
+    {
+        this.avisoPrimeraReunion = avisoPrimeraReunion;
     }
 }

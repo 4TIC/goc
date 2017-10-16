@@ -165,6 +165,7 @@
     "reunionSinMiembros": "No se han definido miembros para la reunión",
     "confirmacionEnvioTitulo": "Confirmación de envío de la convocatoria",
     "confirmacionEnvioMensaje": "¿Estás seguro de que la reunión está completamente definida y quieres notificar a los asistentes?",
+    "confirmacionEnvioMensajeYaEnviado": "La convocatoria de reunión ya ha sido enviada. ¿Quieres enviar de nuevo la información a los asistentes como rectificación de la misma?",
     "resultadoEnvioConvocatoriaTitle": "Resultado del envío de la convocatoria",
     "titleSingular": "Reunión",
     "descriptoresYclaves": "Descriptores y claves",

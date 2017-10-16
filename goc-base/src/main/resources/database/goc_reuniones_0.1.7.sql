@@ -226,110 +226,121 @@ CREATE OR REPLACE FORCE VIEW UJI_REUNIONES.GOC_VW_REUNIONES_PERMISOS
     URL_ASISTENCIA_ALT
 )
 AS
-  SELECT s.id,
+  SELECT
+    s.id,
     s.completada,
     s.fecha,
     s.asunto,
     s.asunto_alt,
     s.persona_id,
     s.persona_nombre,
-    SUM (s.asistente) asistente,
+    SUM(s.asistente)                                                           asistente,
     s.url_acta,
     s.url_acta_alt,
-    (select a.url_asistencia from goc_vw_certificados_asistencia a where a.reunion_id = s.id and a.persona_id = s.persona_id and rownum = 1) url_asistencia,
-    (select a.url_asistencia_alt from goc_vw_certificados_asistencia a where a.reunion_id = s.id and a.persona_id = s.persona_id and rownum = 1) url_asistencia_alt
-  FROM (SELECT r.id,
+    (SELECT a.url_asistencia
+     FROM goc_vw_certificados_asistencia a
+     WHERE a.reunion_id = s.id AND a.persona_id = s.persona_id AND rownum = 1) url_asistencia,
+    (SELECT a.url_asistencia_alt
+     FROM goc_vw_certificados_asistencia a
+     WHERE a.reunion_id = s.id AND a.persona_id = s.persona_id AND rownum = 1) url_asistencia_alt
+  FROM (SELECT
+          r.id,
           r.completada,
           r.fecha,
           r.asunto,
           r.asunto_alt,
-          r.creador_id   persona_id,
+          r.creador_id     persona_id,
           r.creador_nombre persona_nombre,
-          0              asistente,
+          0                asistente,
           r.url_acta,
           r.url_acta_alt
         FROM goc_reuniones r
         UNION
-        SELECT r.id,
+        SELECT
+          r.id,
           r.completada,
           r.fecha,
           r.asunto,
           r.asunto_alt,
-          ri.persona_id   persona_id,
+          ri.persona_id     persona_id,
           ri.persona_nombre persona_nombre,
-          1               asistente,
+          1                 asistente,
           r.url_acta,
           r.url_acta_alt
         FROM goc_reuniones r, goc_reuniones_invitados ri
         WHERE ri.reunion_id = r.id
         UNION
-        SELECT r.id,
+        SELECT
+          r.id,
           r.completada,
           r.fecha,
           r.asunto,
           r.asunto_alt,
-          ori.persona_id   persona_id,
-          ori.nombre       persona_nombre,
-          1                asistente,
+          ori.persona_id persona_id,
+          ori.nombre     persona_nombre,
+          1              asistente,
           r.url_acta,
           r.url_acta_alt
-        FROM goc_reuniones       r,
+        FROM goc_reuniones r,
           goc_organos_reuniones orr,
           goc_organos_reuniones_invits ori
         WHERE r.id = orr.reunion_id
               AND ori.organo_reunion_id = orr.id
         UNION
-        SELECT r.id,
+        SELECT
+          r.id,
           r.completada,
           r.fecha,
           r.asunto,
           r.asunto_alt,
-          orrm.suplente_id   persona_id,
+          orrm.suplente_id     persona_id,
           orrm.suplente_nombre persona_nombre,
-          1                  asistente,
+          1                    asistente,
           r.url_acta,
           r.url_acta_alt
-        FROM goc_reuniones                r,
-          goc_organos_reuniones        orr,
+        FROM goc_reuniones r,
+          goc_organos_reuniones orr,
           goc_organos_reuniones_miembros orrm
-        WHERE     r.id = orr.reunion_id
-                  AND orr.id = orrm.organo_reunion_id
-                  AND orrm.asistencia = 1
-                  AND suplente_id IS NOT NULL
+        WHERE r.id = orr.reunion_id
+              AND orr.id = orrm.organo_reunion_id
+              AND orrm.asistencia = 1
+              AND suplente_id IS NOT NULL
         UNION
-        SELECT r.id,
+        SELECT
+          r.id,
           r.completada,
           r.fecha,
           r.asunto,
           r.asunto_alt,
-          orrm.miembro_id                persona_id,
-          orrm.nombre                    persona_nombre,
-          DECODE (suplente_id, NULL, 1, 0) asistente,
+          orrm.miembro_id                 persona_id,
+          orrm.nombre                     persona_nombre,
+          DECODE(suplente_id, NULL, 1, 0) asistente,
           r.url_acta,
           r.url_acta_alt
-        FROM goc_reuniones                r,
-          goc_organos_reuniones        orr,
+        FROM goc_reuniones r,
+          goc_organos_reuniones orr,
           goc_organos_reuniones_miembros orrm
-        WHERE     r.id = orr.reunion_id
-                  AND orr.id = orrm.organo_reunion_id
-                  AND orrm.asistencia = 1
+        WHERE r.id = orr.reunion_id
+              AND orr.id = orrm.organo_reunion_id
+              AND orrm.asistencia = 1
         UNION
-        SELECT r.id,
+        SELECT
+          r.id,
           r.completada,
           r.fecha,
           r.asunto,
           r.asunto_alt,
           orrm.miembro_id persona_id,
-          orrm.nombre   persona_nombre,
-          0             asistente,
+          orrm.nombre     persona_nombre,
+          0               asistente,
           r.url_acta,
           r.url_acta_alt
-        FROM goc_reuniones                r,
-          goc_organos_reuniones        orr,
+        FROM goc_reuniones r,
+          goc_organos_reuniones orr,
           goc_organos_reuniones_miembros orrm
-        WHERE     r.id = orr.reunion_id
-                  AND orr.id = orrm.organo_reunion_id
-                  AND orrm.asistencia = 0) s
+        WHERE r.id = orr.reunion_id
+              AND orr.id = orrm.organo_reunion_id
+              AND orrm.asistencia = 0) s
   GROUP BY s.id,
     s.completada,
     s.fecha,
@@ -339,3 +350,40 @@ AS
     s.persona_nombre,
     s.url_acta,
     s.url_acta_alt;
+
+CREATE OR REPLACE FORCE VIEW UJI_REUNIONES.GOC_VW_REUNIONES_EDITORES
+(
+    ID,
+    ASUNTO,
+    ASUNTO_ALT,
+    FECHA,
+    DURACION,
+    NUM_DOCUMENTOS,
+    EDITOR_ID,
+    COMPLETADA,
+    EXTERNO,
+    ORGANO_ID,
+    TIPO_ORGANO_ID,
+    AVISO_PRIMERA_REUNION
+)
+AS
+  SELECT
+    r.id,
+    r.asunto,
+    r.asunto_alt,
+    r.fecha,
+    r.duracion,
+    (SELECT COUNT(*)
+     FROM goc_reuniones_documentos rd
+     WHERE rd.reunion_id = r.id)
+                 num_documentos,
+    r.creador_id editor_id,
+    r.completada completada,
+    o.externo,
+    o.organo_id,
+    o.tipo_organo_id,
+    r.aviso_primera_reunion
+  FROM goc_reuniones r,
+    goc_organos_reuniones o,
+    goc_organos_reuniones_miembros orm
+  WHERE r.id = o.reunion_id (+) AND o.id = orm.organo_reunion_id (+);

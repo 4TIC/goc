@@ -57,7 +57,14 @@ Ext.define('goc.view.reunion.ReunionGridController', {
             return Ext.Msg.alert(appI18N.reuniones.enviarConvocatoria, appI18N.reuniones.seleccionarParaEnviarConvocatoria);
         }
 
-        Ext.Msg.confirm(appI18N.reuniones.confirmacionEnvioTitulo, appI18N.reuniones.confirmacionEnvioMensaje, function(result)
+        var mensaje = appI18N.reuniones.confirmacionEnvioMensaje;
+
+        if (record.get('avisoPrimeraReunion') == 1)
+        {
+            mensaje = appI18N.reuniones.confirmacionEnvioMensajeYaEnviado;
+        }
+
+        Ext.Msg.confirm(appI18N.reuniones.confirmacionEnvioTitulo, mensaje, function(result)
         {
             if (result === 'yes')
             {
