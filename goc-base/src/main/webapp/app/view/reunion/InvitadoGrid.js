@@ -29,7 +29,7 @@ Ext.define('goc.view.reunion.InvitadoGrid',
         {
             xtype : 'actioncolumn',
             align : 'right',
-            width : 25,
+            width : 30,
             bind : {
                 disabled : '{reunion.completada}'
             },

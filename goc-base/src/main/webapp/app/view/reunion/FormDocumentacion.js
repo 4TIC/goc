@@ -19,7 +19,7 @@ gridColumns.push({
     xtype : 'actioncolumn',
     name : 'delete',
     align : 'right',
-    width : 25,
+    width : 30,
     bind : {
         disabled : '{completada}'
     },
@@ -45,7 +45,7 @@ gridColumns.push({
 gridColumns.push({
     xtype : 'actioncolumn',
     align : 'right',
-    width : 25,
+    width : 30,
     items : [
         {
             iconCls : 'x-fa fa-download',

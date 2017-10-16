@@ -9,7 +9,7 @@ var gridColumns = [
         xtype : 'actioncolumn',
         title : appI18N.reuniones.posicion,
         align : 'right',
-        width : 25,
+        width : 30,
         items : [
             {
                 iconCls : 'x-fa fa-arrow-up',
@@ -33,7 +33,7 @@ var gridColumns = [
         xtype : 'actioncolumn',
         title : appI18N.reuniones.posicion,
         align : 'right',
-        width : 25,
+        width : 30,
         items : [
             {
                 iconCls : 'x-fa fa-arrow-down',

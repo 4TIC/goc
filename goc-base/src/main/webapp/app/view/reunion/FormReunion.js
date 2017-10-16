@@ -359,7 +359,7 @@ formReunionItems.push({
             {
                 xtype : 'actioncolumn',
                 align : 'right',
-                width : 25,
+                width : 30,
                 items : [
                     {
                         iconCls : 'x-fa fa-user',
@@ -376,7 +376,7 @@ formReunionItems.push({
             {
                 xtype : 'actioncolumn',
                 align : 'right',
-                width : 25,
+                width : 30,
                 bind : {
                     disabled : '{reunion.completada}'
                 },
