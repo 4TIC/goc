@@ -19,6 +19,7 @@ Ext.define('goc.store.Reuniones', {
         { name: 'admiteComentarios', type: 'boolean', defaultValue: true },
         { name: 'telematicaDescripcion', type: 'string' },
         { name: 'telematicaDescripcionAlternativa', type: 'string' },
+        { name: 'avisoPrimeraReunion', type: 'boolean'},
         { name: 'numeroSesion', type: 'string' },
         {
             type: 'number',

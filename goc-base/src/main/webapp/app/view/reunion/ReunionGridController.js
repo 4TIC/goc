@@ -59,7 +59,7 @@ Ext.define('goc.view.reunion.ReunionGridController', {
 
         var mensaje = appI18N.reuniones.confirmacionEnvioMensaje;
 
-        if (record.get('avisoPrimeraReunion') == 1)
+        if (record.get('avisoPrimeraReunion'))
         {
             mensaje = appI18N.reuniones.confirmacionEnvioMensajeYaEnviado;
         }

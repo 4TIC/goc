@@ -40,7 +40,7 @@ public class ReunionEditor
     private Long numeroDocumentos;
 
     @Column(name = "AVISO_PRIMERA_REUNION")
-    private Long avisoPrimeraReunion;
+    private Boolean avisoPrimeraReunion;
 
     public ReunionEditor()
     {
@@ -161,12 +161,12 @@ public class ReunionEditor
         this.editorId = editorId;
     }
 
-    public Long getAvisoPrimeraReunion()
+    public Boolean isAvisoPrimeraReunion()
     {
         return avisoPrimeraReunion;
     }
 
-    public void setAvisoPrimeraReunion(Long avisoPrimeraReunion)
+    public void setAvisoPrimeraReunion(Boolean avisoPrimeraReunion)
     {
         this.avisoPrimeraReunion = avisoPrimeraReunion;
     }
