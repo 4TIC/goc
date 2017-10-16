@@ -28,18 +28,18 @@ public class ReunionFormatter
 
         if (reunion.getDescripcion() != null && !reunion.getDescripcion().isEmpty())
         {
-            content.append("<div><strong>Descripció:</strong><span>" + reunion.getDescripcion() + "</span></div>");
+            content.append("<div><strong>Descripció: </strong><span>" + reunion.getDescripcion() + "</span></div>");
         }
 
-        content.append("<div><strong>Data i hora:</strong> " + formatter.format(reunion.getFecha()) + "</div>");
+        content.append("<div><strong>Data i hora: </strong>" + formatter.format(reunion.getFecha()) + "</div>");
 
         if (reunion.getFechaSegundaConvocatoria() != null)
         {
-            content.append("<div><strong>Segona convocatòria:</strong> " + formatter.format(
+            content.append("<div><strong>Segona convocatòria: </strong>" + formatter.format(
                     reunion.getFechaSegundaConvocatoria()) + "</div>");
         }
 
-        content.append("<div><strong>Duració:</strong> " + reunion.getDuracion() + " minuts</div><br/>");
+        content.append("<div><strong>Duració: </strong>" + reunion.getDuracion() + " minuts</div><br/>");
         content.append(
                 "<div>Per a més informació, podeu consultar el detall de la reunió a <a href=\"" + publicUrl + "/goc/rest/publicacion/reuniones/" + reunion
                         .getId() + "\">" + publicUrl + "/goc/rest/publicacion/reuniones/" + reunion.getId() + "</div>");
