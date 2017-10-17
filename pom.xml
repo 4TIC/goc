@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>es.uji.apps.goc</groupId>
   <artifactId>goc</artifactId>
-  <version>0.1.6</version>
+  <version>0.1.7-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>goc</name>
 
@@ -54,8 +54,8 @@
   </dependencies>
 
   <scm>
-    <connection>scm:svn:http://jira.uji.es/repos/uji/GOC/goc/tags/goc_0.1.6</connection>
-    <url>http://jira.uji.es/repos/uji/GOC/goc/tags/goc_0.1.6</url>
+    <connection>scm:svn:http://jira.uji.es/repos/uji/GOC/goc/trunk</connection>
+    <url>http://jira.uji.es/repos/uji/GOC/goc/trunk</url>
   </scm>
 
   <repositories>
