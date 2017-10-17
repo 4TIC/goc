@@ -351,6 +351,9 @@ AS
     s.url_acta,
     s.url_acta_alt;
 
+ALTER TABLE goc_reuniones
+  ADD (aviso_primera_reunion_user VARCHAR2(100), aviso_primera_reunion_fecha DATE);
+
 CREATE OR REPLACE FORCE VIEW UJI_REUNIONES.GOC_VW_REUNIONES_EDITORES
 (
     ID,
@@ -364,16 +367,17 @@ CREATE OR REPLACE FORCE VIEW UJI_REUNIONES.GOC_VW_REUNIONES_EDITORES
     EXTERNO,
     ORGANO_ID,
     TIPO_ORGANO_ID,
-    AVISO_PRIMERA_REUNION
+    AVISO_PRIMERA_REUNION,
+    AVISO_PRIMERA_REUNION_USER,
+    AVISO_PRIMERA_REUNION_FECHA
 )
 AS
-  SELECT
-    r.id,
+  SELECT r.id,
     r.asunto,
     r.asunto_alt,
     r.fecha,
     r.duracion,
-    (SELECT COUNT(*)
+    (SELECT COUNT (*)
      FROM goc_reuniones_documentos rd
      WHERE rd.reunion_id = r.id)
                  num_documentos,
@@ -382,8 +386,11 @@ AS
     o.externo,
     o.organo_id,
     o.tipo_organo_id,
-    r.aviso_primera_reunion
-  FROM goc_reuniones r,
-    goc_organos_reuniones o,
+    r.aviso_primera_reunion,
+    r.aviso_primera_reunion_user,
+    r.aviso_primera_reunion_fecha
+  FROM goc_reuniones                  r,
+    goc_organos_reuniones          o,
     goc_organos_reuniones_miembros orm
-  WHERE r.id = o.reunion_id (+) AND o.id = orm.organo_reunion_id (+);
+  WHERE r.id = o.reunion_id(+) AND o.id = orm.organo_reunion_id(+);
+

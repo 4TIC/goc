@@ -42,6 +42,12 @@ public class ReunionEditor
     @Column(name = "AVISO_PRIMERA_REUNION")
     private Boolean avisoPrimeraReunion;
 
+    @Column(name = "AVISO_PRIMERA_REUNION_USER")
+    private String avisoPrimeraReunionUser;
+
+    @Column(name = "AVISO_PRIMERA_REUNION_FECHA")
+    private Date avisoPrimeraReunionFecha;
+
     public ReunionEditor()
     {
     }
@@ -169,5 +175,25 @@ public class ReunionEditor
     public void setAvisoPrimeraReunion(Boolean avisoPrimeraReunion)
     {
         this.avisoPrimeraReunion = avisoPrimeraReunion;
+    }
+
+    public String getAvisoPrimeraReunionUser()
+    {
+        return avisoPrimeraReunionUser;
+    }
+
+    public void setAvisoPrimeraReunionUser(String avisoPrimeraReunionUser)
+    {
+        this.avisoPrimeraReunionUser = avisoPrimeraReunionUser;
+    }
+
+    public Date getAvisoPrimeraReunionFecha()
+    {
+        return avisoPrimeraReunionFecha;
+    }
+
+    public void setAvisoPrimeraReunionFecha(Date avisoPrimeraReunionFecha)
+    {
+        this.avisoPrimeraReunionFecha = avisoPrimeraReunionFecha;
     }
 }

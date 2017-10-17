@@ -57,10 +57,28 @@ reunionesGridColumns.push({
 });
 
 reunionesGridColumns.push({
+    dataIndex : 'avisoPrimeraReunion',
+    text : appI18N.reuniones.enviada,
+    align : 'center',
+    reference : 'avisoPrimeraReunion',
+    renderer : function(value, metadata, record)
+    {
+        if (value)
+        {
+            console.log(record.data);
+            return '<span data-qwidth="200" ' +
+            'data-qtip="' + record.get("avisoPrimeraReunionUser") + ' ' + Ext.util.Format.date(record.get("avisoPrimeraReunionFecha"), 'd/m/Y H:i') + '">Sí</span>'
+        }
+
+        return 'No'
+    }
+});
+
+reunionesGridColumns.push({
     dataIndex : 'numeroDocumentos',
     text : appI18N.reuniones.documentos,
     align : 'center',
-    reference: 'documentos',
+    reference : 'documentos',
     renderer : function(value)
     {
         if (value > 0)

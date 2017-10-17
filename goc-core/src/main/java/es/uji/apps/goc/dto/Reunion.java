@@ -100,6 +100,12 @@ public class Reunion implements Serializable
     @Column(name = "AVISO_PRIMERA_REUNION")
     private Boolean avisoPrimeraReunion;
 
+    @Column(name = "AVISO_PRIMERA_REUNION_USER")
+    private String avisoPrimeraReunionUser;
+
+    @Column(name = "AVISO_PRIMERA_REUNION_FECHA")
+    private Date avisoPrimeraReunionFecha;
+
     @Column(name = "URL_ACTA")
     private String urlActa;
 
@@ -559,5 +565,25 @@ public class Reunion implements Serializable
     public void setUrlActaAlternativa(String urlActaAlternativa)
     {
         this.urlActaAlternativa = urlActaAlternativa;
+    }
+
+    public String getAvisoPrimeraReunionUser()
+    {
+        return avisoPrimeraReunionUser;
+    }
+
+    public void setAvisoPrimeraReunionUser(String avisoPrimeraReunionUser)
+    {
+        this.avisoPrimeraReunionUser = avisoPrimeraReunionUser;
+    }
+
+    public Date getAvisoPrimeraReunionFecha()
+    {
+        return avisoPrimeraReunionFecha;
+    }
+
+    public void setAvisoPrimeraReunionFecha(Date avisoPrimeraReunionFecha)
+    {
+        this.avisoPrimeraReunionFecha = avisoPrimeraReunionFecha;
     }
 }

@@ -26,6 +26,8 @@ Ext.define('goc.model.Reunion', {
         { name: 'telematicaDescripcionAlternativa', type: 'string' },
         { name: 'publica', type: 'boolean' },
         { name: 'avisoPrimeraReunion', type: 'boolean'},
+        { name: 'avisoPrimeraReunionUser', type: 'string'},
+        { name: 'avisoPrimeraReunionFecha', type: 'date', dateFormat: 'd/m/Y H:i:s'},
         { name: 'numeroSesion', type: 'string' },
         {
             name: 'duracion',

@@ -193,7 +193,8 @@
     "noAddSuplentePorqueNoAsiste": "No se puede añadir un suplente porque no asistirá a la reunión",
     "opciones": "Opciones",
     "delegacionVoto": "Delegación de voto",
-    "delegacionVotoEmail": "E-mail delegación de voto"
+    "delegacionVotoEmail": "E-mail delegación de voto",
+    "enviada": "Enviada"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Histórico de reuniones",

@@ -15,6 +15,7 @@ import es.uji.commons.rest.ParamUtils;
 import es.uji.commons.rest.ResponseMessage;
 import es.uji.commons.rest.UIEntity;
 import es.uji.commons.sso.AccessManager;
+import es.uji.commons.sso.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -394,7 +395,9 @@ public class ReunionResource extends CoreBaseService
     public ResponseMessage enviarConvocatoria(@PathParam("reunionId") Long reunionId)
             throws MiembrosExternosException, ReunionNoDisponibleException, NotificacionesException
     {
-        String messageError = reunionService.enviarConvocatoria(reunionId);
+        User connectedUser = AccessManager.getConnectedUser(request);
+
+        String messageError = reunionService.enviarConvocatoria(reunionId, connectedUser);
 
         if (messageError == null)
         {

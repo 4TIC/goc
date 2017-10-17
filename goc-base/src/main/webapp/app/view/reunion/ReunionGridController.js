@@ -76,7 +76,10 @@ Ext.define('goc.view.reunion.ReunionGridController', {
                     {
                         var data = Ext.decode(response.responseText);
                         var mensajeRespuesta = (data.message && data.message.indexOf("appI18N") != -1) ? eval(data.message) : data.message;
+
                         Ext.Msg.alert(appI18N.reuniones.resultadoEnvioConvocatoriaTitle, mensajeRespuesta);
+
+                        grid.getStore().reload();
                     },
                     scope : this
                 }

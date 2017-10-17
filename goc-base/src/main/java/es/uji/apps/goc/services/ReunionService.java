@@ -20,6 +20,7 @@ import es.uji.commons.rest.UIEntity;
 import es.uji.commons.rest.json.UIEntityListMessageBodyReader;
 import es.uji.commons.rest.json.UIEntityMessageBodyReader;
 import es.uji.commons.rest.json.UIEntityMessageBodyWriter;
+import es.uji.commons.sso.User;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -1166,7 +1167,7 @@ public class ReunionService
         }
     }
 
-    public String enviarConvocatoria(Long reunionId)
+    public String enviarConvocatoria(Long reunionId, User user)
             throws MiembrosExternosException, ReunionNoDisponibleException, NotificacionesException
     {
         Reunion reunion = reunionDAO.getReunionConMiembrosAndPuntosDiaById(reunionId);
@@ -1176,8 +1177,13 @@ public class ReunionService
 
         avisosReunion.enviaAvisoNuevaReunion(reunion);
 
-        reunion.setAvisoPrimeraReunion(true);
-        reunionDAO.update(reunion);
+        if (!reunion.getAvisoPrimeraReunion())
+        {
+            reunion.setAvisoPrimeraReunion(true);
+            reunion.setAvisoPrimeraReunionUser(user.getName());
+            reunion.setAvisoPrimeraReunionFecha(new Date());
+            reunionDAO.update(reunion);
+        }
 
         return null;
     }
