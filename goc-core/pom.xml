@@ -19,7 +19,7 @@
     <dependency>
       <groupId>es.uji.commons</groupId>
       <artifactId>uji-commons-testing</artifactId>
-      <version>0.3.6-SNAPSHOT</version>
+      <version>0.3.6</version>
     </dependency>
 
     <!-- Jersey -->
