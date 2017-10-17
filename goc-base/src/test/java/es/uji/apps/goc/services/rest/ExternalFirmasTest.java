@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import es.uji.apps.goc.dto.*;
 import es.uji.apps.goc.model.RespuestaFirma;
 import org.junit.Test;
+import org.junit.Ignore;
 
 import com.sun.jersey.api.client.ClientResponse;
 
@@ -19,6 +20,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 
+@Ignore
 public class ExternalFirmasTest extends JerseySpringTest
 {
     @Test

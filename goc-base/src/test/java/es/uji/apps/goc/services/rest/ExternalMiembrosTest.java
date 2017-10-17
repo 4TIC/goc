@@ -7,12 +7,14 @@ import javax.ws.rs.core.MediaType;
 
 import es.uji.apps.goc.dto.MiembroExterno;
 import org.junit.Test;
+import org.junit.Ignore;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 
 import es.uji.apps.goc.dto.ResponseMessage;
 
+@Ignore
 public class ExternalMiembrosTest extends JerseySpringTest
 {
     @Test
