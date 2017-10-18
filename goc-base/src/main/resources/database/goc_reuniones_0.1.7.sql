@@ -394,3 +394,6 @@ AS
     goc_organos_reuniones_miembros orm
   WHERE r.id = o.reunion_id(+) AND o.id = orm.organo_reunion_id(+);
 
+ALTER TABLE UJI_REUNIONES.GOC_REUNIONES_PUNTOS_ORDEN_DIA
+  MODIFY(DESCRIPCION  NULL)
+/
