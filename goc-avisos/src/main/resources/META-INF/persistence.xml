@@ -10,15 +10,26 @@
     <class>es.uji.apps.goc.model.Organo</class>
     <class>es.uji.apps.goc.model.Miembro</class>
     <class>es.uji.apps.goc.dto.Reunion</class>
+    <class>es.uji.apps.goc.dto.ReunionBusqueda</class>
     <class>es.uji.apps.goc.dto.ReunionDocumento</class>
     <class>es.uji.apps.goc.dto.OrganoReunion</class>
     <class>es.uji.apps.goc.dto.OrganoLocal</class>
     <class>es.uji.apps.goc.dto.MiembroLocal</class>
     <class>es.uji.apps.goc.dto.Cargo</class>
     <class>es.uji.apps.goc.dto.OrganoReunionMiembro</class>
+    <class>es.uji.apps.goc.dto.OrganoReunionInvitado</class>
     <class>es.uji.apps.goc.dto.PuntoOrdenDia</class>
     <class>es.uji.apps.goc.dto.PuntoOrdenDiaDocumento</class>
+    <class>es.uji.apps.goc.dto.PuntoOrdenDiaAcuerdo</class>
     <class>es.uji.apps.goc.dto.ReunionComentario</class>
     <class>es.uji.apps.goc.dto.OrganoAutorizado</class>
+    <class>es.uji.apps.goc.dto.OrganoInvitado</class>
+    <class>es.uji.apps.goc.dto.Descriptor</class>
+    <class>es.uji.apps.goc.dto.Clave</class>
+    <class>es.uji.apps.goc.dto.PuntoOrdenDiaDescriptor</class>
+    <class>es.uji.apps.goc.dto.ReunionEditor</class>
+    <class>es.uji.apps.goc.dto.DescriptorTipoOrgano</class>
+    <class>es.uji.apps.goc.dto.ReunionInvitado</class>
+    <class>es.uji.apps.goc.dto.ReunionPermiso</class>
   </persistence-unit>
 </persistence>

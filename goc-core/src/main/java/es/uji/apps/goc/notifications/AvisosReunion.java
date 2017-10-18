@@ -233,7 +233,7 @@ public class AvisosReunion
 
         if (confirmados)
         {
-            listaAsistentesReunion = organoReunionMiembroDAO.getAsistentesConfirmadosByReunionId(reunion.getId());
+            listaAsistentesReunion = organoReunionMiembroDAO.getAsistentesByReunionId(reunion.getId());
         }
         else
         {
