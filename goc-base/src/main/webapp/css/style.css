@@ -278,6 +278,11 @@ h4.title {
     color: #cc4b37;
 }
 
+.item-publico {
+    color: #006400;
+    font-weight: bold;
+}
+
 /*Para forzar un scrollbar horizontal en el componente multiselector-search de extjs, debido a un bug que no permite redimensionar la ventana*/
 div[id^="multiselector-search"][id$="body"] {
     overflow-x: auto;

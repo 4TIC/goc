@@ -666,6 +666,7 @@ public class ReunionService
         reunionTemplate.setTelematica(reunion.isTelematica());
         reunionTemplate.setTelematicaDescripcion(
                 mainLanguage ? reunion.getTelematicaDescripcion() : reunion.getTelematicaDescripcionAlternativa());
+        reunionTemplate.setPublica(reunion.isPublica());
         reunionTemplate.setAdmiteSuplencia(reunion.isAdmiteSuplencia());
         reunionTemplate.setAdmiteDelegacionVoto(reunion.isAdmiteDelegacionVoto());
         reunionTemplate.setAdmiteComentarios(reunion.isAdmiteComentarios());

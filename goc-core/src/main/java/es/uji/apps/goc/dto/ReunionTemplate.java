@@ -26,6 +26,8 @@ public class ReunionTemplate implements Serializable
 
     private String acuerdos;
 
+    private Boolean publica;
+
     private Boolean telematica;
 
     private Boolean completada;
@@ -352,5 +354,15 @@ public class ReunionTemplate implements Serializable
     public void setUrlActa(String urlActa)
     {
         this.urlActa = urlActa;
+    }
+
+    public Boolean isPublica()
+    {
+        return publica;
+    }
+
+    public void setPublica(Boolean publica)
+    {
+        this.publica = publica;
     }
 }

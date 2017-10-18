@@ -7,7 +7,8 @@
     </div>
     <main class="columns reunion">
       <div class="row columns">
-        <h2 th:text="'Reunión: ' + ${reunion.asunto}" class="title">title</h2>
+        <h2 th:text="'Reunión: ' + ${reunion.asunto}" class="title">title
+        </h2>
       </div>
       <div class="row columns">
         <h3 class="title" >Información básica</h3>      
@@ -23,6 +24,7 @@
         <li th:if="${reunion.acuerdos != null}" th:utext="'&lt;strong&gt;Acuerdos&lt;/strong&gt;: ' + ${reunion.acuerdos}"></li>
         <li th:if="${reunion.urlGrabacion != null}"><strong>URL grabación</strong>: <a th:href="${reunion.urlGrabacion}" th:text="${reunion.urlGrabacion}"></a></li>
         <li th:if="${reunion.telematica}"><strong>Reunión telemática. Instrucciones</strong>: <span th:text="${reunion.telematicaDescripcion}"></span></li>
+        <li th:if="${reunion.publica}" class="item-publico"><i class="fa fa-eye"></i> <span>PÚBLICA</span></li>
       </ul>
       <div th:if="${not #lists.isEmpty(reunion.organos)}" class="row columns">
         <h3 class="title">Órganos y asistentes</h3>      
@@ -90,6 +92,7 @@
           <div th:if="${puntoOrdenDia.deliberaciones} != null" th:utext="'&lt;strong&gt;Deliberaciones&lt;/strong&gt;: ' + ${puntoOrdenDia.deliberaciones}"></div>
           <div th:if="${puntoOrdenDia.acuerdos} != null and ${reunion.completada}" th:utext="'&lt;strong&gt;Acuerdos&lt;/strong&gt;: ' + ${puntoOrdenDia.acuerdos}"></div>
           <div th:if="${puntoOrdenDia.acuerdos} != null and not ${reunion.completada}" th:utext="'&lt;strong&gt;Popuesta de acuerdos&lt;/strong&gt;: ' + ${puntoOrdenDia.acuerdos}"></div>
+          <div th:if="${puntoOrdenDia.publico}" class="item-publico"><i class="fa fa-eye"></i> <span>PÚBLICO</span></div>
           <strong th:if="${not #lists.isEmpty(puntoOrdenDia.documentos)}">Documentación:</strong>
           <ul class="contentList" th:with="documentos=${puntoOrdenDia.documentos}">
             <li th:each="documento : ${documentos}">

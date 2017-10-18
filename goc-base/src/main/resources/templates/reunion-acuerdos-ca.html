@@ -32,6 +32,7 @@
           <strong th:text="${puntoOrdenDia.titulo}"></strong>
           <div th:if="${puntoOrdenDia.descripcion} != null" th:utext="'&lt;strong&gt;Descripció&lt;/strong&gt;: ' + ${puntoOrdenDia.descripcion}"></div>
           <div th:if="${puntoOrdenDia.deliberaciones} != null" th:utext="'&lt;strong&gt;Deliberacions&lt;/strong&gt;: ' + ${puntoOrdenDia.deliberaciones}"></div>
+          <div th:if="${puntoOrdenDia.publico}" class="item-publico"><i class="fa fa-eye"></i> <span>PÚBLIC</span></div>
           <div th:if="${puntoOrdenDia.acuerdos} != null" th:utext="'&lt;strong&gt;Acords&lt;/strong&gt;: ' + ${puntoOrdenDia.acuerdos}"></div>
           <div th:if="${puntoOrdenDia.acuerdos} != null">
             <span>
