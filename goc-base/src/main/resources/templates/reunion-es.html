@@ -74,7 +74,11 @@
         <h3 class="title">Documentación</h3>      
       </div>
       <ul th:if="${not #lists.isEmpty(reunion.documentos)}" class="contentList detalle row columns">
-        <li th:each="documento : ${reunion.documentos}"><a th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/documentos/' + ${documento.id} + '/descargar'" th:text="${documento.descripcion}">Descripción documento</a></li>
+        <li th:each="documento : ${reunion.documentos}">
+          <a th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/documentos/' + ${documento.id} + '/descargar'" th:text="${documento.descripcion}">Descripción documento
+          </a>
+          <small th:text="' ' + ${#dates.format(documento.fechaAdicion, 'dd/MM/YYYY HH:mm')}"></small>
+        </li>
       </ul>
       <div th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}" class="row columns">
         <h3 class="title">Puntos del orden del día</h3>      
@@ -88,12 +92,18 @@
           <div th:if="${puntoOrdenDia.acuerdos} != null and not ${reunion.completada}" th:utext="'&lt;strong&gt;Popuesta de acuerdos&lt;/strong&gt;: ' + ${puntoOrdenDia.acuerdos}"></div>
           <strong th:if="${not #lists.isEmpty(puntoOrdenDia.documentos)}">Documentación:</strong>
           <ul class="contentList" th:with="documentos=${puntoOrdenDia.documentos}">
-            <li th:each="documento : ${documentos}"><a th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/puntosOrdenDia/' + ${puntoOrdenDia.id} + '/documentos/' + ${documento.id} + '/descargar'" th:text="${documento.descripcion}">Descripcion documento</a></li>
+            <li th:each="documento : ${documentos}">
+              <a th:href="'/goc/rest/reuniones/' + ${reunion.id} + '/puntosOrdenDia/' + ${puntoOrdenDia.id} + '/documentos/' + ${documento.id} + '/descargar'" th:text="${documento.descripcion}">Descripcion documento</a>
+              <small th:text="' [' +  ${#dates.format(documento.fechaAdicion, 'dd/MM/YYYY HH:mm')} + ']'"></small>
+            </li>
           </ul>
           <strong th:if="${not #lists.isEmpty(puntoOrdenDia.documentosAcuerdos)} and ${reunion.completada}">Acuerdos:</strong>
           <strong th:if="${not #lists.isEmpty(puntoOrdenDia.documentosAcuerdos)} and not ${reunion.completada}">Propuesta de acuerdos:</strong>
           <ul class="contentList" th:with="acuerdos=${puntoOrdenDia.documentosAcuerdos}">
-            <li th:each="acuerdo : ${acuerdos}"><a th:href="'/goc/rest/reuniones/' + ${acuerdo.id} + '/puntosOrdenDia/' + ${puntoOrdenDia.id} + '/acuerdos/' + ${acuerdo.id} + '/descargar'" th:text="${acuerdo.descripcion}">Descripción acuerdo</a></li>
+            <li th:each="acuerdo : ${acuerdos}">
+              <a th:href="'/goc/rest/reuniones/' + ${acuerdo.id} + '/puntosOrdenDia/' + ${puntoOrdenDia.id} + '/acuerdos/' + ${acuerdo.id} + '/descargar'" th:text="${acuerdo.descripcion}">Descripción acuerdo</a>
+              <small th:text="' [' +  ${#dates.format(acuerdo.fechaAdicion, 'dd/MM/YYYY HH:mm')} + ']'"></small>
+            </li>
           </ul>
           <strong th:if="${not #lists.isEmpty(puntoOrdenDia.descriptores)}">Descriptores:</strong>
           <ul class="contentList" th:with="descriptores=${puntoOrdenDia.descriptores}">
