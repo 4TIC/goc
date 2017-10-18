@@ -99,13 +99,19 @@ public class MiembroService
 
         miembro.setNombre(nombre);
         miembro.setEmail(email);
+        String oldCargoId = miembro.getCargo().getId();
 
         es.uji.apps.goc.dto.Cargo cargo =
                 cargoDAO.get(es.uji.apps.goc.dto.Cargo.class, Long.parseLong(cargoId)).get(0);
 
-        miembro.getCargo().setCodigo(cargo.getCodigo());
-        miembro.getCargo().setNombre(cargo.getNombre());
-        miembro.getCargo().setNombreAlternativo(cargo.getNombreAlternativo());
+        Cargo newCargo = new Cargo();
+
+        newCargo.setId(cargo.getId().toString());
+        newCargo.setCodigo(cargo.getCodigo());
+        newCargo.setNombre(cargo.getNombre());
+        newCargo.setNombreAlternativo(cargo.getNombreAlternativo());
+
+        miembro.setCargo(newCargo);
 
         List<OrganoReunion> organoReuniones =
                 organoReunionDAO.getOrganosReunionNoCompletadasByOrganoId(Long.parseLong(miembro.getOrgano().getId()));
@@ -113,7 +119,7 @@ public class MiembroService
         for (OrganoReunion organoReunion : organoReuniones)
         {
             organoReunionMiembroDAO.ByOrganoReunionIdPersonaIdAndCargoId(organoReunion.getId(),
-                    miembro.getPersonaId().toString(), miembro.getCargo().getId(), nombre, email, cargo);
+                    miembro.getPersonaId().toString(), oldCargoId, nombre, email, newCargo);
         }
 
         return miembroDAO.updateMiembro(miembro);
