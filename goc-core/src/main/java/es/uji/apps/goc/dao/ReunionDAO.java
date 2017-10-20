@@ -37,7 +37,6 @@ public class ReunionDAO extends BaseDAODatabaseImpl
     private QReunionComentario qReunionComentario = QReunionComentario.reunionComentario;
     private QReunionDocumento qReunionDocumento = QReunionDocumento.reunionDocumento;
     private QReunionInvitado qReunionInvitado = QReunionInvitado.reunionInvitado;
-    private QOrganoInvitado qOrganoInvitado = QOrganoInvitado.organoInvitado;
     private QReunionPermiso qReunionPermiso = QReunionPermiso.reunionPermiso;
 
     public List<ReunionEditor> getReunionesByEditorId(Long connectedUserId, String organodId, Long tipoOrganoId,
