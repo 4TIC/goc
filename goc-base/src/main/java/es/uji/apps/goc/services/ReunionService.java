@@ -1,12 +1,8 @@
 package es.uji.apps.goc.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.core.InjectParam;
 import es.uji.apps.goc.Utils;
 import es.uji.apps.goc.auth.LanguageConfig;
@@ -16,27 +12,19 @@ import es.uji.apps.goc.exceptions.*;
 import es.uji.apps.goc.model.*;
 import es.uji.apps.goc.model.Cargo;
 import es.uji.apps.goc.notifications.AvisosReunion;
-import es.uji.commons.rest.UIEntity;
-import es.uji.commons.rest.json.UIEntityListMessageBodyReader;
-import es.uji.commons.rest.json.UIEntityMessageBodyReader;
-import es.uji.commons.rest.json.UIEntityMessageBodyWriter;
 import es.uji.commons.sso.User;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.w3c.dom.events.UIEvent;
 
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -802,6 +790,9 @@ public class ReunionService
 
         organoTemplate.setAsistentes(
                 getAsistentesDesdeListaOrganoReunionMiembro(listaAsistentes, listaMiembros, mainLanguage));
+        organoTemplate.setAusentes(
+                getAusentesDesdeListaOrganoReunionMiembro(listaAsistentes, listaMiembros, mainLanguage));
+
         return organoTemplate;
     }
 
@@ -914,6 +905,15 @@ public class ReunionService
         }
 
         return listaMiembroTemplate;
+    }
+
+    private List<MiembroTemplate> getAusentesDesdeListaOrganoReunionMiembro(List<OrganoReunionMiembro> listaAsistentes,
+            List<OrganoReunionMiembro> listaMiembros, boolean mainLanguage)
+    {
+        return listaMiembros.stream()
+                .filter(a -> !listaAsistentes.contains(a))
+                .map(a -> getAsistenteDesdeOrganoReunionMiembro(a, mainLanguage))
+                .collect(Collectors.toList());
     }
 
     private void setDelegacionDeVotoToPlantilla(MiembroTemplate miembroTemplate, List<OrganoReunionMiembro> miembros)

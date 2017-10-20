@@ -315,4 +315,21 @@ public class OrganoReunionMiembro implements Serializable
     {
         this.urlAsistenciaAlternativa = urlAsistenciaAlternativa;
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        OrganoReunionMiembro that = (OrganoReunionMiembro) o;
+
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return id.hashCode();
+    }
 }

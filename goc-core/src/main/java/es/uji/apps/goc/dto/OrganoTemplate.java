@@ -13,6 +13,7 @@ public class OrganoTemplate
     private String tipoCodigo;
 
     private List<MiembroTemplate> asistentes;
+    private List<MiembroTemplate> ausentes;
 
     public String getId()
     {
@@ -87,5 +88,15 @@ public class OrganoTemplate
 
     public void setInactivo(Boolean inactivo) {
         this.inactivo = inactivo;
+    }
+
+    public List<MiembroTemplate> getAusentes()
+    {
+        return ausentes;
+    }
+
+    public void setAusentes(List<MiembroTemplate> ausentes)
+    {
+        this.ausentes = ausentes;
     }
 }
