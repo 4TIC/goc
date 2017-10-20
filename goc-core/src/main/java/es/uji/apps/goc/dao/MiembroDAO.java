@@ -105,7 +105,7 @@ public class MiembroDAO extends BaseDAODatabaseImpl
         return creaMiembroDesdeMiembroLocal(miembroLocal);
     }
 
-    public Miembro getMiembroByIdAndUserId(Long miembroId, Long connectedUserId)
+    public Miembro getMiembroById(Long miembroId)
     {
         JPAQuery query = new JPAQuery(entityManager);
         QMiembroLocal qMiembroLocal = QMiembroLocal.miembroLocal;
@@ -114,7 +114,7 @@ public class MiembroDAO extends BaseDAODatabaseImpl
         List<MiembroLocal> miembrosLocales = query.from(qMiembroLocal)
                 .join(qMiembroLocal.organo, qOrganoLocal)
                 .fetch()
-                .where(qMiembroLocal.id.eq(miembroId).and(qMiembroLocal.organo.creadorId.eq(connectedUserId)))
+                .where(qMiembroLocal.id.eq(miembroId))
                 .list(qMiembroLocal);
 
         if (miembrosLocales.size() == 0)

@@ -90,7 +90,7 @@ public class MiembroService
     public Miembro updateMiembro(Long miembroId, String nombre, String email, String cargoId, Long connectedUserId)
             throws OrganoNoDisponibleException, MiembroNoDisponibleException
     {
-        Miembro miembro = miembroDAO.getMiembroByIdAndUserId(miembroId, connectedUserId);
+        Miembro miembro = miembroDAO.getMiembroById(miembroId);
 
         if (miembro == null)
         {
@@ -129,7 +129,7 @@ public class MiembroService
     public void removeMiembroById(Long miembroId, Long connectedUserId)
             throws MiembroNoDisponibleException
     {
-        Miembro miembro = miembroDAO.getMiembroByIdAndUserId(miembroId, connectedUserId);
+        Miembro miembro = miembroDAO.getMiembroById(miembroId);
 
         if (miembro == null)
         {

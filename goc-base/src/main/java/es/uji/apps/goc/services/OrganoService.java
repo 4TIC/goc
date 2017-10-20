@@ -49,12 +49,15 @@ public class OrganoService
     @Value("${goc.external.organosEndpoint}")
     private String organosExternosEndpoint;
 
-    public List<Organo> getOrganos(Long connectedUserId)
+    public List<Organo> getOrganosByAdminAndAutorizadoId(Long connectedUserId)
             throws OrganosExternosException
     {
         List<Organo> organos = new ArrayList<>();
         organos.addAll(getOrganosExternos());
         organos.addAll(organoDAO.getOrganosByUserId(connectedUserId));
+
+        List<Organo> organosAutorizado = organoDAO.getOrganosByAutorizadoId(connectedUserId);
+        organos.addAll(organosAutorizado.stream().filter(o -> !organos.contains(o)).collect(Collectors.toList()));
 
         return organos;
     }

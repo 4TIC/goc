@@ -142,4 +142,24 @@ public class Organo
     {
         this.nombreAlternativo = nombreAlternativo;
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Organo organo = (Organo) o;
+
+        if (!id.equals(organo.id)) return false;
+        return nombre.equals(organo.nombre);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result = id.hashCode();
+        result = 31 * result + nombre.hashCode();
+        return result;
+    }
 }

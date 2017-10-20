@@ -56,55 +56,8 @@ public class OrganoResource extends CoreBaseService
         }
         else
         {
-            listaOrganos = organoService.getOrganos(connectedUserId);
+        listaOrganos = organoService.getOrganosByAdminAndAutorizadoId(connectedUserId);
         }
-
-        return organosToUI(listaOrganos);
-    }
-
-    @GET
-    @Path("activos")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<UIEntity> getOrganosActivos(@QueryParam("reunionId") Long reunionId)
-            throws OrganosExternosException
-    {
-        Long connectedUserId = AccessManager.getConnectedUserId(request);
-        List<Organo> listaOrganos;
-
-        if (reunionId != null)
-        {
-            listaOrganos = organoService.getOrganosByReunionIdAndUserId(reunionId, connectedUserId);
-        }
-        else
-        {
-            listaOrganos = organoService.getOrganos(connectedUserId);
-        }
-
-        listaOrganos = listaOrganos.stream().filter(o -> o.isExterno() || !o.isInactivo()).collect(Collectors.toList());
-
-        return organosToUI(listaOrganos);
-
-    }
-
-    @GET
-    @Path("activos/usuario")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<UIEntity> getOrganosActivosByUserId()
-            throws OrganosExternosException, RolesPersonaExternaException
-    {
-        Long connectedUserId = AccessManager.getConnectedUserId(request);
-        List<Organo> listaOrganos;
-
-        if (personaService.isUsuario(connectedUserId))
-        {
-            listaOrganos = organoService.getOrganosPorAutorizadoId(connectedUserId);
-        }
-        else
-        {
-            listaOrganos = organoService.getOrganos(connectedUserId);
-        }
-
-        listaOrganos = listaOrganos.stream().filter(o -> o.isExterno() || !o.isInactivo()).collect(Collectors.toList());
 
         return organosToUI(listaOrganos);
     }
@@ -129,6 +82,29 @@ public class OrganoResource extends CoreBaseService
 
         return organosToUI(listaOrganos);
 
+    }
+
+    @GET
+    @Path("activos/usuario")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UIEntity> getOrganosActivosByUserId()
+            throws OrganosExternosException, RolesPersonaExternaException
+    {
+        Long connectedUserId = AccessManager.getConnectedUserId(request);
+        List<Organo> listaOrganos;
+
+        if (personaService.isUsuario(connectedUserId))
+        {
+            listaOrganos = organoService.getOrganosPorAutorizadoId(connectedUserId);
+        }
+        else
+        {
+            listaOrganos = organoService.getOrganosByAdminAndAutorizadoId(connectedUserId);
+        }
+
+        listaOrganos = listaOrganos.stream().filter(o -> o.isExterno() || !o.isInactivo()).collect(Collectors.toList());
+
+        return organosToUI(listaOrganos);
     }
 
     private List<UIEntity> organosToUI(List<Organo> listaOrganos)
