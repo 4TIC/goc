@@ -86,7 +86,9 @@ public class OrganoFirma
         this.id = id;
     }
 
-    public List<MiembroFirma> getAsistentes() {
+    public List<MiembroFirma> getAsistentes()
+    {
+        asistentes.sort((p1, p2) -> p1.getNombre().compareTo(p2.getNombre()));
         return asistentes;
     }
 
