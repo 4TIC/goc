@@ -42,10 +42,11 @@ $(function()
         var items = [];
         $('div.nuevo-delegado-voto .footer button').show();
 
+        console.log(result.data);
         for (var i = 0; i < result.data.length; i++)
         {
             var persona = result.data[i];
-            items.push('<li><input type="radio" name="persona" value="' + persona.id + '"/> <label style="display: inline; margin-right: 0px;" for="delegadoVotoNombre">' + persona.nombre + '</label> <span style="display: inline">(</span><label style="display: inline" for="delegadoVotoEmail">' + persona.email + '</label><span style="display: inline">)</span></li>')
+            items.push('<li><input type="radio" name="persona" value="' + persona.miembroId + '"/> <label style="display: inline; margin-right: 0px;" for="delegadoVotoNombre">' + persona.nombre + '</label> <span style="display: inline">(</span><label style="display: inline" for="delegadoVotoEmail">' + persona.email + '</label><span style="display: inline">)</span></li>')
         }
 
         $('div.nuevo-delegado-voto ul.resultados').html(items.join('\n'));
