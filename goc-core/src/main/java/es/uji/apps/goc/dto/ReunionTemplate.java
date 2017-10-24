@@ -328,6 +328,8 @@ public class ReunionTemplate implements Serializable
 
     public List<InvitadoTemplate> getInvitados()
     {
+        invitados.sort((p1, p2) -> p1.getNombre().compareTo(p2.getNombre()));
+        
         return invitados;
     }
 

@@ -74,24 +74,30 @@ public class OrganoTemplate
         this.id = id;
     }
 
-    public List<MiembroTemplate> getAsistentes() {
+    public List<MiembroTemplate> getAsistentes()
+    {
+        asistentes.sort((p1, p2) -> p1.getNombre().compareTo(p2.getNombre()));
         return asistentes;
     }
 
-    public void setAsistentes(List<MiembroTemplate> asistentes) {
+    public void setAsistentes(List<MiembroTemplate> asistentes)
+    {
         this.asistentes = asistentes;
     }
 
-    public Boolean getInactivo() {
+    public Boolean getInactivo()
+    {
         return inactivo;
     }
 
-    public void setInactivo(Boolean inactivo) {
+    public void setInactivo(Boolean inactivo)
+    {
         this.inactivo = inactivo;
     }
 
     public List<MiembroTemplate> getAusentes()
     {
+        ausentes.sort((p1, p2) -> p1.getNombre().compareTo(p2.getNombre()));
         return ausentes;
     }
 
