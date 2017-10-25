@@ -23,6 +23,9 @@ public class OrganoInvitado implements Serializable
     @Column(name = "ORGANO_ID")
     private String organoId;
 
+    @Column(name = "SOLO_CONSULTA")
+    private Boolean soloConsulta;
+
     public OrganoInvitado()
     {
     }
@@ -75,5 +78,15 @@ public class OrganoInvitado implements Serializable
     public void setPersonaEmail(String personaEmail)
     {
         this.personaEmail = personaEmail;
+    }
+
+    public Boolean isSoloConsulta()
+    {
+        return soloConsulta;
+    }
+
+    public void setSoloConsulta(Boolean soloConsulta)
+    {
+        this.soloConsulta = soloConsulta;
     }
 }

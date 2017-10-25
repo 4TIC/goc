@@ -35,6 +35,9 @@ public class OrganoReunionInvitado implements Serializable
     @Column(name = "URL_ASISTENCIA_ALT")
     private String urlAsistenciaAlternativa;
 
+    @Column(name = "SOLO_CONSULTA")
+    private Boolean soloConsulta;
+
     @ManyToOne
     @JoinColumn(name = "ORGANO_REUNION_ID")
     private OrganoReunion organoReunion;
@@ -146,5 +149,15 @@ public class OrganoReunionInvitado implements Serializable
     public void setPersonaId(String personaId)
     {
         this.personaId = personaId;
+    }
+
+    public Boolean isSoloConsulta()
+    {
+        return soloConsulta;
+    }
+
+    public void setSoloConsulta(Boolean soloConsulta)
+    {
+        this.soloConsulta = soloConsulta;
     }
 }

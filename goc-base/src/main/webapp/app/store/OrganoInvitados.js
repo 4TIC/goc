@@ -16,5 +16,6 @@ Ext.define('goc.store.OrganoInvitados', {
         }
     },
 
-    autoLoad: false
+    autoLoad: false,
+    autoSync: false
 });

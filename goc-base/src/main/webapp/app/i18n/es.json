@@ -50,7 +50,7 @@
     "borrarAutorizacion": "¿Quitar autorización?",
     "borrarInvitado": "¿Quitar invitado?",
     "seleccionarParaBorrarAutorizacion": "Debe seleccionar una persona para quitar la autorización",
-    "seleccionarParaBorrarInvitado": "Debe seleccionar una persona para quitar el invitado",
+    "seleccionarParaBorrarInvitado": "Debe seleccionar una persona para quitar como invitado",
     "invitados": "invitados"
   },
   "tipoOrganos": {
@@ -226,7 +226,8 @@
     "nombre": "Nombre"
   },
   "invitados": {
-    "nombre": "Nombre"
+    "nombre": "Nombre",
+    "soloConsulta": "Solo consulta"
   },
   "menu": {
     "organos": "Órganos",

@@ -49,8 +49,9 @@ Ext.define('goc.view.organo.OrganoInvitadoGridController',
             if (existeInvitado === -1)
             {
                 store.add(invitado);
-                store.getModel().getField('id').persist = false
+                store.getModel().getField('id').persist = false;
                 store.sync();
+                store.getModel().getField('id').persist = true;
             }
         });
     },
@@ -62,7 +63,7 @@ Ext.define('goc.view.organo.OrganoInvitadoGridController',
 
         if (!record)
         {
-            return Ext.Msg.alert(appI18N.organos.borrarAutorizacion, appI18N.organos.seleccionarParaBorrarInvitado);
+            return Ext.Msg.alert(appI18N.organos.borrarInvitado, appI18N.organos.seleccionarParaBorrarInvitado);
         }
 
         var vm = this.getViewModel();
@@ -76,5 +77,11 @@ Ext.define('goc.view.organo.OrganoInvitadoGridController',
                 store.sync();
             }
         });
+    },
+
+    onChangeSoloConsulta : function(elem, rowIndex, checked, record)
+    {
+        var store = this.getViewModel().getStore('organoInvitadosStore');
+        store.sync();
     }
 });

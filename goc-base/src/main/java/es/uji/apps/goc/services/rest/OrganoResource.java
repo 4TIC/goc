@@ -226,11 +226,22 @@ public class OrganoResource extends CoreBaseService
     @Path("invitados")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public UIEntity addInvitado(UIEntity autorizado)
+    public UIEntity addInvitado(UIEntity invitado)
     {
-        OrganoInvitado newOrganoInvitado = organoService.addInvitado(autorizado.toModel(OrganoInvitado.class));
+        OrganoInvitado newOrganoInvitado = organoService.addInvitado(invitado.toModel(OrganoInvitado.class));
 
         return UIEntity.toUI(newOrganoInvitado);
+    }
+
+    @PUT
+    @Path("invitados/{organoInvitadoId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public UIEntity updateInvitado(UIEntity invitado, @PathParam("organoInvitadoId") Long organoInvitadoId)
+    {
+        organoService.updateInvitado(invitado.toModel(OrganoInvitado.class));
+
+        return UIEntity.toUI(invitado);
     }
 
     @DELETE

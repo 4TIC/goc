@@ -255,6 +255,11 @@ public class OrganoService
         organoInvitadoDAO.delete(OrganoInvitado.class, organoInvitadoId);
     }
 
+    public void updateInvitado(OrganoInvitado organoInvitado)
+    {
+        organoInvitadoDAO.update(organoInvitado);
+    }
+
     public boolean usuarioConPermisosParaConvocarOrganos(List<Organo> organos, Long connectedUserId)
     {
         Boolean permisosAdecuados = true;

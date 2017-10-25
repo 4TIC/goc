@@ -439,7 +439,7 @@ public class ReunionService
         List<PuntoOrdenDiaFirma> listaPuntosOrdenDiaFirma = getPuntosOrdenDiaFirmaDesdePuntosOrdenDia(puntosOrdenDia);
         reunionFirma.setPuntosOrdenDia(listaPuntosOrdenDiaFirma);
 
-        List<Persona> invitados = reunionDAO.getInvitadosByReunionId(reunion.getId());
+        List<Persona> invitados = reunionDAO.getInvitadosPresencialesByReunionId(reunion.getId());
         List<InvitadoFirma> invitadosFirma = getInvitadosFirmaDesdeReunionInvitados(invitados);
         reunionFirma.setInvitados(invitadosFirma);
 
@@ -694,7 +694,7 @@ public class ReunionService
                 getPuntosOrdenDiaTemplateDesdePuntosOrdenDia(puntosOrdenDia, mainLanguage);
         reunionTemplate.setPuntosOrdenDia(listaPuntosOrdenDiaTemplate);
 
-        List<Persona> invitados = reunionDAO.getInvitadosByReunionId(reunion.getId());
+        List<Persona> invitados = reunionDAO.getInvitadosPresencialesByReunionId(reunion.getId());
         List<InvitadoTemplate> invitadosTemplate = getInvitadosTemplateDesdeReunionInvitados(invitados);
         reunionTemplate.setInvitados(invitadosTemplate);
 

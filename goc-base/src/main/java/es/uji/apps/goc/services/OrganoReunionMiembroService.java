@@ -80,6 +80,7 @@ public class OrganoReunionMiembroService
             organoReunionInvitado.setNombre(organoInvitado.getPersonaNombre());
             organoReunionInvitado.setOrganoExterno(new Boolean(organoUI.get("externo")));
             organoReunionInvitado.setOrganoId(organoId);
+            organoReunionInvitado.setSoloConsulta(organoInvitado.isSoloConsulta());
 
             OrganoReunion organoReunion = organoReunionDAO.getOrganoReunionByReunionIdAndOrganoId(reunionId, ParamUtils.parseLong(organoId));
 

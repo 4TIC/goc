@@ -9,6 +9,7 @@ Ext.define('goc.model.OrganoInvitado', {
         { name: 'id', type: 'number' },
         { name: 'personaId', type: 'number' },
         { name: 'personaNombre', type: 'string' },
-        { name: 'organoId', type: 'string' }
+        { name: 'organoId', type: 'string' },
+        { name: 'soloConsulta', type: 'boolean' }
     ]
 });

@@ -22,7 +22,16 @@ Ext.define('goc.view.organo.OrganoInvitadoGrid',
         {
             text : appI18N.invitados.nombre,
             dataIndex : 'personaNombre',
-            flex : 1
+            flex : 10
+        },
+        {
+            text : appI18N.invitados.soloConsulta,
+            xtype : 'checkcolumn',
+            dataIndex : 'soloConsulta',
+            flex : 1,
+            listeners : {
+                checkchange : 'onChangeSoloConsulta',
+            }
         }
     ],
     viewConfig : {

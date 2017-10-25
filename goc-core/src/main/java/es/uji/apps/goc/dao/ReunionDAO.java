@@ -348,7 +348,7 @@ public class ReunionDAO extends BaseDAODatabaseImpl
         return query.from(qOrganoReunion).where(qOrganoReunion.reunion.id.eq(reunionId)).list(qOrganoReunion);
     }
 
-    public List<Persona> getInvitadosByReunionId(Long reunionId)
+    public List<Persona> getInvitadosPresencialesByReunionId(Long reunionId)
     {
         JPAQuery queryReunionesInvitados = new JPAQuery(entityManager);
         JPAQuery queryOrganosInvitados = new JPAQuery(entityManager);
@@ -360,7 +360,7 @@ public class ReunionDAO extends BaseDAODatabaseImpl
                 .list(qReunionInvitado);
 
         List<OrganoReunionInvitado> invitadosPorOrgano = queryOrganosInvitados.from(qOrganoReunionInvitado)
-                .where(qOrganoReunionInvitado.reunionId.in(reunionId))
+                .where(qOrganoReunionInvitado.reunionId.in(reunionId).and(qOrganoReunionInvitado.soloConsulta.eq(false)))
                 .distinct()
                 .list(qOrganoReunionInvitado);
 
