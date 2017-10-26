@@ -121,16 +121,13 @@ public class SpringSecurityAuth implements Filter
 
     private boolean isCorrectExternalAPICall(String url, String headerAuthToken)
     {
-        if (url.startsWith("/goc/rest/external"))
+        if (headerAuthToken != null)
         {
-            if (headerAuthToken != null)
-            {
-                String token = filterConfig.getInitParameter("authToken");
+            String token = filterConfig.getInitParameter("authToken");
 
-                if (token != null && headerAuthToken.equals(token))
-                {
-                    return true;
-                }
+            if (token != null && headerAuthToken.equals(token))
+            {
+                return true;
             }
         }
 
