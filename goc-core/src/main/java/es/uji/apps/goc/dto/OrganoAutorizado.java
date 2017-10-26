@@ -26,6 +26,9 @@ public class OrganoAutorizado implements Serializable
     @Column(name = "PERSONA_NOMBRE")
     private String personaNombre;
 
+    @Column(name = "PERSONA_EMAIL")
+    private String personaEmail;
+
     @Column(name = "ORGANO_ID")
     private String organoId;
 
@@ -85,5 +88,15 @@ public class OrganoAutorizado implements Serializable
     public void setPersonaNombre(String personaNombre)
     {
         this.personaNombre = personaNombre;
+    }
+
+    public String getPersonaEmail()
+    {
+        return personaEmail;
+    }
+
+    public void setPersonaEmail(String personaEmail)
+    {
+        this.personaEmail = personaEmail;
     }
 }

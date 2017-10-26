@@ -10,6 +10,7 @@ public class Mensaje
     private String from;
     private String replyTo;
     private List<String> destinos;
+    private List<String> autorizados;
 
     public String getAsunto()
     {
@@ -69,5 +70,15 @@ public class Mensaje
     public void setDestinos(List<String> destinos)
     {
         this.destinos = destinos;
+    }
+
+    public List<String> getAutorizados()
+    {
+        return autorizados;
+    }
+
+    public void setAutorizados(List<String> autorizados)
+    {
+        this.autorizados = autorizados;
     }
 }

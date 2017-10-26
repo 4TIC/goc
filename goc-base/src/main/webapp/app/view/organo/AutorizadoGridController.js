@@ -39,6 +39,7 @@ Ext.define('goc.view.organo.AutorizadoGridController',
             {
                 personaId : res.get('id'),
                 personaNombre : res.get('nombre'),
+                personaEmail : res.get('email'),
                 organoId : record.get('id'),
                 organoExterno : record.get('externo')
             });

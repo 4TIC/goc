@@ -9,6 +9,7 @@ Ext.define('goc.model.OrganoAutorizado', {
         { name: 'id', type: 'number' },
         { name: 'personaId', type: 'number' },
         { name: 'personaNombre', type: 'string' },
+        { name: 'personaEmail', type: 'string' },
         { name: 'organoId', type: 'string' },
         { name: 'organoExterno', type: 'boolean' }
     ]

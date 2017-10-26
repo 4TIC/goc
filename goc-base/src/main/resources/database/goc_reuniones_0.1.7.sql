@@ -315,3 +315,5 @@ AS
     s.persona_nombre,
     s.url_acta,
     s.url_acta_alt;
+
+alter table goc_organos_autorizados add (persona_email varchar2(1000));
