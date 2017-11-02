@@ -2,14 +2,16 @@ package es.uji.apps.goc.dao;
 
 import com.mysema.query.Tuple;
 import com.mysema.query.jpa.impl.JPAQuery;
-import es.uji.apps.goc.dto.PuntoOrdenDiaAcuerdo;
-import es.uji.apps.goc.dto.QPuntoOrdenDiaAcuerdo;
-import es.uji.apps.goc.dto.ReunionDocumento;
-import es.uji.commons.db.BaseDAODatabaseImpl;
+
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import es.uji.apps.goc.dto.PuntoOrdenDiaAcuerdo;
+import es.uji.apps.goc.dto.QPuntoOrdenDiaAcuerdo;
+import es.uji.commons.db.BaseDAODatabaseImpl;
 
 @Repository
 public class PuntoOrdenDiaAcuerdoDAO extends BaseDAODatabaseImpl
@@ -25,6 +27,7 @@ public class PuntoOrdenDiaAcuerdoDAO extends BaseDAODatabaseImpl
                         qPuntoOrdenDiaAcuerdo.puntoOrdenDia.id.count());
     }
 
+    @Transactional
     public PuntoOrdenDiaAcuerdo getAcuerdoById(Long acuerdoId)
     {
         JPAQuery query = new JPAQuery(entityManager);
@@ -41,6 +44,7 @@ public class PuntoOrdenDiaAcuerdoDAO extends BaseDAODatabaseImpl
         return resultado.get(0);
     }
 
+    @Transactional
     public List<PuntoOrdenDiaAcuerdo> getAcuerdosByPuntoOrdenDiaId(Long puntoOrdenDiaId)
     {
         JPAQuery query = new JPAQuery(entityManager);

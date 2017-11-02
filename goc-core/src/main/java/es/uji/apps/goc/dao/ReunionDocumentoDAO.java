@@ -1,12 +1,13 @@
 package es.uji.apps.goc.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
 import com.mysema.query.Tuple;
 import com.mysema.query.jpa.impl.JPAQuery;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import es.uji.apps.goc.dto.QReunionDocumento;
 import es.uji.apps.goc.dto.ReunionDocumento;
@@ -17,6 +18,7 @@ public class ReunionDocumentoDAO extends BaseDAODatabaseImpl
 {
     private QReunionDocumento qReunionDocumento = QReunionDocumento.reunionDocumento;
 
+    @Transactional
     public List<ReunionDocumento> getDocumentosByReunionId(Long reunionId)
     {
         JPAQuery query = new JPAQuery(entityManager);
@@ -60,6 +62,7 @@ public class ReunionDocumentoDAO extends BaseDAODatabaseImpl
         return documentos;
     }
 
+    @Transactional
     public ReunionDocumento getDocumentoById(Long documentoId)
     {
         JPAQuery query = new JPAQuery(entityManager);
