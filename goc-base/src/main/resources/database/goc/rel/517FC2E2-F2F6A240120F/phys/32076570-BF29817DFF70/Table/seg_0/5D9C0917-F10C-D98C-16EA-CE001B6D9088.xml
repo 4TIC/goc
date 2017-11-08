@@ -44,6 +44,14 @@
 </ColumnProxy>
 </columnProxies>
 <indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="GOC_MIEMBROS_R01" id="1B214AA0-8B74-23ED-BF18-C0627F5E3564">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<schemaObject>851AFA7E-0C67-E024-A963-48DB8EF55127</schemaObject>
+<segment>00A8D95D-5A5B-2BD1-4455-6A0114FC507D</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+</IndexProxy>
 <IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="MIEMBROS_PK" id="687BCE2F-B837-4B5C-86D0-19E061F6DEB7">
 <createdBy>borillo</createdBy>
 <createdTime>2016-07-04 13:04:25 UTC</createdTime>
@@ -78,4 +86,17 @@
 <usingIndex>BY INDEX NAME</usingIndex>
 </PrimaryKey>
 </primaryKeys>
+<uniqueKeys>
+<UniqueKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UniqueOraclev10g" name="GOC_MIEMBROS_R01" id="042F5A5D-E2AD-858F-1482-3E5C44D6BBD3">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<segment>00A8D95D-5A5B-2BD1-4455-6A0114FC507D</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+<existingIndex>1B214AA0-8B74-23ED-BF18-C0627F5E3564</existingIndex>
+<indexSegment>00A8D95D-5A5B-2BD1-4455-6A0114FC507D</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</UniqueKey>
+</uniqueKeys>
 </TableProxyOraclev11g>

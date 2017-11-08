@@ -12,6 +12,11 @@
 <accessDriverType>oracle_loader</accessDriverType>
 <rejectLimit></rejectLimit>
 <columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="DELEGADO_VOTO_NOMBRE" id="0AD5A895-DB7F-22B3-D03F-B73CFCF4D8F1">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:32:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
 <ColumnProxy name="CARGO_ID" id="1BEA7C2B-0952-BC5A-9CA2-90666A4C3A59">
 <createdBy>fmelia</createdBy>
 <createdTime>2017-06-12 10:00:11 UTC</createdTime>
@@ -22,9 +27,19 @@
 <createdTime>2017-06-12 10:00:11 UTC</createdTime>
 <ownerDesignName>goc</ownerDesignName>
 </ColumnProxy>
+<ColumnProxy name="URL_ASISTENCIA_ALT" id="3755AF70-751A-CAFC-BD9D-6B0D492426D8">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
 <ColumnProxy name="CARGO_NOMBRE" id="493119C3-9559-0F37-3DE3-6FB5547D4682">
 <createdBy>fmelia</createdBy>
 <createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="URL_ASISTENCIA" id="4F7E43A6-55BE-6F94-1D60-FA56EEFA0412">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
 <ownerDesignName>goc</ownerDesignName>
 </ColumnProxy>
 <ColumnProxy name="ORGANO_EXTERNO" id="636646EB-7E5F-EB74-5494-1666D7BBD67E">
@@ -38,6 +53,11 @@
 <ownerDesignName>goc</ownerDesignName>
 <defaultValue>0</defaultValue>
 </ColumnProxy>
+<ColumnProxy name="DELEGADO_VOTO_ID" id="755E55CF-1631-E72E-84DC-D9B83DE6DEF7">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:32:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
 <ColumnProxy name="ID" id="85BC5620-C367-56AB-E875-6C86683E54CE">
 <createdBy>fmelia</createdBy>
 <createdTime>2017-06-12 10:00:11 UTC</createdTime>
@@ -46,6 +66,16 @@
 <ColumnProxy name="ASISTENCIA_CONFIRMADA" id="88D37BBF-C2A2-D28A-0065-3D0F88AC6B9B">
 <createdBy>fmelia</createdBy>
 <createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CARGO_CODIGO" id="8920171E-F24C-19F8-55A2-3112DBEB03BD">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DELEGADO_VOTO_EMAIL" id="9166F0AF-4896-827B-05B0-AA99F0F9267C">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:32:11 UTC</createdTime>
 <ownerDesignName>goc</ownerDesignName>
 </ColumnProxy>
 <ColumnProxy name="NOMBRE" id="AB1A6A29-A1FD-7B33-7016-C48431EE2921">

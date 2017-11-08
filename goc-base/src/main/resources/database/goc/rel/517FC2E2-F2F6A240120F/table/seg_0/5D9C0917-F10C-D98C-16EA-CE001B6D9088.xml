@@ -121,6 +121,22 @@
 <colUsage columnID="C8932314-0A42-722C-8A43-9563E187FEC8"/>
 </indexColumnUsage>
 </ind_PK_UK>
+<ind_PK_UK id="042F5A5D-E2AD-858F-1482-3E5C44D6BBD3" name="GOC_MIEMBROS_R01">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_MIEMBROS_R01</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>C28D884F-6A4E-1CE4-FF9A-219146637D7B</importedID>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="FBCA6D81-29F8-02EB-C2CA-F8CA0FC06DCC"/>
+<colUsage columnID="E2A5C947-3867-B457-CA79-3507DB32807A"/>
+<colUsage columnID="AE7D296E-AEEB-A995-5723-1BDA7D344DAC"/>
+</indexColumnUsage>
+</ind_PK_UK>
 <ind_PK_UK id="687BCE2F-B837-4B5C-86D0-19E061F6DEB7" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="MIEMBROS_PK">
 <sourceConnName>uji_reuniones@d11</sourceConnName>
 <sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
@@ -133,6 +149,22 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="C8932314-0A42-722C-8A43-9563E187FEC8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="1B214AA0-8B74-23ED-BF18-C0627F5E3564" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_MIEMBROS_R01">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_MIEMBROS_R01</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>18F33472-AF81-A84E-F254-31B1E6335433</importedID>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="FBCA6D81-29F8-02EB-C2CA-F8CA0FC06DCC"/>
+<colUsage columnID="E2A5C947-3867-B457-CA79-3507DB32807A"/>
+<colUsage columnID="AE7D296E-AEEB-A995-5723-1BDA7D344DAC"/>
 </indexColumnUsage>
 </ind_PK_UK>
 <ind_PK_UK id="6F735073-C22D-3833-3130-B6C49C9C33CD" name="FK_MIEMBROS_CARGOS">

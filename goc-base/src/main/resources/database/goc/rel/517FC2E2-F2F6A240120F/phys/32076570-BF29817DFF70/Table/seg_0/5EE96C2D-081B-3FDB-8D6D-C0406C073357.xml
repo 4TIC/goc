@@ -34,6 +34,12 @@
 <createdTime>2017-06-12 10:00:11 UTC</createdTime>
 <ownerDesignName>goc</ownerDesignName>
 </ColumnProxy>
+<ColumnProxy name="ADMITE_DELEGACION_VOTO" id="19578113-0F8F-2D5D-6A2C-DE2B8105AB7D">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:32:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<defaultValue>0</defaultValue>
+</ColumnProxy>
 <ColumnProxy name="NOTIFICADA" id="26F8F9F1-FEFE-CC3A-C3FD-5E5F7E501DBA">
 <createdBy>fmelia</createdBy>
 <createdTime>2017-06-12 10:00:11 UTC</createdTime>
@@ -43,6 +49,11 @@
 <ColumnProxy name="ACTA" id="2D6818D3-6E68-6287-2E4B-B1BF3DE5854A">
 <createdBy>borillo</createdBy>
 <createdTime>2016-07-04 13:04:25 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="URL_ACTA_ALT" id="39128031-C576-209B-7CF2-0ED21FD9C11B">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
 <ownerDesignName>goc</ownerDesignName>
 </ColumnProxy>
 <ColumnProxy name="ASUNTO" id="3B5550FD-3159-EA71-5226-27342B384441">
@@ -80,6 +91,11 @@
 <ColumnProxy name="TELEMATICA_DESCRIPCION" id="58D54753-1403-8B4D-B160-8F44D89296F1">
 <createdBy>fmelia</createdBy>
 <createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="AVISO_PRIMERA_REUNION_USER" id="5FAF610C-FA75-FB9A-3D0B-91F2A05FDAFE">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
 <ownerDesignName>goc</ownerDesignName>
 </ColumnProxy>
 <ColumnProxy name="NUMERO_SESION" id="64DFD16A-6DE7-1545-5393-E68CCE0028E6">
@@ -171,6 +187,16 @@
 <ColumnProxy name="ACUERDOS_ALT" id="E8DC07EA-1A2E-0A9D-DA43-8CA5AAF4AB5C">
 <createdBy>fmelia</createdBy>
 <createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="URL_ACTA" id="EA5DB51A-323B-55D1-71F0-00445AF78494">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="AVISO_PRIMERA_REUNION_FECHA" id="EDA25414-D341-53FA-7D78-275584DFD582">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
 <ownerDesignName>goc</ownerDesignName>
 </ColumnProxy>
 <ColumnProxy name="URL_GRABACION" id="FA931EAF-B363-B14A-0F02-6580D9F86E79">

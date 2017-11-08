@@ -83,6 +83,22 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="PERSONA_EMAIL" id="DB8D23D5-CC02-CB17-4D88-347DDD2DAD0E">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_ORGANOS_AUTORIZADOS</sourceObjSchema>
+<sourceObjName>PERSONA_EMAIL</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>4CF2D0B2-130C-A6C6-3C12-3991393D5F89</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1000 BYTE</dataTypeSize>
+<ownDataTypeParameters>1000 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="D405D279-778C-8730-A036-FCFEBDB156BE" name="GOC_ORGANOS_AUTORIZADOS_PK">

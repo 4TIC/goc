@@ -480,6 +480,82 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="ADMITE_DELEGACION_VOTO" id="19578113-0F8F-2D5D-6A2C-DE2B8105AB7D">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-07-14 12:17:09 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<defaultValue>0</defaultValue>
+<ownDataTypeParameters>,1,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="URL_ACTA" id="EA5DB51A-323B-55D1-71F0-00445AF78494">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_REUNIONES</sourceObjSchema>
+<sourceObjName>URL_ACTA</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>E33A7B1F-813F-BCE3-52CD-007E32D0D6DB</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1000 BYTE</dataTypeSize>
+<ownDataTypeParameters>1000 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="URL_ACTA_ALT" id="39128031-C576-209B-7CF2-0ED21FD9C11B">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_REUNIONES</sourceObjSchema>
+<sourceObjName>URL_ACTA_ALT</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>402DF8C8-8A35-92B9-D6E7-37BBBC1C2384</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1000 BYTE</dataTypeSize>
+<ownDataTypeParameters>1000 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="AVISO_PRIMERA_REUNION_USER" id="5FAF610C-FA75-FB9A-3D0B-91F2A05FDAFE">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_REUNIONES</sourceObjSchema>
+<sourceObjName>AVISO_PRIMERA_REUNION_USER</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>22B4EFCB-ED1C-836F-835E-5CFCC01091B2</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="AVISO_PRIMERA_REUNION_FECHA" id="EDA25414-D341-53FA-7D78-275584DFD582">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_REUNIONES</sourceObjSchema>
+<sourceObjName>AVISO_PRIMERA_REUNION_FECHA</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>32F778C7-B87D-609B-C9EE-97D092AF7843</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 <Column name="ORDEN_DIA" id="C871B76D-F1E4-E393-B90D-8515701362DF">
 <sourceConnName>uji_reuniones@d11</sourceConnName>
 <sourceObjSchema>GOC_REUNIONES</sourceObjSchema>
@@ -510,17 +586,6 @@
 <logicalDatatype>LOGDT028</logicalDatatype>
 <dataTypeSize>4000</dataTypeSize>
 <ownDataTypeParameters>4000,,</ownDataTypeParameters>
-<autoIncrementCycle>false</autoIncrementCycle>
-</Column>
-<Column name="ADMITE_DELEGACION_VOTO" id="19578113-0F8F-2D5D-6A2C-DE2B8105AB7D">
-<createdBy>fmelia</createdBy>
-<createdTime>2017-07-14 12:17:09 UTC</createdTime>
-<ownerDesignName>goc</ownerDesignName>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT019</logicalDatatype>
-<dataTypePrecision>1</dataTypePrecision>
-<ownDataTypeParameters>,1,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 </columns>

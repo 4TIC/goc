@@ -57,6 +57,21 @@
 <ownDataTypeParameters>400 BYTE,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="CODIGO" id="B9D3DAB4-9127-ADF2-5A81-6BF7756BB190">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>GOC_CARGOS</sourceObjSchema>
+<sourceObjName>CODIGO</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>34AB0043-5E3E-8E1C-FBF1-1284778407CE</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10 BYTE</dataTypeSize>
+<ownDataTypeParameters>10 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="DEA06DDA-ABBF-9F4D-0D9B-595479BA213C" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_CARGOS_PK">
@@ -72,6 +87,34 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="56D2EFA3-3E43-9D7E-34C9-891B32CCF5CD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="65B74AFD-66AF-332C-5529-7582649D0002" name="GOC_CARGOS_U01">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_CARGOS_U01</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>5057D52C-CF0C-6277-A6CC-032B643F08BE</importedID>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B9D3DAB4-9127-ADF2-5A81-6BF7756BB190"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="70E6C360-84E3-F1DE-711B-6BEEB63FAE1E" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_CARGOS_U01">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_CARGOS_U01</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>DF317E21-871B-4491-F258-579CB3380A8D</importedID>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B9D3DAB4-9127-ADF2-5A81-6BF7756BB190"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

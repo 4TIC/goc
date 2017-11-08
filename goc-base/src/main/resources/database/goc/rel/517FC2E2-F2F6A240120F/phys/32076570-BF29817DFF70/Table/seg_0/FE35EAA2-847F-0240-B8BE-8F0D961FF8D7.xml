@@ -48,6 +48,11 @@
 <createdTime>2017-06-12 10:00:11 UTC</createdTime>
 <ownerDesignName>goc</ownerDesignName>
 </ColumnProxy>
+<ColumnProxy name="URL_ACTA" id="75384A0B-C5EA-3D78-5864-9F80039B54E0">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
 <ColumnProxy name="ACUERDOS_ALT" id="88C045B4-5956-27AB-4352-0729D2B8FB1A">
 <createdBy>fmelia</createdBy>
 <createdTime>2017-06-12 10:00:11 UTC</createdTime>
@@ -61,6 +66,11 @@
 <ColumnProxy name="ORDEN" id="99073F2C-90A8-6001-9953-4F3FC417393B">
 <createdBy>fmelia</createdBy>
 <createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="URL_ACTA_ALT" id="AD11175B-47A9-69CC-3C57-66F2DDF0C526">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
 <ownerDesignName>goc</ownerDesignName>
 </ColumnProxy>
 <ColumnProxy name="DELIBERACIONES_ALT" id="C6221E82-C0D0-8DDE-999C-7A47563667E5">
