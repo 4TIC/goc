@@ -227,7 +227,9 @@
   },
   "invitados": {
     "nombre": "Nom",
-    "soloConsulta": "Sols consulta"
+    "soloConsulta": "Sols consulta",
+    "motivoInvitacion": "Motiu invitació",
+    "indicadMotivo": "Indiqueu el motiu"
   },
   "menu": {
     "organos": "Òrgans",

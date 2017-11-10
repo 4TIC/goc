@@ -65,7 +65,6 @@ reunionesGridColumns.push({
     {
         if (value)
         {
-            console.log(record.data);
             return '<span data-qwidth="200" ' +
             'data-qtip="' + record.get("avisoPrimeraReunionUser") + ' ' + Ext.util.Format.date(record.get("avisoPrimeraReunionFecha"), 'd/m/Y H:i') + '">Sí</span>'
         }

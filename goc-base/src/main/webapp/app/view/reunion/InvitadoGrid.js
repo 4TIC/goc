@@ -33,6 +33,45 @@ Ext.define('goc.view.reunion.InvitadoGrid',
             bind : {
                 disabled : '{reunion.completada}'
             },
+            dataIndex : 'motivoInvitacion',
+            items : [
+                {
+                    tooltip : appI18N.invitados.motivoInvitacion,
+                    getClass: function(v, meta, rec) {
+                        return rec.data.motivoInvitacion ? 'x-fa fa-file-text-o' :  'x-fa fa-file-o';
+                    },
+                    isDisabled : function(grid)
+                    {
+                        return this.disabled;
+                    },
+                    handler : function(grid, index)
+                    {
+                        var ref = this;
+                        var rec = grid.getStore().getAt(index);
+                        var motivo = rec.data.motivoInvitacion
+
+                        var prompt = Ext.Msg.prompt(appI18N.invitados.motivoInvitacion, appI18N.invitados.indicadMotivo, function(btn, text)
+                        {
+                            if (btn == 'ok')
+                            {
+                                rec.set('motivoInvitacion', text);
+                            }
+                        }, this, true, motivo);
+
+                        prompt.setWidth(500);
+                        prompt.center();
+                        prompt.setData('');
+                    }
+                }
+            ]
+        },
+        {
+            xtype : 'actioncolumn',
+            align : 'right',
+            width : 30,
+            bind : {
+                disabled : '{reunion.completada}'
+            },
             items : [
                 {
                     iconCls : 'x-fa fa-remove',
@@ -60,7 +99,8 @@ Ext.define('goc.view.reunion.InvitadoGrid',
         }
     ],
     viewConfig : {
-        emptyText : appI18N.reuniones.sinInvitadosSeleccionados
+        emptyText : appI18N.reuniones.sinInvitadosSeleccionados,
+        markDirty: false
     },
 
     addTools : function()

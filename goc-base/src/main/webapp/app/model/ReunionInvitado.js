@@ -6,5 +6,6 @@ Ext.define('goc.model.ReunionInvitado', {
         { name: 'personaId', type: 'number' },
         { name: 'personaNombre', type: 'string' },
         { name: 'personaEmail', type: 'string' },
+        { name: 'motivoInvitacion', type: 'string' }
     ]
 });

@@ -114,6 +114,17 @@
 <ownDataTypeParameters>1000 BYTE,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="MOTIVO_INVITACION" id="927B0736-B5EB-7403-49D1-55220F7F28F0">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-09 11:30:36 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT028</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="E7560CFF-FBEE-B845-4EFE-E7B84BF0FEFE" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_REUNIONES_INVITADOS_PK">
