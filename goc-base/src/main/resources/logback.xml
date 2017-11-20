@@ -1,5 +1,5 @@
 <configuration scan="true" debug="true">
-  <property file="${goc.home}/app.properties" />
+  <property file="src/main/resources/app.properties" />
   <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
       <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
@@ -7,9 +7,9 @@
   </appender>
 
   <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>${goc.log.path}/goc-base.log</file>
+    <file>logs/goc-base.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${goc.log.path}/goc-base.%d{yyyy-MM-dd}.log</fileNamePattern>
+      <fileNamePattern>logs/goc-base.%d{yyyy-MM-dd}.log</fileNamePattern>
       <maxHistory>30</maxHistory>
     </rollingPolicy>
     <encoder>

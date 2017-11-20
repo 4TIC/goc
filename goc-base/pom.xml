@@ -260,7 +260,7 @@
             </goals>
             <configuration>
               <files>
-                <file>${goc.home}/app.properties</file>
+                <file>src/main/resources/app.properties</file>
               </files>
             </configuration>
           </execution>
