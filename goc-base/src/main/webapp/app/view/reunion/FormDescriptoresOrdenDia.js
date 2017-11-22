@@ -2,8 +2,8 @@ Ext.define('goc.view.reunion.FormDescriptoresOrdenDia', {
     extend: 'Ext.window.Window',
     xtype: 'formDescriptoresOrdenDia',
 
-    width : 640,
-    minHeight : 540,
+    width: 640,
+    minHeight: 540,
     modal: true,
     bodyPadding: 10,
     autoScroll: true,
