@@ -18,7 +18,7 @@
         <li th:if="${reunion.responsableActa}" th:utext="'&lt;strong&gt;Responsable de acta&lt;/strong&gt;: ' + ${reunion.responsableActa}"></li>
         <li th:if="${reunion.numeroSesion} != null" th:utext="'&lt;strong&gt;Número de sesión&lt;/strong&gt;: ' + ${reunion.numeroSesion}"></li>
         <li th:if="${reunion.ubicacion}" th:utext="'&lt;strong&gt;Lugar&lt;/strong&gt;: ' + ${reunion.ubicacion}"></li>
-        <li th:utext="'&lt;strong&gt;Duración&lt;/strong&gt;: ' + ${reunion.duracion} + ' minutos'"></li>
+        <li th:if="${reunion.duracion and reunion.duracion > 0}" th:utext="'&lt;strong&gt;Duración&lt;/strong&gt;: ' + ${reunion.duracion} + ' minutos'"></li>
         <li th:if="${reunion.descripcion}" th:utext="'&lt;strong&gt;Descripción&lt;/strong&gt;: ' + ${reunion.descripcion}"></li>
         <li th:if="${reunion.acuerdos != null}" th:utext="'&lt;strong&gt;Acuerdos&lt;/strong&gt;: ' + ${reunion.acuerdos}"></li>
         <li th:if="${reunion.urlGrabacion != null}"><strong>URL grabación</strong>: <a th:href="${reunion.urlGrabacion}" th:text="${reunion.urlGrabacion}"></a></li>
