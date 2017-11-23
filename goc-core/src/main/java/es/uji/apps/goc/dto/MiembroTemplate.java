@@ -27,6 +27,8 @@ public class MiembroTemplate
 
     private List<String> delegacionesDeVoto;
 
+    private String condicion;
+
     public String getId()
     {
         return id;
@@ -163,5 +165,15 @@ public class MiembroTemplate
         if (this.delegacionesDeVoto == null || this.delegacionesDeVoto.isEmpty()) return "";
 
         return StringUtils.join(this.delegacionesDeVoto, ", ");
+    }
+
+    public String getCondicion()
+    {
+        return condicion;
+    }
+
+    public void setCondicion(String condicion)
+    {
+        this.condicion = condicion;
     }
 }

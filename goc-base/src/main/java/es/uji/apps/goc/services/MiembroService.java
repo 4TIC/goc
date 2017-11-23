@@ -196,6 +196,8 @@ public class MiembroService
         miembro.setNombre(miembroExterno.getNombre());
         miembro.setEmail(miembroExterno.getEmail());
         miembro.setCargo(cargo);
+        miembro.setCondicion(miembroExterno.getCondicion());
+        miembro.setCondicionAlternativa(miembroExterno.getCondicionAlternativa());
 
         miembro.setOrgano(new Organo(miembroExterno.getOrgano().getId()));
 

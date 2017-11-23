@@ -935,6 +935,8 @@ public class ReunionService
         MiembroTemplate miembroTemplate = new MiembroTemplate();
         miembroTemplate.setNombre(organoReunionMiembro.getNombre());
         miembroTemplate.setEmail(organoReunionMiembro.getEmail());
+        miembroTemplate.setCondicion(
+                mainLanguage ? organoReunionMiembro.getCondicion() : organoReunionMiembro.getCondicionAlternativa());
         miembroTemplate.setId(organoReunionMiembro.getId().toString());
         miembroTemplate.setMiembroId(organoReunionMiembro.getMiembroId());
         miembroTemplate.setSuplente(organoReunionMiembro.getSuplenteNombre());

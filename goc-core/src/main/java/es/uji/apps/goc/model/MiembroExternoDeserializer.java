@@ -24,6 +24,8 @@ public class MiembroExternoDeserializer extends JsonDeserializer<MiembroExterno>
         Long id = node.get("id").asLong();
         String nombre = node.get("nombre").asText();
         String email = node.get("email").asText();
+        String condicion = node.get("condicion").asText();
+        String condicionAlternativa = node.get("condicionAlternativa").asText();
         String organoId = node.get("organo_id").asText();
         String organoNombre = node.get("organo_nombre").asText();
         String organoNombreAlternativo = null;
@@ -52,6 +54,8 @@ public class MiembroExternoDeserializer extends JsonDeserializer<MiembroExterno>
         miembro.setId(id);
         miembro.setNombre(nombre);
         miembro.setEmail(email);
+        miembro.setCondicion(condicion);
+        miembro.setCondicionAlternativa(condicionAlternativa);
         miembro.setOrgano(organo);
         miembro.setCargo(cargo);
 

@@ -89,6 +89,8 @@ public class ReunionMiembroService
         organoReunionMiembro.setId(miembro.getId());
         organoReunionMiembro.setNombre(miembro.getNombre());
         organoReunionMiembro.setEmail(miembro.getEmail());
+        organoReunionMiembro.setCondicion(miembro.getCondicion());
+        organoReunionMiembro.setCondicionAlternativa(miembro.getCondicionAlternativa());
         organoReunionMiembro.setAsistencia(true);
         organoReunionMiembro.setOrganoId(miembro.getOrgano().getId());
         organoReunionMiembro.setOrganoExterno(externo);

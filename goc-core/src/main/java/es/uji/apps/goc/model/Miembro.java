@@ -16,6 +16,9 @@ public class Miembro
     private Organo organo;
     private Cargo cargo;
 
+    private String condicion;
+    private String condicionAlternativa;
+
     public Miembro()
     {
     }
@@ -89,6 +92,26 @@ public class Miembro
         this.personaId = personaId;
     }
 
+    public String getCondicion()
+    {
+        return condicion;
+    }
+
+    public void setCondicion(String condicion)
+    {
+        this.condicion = condicion;
+    }
+
+    public String getCondicionAlternativa()
+    {
+        return condicionAlternativa;
+    }
+
+    public void setCondicionAlternativa(String condicionAlternativa)
+    {
+        this.condicionAlternativa = condicionAlternativa;
+    }
+
     public OrganoReunionMiembro toOrganoReunionMiembro(OrganoReunion organoReunion)
     {
         OrganoReunionMiembro organoReunionMiembro = new OrganoReunionMiembro();
@@ -113,6 +136,8 @@ public class Miembro
         organoReunionMiembro.setCargoCodigo(this.getCargo().getCodigo());
         organoReunionMiembro.setCargoNombre(this.getCargo().getNombre());
         organoReunionMiembro.setCargoNombreAlternativo(this.getCargo().getNombreAlternativo());
+        organoReunionMiembro.setCondicion(this.getCondicion());
+        organoReunionMiembro.setCondicionAlternativa(this.getCondicionAlternativa());
 
         return organoReunionMiembro;
     }
