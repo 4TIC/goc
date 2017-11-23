@@ -3,6 +3,7 @@ package es.uji.apps.goc.services;
 import com.sun.jersey.api.core.InjectParam;
 import es.uji.apps.goc.auth.LanguageConfig;
 import es.uji.apps.goc.auth.PersonalizationConfig;
+import es.uji.apps.goc.dao.OrganoAutorizadoDAO;
 import es.uji.apps.goc.dao.ReunionDAO;
 import es.uji.apps.goc.dto.*;
 import es.uji.apps.goc.exceptions.*;
@@ -30,8 +31,12 @@ import java.util.stream.Collectors;
 public class PublicacionService extends CoreBaseService
 {
     public static final int RESULTADOS_POR_PAGINA = 5;
+
     @InjectParam
     private ReunionDAO reunionDAO;
+
+    @InjectParam
+    private OrganoAutorizadoDAO organoAutorizadoDAO;
 
     @InjectParam
     private LanguageConfig languageConfig;
@@ -237,7 +242,7 @@ public class PublicacionService extends CoreBaseService
             throw new InvalidAccessException("No se tiene acceso a esta reunión");
         }
 
-        boolean permitirComentarios = reunion.isPermitirComentarios(connectedUserId);
+        boolean permitirComentarios = reunion.isPermitirComentarios(connectedUserId, organoAutorizadoDAO.getAutorizadosByReunionId(reunionId));
 
         ReunionTemplate reunionTemplate = reunionService.getReunionTemplateDesdeReunion(reunion, connectedUserId, true,
                 languageConfig.isMainLangauge(lang));
