@@ -13,7 +13,8 @@
         <h3 class="title" >Información básica</h3>      
       </div>
       <ul class="contentList detalle row columns">
-        <li th:utext="'&lt;strong&gt;Fecha&lt;/strong&gt;: ' + ${#dates.format(reunion.fecha, 'dd/MM/YYYY HH:mm')}"></li>
+        <li th:unless="${reunion.fechaSegundaConvocatoria}" th:utext="'&lt;strong&gt;Fecha&lt;/strong&gt;: ' + ${#dates.format(reunion.fecha, 'dd/MM/YYYY HH:mm')}"></li>
+        <li th:if="${reunion.fechaSegundaConvocatoria}" th:utext="'&lt;strong&gt;Primera convocatòria&lt;/strong&gt;: ' + ${#dates.format(reunion.fecha, 'dd/MM/YYYY HH:mm')}"></li>
         <li th:if="${reunion.fechaSegundaConvocatoria}" th:utext="'&lt;strong&gt;Segunda convocatoria&lt;/strong&gt;: ' + ${#dates.format(reunion.fechaSegundaConvocatoria, 'dd/MM/YYYY HH:mm')}"></li>
         <li th:if="${reunion.responsableActa}" th:utext="'&lt;strong&gt;Responsable de acta&lt;/strong&gt;: ' + ${reunion.responsableActa}"></li>
         <li th:if="${reunion.numeroSesion} != null" th:utext="'&lt;strong&gt;Número de sesión&lt;/strong&gt;: ' + ${reunion.numeroSesion}"></li>
