@@ -22,7 +22,7 @@
               <span th:unless="${reunion.urlActa}" data-tooltip="data-tooltip" class="has-tip link-desactivado" title="Acta no disponible hasta que finalice la reunión">Acta</span>
             </span>
             <span class="separador" th:if="${reunion.completada}"> | </span>
-            <span><a th:if="${reunion.completada}" th:href="'/goc/rest/publicacion/reuniones/' + ${reunion.id} + '/acuerdos' + '?lang=' + ${applang}">Puntos orden del día</a></span>
+            <span><a th:if="${reunion.completada}" th:href="'/goc/rest/publicacion/reuniones/' + ${reunion.id} + '/acuerdos' + '?lang=' + ${applang}">Certificados de acuerdos de los puntos del orden del día</a></span>
             <span class="separador" th:if="${reunion.asistente}"> | </span>
             <span>
               <a th:if="${reunion.urlAsistencia}" th:href="${reunion.urlAsistencia}">Certificado de asistencia</a>
