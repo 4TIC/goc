@@ -194,7 +194,8 @@
     "opciones": "Opcions",
     "delegacionVoto": "Delegació de vot",
     "delegacionVotoEmail": "E-mail delegació de vot",
-    "enviada": "Enviada"
+    "enviada": "Enviada",
+    "acta": "Acta"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Històric de reunions",

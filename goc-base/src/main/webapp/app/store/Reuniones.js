@@ -42,7 +42,9 @@ Ext.define('goc.store.Reuniones', {
             calculate: function(data) {
                 return (data.fechaSegundaConvocatoria) ? Ext.Date.format(new Date(data.fechaSegundaConvocatoria), 'H:i') : '';
             }
-        }
+        },
+        { name: 'urlActa', type: 'string'},
+        { name: 'urlActaAlternativa', type: 'string'}
     ],
     proxy: {
         type: 'rest',

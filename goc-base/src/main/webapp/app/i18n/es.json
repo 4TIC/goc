@@ -194,7 +194,9 @@
     "opciones": "Opciones",
     "delegacionVoto": "Delegación de voto",
     "delegacionVotoEmail": "E-mail delegación de voto",
-    "enviada": "Enviada"
+    "enviada": "Enviada",
+    "acta": "Acta",
+    
   },
   "historicoReuniones": {
     "tituloPrincipal": "Histórico de reuniones",

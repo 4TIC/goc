@@ -48,6 +48,12 @@ public class ReunionEditor
     @Column(name = "AVISO_PRIMERA_REUNION_FECHA")
     private Date avisoPrimeraReunionFecha;
 
+    @Column(name = "URL_ACTA")
+    private String urlActa;
+
+    @Column(name = "URL_ACTA_ALT")
+    private String urlActaAlternativa;
+
     public ReunionEditor()
     {
     }
@@ -195,5 +201,25 @@ public class ReunionEditor
     public void setAvisoPrimeraReunionFecha(Date avisoPrimeraReunionFecha)
     {
         this.avisoPrimeraReunionFecha = avisoPrimeraReunionFecha;
+    }
+
+    public String getUrlActa()
+    {
+        return urlActa;
+    }
+
+    public void setUrlActa(String urlActa)
+    {
+        this.urlActa = urlActa;
+    }
+
+    public String getUrlActaAlternativa()
+    {
+        return urlActaAlternativa;
+    }
+
+    public void setUrlActaAlternativa(String urlActaAlternativa)
+    {
+        this.urlActaAlternativa = urlActaAlternativa;
     }
 }
