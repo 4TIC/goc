@@ -211,8 +211,7 @@ public class AvisosReunion
         return true;
     }
 
-    private void buildAndSendMessageWithExtraText(Reunion reunion, String miembro,
-            String asunto, String textoAux)
+    private void buildAndSendMessageWithExtraText(Reunion reunion, String miembro, String asunto, String textoAux)
             throws NotificacionesException
     {
         Mensaje mensaje = new Mensaje();
@@ -222,7 +221,7 @@ public class AvisosReunion
         ReunionFormatter formatter = new ReunionFormatter(reunion);
         mensaje.setCuerpo(formatter.format(publicUrl, textoAux));
         mensaje.setFrom(defaultSender);
-        mensaje.setReplyTo(defaultSender);
+        mensaje.setReplyTo(getReplyTo(reunion));
         mensaje.setDestinos(Collections.singletonList(miembro));
 
         notificacionesDAO.enviaNotificacion(mensaje);
@@ -238,11 +237,16 @@ public class AvisosReunion
         ReunionFormatter formatter = new ReunionFormatter(reunion);
         mensaje.setCuerpo(formatter.format(publicUrl, null));
         mensaje.setFrom(defaultSender);
-        mensaje.setReplyTo(defaultSender);
+        mensaje.setReplyTo(getReplyTo(reunion));
         mensaje.setDestinos(miembros);
         mensaje.setAutorizados(autorizados);
 
         notificacionesDAO.enviaNotificacion(mensaje);
+    }
+
+    private String getReplyTo(Reunion reunion)
+    {
+        return reunion.getCreadorEmail() != null ? reunion.getCreadorEmail() : defaultSender;
     }
 
     private List<String> getAutorizados(Reunion reunion)
