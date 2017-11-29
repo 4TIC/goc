@@ -1,5 +1,38 @@
 package es.uji.apps.goc.notifications;
 
+import com.sun.jersey.core.util.Base64;
+
+import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.Date;
+import net.fortuna.ical4j.model.DateTime;
+import net.fortuna.ical4j.model.ParameterList;
+import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.component.VTimeZone;
+import net.fortuna.ical4j.model.parameter.Cn;
+import net.fortuna.ical4j.model.property.CalScale;
+import net.fortuna.ical4j.model.property.Location;
+import net.fortuna.ical4j.model.property.Method;
+import net.fortuna.ical4j.model.property.Organizer;
+import net.fortuna.ical4j.model.property.ProdId;
+import net.fortuna.ical4j.model.property.TzId;
+import net.fortuna.ical4j.model.property.Uid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
+
+import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import es.uji.apps.goc.dao.NotificacionesDAO;
 import es.uji.apps.goc.dao.OrganoAutorizadoDAO;
 import es.uji.apps.goc.dao.OrganoReunionMiembroDAO;
@@ -12,17 +45,6 @@ import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.exceptions.NotificacionesException;
 import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
 import es.uji.apps.goc.model.Persona;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.util.StringUtils;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -177,7 +199,51 @@ public class AvisosReunion
         SimpleDateFormat dataFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         asunto += " " + dataFormatter.format(reunion.getFecha());
 
-        buildAndSendMessage(reunion, miembros, autorizados, asunto);
+        String calendarString = creaICal(reunion);
+        byte[] calendarEncoded = Base64.encode(calendarString.getBytes());
+        buildAndSendMessage(reunion, miembros, autorizados, asunto, calendarEncoded, "text/calendar");
+    }
+
+    private String creaICal(Reunion reunion) {
+        Calendar icsCalendar = createVcalendar();
+        VEvent meeting = createEvent(reunion);
+        icsCalendar.getComponents().add(meeting);
+        return icsCalendar.toString();
+    }
+
+    private VEvent createEvent(Reunion reunion) {
+        String asunto = reunion.getAsunto();
+        DateTime start = new DateTime(reunion.getFecha());
+        LocalDateTime endDate = LocalDateTime.ofInstant(reunion.getFecha().toInstant(), ZoneId.systemDefault())
+            .plusMinutes(reunion.getDuracion());
+        DateTime end = new DateTime(Date.from(endDate.atZone(ZoneId.systemDefault()).toInstant()));
+        VEvent meeting = new VEvent(start, end, asunto);
+        Uid uid = new Uid(reunion.getId() + "@goc.com");
+        meeting.getProperties().add(uid);
+        meeting.getProperties().add(new Location(reunion.getUbicacion()));
+        ParameterList parameterList = new ParameterList();
+        parameterList.add(new Cn(reunion.getCreadorNombre()));
+        Organizer organizer = null;
+        try {
+            organizer = new Organizer(parameterList, reunion.getCreadorEmail());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        if(organizer != null) {
+            meeting.getProperties().add(organizer);
+        }
+        return meeting;
+    }
+
+    private Calendar createVcalendar() {
+        Calendar icsCalendar = new net.fortuna.ical4j.model.Calendar();
+        icsCalendar.getProperties().add(new ProdId("-//GOC//Calendario reuniones 1.0//EN"));
+        icsCalendar.getProperties().add(CalScale.GREGORIAN);
+        icsCalendar.getProperties().add(Method.PUBLISH);
+        VTimeZone vTimeZone = new VTimeZone();
+        vTimeZone.getProperties().add(new TzId("Europe/Madrid"));
+        icsCalendar.getComponents().add(vTimeZone);
+        return icsCalendar;
     }
 
     private String getNombreOrganos(Reunion reunion)
@@ -205,8 +271,11 @@ public class AvisosReunion
 
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 
+        String calendarString = creaICal(reunion);
+        byte[] calendarEncoded = Base64.encode(calendarString.getBytes());
         buildAndSendMessage(reunion, miembros, autorizados,
-                "[GOC] Recordatori reunió: " + reunion.getAsunto() + " (" + df.format(reunion.getFecha()) + ")");
+                "[GOC] Recordatori reunió: " + reunion.getAsunto() + " (" + df.format(reunion.getFecha()) + ")",
+            calendarEncoded, "text/calendar");
 
         return true;
     }
@@ -227,7 +296,8 @@ public class AvisosReunion
         notificacionesDAO.enviaNotificacion(mensaje);
     }
 
-    private void buildAndSendMessage(Reunion reunion, List<String> miembros, List<String> autorizados, String asunto)
+    private void buildAndSendMessage(Reunion reunion, List<String> miembros, List<String> autorizados, String asunto,
+        byte[] fileBase64, String fileContentType)
             throws NotificacionesException
     {
         Mensaje mensaje = new Mensaje();
@@ -240,6 +310,10 @@ public class AvisosReunion
         mensaje.setReplyTo(getReplyTo(reunion));
         mensaje.setDestinos(miembros);
         mensaje.setAutorizados(autorizados);
+        if(fileBase64 != null) {
+            mensaje.setFileBase64(fileBase64);
+            mensaje.setFileContentType(fileContentType);
+        }
 
         notificacionesDAO.enviaNotificacion(mensaje);
     }

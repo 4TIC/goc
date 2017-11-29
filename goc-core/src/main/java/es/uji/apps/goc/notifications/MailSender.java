@@ -1,7 +1,15 @@
 package es.uji.apps.goc.notifications;
 
+import com.sun.jersey.core.util.Base64;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.util.Properties;
 
+import javax.activation.DataHandler;
 import javax.mail.Address;
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -14,11 +22,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import javax.mail.util.ByteArrayDataSource;
 
 @Component
 public class MailSender
@@ -152,6 +156,16 @@ public class MailSender
         MimeBodyPart messageBodyPart = new MimeBodyPart();
         messageBodyPart.setContent(mensaje.getCuerpo(), mensaje.getContentType());
         multipart.addBodyPart(messageBodyPart);
+
+        if(mensaje.getFileBase64() != null){
+            byte[] fileDecoded = Base64.decode(mensaje.getFileBase64());
+            MimeBodyPart att = new MimeBodyPart();
+            ByteArrayDataSource bds = new ByteArrayDataSource(fileDecoded, mensaje.getFileContentType());
+            bds.setName("reunion.ics");
+            att.setDataHandler(new DataHandler(bds));
+            att.setFileName(bds.getName());
+            multipart.addBodyPart(att);
+        }
 
         message.setContent(multipart);
     }

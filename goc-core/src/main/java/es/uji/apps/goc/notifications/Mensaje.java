@@ -11,6 +11,8 @@ public class Mensaje
     private String replyTo;
     private List<String> destinos;
     private List<String> autorizados;
+    private byte[] fileBase64;
+    private String fileContentType;
 
     public String getAsunto()
     {
@@ -80,5 +82,21 @@ public class Mensaje
     public void setAutorizados(List<String> autorizados)
     {
         this.autorizados = autorizados;
+    }
+
+    public byte[] getFileBase64() {
+        return fileBase64;
+    }
+
+    public void setFileBase64(byte[] fileBase64) {
+        this.fileBase64 = fileBase64;
+    }
+
+    public String getFileContentType() {
+        return fileContentType;
+    }
+
+    public void setFileContentType(String fileContentType) {
+        this.fileContentType = fileContentType;
     }
 }
