@@ -17,6 +17,7 @@ import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.TzId;
 import net.fortuna.ical4j.model.property.Uid;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -29,7 +30,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -51,6 +51,7 @@ import static java.util.stream.Collectors.toList;
 @Component
 public class AvisosReunion
 {
+    private static Logger log = Logger.getLogger(AvisosReunion.class);
     private OrganoReunionMiembroDAO organoReunionMiembroDAO;
     private NotificacionesDAO notificacionesDAO;
     private ReunionDAO reunionDAO;
@@ -199,37 +200,41 @@ public class AvisosReunion
         SimpleDateFormat dataFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         asunto += " " + dataFormatter.format(reunion.getFecha());
 
-        String calendarString = creaICal(reunion);
-        byte[] calendarEncoded = Base64.encode(calendarString.getBytes());
+        String calendarString = null;
+        byte[] calendarEncoded = null;
+        try {
+            calendarString = creaICal(reunion);
+            calendarEncoded = Base64.encode(calendarString.getBytes());
+        } catch (Exception e) {
+            log.error("No se ha podido crear el calendar");
+        }
         buildAndSendMessage(reunion, miembros, autorizados, asunto, calendarEncoded, "text/calendar");
     }
 
-    private String creaICal(Reunion reunion) {
+    private String creaICal(Reunion reunion) throws URISyntaxException {
         Calendar icsCalendar = createVcalendar();
         VEvent meeting = createEvent(reunion);
         icsCalendar.getComponents().add(meeting);
         return icsCalendar.toString();
     }
 
-    private VEvent createEvent(Reunion reunion) {
+    private VEvent createEvent(Reunion reunion) throws URISyntaxException {
         String asunto = reunion.getAsunto();
-        DateTime start = new DateTime(reunion.getFecha());
-        LocalDateTime endDate = LocalDateTime.ofInstant(reunion.getFecha().toInstant(), ZoneId.systemDefault())
-            .plusMinutes(reunion.getDuracion());
-        DateTime end = new DateTime(Date.from(endDate.atZone(ZoneId.systemDefault()).toInstant()));
+        DateTime start = null;
+        DateTime end = null;
+        if(reunion.getFecha() != null && reunion.getDuracion() != null) {
+            start = new DateTime(reunion.getFecha());
+            LocalDateTime endDate = LocalDateTime.ofInstant(reunion.getFecha().toInstant(), ZoneId.systemDefault()).plusMinutes(reunion.getDuracion());
+            end = new DateTime(Date.from(endDate.atZone(ZoneId.systemDefault()).toInstant()));
+        }
         VEvent meeting = new VEvent(start, end, asunto);
         Uid uid = new Uid(reunion.getId() + "@goc.com");
         meeting.getProperties().add(uid);
         meeting.getProperties().add(new Location(reunion.getUbicacion()));
         ParameterList parameterList = new ParameterList();
         parameterList.add(new Cn(reunion.getCreadorNombre()));
-        Organizer organizer = null;
-        try {
-            organizer = new Organizer(parameterList, reunion.getCreadorEmail());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        if(organizer != null) {
+        if(reunion.getCreadorEmail() != null && reunion.getCreadorNombre() != null) {
+            Organizer organizer = new Organizer(parameterList, reunion.getCreadorEmail());
             meeting.getProperties().add(organizer);
         }
         return meeting;
@@ -271,8 +276,14 @@ public class AvisosReunion
 
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 
-        String calendarString = creaICal(reunion);
-        byte[] calendarEncoded = Base64.encode(calendarString.getBytes());
+        String calendarString = null;
+        byte[] calendarEncoded = null;
+        try {
+            calendarString = creaICal(reunion);
+            calendarEncoded = Base64.encode(calendarString.getBytes());
+        } catch (Exception e) {
+            log.error("No se ha podido crear el calendar");
+        }
         buildAndSendMessage(reunion, miembros, autorizados,
                 "[GOC] Recordatori reunió: " + reunion.getAsunto() + " (" + df.format(reunion.getFecha()) + ")",
             calendarEncoded, "text/calendar");

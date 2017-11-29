@@ -157,7 +157,7 @@ public class MailSender
         messageBodyPart.setContent(mensaje.getCuerpo(), mensaje.getContentType());
         multipart.addBodyPart(messageBodyPart);
 
-        if(mensaje.getFileBase64() != null){
+        if(mensaje.getFileBase64() != null && mensaje.getFileBase64().length > 0){
             byte[] fileDecoded = Base64.decode(mensaje.getFileBase64());
             MimeBodyPart att = new MimeBodyPart();
             ByteArrayDataSource bds = new ByteArrayDataSource(fileDecoded, mensaje.getFileContentType());
