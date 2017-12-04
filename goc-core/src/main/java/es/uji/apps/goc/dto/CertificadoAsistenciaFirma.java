@@ -18,6 +18,10 @@ public class CertificadoAsistenciaFirma
 
     private String convocanteNombre;
 
+    private String nombreResponsableActa;
+
+    private String organoResponsableActa;
+
     public Long getReunionId()
     {
         return reunionId;
@@ -106,5 +110,25 @@ public class CertificadoAsistenciaFirma
         int result = reunionId.hashCode();
         result = 31 * result + asistenteId.hashCode();
         return result;
+    }
+
+    public String getNombreResponsableActa()
+    {
+        return nombreResponsableActa;
+    }
+
+    public void setNombreResponsableActa(String nombreResponsableActa)
+    {
+        this.nombreResponsableActa = nombreResponsableActa;
+    }
+
+    public String getOrganoResponsableActa()
+    {
+        return organoResponsableActa;
+    }
+
+    public void setOrganoResponsableActa(String organoResponsableActa)
+    {
+        this.organoResponsableActa = organoResponsableActa;
     }
 }

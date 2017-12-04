@@ -36,6 +36,10 @@ public class AcuerdoPuntoOrdenDiaFirma
 
     private Integer numeroOrganos;
 
+    private String nombreResponsableActa;
+
+    private String organoResponsableActa;
+
     public Long getReunionId()
     {
         return reunionId;
@@ -164,5 +168,25 @@ public class AcuerdoPuntoOrdenDiaFirma
     public void setNumeroOrganos(Integer numeroOrganos)
     {
         this.numeroOrganos = numeroOrganos;
+    }
+
+    public String getNombreResponsableActa()
+    {
+        return nombreResponsableActa;
+    }
+
+    public void setNombreResponsableActa(String nombreResponsableActa)
+    {
+        this.nombreResponsableActa = nombreResponsableActa;
+    }
+
+    public String getOrganoResponsableActa()
+    {
+        return organoResponsableActa;
+    }
+
+    public void setOrganoResponsableActa(String organoResponsableActa)
+    {
+        this.organoResponsableActa = organoResponsableActa;
     }
 }
