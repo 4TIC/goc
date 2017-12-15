@@ -97,15 +97,14 @@
                 <span th:text="${reunion.duracion + ' minuts'}">Fecha</span>
               </div>
               <div th:if="${reunion.acuerdos}">
-                <strong>Acords generals:</strong>
-                <span th:text="${reunion.acuerdos}">Acords</span>
+                <span th:text="${#strings.replace(reunion.acuerdos,'\n','&lt;br&gt;')}">Acords</span>
               </div>
               <div>
                 <strong>Punts ordre del dia:</strong>
               </div>  
               <fieldset class="fieldset" th:each="puntoDia : ${reunion.puntosOrdenDia}" th:if="${puntoDia.publico}">
                 <legend th:text="${puntoDia.titulo}"></legend>
-                <div th:text="${puntoDia.acuerdos}"></div>
+                <div th:if="${puntoDia.acuerdos}" th:utext="${#strings.replace(puntoDia.acuerdos,'\n','&lt;br&gt;')}"></div>
                 <a th:if="${puntoDia.urlActa}" th:href="${puntoDia.urlActa}">Certificat</a>
               </fieldset>
             </blockquote>
