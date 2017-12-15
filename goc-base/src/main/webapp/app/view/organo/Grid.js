@@ -87,7 +87,7 @@ Ext.define('goc.view.organo.Grid', {
     title : appI18N ? appI18N.organos.titulo : 'Òrgans',
     scrollable : true,
     multiSelect: false,
-
+    collapsible : true,
     tbar : [
         {
             xtype : 'button',

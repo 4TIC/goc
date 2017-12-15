@@ -49,6 +49,7 @@ Ext.define('goc.view.organo.Main',
                     activeTab : 0,
                     disabled: true,
                     width : '100%',
+                    split: true,
                     items : [
                         {
                             xtype : 'autorizadoGrid',
