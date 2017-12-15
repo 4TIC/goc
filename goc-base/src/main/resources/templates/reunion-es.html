@@ -123,9 +123,8 @@
         <li th:each="puntoOrdenDia : ${reunion.puntosOrdenDia}">
           <strong th:text="${puntoOrdenDia.titulo}"></strong>
           <div th:if="${puntoOrdenDia.descripcion} != null" th:utext="${#strings.replace(puntoOrdenDia.descripcion,'\n','&lt;br&gt;')}"></div>
-          <div th:if="${puntoOrdenDia.deliberaciones} != null" th:utext="${#strings.replace(puntoOrdenDia.deliberaciones,'\n','&lt;br&gt;')}"></div>
-          <div th:if="${puntoOrdenDia.acuerdos} != null and ${reunion.completada}" th:utext="${#strings.replace(puntoOrdenDia.acuerdos,'\n','&lt;br&gt;')}"></div>
-          <div th:if="${puntoOrdenDia.acuerdos} != null and not ${reunion.completada}" th:utext="${#strings.replace(puntoOrdenDia.acuerdos,'\n','&lt;br&gt;')}"></div>
+          <div th:if="${puntoOrdenDia.deliberaciones} != null and ${reunion.completada} != null" th:utext="${#strings.replace(puntoOrdenDia.deliberaciones,'\n','&lt;br&gt;')}"></div>
+          <div th:if="${puntoOrdenDia.acuerdos} != null" th:utext="${#strings.replace(puntoOrdenDia.acuerdos,'\n','&lt;br&gt;')}"></div>
           <div th:if="${puntoOrdenDia.publico}" class="item-publico"><i class="fa fa-eye"></i> <span>PÚBLICO</span></div>
           <strong th:if="${not #lists.isEmpty(puntoOrdenDia.documentos)}">Documentación:</strong>
           <ul class="contentList" th:with="documentos=${puntoOrdenDia.documentos}">
