@@ -1,13 +1,7 @@
 package es.uji.apps.goc.notifications;
 
-import es.uji.apps.goc.dao.NotificacionesDAO;
-import es.uji.apps.goc.dao.OrganoAutorizadoDAO;
-import es.uji.apps.goc.dao.OrganoReunionMiembroDAO;
-import es.uji.apps.goc.dao.ReunionDAO;
-import es.uji.apps.goc.dto.OrganoAutorizado;
-import es.uji.apps.goc.dto.OrganoReunion;
-import es.uji.apps.goc.dto.OrganoReunionMiembro;
-import es.uji.apps.goc.dto.Reunion;
+import es.uji.apps.goc.dao.*;
+import es.uji.apps.goc.dto.*;
 import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.exceptions.NotificacionesException;
 import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
@@ -33,6 +27,7 @@ public class AvisosReunion
     private NotificacionesDAO notificacionesDAO;
     private ReunionDAO reunionDAO;
     private OrganoAutorizadoDAO organoAutorizadoDAO;
+    private PuntoOrdenDiaDAO puntoOrdenDiaDAO;
 
     @Value("${goc.publicUrl}")
     private String publicUrl;
@@ -42,12 +37,13 @@ public class AvisosReunion
 
     @Autowired
     public AvisosReunion(ReunionDAO reunionDAO, OrganoReunionMiembroDAO organoReunionMiembroDAO,
-            NotificacionesDAO notificacionesDAO, OrganoAutorizadoDAO organoAutorizadoDAO)
+            NotificacionesDAO notificacionesDAO, OrganoAutorizadoDAO organoAutorizadoDAO, PuntoOrdenDiaDAO puntoOrdenDiaDAO)
     {
         this.reunionDAO = reunionDAO;
         this.organoReunionMiembroDAO = organoReunionMiembroDAO;
         this.notificacionesDAO = notificacionesDAO;
         this.organoAutorizadoDAO = organoAutorizadoDAO;
+        this.puntoOrdenDiaDAO = puntoOrdenDiaDAO;
     }
 
     @Transactional
@@ -218,7 +214,9 @@ public class AvisosReunion
         mensaje.setAsunto(asunto);
         mensaje.setContentType("text/html");
 
-        ReunionFormatter formatter = new ReunionFormatter(reunion);
+        List<PuntoOrdenDia> puntosOrdenDiaOrdenados = puntoOrdenDiaDAO.getPuntosByReunionId(reunion.getId());
+
+        ReunionFormatter formatter = new ReunionFormatter(reunion, puntosOrdenDiaOrdenados);
         mensaje.setCuerpo(formatter.format(publicUrl, textoAux));
         mensaje.setFrom(defaultSender);
         mensaje.setReplyTo(getReplyTo(reunion));
@@ -234,7 +232,9 @@ public class AvisosReunion
         mensaje.setAsunto(asunto);
         mensaje.setContentType("text/html");
 
-        ReunionFormatter formatter = new ReunionFormatter(reunion);
+        List<PuntoOrdenDia> puntosOrdenDiaOrdenados = puntoOrdenDiaDAO.getPuntosByReunionId(reunion.getId());
+
+        ReunionFormatter formatter = new ReunionFormatter(reunion, puntosOrdenDiaOrdenados);
         mensaje.setCuerpo(formatter.format(publicUrl, null));
         mensaje.setFrom(defaultSender);
         mensaje.setReplyTo(getReplyTo(reunion));

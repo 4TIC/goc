@@ -1,6 +1,7 @@
 package es.uji.apps.goc.notifications;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import es.uji.apps.goc.dto.PuntoOrdenDia;
 import es.uji.apps.goc.dto.Reunion;
@@ -9,11 +10,13 @@ public class ReunionFormatter
 {
     private final SimpleDateFormat formatter;
     private Reunion reunion;
+    private List<PuntoOrdenDia> puntosOrdenDiaOrdenados;
 
-    public ReunionFormatter(Reunion reunion)
+    public ReunionFormatter(Reunion reunion, List<PuntoOrdenDia> puntosOrdenDiaOrdenados)
     {
         this.formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         this.reunion = reunion;
+        this.puntosOrdenDiaOrdenados = puntosOrdenDiaOrdenados;
     }
 
     public String format(String publicUrl, String textoAux)
@@ -60,12 +63,12 @@ public class ReunionFormatter
             content.append("<div><strong>Duració: </strong>" + reunion.getDuracion() + " minuts</div>");
         }
 
-        if (reunion.getReunionPuntosOrdenDia() != null && !reunion.getReunionPuntosOrdenDia().isEmpty())
+        if (puntosOrdenDiaOrdenados != null && !puntosOrdenDiaOrdenados.isEmpty())
         {
             content.append("<h4>Ordre del dia</h4>");
             content.append("<ol>");
 
-            for (PuntoOrdenDia puntoOrdenDia : reunion.getReunionPuntosOrdenDia())
+            for (PuntoOrdenDia puntoOrdenDia : puntosOrdenDiaOrdenados)
             {
                 content.append("<li>" + puntoOrdenDia.getTitulo() + "</li>");
             }
