@@ -44,6 +44,9 @@ public class PublicacionService extends CoreBaseService
     @Value("${goc.logo}")
     private String logoUrl;
 
+    @Value("${goc.logoPublic}")
+    private String logoPublic;
+
     @Value("${goc.logoDocumentos}")
     private String logoDocumentosUrl;
 
@@ -73,6 +76,7 @@ public class PublicacionService extends CoreBaseService
         String applang = languageConfig.getLangCode(lang);
         Template template = new HTMLTemplate("reuniones-" + applang);
         template.put("logo", logoUrl);
+        template.put("logoPublic", (logoPublic != null) ? logoPublic : logoUrl);
         template.put("reuniones", setLanguageFields(reuniones, lang));
         template.put("applang", applang);
         template.put("charset", charset);
@@ -158,6 +162,7 @@ public class PublicacionService extends CoreBaseService
 
         Template template = new HTMLTemplate("acuerdos-" + applang);
         template.put("logo", logoUrl);
+        template.put("logoPublic", (logoPublic != null) ? logoPublic : logoUrl);
         template.put("applang", applang);
         template.put("charset", charset);
         template.put("lang", lang);
@@ -251,6 +256,7 @@ public class PublicacionService extends CoreBaseService
 
         Template template = new HTMLTemplate("reunion-" + applang);
         template.put("logo", logoUrl);
+        template.put("logoPublic", (logoPublic != null) ? logoPublic : logoUrl);
         template.put("charset", charset);
         template.put("reunion", reunionTemplate);
         template.put("applang", applang);
@@ -297,6 +303,7 @@ public class PublicacionService extends CoreBaseService
 
         Template template = new HTMLTemplate("reunion-acuerdos-" + applang);
         template.put("logo", logoUrl);
+        template.put("logoPublic", (logoPublic != null) ? logoPublic : logoUrl);
         template.put("charset", charset);
         template.put("reunion", reunionTemplate);
         template.put("applang", applang);
