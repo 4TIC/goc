@@ -370,6 +370,28 @@ public class ReunionDAO extends BaseDAODatabaseImpl
         return personas;
     }
 
+    public List<Persona> getInvitadosByReunionId(Long reunionId)
+    {
+        JPAQuery queryReunionesInvitados = new JPAQuery(entityManager);
+        JPAQuery queryOrganosInvitados = new JPAQuery(entityManager);
+
+        List<Persona> personas = new ArrayList<>();
+
+        List<ReunionInvitado> invitadosPorReunion = queryReunionesInvitados.from(qReunionInvitado)
+                .where(qReunionInvitado.reunion.id.eq(reunionId))
+                .list(qReunionInvitado);
+
+        List<OrganoReunionInvitado> invitadosPorOrgano = queryOrganosInvitados.from(qOrganoReunionInvitado)
+                .where(qOrganoReunionInvitado.reunionId.in(reunionId))
+                .distinct()
+                .list(qOrganoReunionInvitado);
+
+        addToPersonasListFromReunionInvitados(personas, invitadosPorReunion);
+        addToPersonasListFromOrganoInvitados(personas, invitadosPorOrgano);
+
+        return personas;
+    }
+
     public void addToPersonasListFromReunionInvitados(List<Persona> personas, List<ReunionInvitado> invitados)
     {
         personas.addAll(invitados.stream()

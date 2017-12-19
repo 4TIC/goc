@@ -273,7 +273,7 @@ public class AvisosReunion
             listaAsistentesReunion = organoReunionMiembroDAO.getMiembrosByReunionId(reunion.getId());
         }
 
-        List<Persona> invitados = reunionDAO.getInvitadosPresencialesByReunionId(reunion.getId());
+        List<Persona> invitados = reunionDAO.getInvitadosByReunionId(reunion.getId());
 
         List<String> emailMiembros =
                 listaAsistentesReunion.stream().map(AvisosReunion::obtenerMailAsistente).collect(toList());
