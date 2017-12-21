@@ -20,9 +20,6 @@ public class AvisosService
     private static Logger log = LoggerFactory.getLogger(AvisosService.class);
     private static final int ONE_DAY = 1000 * 60 * 60 * 24;
 
-    @Value("${uji.smtp.defaultSender}")
-    private String defaultSender;
-
     private AvisosReunion avisosReunion;
     private ReunionDAO reunionDAO;
 

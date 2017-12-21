@@ -65,7 +65,6 @@ reunionesGridColumns.push({
     {
         if (value)
         {
-            console.log(record.data);
             return '<span data-qwidth="200" ' +
             'data-qtip="' + record.get("avisoPrimeraReunionUser") + ' ' + Ext.util.Format.date(record.get("avisoPrimeraReunionFecha"), 'd/m/Y H:i') + '">Sí</span>'
         }
@@ -103,8 +102,8 @@ Ext.define('goc.view.reunion.ReunionGrid',
     reference : 'reunionGrid',
     multiSelect : false,
     scrollable : true,
+    collapsible : true,
     title : appI18N.reuniones.tituloGridReuniones,
-    margin : 5,
     border : 0,
     columns : reunionesGridColumns,
 

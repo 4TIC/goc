@@ -18,6 +18,10 @@ public class MiembroExterno implements Serializable
 
     private OrganoExterno organo;
 
+    private String condicion;
+
+    private String condicionAlternativa;
+
     public Long getId()
     {
         return id;
@@ -68,5 +72,25 @@ public class MiembroExterno implements Serializable
     public void setCargo(CargoExterno cargo)
     {
         this.cargo = cargo;
+    }
+
+    public String getCondicion()
+    {
+        return condicion;
+    }
+
+    public void setCondicion(String condicion)
+    {
+        this.condicion = condicion;
+    }
+
+    public String getCondicionAlternativa()
+    {
+        return condicionAlternativa;
+    }
+
+    public void setCondicionAlternativa(String condicionAlternativa)
+    {
+        this.condicionAlternativa = condicionAlternativa;
     }
 }

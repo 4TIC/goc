@@ -1,0 +1,59 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="GOC_ORGANOS_INVITADOS" directorySegmentName="seg_0" id="89233C55-DF67-5C52-60EF-F96B75FCD4ED">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:32:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<schemaObject>851AFA7E-0C67-E024-A963-48DB8EF55127</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>206233F7-C161-EF4E-FE4B-7CF9616D04E8</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="ORGANO_ID" id="393EC805-1BA3-1618-6C36-477184A116DA">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:32:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PERSONA_NOMBRE" id="4BAB760D-3BC7-86E1-AAAB-81EA68156540">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:32:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PERSONA_ID" id="81F024C4-C583-7C82-2917-13156C0EB147">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:32:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="SOLO_CONSULTA" id="92344DDA-DAB7-566A-FB7A-A4D84995A2C2">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<defaultValue>0</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="ID" id="EA9ED26C-305F-C6D1-1AFF-B97F3231CCC5">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:32:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PERSONA_EMAIL" id="FF1A7905-7DD9-78D6-2EAC-0F8A8C1CC7B3">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:32:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="GOC_ORGANOS_INVITADOS_PK" id="FFCC649E-2BB1-94A2-1671-214AB73BE2F3">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:32:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<segment>0A44468C-8B98-11B4-A1B8-CD40BD6F2B85</segment>
+<tableSpace>9DA6B8A6-6950-3FCA-DBE2-B177C5EB1FCF</tableSpace>
+<indexSegment>0A44468C-8B98-11B4-A1B8-CD40BD6F2B85</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

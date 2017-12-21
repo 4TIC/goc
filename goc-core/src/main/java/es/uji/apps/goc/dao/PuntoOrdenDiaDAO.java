@@ -24,8 +24,7 @@ public class PuntoOrdenDiaDAO extends BaseDAODatabaseImpl
     {
         JPAQuery query = new JPAQuery(entityManager);
 
-        query.from(qPuntoOrdenDia).where(qPuntoOrdenDia.reunion.id.eq(reunionId))
-                .orderBy(qPuntoOrdenDia.orden.asc());
+        query.from(qPuntoOrdenDia).where(qPuntoOrdenDia.reunion.id.eq(reunionId)).orderBy(qPuntoOrdenDia.orden.asc());
 
         return query.list(qPuntoOrdenDia);
 
@@ -34,8 +33,8 @@ public class PuntoOrdenDiaDAO extends BaseDAODatabaseImpl
     public PuntoOrdenDia getPuntoOrdenDiaById(Long puntoOrdenDiaId)
     {
         JPAQuery query = new JPAQuery(entityManager);
-        List<PuntoOrdenDia> puntosOrdenDia = query.from(qPuntoOrdenDia)
-                .where(qPuntoOrdenDia.id.eq(puntoOrdenDiaId)).list(qPuntoOrdenDia);
+        List<PuntoOrdenDia> puntosOrdenDia =
+                query.from(qPuntoOrdenDia).where(qPuntoOrdenDia.id.eq(puntoOrdenDiaId)).list(qPuntoOrdenDia);
 
         if (puntosOrdenDia.size() == 0)
         {
@@ -51,7 +50,8 @@ public class PuntoOrdenDiaDAO extends BaseDAODatabaseImpl
         JPAQuery query = new JPAQuery(entityManager);
         List<PuntoOrdenDia> puntosOrdenDia = query.from(qPuntoOrdenDia)
                 .where(qPuntoOrdenDia.reunion.id.eq(reunionId).and(qPuntoOrdenDia.orden.gt(orden)))
-                .orderBy(qPuntoOrdenDia.orden.asc()).list(qPuntoOrdenDia);
+                .orderBy(qPuntoOrdenDia.orden.asc())
+                .list(qPuntoOrdenDia);
 
         if (puntosOrdenDia.size() == 0)
         {
@@ -61,11 +61,22 @@ public class PuntoOrdenDiaDAO extends BaseDAODatabaseImpl
         return puntosOrdenDia.get(0);
     }
 
-    public PuntoOrdenDia getAnteriorPuntoOrdenDiaByOrden(Long orden)
+    public List<PuntoOrdenDia> getPuntosOrdenDiaMismoOrden(Long reunionId, Long orden)
     {
         JPAQuery query = new JPAQuery(entityManager);
         List<PuntoOrdenDia> puntosOrdenDia = query.from(qPuntoOrdenDia)
-                .where(qPuntoOrdenDia.orden.lt(orden)).orderBy(qPuntoOrdenDia.orden.desc())
+                .where(qPuntoOrdenDia.reunion.id.eq(reunionId).and(qPuntoOrdenDia.orden.eq(orden)))
+                .list(qPuntoOrdenDia);
+
+        return puntosOrdenDia;
+    }
+
+    public PuntoOrdenDia getAnteriorPuntoOrdenDiaByOrden(Long reunionId, Long orden)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+        List<PuntoOrdenDia> puntosOrdenDia = query.from(qPuntoOrdenDia)
+                .where(qPuntoOrdenDia.reunion.id.eq(reunionId).and(qPuntoOrdenDia.orden.lt(orden)))
+                .orderBy(qPuntoOrdenDia.orden.desc())
                 .list(qPuntoOrdenDia);
 
         if (puntosOrdenDia.size() == 0)
@@ -73,15 +84,6 @@ public class PuntoOrdenDiaDAO extends BaseDAODatabaseImpl
             return null;
         }
         return puntosOrdenDia.get(0);
-    }
-
-    public List<PuntoOrdenDia> getPuntosOrdenDiaMismoOrden(Long orden)
-    {
-        JPAQuery query = new JPAQuery(entityManager);
-        List<PuntoOrdenDia> puntosOrdenDia = query.from(qPuntoOrdenDia)
-                .where(qPuntoOrdenDia.orden.eq(orden)).list(qPuntoOrdenDia);
-
-        return puntosOrdenDia;
     }
 
     @Transactional
@@ -96,7 +98,8 @@ public class PuntoOrdenDiaDAO extends BaseDAODatabaseImpl
     {
         JPAQuery query = new JPAQuery(entityManager);
         List<PuntoOrdenDia> puntosOrdenDia = query.from(qPuntoOrdenDia)
-                .where(qPuntoOrdenDia.reunion.id.eq(reunionId)).orderBy(qPuntoOrdenDia.orden.desc())
+                .where(qPuntoOrdenDia.reunion.id.eq(reunionId))
+                .orderBy(qPuntoOrdenDia.orden.desc())
                 .list(qPuntoOrdenDia);
 
         if (puntosOrdenDia.size() == 0)

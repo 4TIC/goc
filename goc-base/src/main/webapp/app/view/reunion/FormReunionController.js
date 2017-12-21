@@ -113,7 +113,8 @@ Ext.define('goc.view.reunion.FormReunionController', {
             datosInvitados.push({
                 personaId : record.get('personaId'),
                 personaNombre : record.get('personaNombre'),
-                personaEmail : record.get('personaEmail')
+                personaEmail : record.get('personaEmail'),
+                motivoInvitacion : record.get('motivoInvitacion')
             });
         });
 

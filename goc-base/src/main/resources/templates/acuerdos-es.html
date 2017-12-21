@@ -7,7 +7,7 @@
     </div>  
     <main class="columns">
       <div class="row columns">
-        <h2 class="title">Lista de acuerdos de los órganos colegiados</h2>
+        <h1 class="title">Lista de acuerdos de los órganos colegiados</h1>
       </div>
       <form name="form-busqueda" action="/goc/rest/publicacion/acuerdos" method="GET">
         <input type="hidden" name="lang" th:value="${lang}" />
@@ -97,15 +97,14 @@
                 <span th:text="${reunion.duracion + ' minuts'}">Fecha</span>
               </div>
               <div th:if="${reunion.acuerdos}">
-                <strong>Acuerdos generales:</strong>
-                <span th:text="${reunion.acuerdos}">Acords</span>
+                <span th:text="${#strings.replace(reunion.acuerdos,'\n','&lt;br&gt;')}">Acords</span>
               </div>
               <div>
                 <strong>Puntos del orden del día:</strong>
               </div>  
               <fieldset class="fieldset" th:each="puntoDia : ${reunion.puntosOrdenDia}" th:if="${puntoDia.publico}">
                 <legend th:text="${puntoDia.titulo}"></legend>
-                <div th:text="${puntoDia.acuerdos}"></div>
+                <div th:if="${puntoDia.acuerdos}" th:utext="${#strings.replace(puntoDia.acuerdos,'\n','&lt;br&gt;')}"></div>
                 <a th:if="${puntoDia.urlActa}" th:href="${puntoDia.urlActa}">Certificado</a>
               </fieldset>
             </blockquote>

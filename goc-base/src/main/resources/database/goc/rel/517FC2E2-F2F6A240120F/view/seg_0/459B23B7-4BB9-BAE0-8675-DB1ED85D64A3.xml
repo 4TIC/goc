@@ -1,0 +1,62 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableView class="oracle.dbtools.crest.model.design.relational.TableView" directorySegmentName="seg_0" id="459B23B7-4BB9-BAE0-8675-DB1ED85D64A3" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_VW_CERTIFICADOS_ASISTENCIA">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_VW_CERTIFICADOS_ASISTENCIA</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:43:08 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>084C278A-F113-AB69-59A9-D7DB77655AB9</importedID>
+<userDefined>true</userDefined>
+<userDefinedSQL>CREATE OR REPLACE VIEW GOC_VW_CERTIFICADOS_ASISTENCIA&lt;br/&gt;AS &lt;br/&gt;select ri.reunion_id,&lt;br/&gt;       ri.persona_id,&lt;br/&gt;       ri.url_asistencia,&lt;br/&gt;       ri.url_asistencia_alt&lt;br/&gt;  from goc_reuniones_invitados ri&lt;br/&gt; where ri.url_asistencia is not null&lt;br/&gt;union &lt;br/&gt;select roi.reunion_id,&lt;br/&gt;       roi.persona_id,&lt;br/&gt;       roi.url_asistencia,&lt;br/&gt;       roi.url_asistencia_alt&lt;br/&gt;  from goc_organos_reuniones_invits roi&lt;br/&gt; where roi.url_asistencia is not null&lt;br/&gt;union &lt;br/&gt;select r.id reunion_id,&lt;br/&gt;       orrm.suplente_id persona_id,&lt;br/&gt;       orrm.url_asistencia,&lt;br/&gt;       orrm.url_asistencia_alt           &lt;br/&gt;  from goc_reuniones r,&lt;br/&gt;       goc_organos_reuniones orr,&lt;br/&gt;       goc_organos_reuniones_miembros orrm&lt;br/&gt; where r.id = orr.reunion_id&lt;br/&gt;   and orr.id = orrm.organo_reunion_id&lt;br/&gt;   and orrm.asistencia = 1&lt;br/&gt;   and suplente_id is not null&lt;br/&gt;   and orrm.url_asistencia is not null   &lt;br/&gt;union &lt;br/&gt;select r.id reunion_id,&lt;br/&gt;       orrm.miembro_id persona_id,&lt;br/&gt;       orrm.url_asistencia,&lt;br/&gt;       orrm.url_asistencia_alt           &lt;br/&gt;  from goc_reuniones r,&lt;br/&gt;       goc_organos_reuniones orr,&lt;br/&gt;       goc_organos_reuniones_miembros orrm&lt;br/&gt; where r.id = orr.reunion_id&lt;br/&gt;   and orr.id = orrm.organo_reunion_id&lt;br/&gt;   and orrm.asistencia = 1&lt;br/&gt;   and suplente_id is null   &lt;br/&gt;   and orrm.url_asistencia is not null</userDefinedSQL>
+<viewElements>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="REUNION_ID" id="DDD122E6-3FC1-D744-2653-4B24310EF733">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:43:08 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>REUNION_ID</alias>
+<dataType>NUMBER</dataType>
+<headerAlias>REUNION_ID</headerAlias>
+<reference>false</reference>
+<viewID>459B23B7-4BB9-BAE0-8675-DB1ED85D64A3</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="PERSONA_ID" id="434F15BF-80DB-D713-31F4-96EEA213B1DE">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:43:08 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>PERSONA_ID</alias>
+<dataType>NUMBER</dataType>
+<headerAlias>PERSONA_ID</headerAlias>
+<reference>false</reference>
+<viewID>459B23B7-4BB9-BAE0-8675-DB1ED85D64A3</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="URL_ASISTENCIA" id="BC5A563D-945D-29FD-D8AB-598D1F79F72D">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:43:08 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>URL_ASISTENCIA</alias>
+<dataType>VARCHAR2 (1000)</dataType>
+<headerAlias>URL_ASISTENCIA</headerAlias>
+<reference>false</reference>
+<viewID>459B23B7-4BB9-BAE0-8675-DB1ED85D64A3</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="URL_ASISTENCIA_ALT" id="03081684-7C49-F3A0-3D7D-0D01924416E6">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:43:08 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>URL_ASISTENCIA_ALT</alias>
+<dataType>VARCHAR2 (1000)</dataType>
+<headerAlias>URL_ASISTENCIA_ALT</headerAlias>
+<reference>false</reference>
+<viewID>459B23B7-4BB9-BAE0-8675-DB1ED85D64A3</viewID>
+</viewElement>
+</viewElements>
+</TableView>

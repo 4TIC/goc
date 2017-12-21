@@ -7,22 +7,57 @@
     </div>
     <main class="columns reunion">
       <div class="row columns">
-        <h2 th:text="'Reunión: ' + ${reunion.asunto}" class="title">title</h2>
+        <h1 th:text="'Reunión: ' + ${reunion.asunto}" class="title">title</h1>
       </div>
       <div class="row columns">
         <h3 class="title" >Información básica</h3>      
       </div>
       <ul class="contentList detalle row columns">
-        <li th:utext="'&lt;strong&gt;Fecha&lt;/strong&gt;: ' + ${#dates.format(reunion.fecha, 'dd/MM/YYYY HH:mm')}"></li>
-        <li th:if="${reunion.fechaSegundaConvocatoria}" th:utext="'&lt;strong&gt;Segunda convocatoria&lt;/strong&gt;: ' + ${#dates.format(reunion.fechaSegundaConvocatoria, 'dd/MM/YYYY HH:mm')}"></li>
-        <li th:if="${reunion.responsableActa}" th:utext="'&lt;strong&gt;Responsable de acta&lt;/strong&gt;: ' + ${reunion.responsableActa}"></li>
-        <li th:if="${reunion.numeroSesion} != null" th:utext="'&lt;strong&gt;Número de sesión&lt;/strong&gt;: ' + ${reunion.numeroSesion}"></li>
-        <li th:if="${reunion.ubicacion}" th:utext="'&lt;strong&gt;Lugar&lt;/strong&gt;: ' + ${reunion.ubicacion}"></li>
-        <li th:utext="'&lt;strong&gt;Duración&lt;/strong&gt;: ' + ${reunion.duracion} + ' minutos'"></li>
-        <li th:if="${reunion.descripcion}" th:utext="'&lt;strong&gt;Descripción&lt;/strong&gt;: ' + ${reunion.descripcion}"></li>
-        <li th:if="${reunion.acuerdos != null}" th:utext="'&lt;strong&gt;Acuerdos&lt;/strong&gt;: ' + ${reunion.acuerdos}"></li>
-        <li th:if="${reunion.urlGrabacion != null}"><strong>URL grabación</strong>: <a th:href="${reunion.urlGrabacion}" th:text="${reunion.urlGrabacion}"></a></li>
-        <li th:if="${reunion.telematica}"><strong>Reunión telemática. Instrucciones</strong>: <span th:text="${reunion.telematicaDescripcion}"></span></li>
+        <li th:unless="${reunion.fechaSegundaConvocatoria}">
+          <div class="tag"><strong>Fecha:</strong></div>
+          <div class="value" th:utext="${#dates.format(reunion.fecha, 'dd/MM/YYYY HH:mm')}">valor</div>
+        </li>
+        <li th:if="${reunion.fechaSegundaConvocatoria}">
+          <div class="tag"><strong>Primera convocatoria:</strong></div>
+          <div class="value" th:utext="${#dates.format(reunion.fecha, 'dd/MM/YYYY HH:mm')}">valor</div>
+        </li>
+        <li th:if="${reunion.fechaSegundaConvocatoria}">
+          <div class="tag"><strong>Segona convocatoria:</strong></div>
+          <div class="value" th:utext="${#dates.format(reunion.fechaSegundaConvocatoria, 'dd/MM/YYYY HH:mm')}">valor</div>
+        </li>
+        <li th:if="${reunion.responsableActa}">
+          <div class="tag"><strong>Responsable de acta:</strong></div>
+          <div class="value" th:utext="${reunion.responsableActa}">valor</div>
+        </li>
+        <li th:if="${reunion.numeroSesion} != null">
+          <div class="tag"><strong>Número de sesión:</strong></div>
+          <div class="value" th:utext="${reunion.numeroSesion}">valor</div>
+        </li>
+        <li th:if="${reunion.ubicacion}">
+          <div class="tag"><strong>Lugar:</strong></div>
+          <div class="value" th:utext="${reunion.ubicacion}">valor</div>
+        </li>
+        <li th:if="${reunion.duracion and reunion.duracion > 0}">
+          <div class="tag"><strong>Duración:</strong></div>
+          <div class="value" th:utext="${reunion.duracion} + ' minutos'">valor</div>
+        </li>
+        <li th:if="${reunion.descripcion}">
+          <div class="tag"><strong>Descripción:</strong></div>
+          <div class="value" th:utext="${#strings.replace(reunion.descripcion,'\n','&lt;br&gt;')}">valor</div>
+        </li>
+        <li th:if="${reunion.acuerdos != null}">
+          <div class="tag"><strong>Acuerdos generales:</strong></div>
+          <div class="value" th:utext="${#strings.replace(reunion.acuerdos,'\n','&lt;br&gt;')}">valor</div>
+        </li>
+        <li th:if="${reunion.urlGrabacion != null}">
+          <div class="tag"><strong>URL grabación:</strong></div>
+          <div class="value"><a th:href="${reunion.urlGrabacion}" th:text="${reunion.urlGrabacion}"></a></div>
+        </li>
+        <li th:if="${reunion.telematica}">
+          <div class="tag"><strong>Reunión telemática Instrucciones:</strong></div>
+          <div class="value" th:utext="${reunion.telematicaDescripcion}">valor</div>
+        </li>
+        <li th:if="${reunion.publica}" class="item-publico"><i class="fa fa-eye"></i> <span>PÚBLICA</span></li>
       </ul>
       <div th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}" class="row columns">
         <h3 class="title">Puntos del orden del día</h3>      
@@ -30,10 +65,10 @@
       <ol th:if="${not #lists.isEmpty(reunion.puntosOrdenDia)}" class="detalle row columns">
         <li th:each="puntoOrdenDia : ${reunion.puntosOrdenDia}">
           <strong th:text="${puntoOrdenDia.titulo}"></strong>
-          <div th:if="${puntoOrdenDia.descripcion} != null" th:utext="'&lt;strong&gt;Descripción&lt;/strong&gt;: ' + ${puntoOrdenDia.descripcion}"></div>
-          <div th:if="${puntoOrdenDia.deliberaciones} != null" th:utext="'&lt;strong&gt;Deliberaciones&lt;/strong&gt;: ' + ${puntoOrdenDia.deliberaciones}"></div>
+          <div th:if="${puntoOrdenDia.descripcion} != null" th:utext="${#strings.replace(puntoOrdenDia.descripcion,'\n','&lt;br&gt;')}"></div>
+          <div th:if="${puntoOrdenDia.deliberaciones} != null" th:utext="${#strings.replace(puntoOrdenDia.deliberaciones,'\n','&lt;br&gt;')}"></div>
+          <div th:if="${puntoOrdenDia.acuerdos} != null" th:utext="${#strings.replace(puntoOrdenDia.acuerdos,'\n','&lt;br&gt;')}"></div>
           <div th:if="${puntoOrdenDia.publico}" class="item-publico"><i class="fa fa-eye"></i> <span>PÚBLICO</span></div>
-          <div th:if="${puntoOrdenDia.acuerdos} != null" th:utext="'&lt;strong&gt;Acuerdos&lt;/strong&gt;: ' + ${puntoOrdenDia.acuerdos}"></div>
           <div th:if="${puntoOrdenDia.acuerdos} != null">
             <span>
               <a th:if="${puntoOrdenDia.urlActa}" th:href="${puntoOrdenDia.urlActa}">Certificado</a>

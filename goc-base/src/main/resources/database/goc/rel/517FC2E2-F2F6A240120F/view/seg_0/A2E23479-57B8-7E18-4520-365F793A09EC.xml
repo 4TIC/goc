@@ -1,0 +1,158 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableView class="oracle.dbtools.crest.model.design.relational.TableView" directorySegmentName="seg_0" id="A2E23479-57B8-7E18-4520-365F793A09EC" schemaObject="851AFA7E-0C67-E024-A963-48DB8EF55127" name="GOC_VW_REUNIONES_PERMISOS">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_VW_REUNIONES_PERMISOS</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:43:08 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>2FF649F9-5B52-5E96-AC16-0DA2E54CC96C</importedID>
+<userDefined>true</userDefined>
+<userDefinedSQL>CREATE OR REPLACE VIEW GOC_VW_REUNIONES_PERMISOS&lt;br/&gt;AS &lt;br/&gt;SELECT s.id,&lt;br/&gt;            s.completada,&lt;br/&gt;            s.fecha,&lt;br/&gt;            s.asunto,&lt;br/&gt;            s.asunto_alt,&lt;br/&gt;            s.persona_id,&lt;br/&gt;            s.persona_nombre,&lt;br/&gt;            SUM (s.asistente) asistente,&lt;br/&gt;            s.url_acta,&lt;br/&gt;            s.url_acta_alt,&lt;br/&gt;            (SELECT a.url_asistencia&lt;br/&gt;               FROM goc_vw_certificados_asistencia a&lt;br/&gt;              WHERE     a.reunion_id = s.id&lt;br/&gt;                    AND a.persona_id = s.persona_id&lt;br/&gt;                    AND ROWNUM = 1)&lt;br/&gt;               url_asistencia,&lt;br/&gt;            (SELECT a.url_asistencia_alt&lt;br/&gt;               FROM goc_vw_certificados_asistencia a&lt;br/&gt;              WHERE     a.reunion_id = s.id&lt;br/&gt;                    AND a.persona_id = s.persona_id&lt;br/&gt;                    AND ROWNUM = 1)&lt;br/&gt;               url_asistencia_alt&lt;br/&gt;       FROM (SELECT r.id,&lt;br/&gt;                    r.completada,&lt;br/&gt;                    r.fecha,&lt;br/&gt;                    r.asunto,&lt;br/&gt;                    r.asunto_alt,&lt;br/&gt;                    r.creador_id   persona_id,&lt;br/&gt;                    r.creador_nombre persona_nombre,&lt;br/&gt;                    0              asistente,&lt;br/&gt;                    r.url_acta,&lt;br/&gt;                    r.url_acta_alt&lt;br/&gt;               FROM goc_reuniones r&lt;br/&gt;             UNION&lt;br/&gt;             SELECT r.id,&lt;br/&gt;                    r.completada,&lt;br/&gt;                    r.fecha,&lt;br/&gt;                    r.asunto,&lt;br/&gt;                    r.asunto_alt,&lt;br/&gt;                    ra.persona_id   persona_id,&lt;br/&gt;                    ra.persona_nombre persona_nombre,&lt;br/&gt;                    0               asistente,&lt;br/&gt;                    r.url_acta,&lt;br/&gt;                    r.url_acta_alt&lt;br/&gt;               FROM goc_reuniones         r,&lt;br/&gt;                    goc_organos_reuniones orr,&lt;br/&gt;                    goc_organos_autorizados ra&lt;br/&gt;              WHERE r.id = orr.reunion_id AND orr.organo_id = ra.organo_id&lt;br/&gt;             UNION&lt;br/&gt;             SELECT r.id,&lt;br/&gt;                    r.completada,&lt;br/&gt;                    r.fecha,&lt;br/&gt;                    r.asunto,&lt;br/&gt;                    r.asunto_alt,&lt;br/&gt;                    ri.persona_id   persona_id,&lt;br/&gt;                    ri.persona_nombre persona_nombre,&lt;br/&gt;                    1               asistente,&lt;br/&gt;                    r.url_acta,&lt;br/&gt;                    r.url_acta_alt&lt;br/&gt;               FROM goc_reuniones r, goc_reuniones_invitados ri&lt;br/&gt;              WHERE ri.reunion_id = r.id&lt;br/&gt;             UNION&lt;br/&gt;             SELECT r.id,&lt;br/&gt;                    r.completada,&lt;br/&gt;                    r.fecha,&lt;br/&gt;                    r.asunto,&lt;br/&gt;                    r.asunto_alt,&lt;br/&gt;                    ori.persona_id persona_id,&lt;br/&gt;                    ori.nombre   persona_nombre,&lt;br/&gt;                    decode(ori.solo_consulta, 0, 1, 1, 0) asistente,&lt;br/&gt;                    r.url_acta,&lt;br/&gt;                    r.url_acta_alt&lt;br/&gt;               FROM goc_reuniones              r,&lt;br/&gt;                    goc_organos_reuniones      orr,&lt;br/&gt;                    goc_organos_reuniones_invits ori&lt;br/&gt;              WHERE r.id = orr.reunion_id AND ori.organo_reunion_id = orr.id&lt;br/&gt;             UNION&lt;br/&gt;             SELECT r.id,&lt;br/&gt;                    r.completada,&lt;br/&gt;                    r.fecha,&lt;br/&gt;                    r.asunto,&lt;br/&gt;                    r.asunto_alt,&lt;br/&gt;                    orrm.suplente_id   persona_id,&lt;br/&gt;                    orrm.suplente_nombre persona_nombre,&lt;br/&gt;                    1                  asistente,&lt;br/&gt;                    r.url_acta,&lt;br/&gt;                    r.url_acta_alt&lt;br/&gt;               FROM goc_reuniones                r,&lt;br/&gt;                    goc_organos_reuniones        orr,&lt;br/&gt;                    goc_organos_reuniones_miembros orrm&lt;br/&gt;              WHERE     r.id = orr.reunion_id&lt;br/&gt;                    AND orr.id = orrm.organo_reunion_id&lt;br/&gt;                    AND orrm.asistencia = 1&lt;br/&gt;                    AND suplente_id IS NOT NULL&lt;br/&gt;             UNION&lt;br/&gt;             SELECT r.id,&lt;br/&gt;                    r.completada,&lt;br/&gt;                    r.fecha,&lt;br/&gt;                    r.asunto,&lt;br/&gt;                    r.asunto_alt,&lt;br/&gt;                    orrm.miembro_id                persona_id,&lt;br/&gt;                    orrm.nombre                    persona_nombre,&lt;br/&gt;                    DECODE (suplente_id, NULL, 1, 0) asistente,&lt;br/&gt;                    r.url_acta,&lt;br/&gt;                    r.url_acta_alt&lt;br/&gt;               FROM goc_reuniones                r,&lt;br/&gt;                    goc_organos_reuniones        orr,&lt;br/&gt;                    goc_organos_reuniones_miembros orrm&lt;br/&gt;              WHERE     r.id = orr.reunion_id&lt;br/&gt;                    AND orr.id = orrm.organo_reunion_id&lt;br/&gt;                    AND orrm.asistencia = 1&lt;br/&gt;             UNION&lt;br/&gt;             SELECT r.id,&lt;br/&gt;                    r.completada,&lt;br/&gt;                    r.fecha,&lt;br/&gt;                    r.asunto,&lt;br/&gt;                    r.asunto_alt,&lt;br/&gt;                    orrm.miembro_id persona_id,&lt;br/&gt;                    orrm.nombre   persona_nombre,&lt;br/&gt;                    0             asistente,&lt;br/&gt;                    r.url_acta,&lt;br/&gt;                    r.url_acta_alt&lt;br/&gt;               FROM goc_reuniones                r,&lt;br/&gt;                    goc_organos_reuniones        orr,&lt;br/&gt;                    goc_organos_reuniones_miembros orrm&lt;br/&gt;              WHERE     r.id = orr.reunion_id&lt;br/&gt;                    AND orr.id = orrm.organo_reunion_id&lt;br/&gt;                    AND orrm.asistencia = 0) s&lt;br/&gt;   GROUP BY s.id,&lt;br/&gt;            s.completada,&lt;br/&gt;            s.fecha,&lt;br/&gt;            s.asunto,&lt;br/&gt;            s.asunto_alt,&lt;br/&gt;            s.persona_id,&lt;br/&gt;            s.persona_nombre,&lt;br/&gt;            s.url_acta,&lt;br/&gt;            s.url_acta_alt</userDefinedSQL>
+<viewElements>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="ID" id="6D5A4F6D-5A13-0253-0CA5-20B0F8D5F1EF">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:43:08 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>ID</alias>
+<dataType>NUMBER</dataType>
+<headerAlias>ID</headerAlias>
+<reference>false</reference>
+<viewID>A2E23479-57B8-7E18-4520-365F793A09EC</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="COMPLETADA" id="12D9FF4F-21C7-3503-90AF-72FF2050BFC3">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:43:08 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>COMPLETADA</alias>
+<dataType>NUMBER</dataType>
+<headerAlias>COMPLETADA</headerAlias>
+<reference>false</reference>
+<viewID>A2E23479-57B8-7E18-4520-365F793A09EC</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="FECHA" id="CA23294E-F796-BB34-8F34-4E5A579DF24F">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:43:08 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>FECHA</alias>
+<dataType>DATE (7)</dataType>
+<headerAlias>FECHA</headerAlias>
+<reference>false</reference>
+<viewID>A2E23479-57B8-7E18-4520-365F793A09EC</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="ASUNTO" id="DECD6674-50F9-5736-7302-361B3C46EEBA">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:43:08 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>ASUNTO</alias>
+<dataType>VARCHAR2 (500)</dataType>
+<headerAlias>ASUNTO</headerAlias>
+<reference>false</reference>
+<viewID>A2E23479-57B8-7E18-4520-365F793A09EC</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="ASUNTO_ALT" id="C0D9D277-0E60-84F0-812E-455CB07A84DC">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:43:08 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>ASUNTO_ALT</alias>
+<dataType>VARCHAR2 (500)</dataType>
+<headerAlias>ASUNTO_ALT</headerAlias>
+<reference>false</reference>
+<viewID>A2E23479-57B8-7E18-4520-365F793A09EC</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="PERSONA_ID" id="203A1345-F51C-746E-6E99-EA06D9D9788F">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:43:08 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>PERSONA_ID</alias>
+<dataType>NUMBER</dataType>
+<headerAlias>PERSONA_ID</headerAlias>
+<reference>false</reference>
+<viewID>A2E23479-57B8-7E18-4520-365F793A09EC</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="PERSONA_NOMBRE" id="7CDB10FF-ADA8-F7AF-A78A-65BD4EF86A65">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:43:08 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>PERSONA_NOMBRE</alias>
+<dataType>VARCHAR2 (2000)</dataType>
+<headerAlias>PERSONA_NOMBRE</headerAlias>
+<reference>false</reference>
+<viewID>A2E23479-57B8-7E18-4520-365F793A09EC</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="ASISTENTE" id="C17BCD0E-A641-C1A4-BCA0-015403BC5A6B">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:43:08 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>ASISTENTE</alias>
+<dataType>NUMBER</dataType>
+<headerAlias>ASISTENTE</headerAlias>
+<reference>false</reference>
+<viewID>A2E23479-57B8-7E18-4520-365F793A09EC</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="URL_ACTA" id="818D9D99-B8B8-440A-37AE-B7339EE11B63">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:43:08 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>URL_ACTA</alias>
+<dataType>VARCHAR2 (1000)</dataType>
+<headerAlias>URL_ACTA</headerAlias>
+<reference>false</reference>
+<viewID>A2E23479-57B8-7E18-4520-365F793A09EC</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="URL_ACTA_ALT" id="09A863C0-06E5-35FF-A532-0EC4ADB0C45D">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:43:08 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>URL_ACTA_ALT</alias>
+<dataType>VARCHAR2 (1000)</dataType>
+<headerAlias>URL_ACTA_ALT</headerAlias>
+<reference>false</reference>
+<viewID>A2E23479-57B8-7E18-4520-365F793A09EC</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="URL_ASISTENCIA" id="2B94CCC3-2EE4-1B94-2F7D-FCF90DA35532">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:43:08 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>URL_ASISTENCIA</alias>
+<dataType>VARCHAR2 (1000)</dataType>
+<headerAlias>URL_ASISTENCIA</headerAlias>
+<reference>false</reference>
+<viewID>A2E23479-57B8-7E18-4520-365F793A09EC</viewID>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="URL_ASISTENCIA_ALT" id="050C807B-831C-E8D7-9CBE-802F6C7C306A">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:43:08 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>URL_ASISTENCIA_ALT</alias>
+<dataType>VARCHAR2 (1000)</dataType>
+<headerAlias>URL_ASISTENCIA_ALT</headerAlias>
+<reference>false</reference>
+<viewID>A2E23479-57B8-7E18-4520-365F793A09EC</viewID>
+</viewElement>
+</viewElements>
+</TableView>

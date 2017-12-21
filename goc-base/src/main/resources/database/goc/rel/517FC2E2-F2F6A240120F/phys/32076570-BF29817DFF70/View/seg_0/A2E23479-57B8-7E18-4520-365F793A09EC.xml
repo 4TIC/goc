@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableViewProxyOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.TableViewProxyOraclev10g" name="GOC_VW_REUNIONES_PERMISOS" directorySegmentName="seg_0" id="A2E23479-57B8-7E18-4520-365F793A09EC">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:43:08 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<schemaObject>851AFA7E-0C67-E024-A963-48DB8EF55127</schemaObject>
+</TableViewProxyOraclev10g>

@@ -16,7 +16,7 @@
     "sinResultados": "La búsqueda realizada no ha producido ningún resultado",
     "confirmarBorrado": "¿Estás seguro/a de querer borrar el registro?",
     "desconectar": "desconectarse",
-    "conectadoComo": "Conectado com",
+    "conectadoComo": "Conectado como",
     "edicionRegistro": "Edición de registro",
     "borradoRegistro": "Borrar registro",
     "seleccionarParaEditarRegistro": "Debe seleccionar un registro para poder editarlo",
@@ -194,7 +194,9 @@
     "opciones": "Opciones",
     "delegacionVoto": "Delegación de voto",
     "delegacionVotoEmail": "E-mail delegación de voto",
-    "enviada": "Enviada"
+    "enviada": "Enviada",
+    "acta": "Acta",
+    
   },
   "historicoReuniones": {
     "tituloPrincipal": "Histórico de reuniones",
@@ -227,7 +229,9 @@
   },
   "invitados": {
     "nombre": "Nombre",
-    "soloConsulta": "Solo consulta"
+    "soloConsulta": "Solo consulta",
+    "motivoInvitacion": "Motivo invitación",
+    "indicadMotivo": "Indica el motivo"
   },
   "menu": {
     "organos": "Órganos",

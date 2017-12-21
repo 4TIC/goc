@@ -165,7 +165,7 @@
     "reunionSinMiembros": "No s'han definit membres per a la reunió",
     "confirmacionEnvioTitulo": "Confirmació d'enviament de la convocatòria",
     "confirmacionEnvioMensaje": "Estàs segur de que la reunió està completament definida i vols notificar als assistents?",
-    "confirmacionEnvioMensajeYaEnviado": "La convocatòria de reunió ya ha estat enviada. vols enviar de nou la informació als assistents com una rectificació de la mateixa?",
+    "confirmacionEnvioMensajeYaEnviado": "La convocatòria de reunió ja ha estat enviada. vols enviar de nou la informació als assistents com una rectificació de la mateixa?",
     "resultadoEnvioConvocatoriaTitle": "Resultat de l'enviament de la convocatòria",
     "titleSingular": "Reunió",
     "descriptoresYclaves": "Descriptors i claus",
@@ -194,7 +194,8 @@
     "opciones": "Opcions",
     "delegacionVoto": "Delegació de vot",
     "delegacionVotoEmail": "E-mail delegació de vot",
-    "enviada": "Enviada"
+    "enviada": "Enviada",
+    "acta": "Acta"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Històric de reunions",
@@ -227,7 +228,9 @@
   },
   "invitados": {
     "nombre": "Nom",
-    "soloConsulta": "Sols consulta"
+    "soloConsulta": "Sols consulta",
+    "motivoInvitacion": "Motiu invitació",
+    "indicadMotivo": "Indiqueu el motiu"
   },
   "menu": {
     "organos": "Òrgans",

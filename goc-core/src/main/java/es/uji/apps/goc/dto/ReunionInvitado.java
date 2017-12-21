@@ -33,6 +33,9 @@ public class ReunionInvitado implements Serializable
     @Column(name = "URL_ASISTENCIA_ALT")
     private String urlAsistenciaAlternativa;
 
+    @Column(name = "MOTIVO_INVITACION")
+    private String motivoInvitacion;
+
     public Long getId()
     {
         return id;
@@ -101,5 +104,15 @@ public class ReunionInvitado implements Serializable
     public void setUrlAsistenciaAlternativa(String urlAsistenciaAlternativa)
     {
         this.urlAsistenciaAlternativa = urlAsistenciaAlternativa;
+    }
+
+    public String getMotivoInvitacion()
+    {
+        return motivoInvitacion;
+    }
+
+    public void setMotivoInvitacion(String motivoInvitacion)
+    {
+        this.motivoInvitacion = motivoInvitacion;
     }
 }

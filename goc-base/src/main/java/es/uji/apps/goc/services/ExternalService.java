@@ -43,6 +43,8 @@ public class ExternalService
 
         Miembro m1 = new Miembro(1L, "Miembro 1 Organo " + organo.getId(), "miembro1@organo" + organo.getId() + ".com",
                 organo, c1);
+        m1.setCondicion("Condición 1");
+
         listaMiembros.add(m1);
 
         Cargo c2 = new Cargo("2");
@@ -54,6 +56,7 @@ public class ExternalService
         {
             Miembro miembro = new Miembro(i, "Miembro " + i.toString() + " Organo " + organo.getId(),
                     "miembro" + i.toString() + "@organo" + organo.getId() + ".com", organo, c2);
+            miembro.setCondicion("condicion " + i);
             listaMiembros.add(miembro);
         }
 

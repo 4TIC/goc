@@ -12,5 +12,11 @@
 <designDescr class="oracle.dbtools.crest.model.design.Design$DesignStorageDesc" id="3680366E-98AA-9E26-B1F1-C3702B42D076">
 <designStoragePath>/opt/devel/workspaces/uji/goc/goc-base/src/main/resources/database</designStoragePath>
 </designDescr>
+<designDescr class="oracle.dbtools.crest.model.design.Design$DesignStorageDesc" id="406CB7C1-5C1F-83EC-CBBF-047731E5C027">
+<designStoragePath>/opt/devel/workspaces/uji/goc/goc-base/src/main/resources/database</designStoragePath>
+</designDescr>
+<designDescr class="oracle.dbtools.crest.model.design.Design$DesignStorageDesc" id="B39E7E46-30E3-4D00-DED1-F284F9D37DC8">
+<designStoragePath>/opt/devel/workspaces/uji/goc/goc-base/src/main/resources/database</designStoragePath>
+</designDescr>
 </usedDesignStorageDescriptors>
 </OSDM_Design>

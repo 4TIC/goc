@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="C14F19FD-CF87-CAD0-B708-8EA99F97F3C7" containerWithKeyObject="7FE9761C-69AB-6D31-C008-483F45FD49C9" localFKIndex="AD90D94A-7477-2047-194A-908E03AED77D" name="GOC_ORGANOS_REUNIONES_INVI_R01">
+<sourceConnName>uji_reuniones</sourceConnName>
+<sourceObjSchema>UJI_REUNIONES</sourceObjSchema>
+<sourceObjName>GOC_ORGANOS_REUNIONES_INVI_R01</sourceObjName>
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+<importedID>1F8B1244-9F53-8BEA-35CE-0DA3E18AA3E6</importedID>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>99288A20-DF4D-2D1B-C470-576A6E8EA86A</referredTableID>
+<keyObject>0C3D1D3C-6BB6-A756-16E1-59389BBAD686</keyObject>
+<referredKeyID>0C3D1D3C-6BB6-A756-16E1-59389BBAD686</referredKeyID>
+<mandatory>true</mandatory>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

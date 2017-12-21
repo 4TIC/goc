@@ -12,6 +12,16 @@
 <accessDriverType>oracle_loader</accessDriverType>
 <rejectLimit></rejectLimit>
 <columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="PERSONA_EMAIL" id="3B379021-F128-3970-6751-AC1908EA5D77">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:32:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="URL_ASISTENCIA" id="41877965-90C4-551C-5E4E-9FC5C88061E9">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
 <ColumnProxy name="PERSONA_NOMBRE" id="46E9A408-5C5A-F230-B50B-E82DCE876753">
 <createdBy>fmelia</createdBy>
 <createdTime>2017-06-12 10:00:11 UTC</createdTime>
@@ -30,6 +40,11 @@
 <ColumnProxy name="PERSONA_ID" id="7D7A6A19-754E-BF8B-B789-C83FB4EECC30">
 <createdBy>fmelia</createdBy>
 <createdTime>2017-06-12 10:00:11 UTC</createdTime>
+<ownerDesignName>goc</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="URL_ASISTENCIA_ALT" id="B4312195-EBBC-EBE2-BC58-A5AFC73FADDC">
+<createdBy>fmelia</createdBy>
+<createdTime>2017-11-08 14:36:13 UTC</createdTime>
 <ownerDesignName>goc</ownerDesignName>
 </ColumnProxy>
 </columnProxies>
