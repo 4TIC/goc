@@ -5,7 +5,7 @@ ALTER TABLE goc_organos_reuniones_miembros
   delegado_voto_email VARCHAR2(200)
   );
 
-ALTER TABLE goc_reuniones ADD;
+ALTER TABLE goc_reuniones ADD
 (admite_delegacion_voto NUMBER (1) DEFAULT 0 NOT NULL);
 
 CREATE OR REPLACE FORCE VIEW GOC_VW_REUNIONES_PERMISOS
