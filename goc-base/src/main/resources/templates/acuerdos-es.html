@@ -94,7 +94,7 @@
               </div>
               <div style="display: inline;">
                 <strong>Duración:</strong>
-                <span th:text="${reunion.duracion + ' minuts'}">Fecha</span>
+                <span th:text="${reunion.duracion + ' minutos'}">Fecha</span>
               </div>
               <div th:if="${reunion.acuerdos}">
                 <span th:text="${#strings.replace(reunion.acuerdos,'\n','&lt;br&gt;')}">Acords</span>
