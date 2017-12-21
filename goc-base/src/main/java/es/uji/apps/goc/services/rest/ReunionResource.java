@@ -58,9 +58,6 @@ public class ReunionResource extends CoreBaseService
     @InjectParam
     private LanguageConfig languageConfig;
 
-    @Value("${uji.smtp.defaultSender}")
-    private String defaultSender;
-
     @Value("${goc.logoDocumentos}")
     private String logoUrl;
 

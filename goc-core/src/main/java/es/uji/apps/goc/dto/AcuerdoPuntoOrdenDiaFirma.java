@@ -30,6 +30,16 @@ public class AcuerdoPuntoOrdenDiaFirma
 
     private List<OrganoFirma> organos;
 
+    private Long numeroSesion;
+
+    private String nombreOrganos;
+
+    private Integer numeroOrganos;
+
+    private String nombreResponsableActa;
+
+    private String organoResponsableActa;
+
     public Long getReunionId()
     {
         return reunionId;
@@ -130,5 +140,53 @@ public class AcuerdoPuntoOrdenDiaFirma
         this.organos = organos;
     }
 
+    public Long getNumeroSesion()
+    {
+        return numeroSesion;
+    }
 
+    public void setNumeroSesion(Long numeroSesion)
+    {
+        this.numeroSesion = numeroSesion;
+    }
+
+    public String getNombreOrganos()
+    {
+        return nombreOrganos;
+    }
+
+    public void setNombreOrganos(String nombreOrganos)
+    {
+        this.nombreOrganos = nombreOrganos;
+    }
+
+    public Integer getNumeroOrganos()
+    {
+        return numeroOrganos;
+    }
+
+    public void setNumeroOrganos(Integer numeroOrganos)
+    {
+        this.numeroOrganos = numeroOrganos;
+    }
+
+    public String getNombreResponsableActa()
+    {
+        return nombreResponsableActa;
+    }
+
+    public void setNombreResponsableActa(String nombreResponsableActa)
+    {
+        this.nombreResponsableActa = nombreResponsableActa;
+    }
+
+    public String getOrganoResponsableActa()
+    {
+        return organoResponsableActa;
+    }
+
+    public void setOrganoResponsableActa(String organoResponsableActa)
+    {
+        this.organoResponsableActa = organoResponsableActa;
+    }
 }

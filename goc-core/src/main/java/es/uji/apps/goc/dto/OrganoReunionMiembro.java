@@ -78,6 +78,11 @@ public class OrganoReunionMiembro implements Serializable
     @Column(name = "URL_ASISTENCIA_ALT")
     private String urlAsistenciaAlternativa;
 
+    private String condicion;
+
+    @Column(name = "CONDICION_ALT")
+    private String condicionAlternativa;
+
     @ManyToOne
     @JoinColumn(name = "ORGANO_REUNION_ID")
     private OrganoReunion organoReunion;
@@ -314,6 +319,26 @@ public class OrganoReunionMiembro implements Serializable
     public void setUrlAsistenciaAlternativa(String urlAsistenciaAlternativa)
     {
         this.urlAsistenciaAlternativa = urlAsistenciaAlternativa;
+    }
+
+    public String getCondicion()
+    {
+        return condicion;
+    }
+
+    public void setCondicion(String condicion)
+    {
+        this.condicion = condicion;
+    }
+
+    public String getCondicionAlternativa()
+    {
+        return condicionAlternativa;
+    }
+
+    public void setCondicionAlternativa(String condicionAlternativa)
+    {
+        this.condicionAlternativa = condicionAlternativa;
     }
 
     @Override

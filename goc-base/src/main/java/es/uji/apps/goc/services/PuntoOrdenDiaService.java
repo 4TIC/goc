@@ -75,7 +75,7 @@ public class PuntoOrdenDiaService
     {
         PuntoOrdenDia puntoOrdenDia = puntoOrdenDiaDAO.getPuntoOrdenDiaById(puntoOrdenDiaId);
         PuntoOrdenDia anteriorPuntoOrdenDia =
-                puntoOrdenDiaDAO.getAnteriorPuntoOrdenDiaByOrden(puntoOrdenDia.getOrden());
+                puntoOrdenDiaDAO.getAnteriorPuntoOrdenDiaByOrden(reunionId, puntoOrdenDia.getOrden());
 
         if (anteriorPuntoOrdenDia != null)
         {
@@ -89,7 +89,7 @@ public class PuntoOrdenDiaService
         }
 
         List<PuntoOrdenDia> listaPuntosOrdenDia =
-                puntoOrdenDiaDAO.getPuntosOrdenDiaMismoOrden(puntoOrdenDia.getOrden());
+                puntoOrdenDiaDAO.getPuntosOrdenDiaMismoOrden(reunionId, puntoOrdenDia.getOrden());
 
         if (listaPuntosOrdenDia.size() > 1)
         {
@@ -114,7 +114,7 @@ public class PuntoOrdenDiaService
         }
 
         List<PuntoOrdenDia> listaPuntosOrdenDia =
-                puntoOrdenDiaDAO.getPuntosOrdenDiaMismoOrden(puntoOrdenDia.getOrden());
+                puntoOrdenDiaDAO.getPuntosOrdenDiaMismoOrden(reunionId, puntoOrdenDia.getOrden());
 
         if (listaPuntosOrdenDia.size() > 1)
         {

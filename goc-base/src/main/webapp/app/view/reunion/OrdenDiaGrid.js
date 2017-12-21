@@ -129,6 +129,7 @@ Ext.define('goc.view.reunion.OrdenDiaGrid',
     viewConfig : {
         emptyText : appI18N.reuniones.ordendiaVacio
     },
+    split: true,
     listeners : {
         reunionSelected : 'onRefresh',
         celldblclick : 'onEdit',

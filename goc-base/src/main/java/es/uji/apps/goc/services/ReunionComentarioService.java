@@ -1,8 +1,10 @@
 package es.uji.apps.goc.services;
 
+import es.uji.apps.goc.dao.OrganoAutorizadoDAO;
 import es.uji.apps.goc.dao.OrganoReunionMiembroDAO;
 import es.uji.apps.goc.dao.ReunionComentarioDAO;
 import es.uji.apps.goc.dao.ReunionDAO;
+import es.uji.apps.goc.dto.OrganoAutorizado;
 import es.uji.apps.goc.dto.OrganoReunionMiembro;
 import es.uji.apps.goc.dto.Reunion;
 import es.uji.apps.goc.dto.ReunionComentario;
@@ -30,6 +32,9 @@ public class ReunionComentarioService
 
     @Autowired
     private ReunionDAO reunionDAO;
+
+    @Autowired
+    private OrganoAutorizadoDAO organoAutorizadoDAO;
 
     public List<ReunionComentario> getComentariosByReunionId(Long reunionId, Long connectedUserId)
     {
@@ -78,11 +83,19 @@ public class ReunionComentarioService
     {
         List<OrganoReunionMiembro> listaAsistentes =
                 organoReunionMiembroDAO.getMiembroByAsistenteIdOrSuplenteId(reunionBD.getId(), connectedUserId);
-        List<OrganoReunionMiembro> listaAstenteFiltrada = listaAsistentes.stream()
-                .filter(l -> l.getMiembroId().equals(connectedUserId))
+
+        List<OrganoReunionMiembro> listaAsitentesFiltrada = listaAsistentes.stream()
+                .filter(l -> l.getMiembroId().equals(connectedUserId.toString()))
                 .collect(Collectors.toList());
 
-        if (listaAstenteFiltrada.isEmpty() && !reunionBD.getCreadorId().equals(connectedUserId))
+        List<OrganoAutorizado> listaAurotizados = organoAutorizadoDAO.getAutorizadosByReunionId(reunionBD.getId());
+
+        List<OrganoAutorizado> listaAutorizadosFiltrada = listaAurotizados.stream()
+                .filter(l -> l.getPersonaId().equals(connectedUserId))
+                .collect(Collectors.toList());
+
+        if (listaAsitentesFiltrada.isEmpty() && listaAutorizadosFiltrada.isEmpty() && !reunionBD.getCreadorId()
+                .equals(connectedUserId))
         {
             throw new AsistenteNoEncontradoException();
         }

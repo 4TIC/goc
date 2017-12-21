@@ -316,6 +316,13 @@ AS
     s.url_acta,
     s.url_acta_alt;
 
-alter table goc_organos_autorizados add (persona_email varchar2(1000));
+ALTER TABLE goc_organos_autorizados
+  ADD (persona_email VARCHAR2(1000));
 
-alter table goc_reuniones_invitados add (motivo_invitacion clob);
+ALTER TABLE goc_reuniones_invitados
+  ADD (motivo_invitacion CLOB);
+
+ALTER TABLE goc_organos_reuniones_miembros
+  ADD (condicion VARCHAR2(1000));
+ALTER TABLE goc_organos_reuniones_miembros
+  ADD (condicion_alt VARCHAR2(1000));

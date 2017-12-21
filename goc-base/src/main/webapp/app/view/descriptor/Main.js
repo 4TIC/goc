@@ -14,7 +14,6 @@ Ext.define('goc.view.descriptor.Main', {
     ],
 
     title : appI18N.descriptores.titulo,
-    padding : 10,
     autoHeight : true,
     layout : {
         type : 'vbox',
@@ -31,6 +30,7 @@ Ext.define('goc.view.descriptor.Main', {
             flex : 1,
             activeTab : 0,
             disabled: true,
+            split: true,
             items : [
                 {
                     xtype : 'claveGrid'

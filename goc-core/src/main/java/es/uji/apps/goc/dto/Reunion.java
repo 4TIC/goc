@@ -490,7 +490,7 @@ public class Reunion implements Serializable
         return (numeroOrganosConMiembros > 0);
     }
 
-    public boolean isPermitirComentarios(Long connectedUserId)
+    public boolean isPermitirComentarios(Long connectedUserId, List<OrganoAutorizado> organoAutorizados)
     {
         Set<OrganoReunion> reunionOrganos = getReunionOrganos();
 
@@ -506,6 +506,14 @@ public class Reunion implements Serializable
                 {
                     permitirComentarios = true;
                 }
+            }
+        }
+
+        for (OrganoAutorizado organoAutorizado : organoAutorizados)
+        {
+            if (organoAutorizado.getPersonaId().equals(connectedUserId))
+            {
+                permitirComentarios = true;
             }
         }
 

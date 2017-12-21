@@ -1,13 +1,7 @@
 package es.uji.apps.goc.notifications;
 
-import es.uji.apps.goc.dao.NotificacionesDAO;
-import es.uji.apps.goc.dao.OrganoAutorizadoDAO;
-import es.uji.apps.goc.dao.OrganoReunionMiembroDAO;
-import es.uji.apps.goc.dao.ReunionDAO;
-import es.uji.apps.goc.dto.OrganoAutorizado;
-import es.uji.apps.goc.dto.OrganoReunion;
-import es.uji.apps.goc.dto.OrganoReunionMiembro;
-import es.uji.apps.goc.dto.Reunion;
+import es.uji.apps.goc.dao.*;
+import es.uji.apps.goc.dto.*;
 import es.uji.apps.goc.exceptions.MiembrosExternosException;
 import es.uji.apps.goc.exceptions.NotificacionesException;
 import es.uji.apps.goc.exceptions.ReunionNoDisponibleException;
@@ -33,6 +27,7 @@ public class AvisosReunion
     private NotificacionesDAO notificacionesDAO;
     private ReunionDAO reunionDAO;
     private OrganoAutorizadoDAO organoAutorizadoDAO;
+    private PuntoOrdenDiaDAO puntoOrdenDiaDAO;
 
     @Value("${goc.publicUrl}")
     private String publicUrl;
@@ -42,12 +37,13 @@ public class AvisosReunion
 
     @Autowired
     public AvisosReunion(ReunionDAO reunionDAO, OrganoReunionMiembroDAO organoReunionMiembroDAO,
-            NotificacionesDAO notificacionesDAO, OrganoAutorizadoDAO organoAutorizadoDAO)
+            NotificacionesDAO notificacionesDAO, OrganoAutorizadoDAO organoAutorizadoDAO, PuntoOrdenDiaDAO puntoOrdenDiaDAO)
     {
         this.reunionDAO = reunionDAO;
         this.organoReunionMiembroDAO = organoReunionMiembroDAO;
         this.notificacionesDAO = notificacionesDAO;
         this.organoAutorizadoDAO = organoAutorizadoDAO;
+        this.puntoOrdenDiaDAO = puntoOrdenDiaDAO;
     }
 
     @Transactional
@@ -211,18 +207,19 @@ public class AvisosReunion
         return true;
     }
 
-    private void buildAndSendMessageWithExtraText(Reunion reunion, String miembro,
-            String asunto, String textoAux)
+    private void buildAndSendMessageWithExtraText(Reunion reunion, String miembro, String asunto, String textoAux)
             throws NotificacionesException
     {
         Mensaje mensaje = new Mensaje();
         mensaje.setAsunto(asunto);
         mensaje.setContentType("text/html");
 
-        ReunionFormatter formatter = new ReunionFormatter(reunion);
+        List<PuntoOrdenDia> puntosOrdenDiaOrdenados = puntoOrdenDiaDAO.getPuntosByReunionId(reunion.getId());
+
+        ReunionFormatter formatter = new ReunionFormatter(reunion, puntosOrdenDiaOrdenados);
         mensaje.setCuerpo(formatter.format(publicUrl, textoAux));
         mensaje.setFrom(defaultSender);
-        mensaje.setReplyTo(defaultSender);
+        mensaje.setReplyTo(getReplyTo(reunion));
         mensaje.setDestinos(Collections.singletonList(miembro));
 
         notificacionesDAO.enviaNotificacion(mensaje);
@@ -235,14 +232,21 @@ public class AvisosReunion
         mensaje.setAsunto(asunto);
         mensaje.setContentType("text/html");
 
-        ReunionFormatter formatter = new ReunionFormatter(reunion);
+        List<PuntoOrdenDia> puntosOrdenDiaOrdenados = puntoOrdenDiaDAO.getPuntosByReunionId(reunion.getId());
+
+        ReunionFormatter formatter = new ReunionFormatter(reunion, puntosOrdenDiaOrdenados);
         mensaje.setCuerpo(formatter.format(publicUrl, null));
         mensaje.setFrom(defaultSender);
-        mensaje.setReplyTo(defaultSender);
+        mensaje.setReplyTo(getReplyTo(reunion));
         mensaje.setDestinos(miembros);
         mensaje.setAutorizados(autorizados);
 
         notificacionesDAO.enviaNotificacion(mensaje);
+    }
+
+    private String getReplyTo(Reunion reunion)
+    {
+        return reunion.getCreadorEmail() != null ? reunion.getCreadorEmail() : defaultSender;
     }
 
     private List<String> getAutorizados(Reunion reunion)
@@ -269,7 +273,7 @@ public class AvisosReunion
             listaAsistentesReunion = organoReunionMiembroDAO.getMiembrosByReunionId(reunion.getId());
         }
 
-        List<Persona> invitados = reunionDAO.getInvitadosPresencialesByReunionId(reunion.getId());
+        List<Persona> invitados = reunionDAO.getInvitadosByReunionId(reunion.getId());
 
         List<String> emailMiembros =
                 listaAsistentesReunion.stream().map(AvisosReunion::obtenerMailAsistente).collect(toList());
