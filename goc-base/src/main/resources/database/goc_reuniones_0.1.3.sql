@@ -150,8 +150,9 @@ CREATE OR REPLACE VIEW goc_vw_reuniones_editores AS
   WHERE r.id = o.reunion_id
         AND o.id = orm.organo_reunion_id
         AND orm.cargo_firma = 1;
+/
 
-create table goc_descriptores_tipos_organo (id number primary key not null, descriptor_id number not null, tipo_organo_id number not null)
+create table goc_descriptores_tipos_organo (id number primary key not null, descriptor_id number not null, tipo_organo_id number not null);
 
 ALTER TABLE GOC_DESCRIPTORES_TIPOS_ORGANO ADD
 CONSTRAINT GOC_DESCRIPTORES_TIPOS_ORG_TO
@@ -164,7 +165,7 @@ CONSTRAINT GOC_DESCRIPTORES_TIPOS_ORG_DE
  REFERENCES GOC_DESCRIPTORES (ID);
 
 CREATE INDEX UJI_DESCRIPTORES_TIP_ORG_TO_I ON GOC_DESCRIPTORES_TIPOS_ORGANO
-(TIPO_ORGANO_ID)
+(TIPO_ORGANO_ID);
 
 CREATE INDEX UJI_DESCRIPTORES_TIP_ORG_de_I ON GOC_DESCRIPTORES_TIPOS_ORGANO
-(DESCRIPTOR_ID)
+(DESCRIPTOR_ID);

@@ -57,7 +57,7 @@ ALTER TABLE goc_organos_reuniones_miembros
   DROP COLUMN cargo_firma;
 
 ALTER TABLE goc_reuniones_invitados
-  ADD (persona_email VARCHAR2(1000) NOT NULL)
+  ADD (persona_email VARCHAR2(1000) NOT NULL);
 
 CREATE OR REPLACE FORCE VIEW GOC_VW_REUNIONES_BUSQUEDA
 (
@@ -214,4 +214,5 @@ CREATE OR REPLACE VIEW goc_vw_reuniones_permisos AS
           AND orrm.asistencia = 1
   )
   GROUP BY id, completada, fecha, asunto, asunto_alt, persona_id, persona_nombre
+;
 
