@@ -3,11 +3,10 @@ Ext.define('goc.view.reunion.FormDescriptoresOrdenDia', {
     xtype: 'formDescriptoresOrdenDia',
 
     width: 640,
-    height: 800,
+    minHeight: 540,
     modal: true,
     bodyPadding: 10,
     autoScroll: true,
-    y: -60,
 
     layout: {
         type: 'vbox',

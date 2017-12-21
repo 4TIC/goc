@@ -180,7 +180,7 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
 
     onAttachmentEditDescriptores : function()
     {
-        var view = this.getView().up('panel');
+        var view = this.getView().up('viewport');
         var grid = this.getView();
         var record = grid.getView().getSelectionModel().getSelection()[0];
         var viewModel = this.getViewModel();
@@ -215,7 +215,6 @@ Ext.define('goc.view.reunion.OrdenDiaGridController', {
                 }
             }
         });
-        this.modal.height = '50%';
         this.modal.show();
     },
 
