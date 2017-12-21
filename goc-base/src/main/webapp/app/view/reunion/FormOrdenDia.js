@@ -8,7 +8,7 @@ var formItems = [
         allowBlank : false,
         fieldLabel : getMultiLangLabel(appI18N.reuniones.titulo, mainLanguage),
         name : 'titulo',
-        emptyText : 'Títol',
+        emptyText : getMultiLangLabel(appI18N.reuniones.titulo, mainLanguage),
         bind : {
             value : '{puntoOrdenDia.titulo}',
             disabled : '{reunionCompletada}'
@@ -22,7 +22,7 @@ if (isMultilanguageApplication())
         allowBlank : false,
         fieldLabel : getMultiLangLabel(appI18N.reuniones.titulo, alternativeLanguage),
         name : 'tituloAlternativo',
-        emptyText : 'Títol',
+        emptyText : getMultiLangLabel(appI18N.reuniones.titulo, alternativeLanguage),
         bind : {
             value : '{puntoOrdenDia.tituloAlternativo}',
             disabled : '{reunionCompletada}'
@@ -57,7 +57,7 @@ formItems.push({
     fieldLabel : getMultiLangLabel(appI18N.reuniones.descripcion, mainLanguage),
     labelAlign : 'top',
     flex : 1,
-    emptyText : 'descripció',
+    emptyText : getMultiLangLabel(appI18N.reuniones.descripcion, mainLanguage),
     bind : {
         value : '{puntoOrdenDia.descripcion}',
         disabled : '{reunionCompletada}'
@@ -72,7 +72,7 @@ if (isMultilanguageApplication())
         fieldLabel : getMultiLangLabel(appI18N.reuniones.descripcion, alternativeLanguage),
         labelAlign : 'top',
         flex : 1,
-        emptyText : 'descripció',
+        emptyText : getMultiLangLabel(appI18N.reuniones.descripcion, alternativeLanguage),
         bind : {
             value : '{puntoOrdenDia.descripcionAlternativa}',
             disabled : '{reunionCompletada}'
@@ -86,7 +86,7 @@ formItems.push({
     fieldLabel : getMultiLangLabel(appI18N.reuniones.deliberaciones, mainLanguage),
     labelAlign : 'top',
     flex : 1,
-    emptyText : 'deliberacions',
+    emptyText : getMultiLangLabel(appI18N.reuniones.deliberaciones, mainLanguage),
     bind : {
         value : '{puntoOrdenDia.deliberaciones}',
         disabled : '{reunionCompletada}'
@@ -101,7 +101,7 @@ if (isMultilanguageApplication())
         fieldLabel : getMultiLangLabel(appI18N.reuniones.deliberaciones, alternativeLanguage),
         labelAlign : 'top',
         flex : 1,
-        emptyText : 'deliberacions',
+        emptyText : getMultiLangLabel(appI18N.reuniones.deliberaciones, alternativeLanguage),
         bind : {
             value : '{puntoOrdenDia.deliberacionesAlternativas}',
             disabled : '{reunionCompletada}'
@@ -115,7 +115,7 @@ formItems.push({
     fieldLabel : getMultiLangLabel(appI18N.reuniones.acuerdos, mainLanguage),
     labelAlign : 'top',
     flex : 1,
-    emptyText : 'acords',
+    emptyText : getMultiLangLabel(appI18N.reuniones.acuerdos, mainLanguage),
     bind : {
         value : '{puntoOrdenDia.acuerdos}',
         disabled : '{reunionCompletada}'
@@ -130,7 +130,7 @@ if (isMultilanguageApplication())
         fieldLabel : getMultiLangLabel(appI18N.reuniones.acuerdos, alternativeLanguage),
         labelAlign : 'top',
         flex : 1,
-        emptyText : 'acords',
+        emptyText : getMultiLangLabel(appI18N.reuniones.acuerdos, alternativeLanguage),
         bind : {
             value : '{puntoOrdenDia.acuerdosAlternativos}',
             disabled : '{reunionCompletada}'
