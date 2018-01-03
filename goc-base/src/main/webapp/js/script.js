@@ -21,9 +21,14 @@ $(function()
                 response.data.map(function(comentario)
                 {
                     var creador = comentario.creadorNombre ? comentario.creadorNombre : comentario.creadorId;
+                    html += '<div class="row columns">';
+
+                    if (comentario.permiteBorrado == 'true')
+                    {
+                        html += '  <a href="#" class="delete-comentario" data-id="' + comentario.id + '"><i class="fa fa-times"></i></a>';
+                    }
+
                     html +=
-                    '<div class="row columns">' +
-                    '  <a href="#" class="delete-comentario" data-id="' + comentario.id + '"><i class="fa fa-times"></i></a>' +
                     '  <div class="comentario">' +
                     '    <p class=""autor"><strong>' + appI18N.acta.autor + '</strong>: ' + creador + '</p>' +
                     '    <div class="texto">' + comentario.comentario + '</div>' +
