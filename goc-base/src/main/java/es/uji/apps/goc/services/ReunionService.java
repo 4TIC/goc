@@ -950,6 +950,7 @@ public class ReunionService
         cargo.setId(organoReunionMiembro.getCargoId());
         cargo.setNombre(
                 mainLanguage ? organoReunionMiembro.getCargoNombre() : organoReunionMiembro.getCargoNombreAlternativo());
+        cargo.setCodigo(organoReunionMiembro.getCargoCodigo());
 
         miembroTemplate.setCargo(cargo);
 
