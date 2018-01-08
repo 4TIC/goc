@@ -50,6 +50,7 @@ formReunionItems.push({
         {
             allowBlank : false,
             xtype : 'datefield',
+            startDay: 1,
             name : 'fecha',
             emptyText : appI18N.reuniones.fecha,
             format : 'd/m/Y',
