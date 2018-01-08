@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+  <distributable/>
+
+  <!--
+    [Enable SSO] - Enable SAML2 SSO integration
+    Add to contextConfigLocation classpath:applicationContext-security.xml
+
+    [Disable SSO] - Creates authenticated user from properties file
+    Add to contextConfigLocation classpath:applicationContext-DISABLE-security.xml
+  -->
+
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+      classpath:applicationContext.xml
+      classpath:applicationContext-swagger.xml
+      classpath:applicationContext-DISABLE-security.xml
+    </param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>appVersion</param-name>
+    <param-value>${pom.version}</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>webAppRootKey</param-name>
+    <param-value>uji-goc-base.root</param-value>
+  </context-param>
+
+  <listener>
+    <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>es.uji.commons.rest.listeners.CleanUpOracleMBeansListener</listener-class>
+  </listener>
+
+  <!-- Spring filters-->
+
+  <filter>
+    <filter-name>multiClienteUserRegistration</filter-name>
+    <filter-class>es.uji.apps.goc.auth.MultiClienteDefaultSessionFromPropertiesAuth</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>multiClienteUserRegistration</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+
+  <filter>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!-- Spring Security -->
+
+  <!--
+    [Enable SSO]
+    <filter-class>es.uji.apps.goc.auth.SpringSecurityAuth</filter-class>
+
+    [Disable SSO]
+    <filter-class>es.uji.apps.goc.auth.DefaulSessionFromPropertiesAuth</filter-class>
+  -->
+
+  <filter>
+    <filter-name>userRegistration</filter-name>
+    <filter-class>es.uji.apps.goc.auth.DefaulSessionFromPropertiesAuth</filter-class>
+    <init-param>
+      <param-name>authToken</param-name>
+      <param-value>${goc.external.authToken}</param-value>
+    </init-param>
+    <init-param>
+      <param-name>defaultUserId</param-name>
+      <param-value>${uji.deploy.defaultUserId}</param-value>
+    </init-param>
+    <init-param>
+      <param-name>defaultUserName</param-name>
+      <param-value>${uji.deploy.defaultUserName}</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>userRegistration</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!-- Jersey Servlet -->
+
+  <servlet>
+    <servlet-name>rest-api</servlet-name>
+    <servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
+    <init-param>
+      <param-name>com.sun.jersey.config.property.packages</param-name>
+      <param-value>es.uji.commons.rest.json; com.fasterxml.jackson.jaxrs.json; es.uji.apps.goc.templates; es.uji.apps.goc.services.rest; io.swagger.jaxrs.json; io.swagger.jaxrs.listing
+      </param-value>
+    </init-param>
+    <init-param>
+      <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
+      <param-value>com.sun.jersey.api.container.filter.LoggingFilter</param-value>
+    </init-param>
+    <init-param>
+      <param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
+      <param-value>com.sun.jersey.api.container.filter.LoggingFilter</param-value>
+    </init-param>
+    <init-param>
+      <param-name>com.sun.jersey.config.feature.logging.DisableEntitylogging</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>rest-api</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>Bootstrap</servlet-name>
+    <servlet-class>es.uji.apps.goc.Bootstrap</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+</web-app>

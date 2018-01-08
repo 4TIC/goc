@@ -1,0 +1,84 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>goc-base-multiclient</artifactId>
+    <packaging>war</packaging>
+    <name>goc-base-multiclient</name>
+
+    <parent>
+        <artifactId>goc</artifactId>
+        <groupId>es.uji.apps.goc</groupId>
+        <version>0.1.7-SNAPSHOT</version>
+    </parent>
+
+    <properties>
+        <goc.version>0.1.7-SNAPSHOT</goc.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>es.uji.apps.goc</groupId>
+            <artifactId>goc-base</artifactId>
+            <version>${goc.version}</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>es.uji.apps.goc</groupId>
+            <artifactId>goc-base</artifactId>
+            <version>${goc.version}</version>
+            <type>warpath</type>
+        </dependency>
+        <dependency>
+            <groupId>es.uji.apps.goc</groupId>
+            <artifactId>goc-base</artifactId>
+            <version>${goc.version}</version>
+            <classifier>classes</classifier>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>goc</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.appfuse.plugins</groupId>
+                <artifactId>warpath-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>add-classes</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <attachClasses>true</attachClasses>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
