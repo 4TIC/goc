@@ -422,7 +422,7 @@ public class ReunionService
             reunionFirma.setCargoAlternativoResponsableActa(responsable.getCargoNombreAlternativo());
         }
 
-        List<Organo> organos = organoService.getOrganosByReunionIdAndUserId(reunion.getId(), connectedUserId);
+        List<Organo> organos = organoService.getOrganosByReunionId(reunion.getId(), connectedUserId);
         List<ReunionComentario> comentarios =
                 reunionComentarioService.getComentariosByReunionId(reunion.getId(), connectedUserId);
 
@@ -674,7 +674,7 @@ public class ReunionService
                     mainLanguage ? responsable.getCargoNombre() : responsable.getCargoNombreAlternativo());
         }
 
-        List<Organo> organos = organoService.getOrganosByReunionIdAndUserId(reunion.getId(), connectedUserId);
+        List<Organo> organos = organoService.getOrganosByReunionId(reunion.getId(), connectedUserId);
         List<ReunionComentario> comentarios =
                 reunionComentarioService.getComentariosByReunionId(reunion.getId(), connectedUserId);
 

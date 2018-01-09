@@ -52,7 +52,7 @@ public class OrganoResource extends CoreBaseService
 
         if (reunionId != null)
         {
-            listaOrganos = organoService.getOrganosByReunionIdAndUserId(reunionId, connectedUserId);
+            listaOrganos = organoService.getOrganosByReunionId(reunionId, connectedUserId);
         }
         else
         {
@@ -73,7 +73,7 @@ public class OrganoResource extends CoreBaseService
 
         if (reunionId != null)
         {
-            listaOrganos = organoService.getOrganosByReunionIdAndUserId(reunionId, connectedUserId);
+            listaOrganos = organoService.getOrganosByReunionId(reunionId, connectedUserId);
         }
         else
         {
