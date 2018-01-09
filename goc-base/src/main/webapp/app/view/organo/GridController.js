@@ -3,9 +3,6 @@ Ext.define('goc.view.organo.GridController', {
     alias : 'controller.organoGridController',
     onLoad : function()
     {
-        var comboEstado = this.getView().up('organoMainPanel').down('comboEstadoOrgano');
-        comboEstado.setValue(false);
-
         var viewModel = this.getViewModel();
         viewModel.getStore('organosStore').load();
         viewModel.getStore('tipoOrganosStore').load({
@@ -16,6 +13,12 @@ Ext.define('goc.view.organo.GridController', {
             },
             scope : this
         });
+    },
+
+    afterLoad : function()
+    {
+        var comboEstado = this.getView().up('organoMainPanel').down('comboEstadoOrgano');
+        comboEstado.setValue(false);
     },
 
     decideRowIsEditable : function(editor, context)

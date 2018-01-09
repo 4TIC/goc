@@ -122,6 +122,13 @@ Ext.define('goc.view.organo.Grid', {
             bind : {
                 hidden : '{ocultaBotonHabilita}'
             }
+        },'->',
+        {
+            xtype : 'comboEstadoOrgano'
+        },
+        {
+            padding : 10,
+            xtype : 'comboTipoOrgano'
         }
     ],
 
@@ -129,6 +136,7 @@ Ext.define('goc.view.organo.Grid', {
 
     listeners : {
         render : 'onLoad',
+        afterrender : 'afterLoad',
         beforeedit : 'decideRowIsEditable',
         selectionChange : 'organoSelected'
     }

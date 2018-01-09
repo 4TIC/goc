@@ -14,17 +14,6 @@ Ext.define('goc.view.organo.Main',
         'goc.view.organo.ComboTipoOrgano'
     ],
 
-    tbar : [
-        '->',
-        {
-            xtype : 'comboEstadoOrgano'
-        },
-        {
-            padding : 10,
-            xtype : 'comboTipoOrgano'
-        }
-    ],
-
     layout : 'fit',
     border : 0,
     controller : 'organoMainController',
