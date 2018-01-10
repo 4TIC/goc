@@ -51,7 +51,8 @@
     "borrarInvitado": "Esborrar convidat?",
     "seleccionarParaBorrarAutorizacion": "Cal seleccionar una persona per a esborrar l'autorització",
     "seleccionarParaBorrarInvitado": "Cal seleccionar una persona per a esborrar com a convidat",
-    "invitados": "Convidats"
+    "invitados": "Convidats",
+    "buscarOrgano": "Cercar òrgan"
   },
   "tipoOrganos": {
     "titulo": "Tipus d'Òrgans",

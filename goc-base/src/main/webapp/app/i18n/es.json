@@ -51,7 +51,8 @@
     "borrarInvitado": "¿Quitar invitado?",
     "seleccionarParaBorrarAutorizacion": "Debe seleccionar una persona para quitar la autorización",
     "seleccionarParaBorrarInvitado": "Debe seleccionar una persona para quitar como invitado",
-    "invitados": "invitados"
+    "invitados": "invitados",
+    "buscarOrgano": "Buscar órgano"
   },
   "tipoOrganos": {
     "titulo": "Tipos de Órganos",

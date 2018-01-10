@@ -58,7 +58,8 @@ Ext.define('goc.view.organo.Main',
 
     listeners : {
         'tipoOrganoSelected' : 'onTipoOrganoSelected',
-        'filtrarOrganos' : 'onFiltrarOrganos'
+        'filtrarOrganos' : 'onFiltrarOrganos',
+        'searchOrgano': 'onSearchOrgano'
     }
 }
 );
