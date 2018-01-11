@@ -98,22 +98,6 @@ public class OrganoDAO extends BaseDAODatabaseImpl
         return organoLocalToOrgano(organos.get(0));
     }
 
-    public Organo getOrganoByIdAndUserId(Long organoId, Long connectedUserId)
-    {
-        JPAQuery query = new JPAQuery(entityManager);
-
-        List<OrganoLocal> organos = query.from(qOrganoLocal)
-                .where(qOrganoLocal.id.eq(organoId).and(qOrganoLocal.creadorId.eq(connectedUserId)))
-                .list(qOrganoLocal);
-
-        if (organos.size() == 0)
-        {
-            return null;
-        }
-
-        return organoLocalToOrgano(organos.get(0));
-    }
-
     public Organo insertOrgano(Organo organo, Long connectedUserId)
     {
         OrganoLocal organoLocal = organoLocalDesdeOrgano(organo);

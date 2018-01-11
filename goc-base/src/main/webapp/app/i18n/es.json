@@ -51,7 +51,8 @@
     "borrarInvitado": "¿Quitar invitado?",
     "seleccionarParaBorrarAutorizacion": "Debe seleccionar una persona para quitar la autorización",
     "seleccionarParaBorrarInvitado": "Debe seleccionar una persona para quitar como invitado",
-    "invitados": "Invitados"
+    "invitados": "invitados",
+    "buscarOrgano": "Buscar órgano"
   },
   "tipoOrganos": {
     "titulo": "Tipos de Órganos",
@@ -196,7 +197,7 @@
     "delegacionVotoEmail": "E-mail delegación de voto",
     "enviada": "Enviada",
     "acta": "Acta",
-    
+    "publicarAcuerdos": "Publicar acuerdos"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Histórico de reuniones",

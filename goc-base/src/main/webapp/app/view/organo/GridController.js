@@ -3,9 +3,6 @@ Ext.define('goc.view.organo.GridController', {
     alias : 'controller.organoGridController',
     onLoad : function()
     {
-        var comboEstado = this.getView().up('organoMainPanel').down('comboEstadoOrgano');
-        comboEstado.setValue(false);
-
         var viewModel = this.getViewModel();
         viewModel.getStore('organosStore').load();
         viewModel.getStore('tipoOrganosStore').load({
@@ -16,6 +13,12 @@ Ext.define('goc.view.organo.GridController', {
             },
             scope : this
         });
+    },
+
+    afterLoad : function()
+    {
+        var comboEstado = this.getView().up('organoMainPanel').down('comboEstadoOrgano');
+        comboEstado.setValue(false);
     },
 
     decideRowIsEditable : function(editor, context)
@@ -52,7 +55,7 @@ Ext.define('goc.view.organo.GridController', {
 
         toolbar.items.each(function(button)
         {
-            if (button.name !== 'add')
+            if (button.name === 'edit')
             {
                 button.setDisabled(record[0].get("externo") === "true");
             }
@@ -77,10 +80,12 @@ Ext.define('goc.view.organo.GridController', {
         var grid = this.getView();
         var comboEstado = grid.up('organoMainPanel').down('comboEstadoOrgano');
         var comboTipoOrgano = grid.up('organoMainPanel').down('comboTipoOrgano');
+        var organoSearch = grid.up('organoMainPanel').down('[reference=organoSearch]');
+
+        organoSearch.setValue("");
         comboTipoOrgano.clearValue();
         comboEstado.setValue(false);
 
-        var vm = this.getViewModel();
         var store = this.getStore('organosStore');
         store.clearFilter();
 
@@ -106,7 +111,7 @@ Ext.define('goc.view.organo.GridController', {
 
         if (record.phantom === true)
         {
-            return grid.getStore().remove(records);
+            return grid.getStore().remove(record);
         }
 
         this.cancelEdit();
@@ -141,6 +146,11 @@ Ext.define('goc.view.organo.GridController', {
                 grid.up('panel').down('grid[name=organoInvitadoGrid]').clearStore();
             }
         });
+    },
+
+    onSearchOrgano: function(field, searchString)
+    {
+        this.getView().up('organoMainPanel').fireEvent('searchOrgano', searchString);
     }
 })
 ;

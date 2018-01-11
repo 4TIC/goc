@@ -1,10 +1,15 @@
 package es.uji.apps.goc.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrganoFirma
 {
+    private static final String PRESIDENTE = "PR";
+    private static final String SECRETARIO = "SE";
+
     private String id;
     private String nombre;
 
@@ -88,8 +93,7 @@ public class OrganoFirma
 
     public List<MiembroFirma> getAsistentes()
     {
-        asistentes.sort((p1, p2) -> p1.getNombre().compareTo(p2.getNombre()));
-        return asistentes;
+        return orderMiembros(asistentes);
     }
 
     public void setAsistentes(List<MiembroFirma> asistentes) {
@@ -123,4 +127,21 @@ public class OrganoFirma
     {
         this.tipoNombreAlternativo = tipoNombreAlternativo;
     }
+
+    private List<MiembroFirma> orderMiembros(List<MiembroFirma> miembros)
+    {
+        if (miembros == null) return null;
+
+        List<MiembroFirma> miembrosOrdenados = new ArrayList<>();
+
+        miembros.sort((p1, p2) -> p1.getNombre().compareTo(p2.getNombre()));
+
+        miembrosOrdenados.addAll(miembros.stream().filter(m -> m.getCargo().getCodigo().equalsIgnoreCase(PRESIDENTE)).collect(
+                Collectors.toList()));
+        miembrosOrdenados.addAll(miembros.stream().filter(m -> m.getCargo().getCodigo().equalsIgnoreCase(SECRETARIO)).collect(Collectors.toList()));
+        miembrosOrdenados.addAll(miembros.stream().filter(m -> ! (m.getCargo().getCodigo().equalsIgnoreCase(SECRETARIO) || (m.getCargo().getCodigo().equalsIgnoreCase(PRESIDENTE)))).collect(Collectors.toList()));
+
+        return miembrosOrdenados;
+    }
+
 }

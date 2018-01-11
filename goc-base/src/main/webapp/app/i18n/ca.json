@@ -51,7 +51,8 @@
     "borrarInvitado": "Esborrar convidat?",
     "seleccionarParaBorrarAutorizacion": "Cal seleccionar una persona per a esborrar l'autorització",
     "seleccionarParaBorrarInvitado": "Cal seleccionar una persona per a esborrar com a convidat",
-    "invitados": "Convidats"
+    "invitados": "Convidats",
+    "buscarOrgano": "Cercar òrgan"
   },
   "tipoOrganos": {
     "titulo": "Tipus d'Òrgans",
@@ -195,7 +196,8 @@
     "delegacionVoto": "Delegació de vot",
     "delegacionVotoEmail": "E-mail delegació de vot",
     "enviada": "Enviada",
-    "acta": "Acta"
+    "acta": "Acta",
+    "publicarAcuerdos": "Publicar acords"
   },
   "historicoReuniones": {
     "tituloPrincipal": "Històric de reunions",

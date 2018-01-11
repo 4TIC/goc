@@ -24,4 +24,13 @@ public class ReunionComentarioDAO extends BaseDAODatabaseImpl
 
         return query.list(qReunionComentario);
     }
+
+    public ReunionComentario getComentarioById(Long comentarioId)
+    {
+        JPAQuery query = new JPAQuery(entityManager);
+
+        query.from(qReunionComentario).where(qReunionComentario.id.eq(comentarioId));
+
+        return query.uniqueResult(qReunionComentario);
+    }
 }

@@ -86,7 +86,7 @@ Ext.define('goc.view.organo.Grid', {
     name : 'organosGrid',
     title : appI18N ? appI18N.organos.titulo : 'Òrgans',
     scrollable : true,
-    multiSelect: false,
+    multiSelect : false,
     collapsible : true,
     tbar : [
         {
@@ -122,6 +122,21 @@ Ext.define('goc.view.organo.Grid', {
             bind : {
                 hidden : '{ocultaBotonHabilita}'
             }
+        }, '->',
+        {
+            xtype : 'comboEstadoOrgano'
+        },
+        {
+            xtype : 'comboTipoOrgano'
+        },
+        {
+            xtype : 'textfield',
+            emptyText : appI18N.organos.buscarOrgano,
+            width : 380,
+            reference: 'organoSearch',
+            listeners : {
+                change : 'onSearchOrgano'
+            }
         }
     ],
 
@@ -129,6 +144,7 @@ Ext.define('goc.view.organo.Grid', {
 
     listeners : {
         render : 'onLoad',
+        afterrender : 'afterLoad',
         beforeedit : 'decideRowIsEditable',
         selectionChange : 'organoSelected'
     }

@@ -1,9 +1,14 @@
 package es.uji.apps.goc.dto;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrganoTemplate
 {
+    private static final String PRESIDENTE = "PR";
+    private static final String SECRETARIO = "SE";
+
     private String id;
     private String nombre;
     private Boolean inactivo;
@@ -76,8 +81,7 @@ public class OrganoTemplate
 
     public List<MiembroTemplate> getAsistentes()
     {
-        asistentes.sort((p1, p2) -> p1.getNombre().compareTo(p2.getNombre()));
-        return asistentes;
+        return orderMiembros(asistentes);
     }
 
     public void setAsistentes(List<MiembroTemplate> asistentes)
@@ -97,12 +101,26 @@ public class OrganoTemplate
 
     public List<MiembroTemplate> getAusentes()
     {
-        ausentes.sort((p1, p2) -> p1.getNombre().compareTo(p2.getNombre()));
-        return ausentes;
+        return orderMiembros(ausentes);
     }
 
     public void setAusentes(List<MiembroTemplate> ausentes)
     {
         this.ausentes = ausentes;
+    }
+
+    private List<MiembroTemplate> orderMiembros(List<MiembroTemplate> miembros)
+    {
+        if (miembros == null) return null;
+
+        List<MiembroTemplate> miembrosOrdenados = new ArrayList<>();
+
+        miembros.sort((p1, p2) -> p1.getNombre().compareTo(p2.getNombre()));
+
+        miembrosOrdenados.addAll(miembros.stream().filter(m -> m.getCargo().getCodigo().equalsIgnoreCase(PRESIDENTE)).collect(Collectors.toList()));
+        miembrosOrdenados.addAll(miembros.stream().filter(m -> m.getCargo().getCodigo().equalsIgnoreCase(SECRETARIO)).collect(Collectors.toList()));
+        miembrosOrdenados.addAll(miembros.stream().filter(m -> ! (m.getCargo().getCodigo().equalsIgnoreCase(SECRETARIO) || (m.getCargo().getCodigo().equalsIgnoreCase(PRESIDENTE)))).collect(Collectors.toList()));
+
+        return miembrosOrdenados;
     }
 }

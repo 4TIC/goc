@@ -16,7 +16,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("/reuniones/{reunionId}/comentarios")
+@Path("/reuniones/{reunionId}/comentarios/")
 public class ReunionComentarioResource extends CoreBaseService
 {
     @InjectParam
@@ -30,10 +30,20 @@ public class ReunionComentarioResource extends CoreBaseService
     public List<UIEntity> getReunionComentarios(@PathParam("reunionId") Long reunionId)
     {
         Long connectedUserId = AccessManager.getConnectedUserId(request);
-        List<ReunionComentario> comentarios =
-                reunionComentarioService.getComentariosByReunionId(reunionId, connectedUserId);
 
-        return reunionComentariosToUI(comentarios);
+        List<UIEntity> entities = new ArrayList<>();
+
+        for (ReunionComentario comentario : reunionComentarioService.getComentariosByReunionId(reunionId,
+                connectedUserId))
+        {
+            UIEntity entity = UIEntity.toUI(comentario);
+            entity.put("permiteBorrado",
+                    reunionComentarioService.isPermiteBorrado(reunionId, comentario, connectedUserId));
+
+            entities.add(entity);
+        }
+
+        return entities;
     }
 
     @POST

@@ -98,7 +98,7 @@ public class OrganoService
             Boolean inactivo, Long connectedUserId)
             throws OrganoNoDisponibleException
     {
-        Organo organo = organoDAO.getOrganoByIdAndUserId(organoId, connectedUserId);
+        Organo organo = organoDAO.getOrganoById(organoId);
 
         if (organo == null)
         {
@@ -136,7 +136,7 @@ public class OrganoService
         return organosExternosDTOToOrgano(listaOrganosExternos);
     }
 
-    public List<Organo> getOrganosByReunionIdAndUserId(Long reunionId, Long connectedUserId)
+    public List<Organo> getOrganosByReunionId(Long reunionId, Long connectedUserId)
     {
         List<Organo> organos = new ArrayList<>();
 

@@ -47,6 +47,22 @@ Ext.define('goc.view.organo.MainController', {
         });
 
         store.addFilter(filter);
+    },
+
+    onSearchOrgano: function(searchString)
+    {
+        var viewModel = this.getViewModel();
+        var store = viewModel.getStore('organosStore');
+
+        var filter  = new Ext.util.Filter(
+        {
+            id : 'search',
+            property : 'nombre',
+            value : searchString,
+            anyMatch: true
+        });
+
+        store.addFilter(filter);
     }
 });
 

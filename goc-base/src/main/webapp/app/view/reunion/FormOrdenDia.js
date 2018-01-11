@@ -39,7 +39,7 @@ formItems.push({
             flex : 1
         },
         {
-            boxLabel : appI18N.reuniones.publico,
+            boxLabel : appI18N.reuniones.publicarAcuerdos,
             name : 'publico',
             bind : {
                 disabled : '{reunionCompletada}',

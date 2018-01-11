@@ -325,6 +325,9 @@ public class ReunionDAO extends BaseDAODatabaseImpl
         JPADeleteClause deleteClause = new JPADeleteClause(entityManager, qOrganoReunionMiembro);
         deleteClause.where(qOrganoReunionMiembro.reunionId.eq(reunionId)).execute();
 
+        deleteClause = new JPADeleteClause(entityManager, qOrganoReunionInvitado);
+        deleteClause.where(qOrganoReunionInvitado.reunionId.eq(reunionId)).execute();
+
         deleteClause = new JPADeleteClause(entityManager, qOrganoReunion);
         deleteClause.where(qOrganoReunion.reunion.id.eq(reunionId)).execute();
 

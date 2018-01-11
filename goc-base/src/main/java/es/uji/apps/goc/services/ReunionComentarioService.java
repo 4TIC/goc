@@ -39,7 +39,25 @@ public class ReunionComentarioService
     public List<ReunionComentario> getComentariosByReunionId(Long reunionId, Long connectedUserId)
     {
         return reunionComentarioDAO.getComentariosByReunionId(reunionId);
+    }
 
+    public Boolean isPermiteBorrado(Long reunionId, ReunionComentario comentario, Long connectedUserId)
+    {
+        Reunion reunion = reunionDAO.getReunionById(reunionId);
+
+        if (reunion.getCompletada() != null && reunion.getCompletada()) return false;
+
+        List<OrganoAutorizado> listaAurotizados = organoAutorizadoDAO.getAutorizadosByReunionId(reunion.getId());
+
+        List<OrganoAutorizado> listaAutorizadosFiltrada = listaAurotizados.stream()
+                .filter(l -> l.getPersonaId().equals(connectedUserId))
+                .collect(Collectors.toList());
+
+        if (!listaAutorizadosFiltrada.isEmpty() || reunion.getCreadorId().equals(connectedUserId)) return true;
+
+        if (comentario != null && comentario.getCreadorId().equals(connectedUserId)) return true;
+
+        return false;
     }
 
     @Transactional
@@ -71,11 +89,12 @@ public class ReunionComentarioService
     public void deleteComentario(Long reunionId, Long comentarioId, User userConnected)
             throws AsistenteNoEncontradoException
     {
-        Reunion reunionBD = reunionDAO.getReunionById(reunionId);
+        ReunionComentario comentario = reunionComentarioDAO.getComentarioById(comentarioId);
 
-        checkIfUsuarioInReunion(reunionBD, userConnected.getId());
-
-        reunionComentarioDAO.delete(ReunionComentario.class, comentarioId);
+        if (isPermiteBorrado(reunionId, comentario, userConnected.getId()))
+        {
+            reunionComentarioDAO.delete(ReunionComentario.class, comentarioId);
+        }
     }
 
     private void checkIfUsuarioInReunion(Reunion reunionBD, Long connectedUserId)

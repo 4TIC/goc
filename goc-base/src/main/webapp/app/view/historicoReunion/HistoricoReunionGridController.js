@@ -88,8 +88,5 @@ Ext.define('goc.view.historicoReunion.HistoricoReunionGridController', {
             });
 
         store.addFilter(filter);
-
     }
-
-
 });
